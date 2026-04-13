@@ -1,0 +1,246 @@
+/* ============================================
+   FAQS PAGE — Specific Styles
+   ============================================ */
+
+/* ——— FAQS HERO ——— */
+.faqs-hero {
+    padding: 160px 0 80px;
+    background: var(--dark);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.faqs-hero::before {
+    content: 'FAQ';
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-serif);
+    font-size: 18rem;
+    font-weight: 700;
+    color: rgba(196, 160, 96, 0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+.faqs-hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+}
+
+/* ——— FAQS LAYOUT ——— */
+.faqs-body {
+    background: var(--black);
+}
+
+.faqs-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+/* ——— SIDEBAR ——— */
+.faqs-sidebar {
+    position: sticky;
+    top: 108px;
+}
+
+.sidebar-nav {
+    padding: 24px 20px;
+    border-radius: var(--radius-md);
+    border-color: var(--border-gold);
+}
+
+.sidebar-nav-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.sidebar-nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background: var(--gold-pale);
+    color: var(--gold);
+}
+
+/* ——— FAQ GROUPS ——— */
+.faqs-main {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+
+.faq-group {
+    scroll-margin-top: 120px;
+}
+
+.faq-group-title {
+    font-family: var(--font-sans);
+    font-size: 1.4rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.faq-group-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--gold-pale);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-sm);
+    display: grid;
+    place-items: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+/* ——— FAQ ACCORDION (shared with zanzibar) ——— */
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--border);
+    transition: var(--transition);
+}
+
+.faq-item:first-child {
+    border-top: 1px solid var(--border);
+}
+
+.faq-q {
+    width: 100%;
+    text-align: left;
+    padding: 22px 0;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: color 0.3s;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.faq-q:hover {
+    color: var(--gold);
+}
+
+.faq-icon {
+    font-size: 1.6rem;
+    color: var(--gold);
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1;
+    font-family: var(--font-sans);
+}
+
+.faq-item.open .faq-icon {
+    transform: rotate(45deg);
+}
+
+.faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s;
+}
+
+.faq-item.open .faq-a {
+    max-height: 600px;
+    padding-bottom: 24px;
+}
+
+.faq-a p,
+.faq-a ol,
+.faq-a ul {
+    font-size: 0.93rem;
+    line-height: 1.85;
+    color: var(--text-muted);
+}
+
+/* ——— CTA STRIP ——— */
+.faqs-cta-strip {
+    background: var(--dark-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 56px 0;
+}
+
+.faq-cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+/* ——— RESPONSIVE ——— */
+@media (max-width: 900px) {
+    .faqs-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .faqs-sidebar {
+        position: static;
+        margin-bottom: 0;
+    }
+
+    .sidebar-nav {
+        display: none;
+    }
+
+    .faqs-hero::before {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .faqs-hero {
+        padding: 120px 0 60px;
+    }
+
+    .faqs-main {
+        gap: 48px;
+    }
+
+    .faq-cta-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
