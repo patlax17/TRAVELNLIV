@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery — Travel &amp; LIV Collective | High-Res Memories</title>
+    <meta name="description"
+        content="The Collection — High-resolution memories from Travel &amp; LIV Collective. Browse and download photos from our group travel experiences across the world." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="gallery.css" />
+</head>
+
+<body>
+
+    <!-- ======== NAVIGATION ======== -->
+    <nav id="nav" class="scrolled">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Travel &amp; LIV Collective"
+                    class="nav-logo-img" /></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="upcoming.html">Upcoming Trips</a></li>
+                <li><a href="partnerships.html">Partners</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+            </ul>
+            <a href="index.html#event" class="btn btn-gold nav-cta" id="gallery-nav-cta">Reserve Your Spot</a>
+            <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">✕</button>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="upcoming.html">Upcoming Trips</a>
+        <a href="partnerships.html">Partners</a>
+        <a href="gallery.html" class="active">Gallery</a>
+        <a href="faqs.html">FAQs</a>
+        <a href="index.html#event" class="btn btn-gold" style="margin-top:16px;">Reserve Your Spot</a>
+    </div>
+
+    <!-- ======== PAGE HERO ======== -->
+    <section class="gallery-hero">
+        <div class="gallery-hero-bg">
+            <img src="zanzibar_hero.png" alt="Gallery hero" />
+            <div class="gallery-hero-overlay"></div>
+        </div>
+        <div class="container gallery-hero-content">
+            <div class="animate-fade-up">
+                <span class="eyebrow animate-fade-up animate-delay-1"><span class="gold-line"></span>The
+                    Collection</span>
+                <h1 class="display-lg animate-fade-up animate-delay-2" style="margin:20px 0 16px;">
+                    High-resolution memories<br />from <em>Travel &amp; LIV Collective</em>
+                </h1>
+                <div class="divider" style="margin:0 0 24px;"></div>
+                <p class="text-muted animate-fade-up animate-delay-3"
+                    style="max-width:580px;font-size:1.05rem;line-height:1.8;">
+                    Every frame tells a story. Browse, relive, and download your favourite moments from our journeys
+                    together.
+                </p>
+            </div>
+            <!-- Stats row -->
+            <div class="gallery-stats animate-fade-in animate-delay-4">
+                <div class="gstat">
+                    <span class="gstat-num" id="photoCount">12</span>
+                    <span class="gstat-label">Photos</span>
+                </div>
+                <div class="gstat-div"></div>
+                <div class="gstat">
+                    <span class="gstat-num">3+</span>
+                    <span class="gstat-label">Destinations</span>
+                </div>
+                <div class="gstat-div"></div>
+                <div class="gstat">
+                    <span class="gstat-num">HQ</span>
+                    <span class="gstat-label">Downloads</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== FILTER BAR ======== -->
+    <div class="gallery-filter-bar" id="filterBar">
+        <div class="container">
+            <div class="filter-inner">
+                <button class="filter-btn active" data-filter="all" id="filter-all">All Photos</button>
+                <button class="filter-btn" data-filter="community" id="filter-community">The Collective</button>
+                <button class="filter-btn" data-filter="china" id="filter-china">China</button>
+                <button class="filter-btn" data-filter="team" id="filter-team">Team</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== GALLERY GRID ======== -->
+    <main class="section" id="gallery-main">
+        <div class="container">
+            <div class="gallery-grid" id="galleryGrid">
+
+                <!-- Real Photos -->
+                <div class="gallery-card reveal" data-category="community" data-src="story_collective.jpg"
+                    data-title="The Story of the Collective"
+                    data-desc="A defining moment — the entire Travel &amp; LIV Collective gathered together, building connections that outlast any trip.">
+                    <div class="gallery-card-img">
+                        <img src="story_collective.jpg" alt="Story of the collective" loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">The Story</p>
+                            <p class="overlay-dest">The Collective</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="story_collective.jpg" download="travelnliv-story-collective.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal animate-delay-1" data-category="team" data-src="olivia_photo.jpg"
+                    data-title="Olivia Owen — Founder"
+                    data-desc="Olivia Owen, founder of Travel &amp; LIV Collective — the curator behind every unforgettable experience.">
+                    <div class="gallery-card-img">
+                        <img src="olivia_photo.jpg" alt="Olivia Owen, Founder of Travel and LIV Collective"
+                            loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">Olivia Owen — Founder</p>
+                            <p class="overlay-dest">Travel &amp; LIV Collective</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="olivia_photo.jpg" download="travelnliv-olivia-founder.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="gallery-card reveal animate-delay-2" data-category="community china"
+                    data-src="social_proof/KQ6A1033.JPG" data-title="The Collective ✦"
+                    data-desc="Candid moments that define what Travel &amp; LIV Collective is all about — real people, real connections.">
+                    <div class="gallery-card-img">
+                        <img src="social_proof/KQ6A1033.JPG" alt="Travel and LIV Collective group" loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">The Collective ✦</p>
+                            <p class="overlay-dest">Real Connections</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="social_proof/KQ6A1033.JPG" download="travelnliv-collective-1.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal animate-delay-3" data-category="community"
+                    data-src="social_proof/IMG_2476.JPG" data-title="Real Connections ✦"
+                    data-desc="Group of travelers connecting abroad — this is what the collective is made of.">
+                    <div class="gallery-card-img">
+                        <img src="social_proof/IMG_2476.JPG" alt="Group of travelers connecting abroad"
+                            loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">Real Connections ✦</p>
+                            <p class="overlay-dest">The Collective</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="social_proof/IMG_2476.JPG" download="travelnliv-connections.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal" data-category="community" data-src="social_proof/IMG_2486.JPG"
+                    data-title="Good Vibes ✦"
+                    data-desc="Group laughs and good vibes — a moment that captures why people keep coming back.">
+                    <div class="gallery-card-img">
+                        <img src="social_proof/IMG_2486.JPG" alt="Group laughs and good vibes" loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">Good Vibes ✦</p>
+                            <p class="overlay-dest">The Collective</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="social_proof/IMG_2486.JPG" download="travelnliv-good-vibes.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal animate-delay-1" data-category="community china"
+                    data-src="social_proof/IMG_2539.JPG" data-title="Explore Together ✦"
+                    data-desc="Travelers exploring together — discovering new places is always better with the collective.">
+                    <div class="gallery-card-img">
+                        <img src="social_proof/IMG_2539.JPG" alt="Travelers exploring together" loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">Explore Together ✦</p>
+                            <p class="overlay-dest">China</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="social_proof/IMG_2539.JPG" download="travelnliv-explore-together.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal animate-delay-2" data-category="community china"
+                    data-src="social_proof/IMG_3312.JPG" data-title="Culture &amp; Vibes ✦"
+                    data-desc="Cultural experiences abroad — immersing in the local life is what makes the collective's trips unforgettable.">
+                    <div class="gallery-card-img">
+                        <img src="social_proof/IMG_3312.JPG" alt="Cultural experiences abroad" loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">Culture &amp; Vibes ✦</p>
+                            <p class="overlay-dest">China</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="social_proof/IMG_3312.JPG" download="travelnliv-culture-vibes.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal animate-delay-3" data-category="community"
+                    data-src="social_proof/IMG_3328.JPG" data-title="Unforgettable ✦"
+                    data-desc="Group travel memories that stay with you long after the trip ends.">
+                    <div class="gallery-card-img">
+                        <img src="social_proof/IMG_3328.JPG" alt="Group travel memories" loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">Unforgettable ✦</p>
+                            <p class="overlay-dest">The Collective</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="social_proof/IMG_3328.JPG" download="travelnliv-unforgettable.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal" data-category="community" data-src="social_proof/IMG_3337.JPG"
+                    data-title="Your Crew ✦"
+                    data-desc="Travel &amp; LIV group moments — your future travel crew, waiting to meet you.">
+                    <div class="gallery-card-img">
+                        <img src="social_proof/IMG_3337.JPG" alt="Travel and LIV group moments" loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">Your Crew ✦</p>
+                            <p class="overlay-dest">The Collective</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="social_proof/IMG_3337.JPG" download="travelnliv-your-crew.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal animate-delay-1" data-category="community china"
+                    data-src="social_proof/IMG_3428.JPG" data-title="Made It Out ✦"
+                    data-desc="Collective adventures — for the ones who actually make it out of the group chat.">
+                    <div class="gallery-card-img">
+                        <img src="social_proof/IMG_3428.JPG" alt="Collective adventures" loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">Made It Out ✦</p>
+                            <p class="overlay-dest">China</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="social_proof/IMG_3428.JPG" download="travelnliv-made-it-out.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal animate-delay-2" data-category="community"
+                    data-src="social_proof/IMG_3482.JPG" data-title="New Friends ✦"
+                    data-desc="Travel experiences with new friends — the collective grows with every trip.">
+                    <div class="gallery-card-img">
+                        <img src="social_proof/IMG_3482.JPG" alt="Travel experiences with new friends" loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">New Friends ✦</p>
+                            <p class="overlay-dest">The Collective</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="social_proof/IMG_3482.JPG" download="travelnliv-new-friends.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card reveal animate-delay-3" data-category="community china"
+                    data-src="social_proof/KQ6A1043.JPG" data-title="The Experience ✦"
+                    data-desc="The Travel &amp; LIV experience — where every destination becomes a connection.">
+                    <div class="gallery-card-img">
+                        <img src="social_proof/KQ6A1043.JPG" alt="Travel and LIV Collective destination experience"
+                            loading="lazy" />
+                    </div>
+                    <div class="gallery-card-overlay">
+                        <div class="overlay-content">
+                            <p class="overlay-title">The Experience ✦</p>
+                            <p class="overlay-dest">China</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-btn view-btn" aria-label="View fullscreen">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                                    </svg>
+                                    View
+                                </button>
+                                <a href="social_proof/KQ6A1043.JPG" download="travelnliv-the-experience.jpg"
+                                    class="overlay-btn download-btn" aria-label="Download high-res">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                    </svg>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No results message (hidden by default) -->
+                <div class="gallery-no-results" id="noResults" style="display:none;">
+                    <span>🌍</span>
+                    <p>No photos in this category yet.</p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- ======== CTA STRIP ======== -->
+    <section class="gallery-cta-strip">
+        <div class="container">
+            <div class="gcta-inner reveal">
+                <div>
+                    <p class="eyebrow" style="margin-bottom:12px;"><span class="gold-line"></span>Be Part of the Next
+                        Chapter</p>
+                    <h2 class="display-sm">Your photos could be in here next.</h2>
+                </div>
+                <a href="index.html#event" class="btn btn-gold" id="gallery-cta-btn">
+                    Join the Next Experience
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                        viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== FOOTER ======== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo"><img src="logo.jpg" alt="Travel &amp; LIV Collective"
+                            class="footer-logo-img" /></div>
+                    <p class="footer-desc">A curated collective of like-minded people who value experience, connection,
+                        and the
+                        finer things in life.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/travelnlivcollective" target="_blank" rel="noopener"
+                            class="social-icon" id="footer-instagram-gallery" aria-label="Instagram">📷</a>
+                        <a href="https://www.tiktok.com/@travelnlivcollective" target="_blank" rel="noopener"
+                            class="social-icon" id="footer-tiktok-gallery" aria-label="TikTok">🎵</a>
+                        <a href="https://www.facebook.com/Travelnlivcollective" target="_blank" rel="noopener"
+                            class="social-icon" id="footer-facebook-gallery" aria-label="Facebook">📘</a>
+                        <a href="https://whatsapp.com/channel/0029VbBQk77CsU9WUplHdr1k" target="_blank" rel="noopener"
+                            class="social-icon" id="footer-whatsapp-gallery" aria-label="WhatsApp Channel">💬</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer-heading">Trips</div>
+                    <ul class="footer-links">
+                        <li><a href="upcoming.html">Upcoming Trips</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-heading">Explore</div>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="about.html#past-trips">Past Trips</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="partnerships.html">Partnerships</a></li>
+                        <li><a href="faqs.html">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-heading">Info</div>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="mailto:Info@travelnliv.com">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Travel &amp; LIV Collective. All rights reserved.</p>
+                <p>Crafted with ✦ for those who actually make it out</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ======== LIGHTBOX MODAL ======== -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+        </button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M15 18l-6-6 6-6" />
+            </svg>
+        </button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M9 18l6-6-6-6" />
+            </svg>
+        </button>
+        <div class="lightbox-content">
+            <div class="lightbox-img-wrap">
+                <img src="" alt="" id="lightboxImg" />
+                <div class="lightbox-loader" id="lightboxLoader"></div>
+            </div>
+            <div class="lightbox-info">
+                <div class="lightbox-text">
+                    <p class="lightbox-title" id="lightboxTitle"></p>
+                    <p class="lightbox-desc" id="lightboxDesc"></p>
+                </div>
+                <a href="#" download="" class="btn btn-gold lightbox-download" id="lightboxDownload"
+                    aria-label="Download high-res image">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                        viewBox="0 0 24 24">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                    </svg>
+                    Download High-Res
+                </a>
+            </div>
+            <div class="lightbox-counter">
+                <span id="lightboxCurrent">1</span> / <span id="lightboxTotal">17</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="gallery.js"></script>
+</body>
+
+</html>

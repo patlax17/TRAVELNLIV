@@ -9,25 +9,32 @@
 :root {
     --black: #0a0a0a;
     --dark: #111111;
+    --dark-1: #131313;
     --dark-2: #181818;
     --dark-3: #222222;
     --dark-4: #2a2a2a;
     --border: rgba(255, 255, 255, 0.08);
-    --border-gold: rgba(196, 160, 96, 0.3);
+    --border-gold: rgba(143, 191, 159, 0.35);
 
-    --gold: #c4a060;
-    --gold-light: #e0c080;
-    --gold-pale: rgba(196, 160, 96, 0.12);
-    --gold-glow: rgba(196, 160, 96, 0.25);
+    /* Primary brand accent — sage green from logo */
+    --teal: #8FBF9F;
+    --teal-dark: #6aa880;
+    --teal-light: #b2d8bf;
+    --teal-pale: rgba(143, 191, 159, 0.13);
+    --teal-glow: rgba(143, 191, 159, 0.28);
+
+    /* Gold kept as alias so existing components still compile */
+    --gold: #8FBF9F;
+    --gold-light: #b2d8bf;
+    --gold-pale: rgba(143, 191, 159, 0.13);
+    --gold-glow: rgba(143, 191, 159, 0.28);
+
+    --coral: #f97316;
 
     --white: #ffffff;
-    --off-white: #f5f0e8;
+    --off-white: #f0f5f2;
     --text-muted: rgba(255, 255, 255, 0.55);
     --text-dim: rgba(255, 255, 255, 0.35);
-
-    --teal: #2dd4bf;
-    --teal-dark: #0d9488;
-    --coral: #f97316;
 
     --font-serif: 'Playfair Display', Georgia, serif;
     --font-sans: 'DM Sans', 'Inter', sans-serif;
@@ -37,7 +44,7 @@
     --radius-lg: 24px;
     --radius-xl: 40px;
 
-    --shadow-gold: 0 0 40px rgba(196, 160, 96, 0.15), 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-gold: 0 0 40px rgba(143, 191, 159, 0.18), 0 8px 32px rgba(0, 0, 0, 0.5);
     --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.6);
 
     --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -98,7 +105,7 @@ button {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--gold);
+    background: var(--teal);
     border-radius: 3px;
 }
 
@@ -141,7 +148,7 @@ h6 {
     font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--teal);
 }
 
 .text-muted {
@@ -149,7 +156,7 @@ h6 {
 }
 
 .text-gold {
-    color: var(--gold);
+    color: var(--teal);
 }
 
 .text-center {
@@ -210,26 +217,26 @@ h6 {
 }
 
 .btn-gold {
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
     color: var(--black);
-    box-shadow: 0 4px 20px rgba(196, 160, 96, 0.35);
+    box-shadow: 0 4px 20px rgba(143, 191, 159, 0.38);
 }
 
 .btn-gold:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(196, 160, 96, 0.5);
+    box-shadow: 0 8px 32px rgba(143, 191, 159, 0.55);
     filter: brightness(1.08);
 }
 
 .btn-outline {
     border: 1.5px solid var(--border-gold);
-    color: var(--gold);
+    color: var(--teal);
     background: transparent;
 }
 
 .btn-outline:hover {
-    background: var(--gold-pale);
-    border-color: var(--gold);
+    background: var(--teal-pale);
+    border-color: var(--teal);
     transform: translateY(-2px);
 }
 
@@ -277,10 +284,27 @@ h6 {
     font-weight: 700;
     color: var(--white);
     letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
 }
 
 .nav-logo span {
-    color: var(--gold);
+    color: var(--teal);
+}
+
+.nav-logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.footer-logo-img {
+    height: 56px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    margin-bottom: 4px;
 }
 
 .nav-links {
@@ -347,7 +371,7 @@ h6 {
 }
 
 .mobile-nav a:hover {
-    color: var(--gold);
+    color: var(--teal);
 }
 
 .mobile-nav-close {
@@ -367,7 +391,7 @@ h6 {
 .divider {
     width: 60px;
     height: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent);
+    background: linear-gradient(90deg, var(--teal), transparent);
     margin: 16px auto 0;
 }
 
@@ -380,7 +404,7 @@ h6 {
     display: inline-block;
     width: 40px;
     height: 2px;
-    background: var(--gold);
+    background: var(--teal);
     vertical-align: middle;
     margin-right: 12px;
 }
@@ -399,15 +423,15 @@ h6 {
 }
 
 .tag-gold {
-    background: var(--gold-pale);
-    color: var(--gold);
+    background: var(--teal-pale);
+    color: var(--teal);
     border: 1px solid var(--border-gold);
 }
 
 .tag-teal {
-    background: rgba(45, 212, 191, 0.1);
+    background: rgba(143, 191, 159, 0.13);
     color: var(--teal);
-    border: 1px solid rgba(45, 212, 191, 0.25);
+    border: 1px solid rgba(143, 191, 159, 0.3);
 }
 
 /* ——— ANIMATIONS ——— */
@@ -529,7 +553,7 @@ footer {
 }
 
 .footer-logo span {
-    color: var(--gold);
+    color: var(--teal);
 }
 
 .footer-desc {
@@ -558,9 +582,9 @@ footer {
 }
 
 .social-icon:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-    background: var(--gold-pale);
+    border-color: var(--teal);
+    color: var(--teal);
+    background: var(--teal-pale);
 }
 
 .footer-heading {
@@ -584,7 +608,7 @@ footer {
 }
 
 .footer-links a:hover {
-    color: var(--gold);
+    color: var(--teal);
     padding-left: 4px;
 }
 

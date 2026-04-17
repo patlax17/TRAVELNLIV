@@ -16,12 +16,14 @@
   <!-- ======== NAVIGATION ======== -->
   <nav id="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Travel<span>&</span>LIV</a>
+      <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Travel & LIV Collective"
+          class="nav-logo-img" /></a>
       <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="upcoming.html">Upcoming Trips</a></li>
         <li><a href="partnerships.html">Partners</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
         <li><a href="faqs.html">FAQs</a></li>
       </ul>
       <a href="#featured" class="btn btn-gold nav-cta" id="nav-reserve-btn">Reserve Your Spot</a>
@@ -38,6 +40,7 @@
     <a href="about.html">About</a>
     <a href="upcoming.html">Upcoming Trips</a>
     <a href="partnerships.html">Partners</a>
+    <a href="gallery.html">Gallery</a>
     <a href="faqs.html">FAQs</a>
     <a href="#featured" class="btn btn-gold" style="margin-top:16px;">Reserve Your Spot</a>
   </div>
@@ -315,36 +318,46 @@
     </div>
   </section>
 
-  <!-- ======== SECTION 5: NEXT TRIP PLACEHOLDER ======== -->
-  <!-- 🛠 ADMIN: Update destination, dates, description, price, and button link below -->
+  <!-- ======== SECTION 5: NEXT TRIP ======== -->
   <section class="section trip-feature-section" id="featured">
     <div class="container">
       <div class="section-header text-center reveal">
         <span class="eyebrow">Next Experience</span>
-        <h2 class="display-md" style="margin-top:16px;">Our Next Trip is Being Planned</h2>
+        <h2 class="display-md" style="margin-top:16px;">Where We're Going Next</h2>
         <div class="divider"></div>
         <p class="text-muted" style="max-width:560px;margin:16px auto 0;line-height:1.8;">
-          Details coming soon. Be the first to know when the next destination drops.
+          The next chapter is written. Spots are limited — secure yours before they're gone.
         </p>
       </div>
 
-      <!-- PLACEHOLDER TRIP CARD — admin updates content inside this card -->
-      <div class="next-trip-placeholder reveal">
-        <div class="ntp-icon">✈️</div>
-        <div class="ntp-body">
-          <p class="ntp-label">Destination</p>
-          <h3 class="ntp-destination">Coming Soon</h3>
-          <p class="ntp-meta">Dates · Duration · Price — to be announced</p>
-          <p class="ntp-desc text-muted">
-            We're putting the final details together on something special. Stay in the loop — drop your email in the
-            section below and you'll be the first to know.
+      <!-- BALI 2026 FEATURED CARD -->
+      <div class="next-trip-placeholder reveal"
+        style="display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;padding:0;max-width:860px;">
+        <div style="height:100%;min-height:320px;overflow:hidden;position:relative;">
+          <img src="china_trip/IMG_9048.JPG" alt="Bali, Indonesia"
+            style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;" />
+          <div
+            style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(20,20,20,0.6));">
+          </div>
+          <span class="tag tag-gold" style="position:absolute;top:20px;left:20px;">Booking Open</span>
+        </div>
+        <div class="ntp-body" style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center;">
+          <p class="ntp-label">Next Destination</p>
+          <h3 class="ntp-destination">Bali, Indonesia</h3>
+          <p class="ntp-meta">July 30 – August 5, 2026 · 7 Days</p>
+          <p class="ntp-desc text-muted" style="margin-top:12px;">
+            Sacred rice terraces, rooftop infinity pools, temple sunrises, and nights the group chat will never let you
+            forget. This is Bali with the collective.
           </p>
-          <a href="#event" class="btn btn-gold" id="next-trip-notify-btn" style="margin-top:24px;">
-            Get Notified
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </a>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+            <a href="upcoming.html" class="btn btn-gold" id="next-trip-bali-btn">
+              Reserve Your Spot
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a href="upcoming.html" class="btn btn-outline" id="next-trip-details-btn">View All Trips</a>
+          </div>
         </div>
       </div>
 
@@ -455,9 +468,14 @@
         <p class="text-muted" style="font-size:0.88rem;margin-bottom:20px;margin-top:40px;">Follow along for trip
           reveals & updates</p>
         <div class="footer-socials" style="justify-content:center;">
-          <a href="#" class="social-icon" id="cta-instagram" aria-label="Instagram">📷</a>
-          <a href="#" class="social-icon" id="cta-tiktok" aria-label="TikTok">🎵</a>
-          <a href="#" class="social-icon" id="cta-twitter" aria-label="Twitter">🐦</a>
+          <a href="https://www.instagram.com/travelnlivcollective" target="_blank" rel="noopener" class="social-icon"
+            id="cta-instagram" aria-label="Instagram">📷</a>
+          <a href="https://www.tiktok.com/@travelnlivcollective" target="_blank" rel="noopener" class="social-icon"
+            id="cta-tiktok" aria-label="TikTok">🎵</a>
+          <a href="https://www.facebook.com/Travelnlivcollective" target="_blank" rel="noopener" class="social-icon"
+            id="cta-facebook" aria-label="Facebook">📘</a>
+          <a href="https://chat.whatsapp.com/Ii7bQKfuOZoLcWfmj8C1Q5?mode=gi_t" target="_blank" rel="noopener"
+            class="social-icon" id="cta-whatsapp" aria-label="WhatsApp">💬</a>
         </div>
       </div>
     </div>
@@ -468,13 +486,18 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="footer-logo">Travel<span>&</span>LIV</div>
+          <div class="footer-logo"><img src="logo.jpg" alt="Travel & LIV Collective" class="footer-logo-img" /></div>
           <p class="footer-desc">A curated collective of like-minded people who value experience, connection, and the
             finer things in life.</p>
           <div class="footer-socials">
-            <a href="#" class="social-icon" id="footer-instagram" aria-label="Instagram">📷</a>
-            <a href="#" class="social-icon" id="footer-tiktok" aria-label="TikTok">🎵</a>
-            <a href="#" class="social-icon" id="footer-twitter" aria-label="Twitter">🐦</a>
+            <a href="https://www.instagram.com/travelnlivcollective" target="_blank" rel="noopener" class="social-icon"
+              id="footer-instagram" aria-label="Instagram">📷</a>
+            <a href="https://www.tiktok.com/@travelnlivcollective" target="_blank" rel="noopener" class="social-icon"
+              id="footer-tiktok" aria-label="TikTok">🎵</a>
+            <a href="https://www.facebook.com/Travelnlivcollective" target="_blank" rel="noopener" class="social-icon"
+              id="footer-facebook" aria-label="Facebook">📘</a>
+            <a href="https://whatsapp.com/channel/0029VbBQk77CsU9WUplHdr1k" target="_blank" rel="noopener"
+              class="social-icon" id="footer-whatsapp" aria-label="WhatsApp Channel">💬</a>
           </div>
         </div>
         <div>
@@ -497,7 +520,7 @@
           <ul class="footer-links">
             <li><a href="#">Privacy Policy</a></li>
             <li><a href="#">Terms of Service</a></li>
-            <li><a href="mailto:hello@travelnliv.com">Contact Us</a></li>
+            <li><a href="mailto:Info@travelnliv.com">Contact Us</a></li>
           </ul>
         </div>
       </div>
