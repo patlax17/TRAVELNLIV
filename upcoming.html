@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="about.css" />
 </head>
 
-<body>
+<body data-page="upcoming">
 
     <!-- ======== NAVIGATION ======== -->
     <nav id="nav" class="scrolled">
@@ -64,22 +64,22 @@
         <div class="container">
 
             <!-- Trip 1 — Bali, Indonesia -->
-            <div class="upcoming-trip-row reveal">
+            <div class="upcoming-trip-row reveal" id="trip1-row">
                 <div class="upcoming-trip-img-wrap">
-                    <img src="zanzibar_hero.png" alt="Bali, Indonesia — Travel and LIV Collective" />
+                    <img src="bali_hero.png" alt="Bali, Indonesia — Travel and LIV Collective" id="trip1-img" />
                     <div class="upcoming-trip-img-overlay">
-                        <span class="tag tag-gold">Booking Open</span>
+                        <span class="tag tag-gold" id="trip1-badge">Booking Open</span>
                     </div>
                 </div>
                 <div class="upcoming-trip-details">
                     <div class="upcoming-trip-meta-row">
-                        <span class="tag tag-gold">July–August 2026</span>
-                        <span class="tag tag-teal">7 Days</span>
-                        <span class="tag"
+                        <span class="tag tag-gold" id="trip1-month">July–August 2026</span>
+                        <span class="tag tag-teal" id="trip1-dates-tag">7 Days</span>
+                        <span class="tag" id="trip1-region"
                             style="background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid var(--border);">Indonesia</span>
                     </div>
-                    <h2 class="display-md" style="margin-top:20px;">Bali, Indonesia</h2>
-                    <p class="text-muted" style="font-size:1rem;line-height:1.8;margin:16px 0 24px;">
+                    <h2 class="display-md" id="trip1-destination" style="margin-top:20px;">Bali, Indonesia</h2>
+                    <p class="text-muted" id="trip1-desc" style="font-size:1rem;line-height:1.8;margin:16px 0 24px;">
                         Seven days in the Island of the Gods. From sacred rice terraces and volcanic sunrises to rooftop
                         infinity pools, traditional ceremonies, and nights you'll never forget — Bali is where the soul
                         gets recharged and strangers become lifelong friends.
@@ -94,17 +94,17 @@
                     </div>
                     <div class="upcoming-departures">
                         <div class="upcoming-departure">
-                            <span class="dep-date">July 30 – August 5, 2026</span>
+                            <span class="dep-date" id="trip1-dates">July 30 – August 5, 2026</span>
                             <span class="tag tag-gold" style="font-size:0.7rem;">Spots Limited</span>
                         </div>
                     </div>
                     <div class="upcoming-price-row">
                         <div>
                             <span class="price-from">Details</span>
-                            <span class="price-amount" style="font-size:1.4rem;">Coming Soon</span>
+                            <span class="price-amount" id="trip1-price-val" style="font-size:1.4rem;">Coming Soon</span>
                         </div>
                         <a href="https://chat.whatsapp.com/Ii7bQKfuOZoLcWfmj8C1Q5?mode=gi_t" target="_blank"
-                            rel="noopener" class="btn btn-gold" id="upcoming-bali-btn">
+                            rel="noopener" class="btn btn-gold" id="trip1-cta">
                             Secure Your Spot
                             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
                                 viewBox="0 0 24 24">
@@ -116,22 +116,23 @@
             </div>
 
             <!-- Trip 2 — Punta Cana, Dominican Republic -->
-            <div class="upcoming-trip-row reveal" style="margin-top:80px;">
+            <div class="upcoming-trip-row reveal" id="trip2-row" style="margin-top:80px;">
                 <div class="upcoming-trip-img-wrap">
-                    <img src="snorkeling_mnemba.png" alt="Punta Cana, Dominican Republic — Travel and LIV Collective" />
+                    <img src="punta_cana_hero.png" alt="Punta Cana — Travel and LIV Collective" id="trip2-img" />
                     <div class="upcoming-trip-img-overlay">
-                        <span class="tag tag-teal">Coming Soon</span>
+                        <span class="tag tag-teal" id="trip2-badge">Coming Soon</span>
                     </div>
                 </div>
                 <div class="upcoming-trip-details">
                     <div class="upcoming-trip-meta-row">
-                        <span class="tag tag-teal">October 2026</span>
-                        <span class="tag"
+                        <span class="tag tag-teal" id="trip2-month">October 2026</span>
+                        <span class="tag" id="trip2-region"
                             style="background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid var(--border);">Dominican
                             Republic</span>
                     </div>
-                    <h2 class="display-md" style="margin-top:20px;">Punta Cana, Dominican Republic</h2>
-                    <p class="text-muted" style="font-size:1rem;line-height:1.8;margin:16px 0 24px;">
+                    <h2 class="display-md" id="trip2-destination" style="margin-top:20px;">Punta Cana, Dominican
+                        Republic</h2>
+                    <p class="text-muted" id="trip2-desc" style="font-size:1rem;line-height:1.8;margin:16px 0 24px;">
                         White-sand beaches, crystal-clear waters, and the warmth of the Caribbean — Punta Cana is the
                         perfect backdrop for an unforgettable collective experience. Full details dropping soon.
                     </p>
@@ -143,17 +144,17 @@
                     </div>
                     <div class="upcoming-departures">
                         <div class="upcoming-departure">
-                            <span class="dep-date">October 2026</span>
+                            <span class="dep-date" id="trip2-dates">October 2026</span>
                             <span class="tag tag-teal" style="font-size:0.7rem;">Details Coming Soon</span>
                         </div>
                     </div>
                     <div class="upcoming-price-row">
                         <div>
                             <span class="price-from">Stay</span>
-                            <span class="price-amount" style="font-size:1.4rem;">Tuned 📍</span>
+                            <span class="price-amount" id="trip2-price-val" style="font-size:1.4rem;">Tuned 📍</span>
                         </div>
                         <a href="https://chat.whatsapp.com/Ii7bQKfuOZoLcWfmj8C1Q5?mode=gi_t" target="_blank"
-                            rel="noopener" class="btn btn-outline" id="upcoming-punta-btn">
+                            rel="noopener" class="btn btn-outline" id="trip2-cta">
                             Get Notified
                             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
                                 viewBox="0 0 24 24">
@@ -165,25 +166,24 @@
             </div>
 
             <!-- Trip 3 — Rio de Janeiro, Brazil -->
-            <div class="upcoming-trip-row reveal" style="margin-top:80px;">
+            <div class="upcoming-trip-row reveal" id="trip3-row" style="margin-top:80px;">
                 <div class="upcoming-trip-img-wrap">
-                    <img src="group_travel.png" alt="Rio de Janeiro, Brazil — Travel and LIV Collective" />
+                    <img src="rio_hero.png" alt="Rio de Janeiro — Travel and LIV Collective" id="trip3-img" />
                     <div class="upcoming-trip-img-overlay">
-                        <span class="tag tag-teal">Coming Soon</span>
+                        <span class="tag tag-teal" id="trip3-badge">Coming Soon</span>
                     </div>
                 </div>
                 <div class="upcoming-trip-details">
                     <div class="upcoming-trip-meta-row">
-                        <span class="tag tag-teal">December 2026</span>
-                        <span class="tag"
+                        <span class="tag tag-teal" id="trip3-month">December 2026</span>
+                        <span class="tag" id="trip3-region"
                             style="background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid var(--border);">Brazil</span>
                     </div>
-                    <h2 class="display-md" style="margin-top:20px;">Rio de Janeiro, Brazil</h2>
-                    <p class="text-muted" style="font-size:1rem;line-height:1.8;margin:16px 0 24px;">
+                    <h2 class="display-md" id="trip3-destination" style="margin-top:20px;">Rio de Janeiro, Brazil</h2>
+                    <p class="text-muted" id="trip3-desc" style="font-size:1rem;line-height:1.8;margin:16px 0 24px;">
                         End 2026 right. Carnival energy, iconic beaches, Christ the Redeemer, and samba nights —
                         Rio is electric, and we're bringing the collective there for a December experience you won't
                         forget.
-                        Full details dropping soon.
                     </p>
                     <div class="upcoming-includes">
                         <div class="upcoming-include"><span>🌊</span> Iconic Locations</div>
@@ -193,17 +193,17 @@
                     </div>
                     <div class="upcoming-departures">
                         <div class="upcoming-departure">
-                            <span class="dep-date">December 2026</span>
+                            <span class="dep-date" id="trip3-dates">December 2026</span>
                             <span class="tag tag-teal" style="font-size:0.7rem;">Details Coming Soon</span>
                         </div>
                     </div>
                     <div class="upcoming-price-row">
                         <div>
                             <span class="price-from">Stay</span>
-                            <span class="price-amount" style="font-size:1.4rem;">Tuned 📍</span>
+                            <span class="price-amount" id="trip3-price-val" style="font-size:1.4rem;">Tuned 📍</span>
                         </div>
                         <a href="https://chat.whatsapp.com/Ii7bQKfuOZoLcWfmj8C1Q5?mode=gi_t" target="_blank"
-                            rel="noopener" class="btn btn-outline" id="upcoming-rio-btn">
+                            rel="noopener" class="btn btn-outline" id="trip3-cta">
                             Get Notified
                             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
                                 viewBox="0 0 24 24">
@@ -386,6 +386,8 @@
     </footer>
 
     <script src="main.js"></script>
+    <script src="site-config.js"></script>
+    <script src="content-loader.js"></script>
 </body>
 
 </html>

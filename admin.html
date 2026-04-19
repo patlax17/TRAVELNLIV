@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — Travel & LIV Collective</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="admin.css" />
+</head>
+
+<body>
+
+    <!-- ======== LOGIN SCREEN ======== -->
+    <div id="login-screen">
+        <div class="login-card">
+            <img src="logo.jpg" alt="Travel & LIV Collective" class="login-logo" />
+            <h1>Admin Dashboard</h1>
+            <p>Sign in to manage your website content</p>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" class="form-control" placeholder="Enter admin password" />
+            </div>
+            <button class="btn-admin-primary" onclick="handleLogin()">Sign In</button>
+            <p class="login-error" id="login-error">Incorrect password. Please try again.</p>
+        </div>
+    </div>
+
+    <!-- ======== ADMIN APP ======== -->
+    <div id="admin-app" style="display:none;">
+
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">
+                <img src="logo.jpg" alt="T&LIV" />
+                <div>
+                    <div class="sidebar-brand-text">Travel & LIV</div>
+                    <div class="sidebar-brand-sub">Admin Panel</div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section-label">Site Sections</div>
+                <button class="sidebar-link active" onclick="showPanel('home')" id="nav-home">
+                    <span class="sl-icon">🏠</span><span>Homepage</span>
+                </button>
+                <button class="sidebar-link" onclick="showPanel('trips')" id="nav-trips">
+                    <span class="sl-icon">✈️</span><span>Upcoming Trips</span>
+                </button>
+                <button class="sidebar-link" onclick="showPanel('events')" id="nav-events">
+                    <span class="sl-icon">🎉</span><span>Events</span>
+                </button>
+                <button class="sidebar-link" onclick="showPanel('faqs')" id="nav-faqs">
+                    <span class="sl-icon">❓</span><span>FAQs</span>
+                </button>
+                <button class="sidebar-link" onclick="showPanel('gallery')" id="nav-gallery">
+                    <span class="sl-icon">📸</span><span>Gallery</span>
+                </button>
+                <button class="sidebar-link" onclick="showPanel('social')" id="nav-social">
+                    <span class="sl-icon">🔗</span><span>Links & Contact</span>
+                </button>
+                <div class="sidebar-section-label" style="margin-top:12px;">Settings</div>
+                <button class="sidebar-link" onclick="showPanel('settings')" id="nav-settings">
+                    <span class="sl-icon">⚙️</span><span>Settings</span>
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-status">
+                    <div class="status-dot"></div>
+                    <span>Connected</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="admin-main">
+            <div class="admin-topbar">
+                <div>
+                    <div class="admin-topbar-title" id="panel-title">Homepage</div>
+                    <div class="admin-topbar-sub" id="panel-sub">Edit hero, next trip, event section, and past event
+                        recap</div>
+                </div>
+                <div class="topbar-actions">
+                    <a href="index.html" target="_blank" class="btn-secondary">🔗 View Site</a>
+                    <button class="btn-save" onclick="saveAll()">Save Changes</button>
+                </div>
+            </div>
+
+            <!-- ========== PANEL: HOMEPAGE ========== -->
+            <div class="admin-panel active" id="panel-home">
+
+                <!-- Next Trip Card -->
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">🌍</div>
+                        <div>
+                            <div class="panel-section-title">Next Trip Card (Homepage)</div>
+                            <div class="panel-section-desc">The featured destination shown on the homepage hero area
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Destination Name</label>
+                            <input type="text" id="nt-destination" class="form-control"
+                                placeholder="e.g. Bali, Indonesia" />
+                        </div>
+                        <div class="form-group">
+                            <label>Badge Label</label>
+                            <input type="text" id="nt-badge" class="form-control" placeholder="e.g. Booking Open" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Dates</label>
+                            <input type="text" id="nt-dates" class="form-control"
+                                placeholder="e.g. July 30 – August 5, 2026" />
+                        </div>
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <input type="text" id="nt-duration" class="form-control" placeholder="e.g. 7 Days" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="nt-desc" class="form-control"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Hero Image Filename</label>
+                            <input type="text" id="nt-image" class="form-control" placeholder="e.g. bali_hero.png" />
+                        </div>
+                        <div class="form-group">
+                            <label>Price From (optional)</label>
+                            <input type="text" id="nt-price" class="form-control" placeholder="e.g. From $2,499" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>CTA Button Text</label>
+                            <input type="text" id="nt-cta-text" class="form-control" placeholder="Reserve Your Spot" />
+                        </div>
+                        <div class="form-group">
+                            <label>CTA Button URL</label>
+                            <input type="url" id="nt-cta-url" class="form-control" placeholder="https://..." />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Past Event Recap -->
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">🎊</div>
+                        <div>
+                            <div class="panel-section-title">Past Event Recap (Homepage)</div>
+                            <div class="panel-section-desc">The photo highlight section showing your most recent event's
+                                photos</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Show This Section?</label>
+                        <select id="pe-visible" class="form-control">
+                            <option value="true">Yes — Show on homepage</option>
+                            <option value="false">No — Hide for now</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" id="pe-city" class="form-control" placeholder="e.g. NYC" />
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" id="pe-date" class="form-control" placeholder="e.g. April 2025" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Event Title</label>
+                            <input type="text" id="pe-title" class="form-control" placeholder="e.g. The Launch Party" />
+                        </div>
+                        <div class="form-group">
+                            <label>Title Italic Suffix</label>
+                            <input type="text" id="pe-italic" class="form-control" placeholder="e.g. it was a vibe." />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Recap Description</label>
+                        <textarea id="pe-desc" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="color:var(--text-muted);font-size:0.72rem;">📸 To update the photos in this
+                            section, edit the image src paths directly in index.html under the #past-event section. Each
+                            <code style="color:var(--gold)">lp-item</code> div is one photo.</label>
+                    </div>
+                </div>
+
+            </div><!-- end panel-home -->
+
+            <!-- ========== PANEL: UPCOMING TRIPS ========== -->
+            <div class="admin-panel" id="panel-trips">
+
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">✈️</div>
+                        <div>
+                            <div class="panel-section-title">Upcoming Trips (3 listings)</div>
+                            <div class="panel-section-desc">These appear on the Upcoming Trips page and preview cards on
+                                About</div>
+                        </div>
+                    </div>
+
+                    <!-- Trip 1 -->
+                    <div class="trip-admin-card" id="trip-card-1">
+                        <div class="trip-card-header">
+                            <span class="trip-card-num">Trip 1</span>
+                            <div class="form-group" style="margin:0;min-width:160px;">
+                                <select id="trip1-status" class="form-control"
+                                    style="padding:6px 32px 6px 12px;font-size:0.78rem;">
+                                    <option value="booking-open">🟢 Booking Open</option>
+                                    <option value="coming-soon">🟡 Coming Soon</option>
+                                    <option value="hidden">🔴 Hidden</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Destination</label>
+                                <input type="text" id="trip1-destination" class="form-control"
+                                    placeholder="e.g. Bali, Indonesia" />
+                            </div>
+                            <div class="form-group">
+                                <label>Hero Image Filename</label>
+                                <input type="text" id="trip1-image" class="form-control"
+                                    placeholder="e.g. bali_hero.png" />
+                            </div>
+                        </div>
+                        <div class="form-row triple">
+                            <div class="form-group">
+                                <label>Month / Year Display</label>
+                                <input type="text" id="trip1-month" class="form-control"
+                                    placeholder="July–August 2026" />
+                            </div>
+                            <div class="form-group">
+                                <label>Exact Dates</label>
+                                <input type="text" id="trip1-dates" class="form-control"
+                                    placeholder="July 30 – Aug 5, 2026" />
+                            </div>
+                            <div class="form-group">
+                                <label>Duration</label>
+                                <input type="text" id="trip1-duration" class="form-control" placeholder="7 Days" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Region / Country Tag</label>
+                                <input type="text" id="trip1-region" class="form-control" placeholder="Indonesia" />
+                            </div>
+                            <div class="form-group">
+                                <label>Price Display</label>
+                                <input type="text" id="trip1-price" class="form-control"
+                                    placeholder="Coming Soon / From $2,499" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="trip1-desc" class="form-control"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>CTA Button Text</label>
+                                <input type="text" id="trip1-cta-text" class="form-control"
+                                    placeholder="Secure Your Spot" />
+                            </div>
+                            <div class="form-group">
+                                <label>CTA Button URL</label>
+                                <input type="url" id="trip1-cta-url" class="form-control" placeholder="https://..." />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trip 2 -->
+                    <div class="trip-admin-card" id="trip-card-2">
+                        <div class="trip-card-header">
+                            <span class="trip-card-num">Trip 2</span>
+                            <div class="form-group" style="margin:0;min-width:160px;">
+                                <select id="trip2-status" class="form-control"
+                                    style="padding:6px 32px 6px 12px;font-size:0.78rem;">
+                                    <option value="booking-open">🟢 Booking Open</option>
+                                    <option value="coming-soon">🟡 Coming Soon</option>
+                                    <option value="hidden">🔴 Hidden</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Destination</label>
+                                <input type="text" id="trip2-destination" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Hero Image Filename</label>
+                                <input type="text" id="trip2-image" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-row triple">
+                            <div class="form-group">
+                                <label>Month / Year Display</label>
+                                <input type="text" id="trip2-month" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Exact Dates</label>
+                                <input type="text" id="trip2-dates" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Duration</label>
+                                <input type="text" id="trip2-duration" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Region / Country Tag</label>
+                                <input type="text" id="trip2-region" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Price Display</label>
+                                <input type="text" id="trip2-price" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="trip2-desc" class="form-control"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>CTA Button Text</label>
+                                <input type="text" id="trip2-cta-text" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>CTA Button URL</label>
+                                <input type="url" id="trip2-cta-url" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trip 3 -->
+                    <div class="trip-admin-card" id="trip-card-3">
+                        <div class="trip-card-header">
+                            <span class="trip-card-num">Trip 3</span>
+                            <div class="form-group" style="margin:0;min-width:160px;">
+                                <select id="trip3-status" class="form-control"
+                                    style="padding:6px 32px 6px 12px;font-size:0.78rem;">
+                                    <option value="booking-open">🟢 Booking Open</option>
+                                    <option value="coming-soon">🟡 Coming Soon</option>
+                                    <option value="hidden">🔴 Hidden</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Destination</label>
+                                <input type="text" id="trip3-destination" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Hero Image Filename</label>
+                                <input type="text" id="trip3-image" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-row triple">
+                            <div class="form-group">
+                                <label>Month / Year Display</label>
+                                <input type="text" id="trip3-month" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Exact Dates</label>
+                                <input type="text" id="trip3-dates" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Duration</label>
+                                <input type="text" id="trip3-duration" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Region / Country Tag</label>
+                                <input type="text" id="trip3-region" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Price Display</label>
+                                <input type="text" id="trip3-price" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="trip3-desc" class="form-control"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>CTA Button Text</label>
+                                <input type="text" id="trip3-cta-text" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>CTA Button URL</label>
+                                <input type="url" id="trip3-cta-url" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- end panel-trips -->
+
+            <!-- ========== PANEL: EVENTS ========== -->
+            <div class="admin-panel" id="panel-events">
+
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">📅</div>
+                        <div>
+                            <div class="panel-section-title">Upcoming Event Section (Homepage)</div>
+                            <div class="panel-section-desc">The "Upcoming Event" section at the bottom of the homepage —
+                                toggle between "stay tuned" mode and "live ticket" mode</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Section Mode</label>
+                        <div class="mode-selector">
+                            <label class="mode-option">
+                                <input type="radio" name="event-mode" value="coming-soon" id="mode-cs" />
+                                <div class="mode-option-icon">📣</div>
+                                <div class="mode-option-label">Stay Tuned</div>
+                                <div class="mode-option-sub">Show "coming soon" teaser</div>
+                            </label>
+                            <label class="mode-option">
+                                <input type="radio" name="event-mode" value="live" id="mode-live" />
+                                <div class="mode-option-icon">🎟️</div>
+                                <div class="mode-option-label">Live Event</div>
+                                <div class="mode-option-sub">Show event details + ticket button</div>
+                            </label>
+                            <label class="mode-option">
+                                <input type="radio" name="event-mode" value="hidden" id="mode-hidden" />
+                                <div class="mode-option-icon">🚫</div>
+                                <div class="mode-option-label">Hidden</div>
+                                <div class="mode-option-sub">Remove section entirely</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Background Image Filename</label>
+                        <input type="text" id="ev-bg" class="form-control" placeholder="e.g. zanzibar_hero.png" />
+                    </div>
+
+                    <div id="cs-fields">
+                        <div class="admin-divider"></div>
+                        <div
+                            style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">
+                            📣 Stay Tuned Mode Fields</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Eyebrow Label</label>
+                                <input type="text" id="ev-eyebrow" class="form-control" placeholder="Upcoming Event" />
+                            </div>
+                            <div class="form-group">
+                                <label>Badge Text</label>
+                                <input type="text" id="ev-badge" class="form-control"
+                                    placeholder="Next Event Coming Soon" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Main Heading</label>
+                            <input type="text" id="ev-heading" class="form-control"
+                                placeholder="The next event is coming..." />
+                        </div>
+                        <div class="form-group">
+                            <label>Heading Italic Suffix</label>
+                            <input type="text" id="ev-heading-italic" class="form-control" placeholder="stay tuned." />
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="ev-desc" class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Sub-Description (below email form)</label>
+                            <textarea id="ev-sub-desc" class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="live-fields" style="display:none;">
+                        <div class="admin-divider"></div>
+                        <div
+                            style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">
+                            🎟️ Live Event Mode Fields</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Event Name</label>
+                                <input type="text" id="ev-live-name" class="form-control"
+                                    placeholder="NYE Mixer 2026" />
+                            </div>
+                            <div class="form-group">
+                                <label>Event Date</label>
+                                <input type="text" id="ev-live-date" class="form-control"
+                                    placeholder="December 31, 2026" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Venue</label>
+                                <input type="text" id="ev-live-venue" class="form-control" placeholder="NYC — TBA" />
+                            </div>
+                            <div class="form-group">
+                                <label>Price Display</label>
+                                <input type="text" id="ev-live-price" class="form-control" placeholder="From $45" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Ticket Button Text</label>
+                                <input type="text" id="ev-live-btn" class="form-control" placeholder="Get Tickets" />
+                            </div>
+                            <div class="form-group">
+                                <label>Ticket URL</label>
+                                <input type="url" id="ev-live-url" class="form-control" placeholder="https://..." />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- end panel-events -->
+
+            <!-- ========== PANEL: FAQs ========== -->
+            <div class="admin-panel" id="panel-faqs">
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">❓</div>
+                        <div>
+                            <div class="panel-section-title">FAQ Management</div>
+                            <div class="panel-section-desc">Add, edit, or remove questions in each category. Changes
+                                save instantly to the live site.</div>
+                        </div>
+                    </div>
+
+                    <div id="faq-editor">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== PANEL: GALLERY ========== -->
+            <div class="admin-panel" id="panel-gallery">
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">📸</div>
+                        <div>
+                            <div class="panel-section-title">Gallery Stats</div>
+                            <div class="panel-section-desc">These numbers appear in the gallery hero section</div>
+                        </div>
+                    </div>
+                    <div class="form-row triple">
+                        <div class="form-group">
+                            <label>Total Photo Count</label>
+                            <input type="number" id="gallery-photos" class="form-control" placeholder="50" />
+                        </div>
+                        <div class="form-group">
+                            <label>Destinations Featured</label>
+                            <input type="number" id="gallery-dests" class="form-control" placeholder="2" />
+                        </div>
+                        <div class="form-group">
+                            <label>Trips Documented</label>
+                            <input type="number" id="gallery-trips" class="form-control" placeholder="1" />
+                        </div>
+                    </div>
+                    <div
+                        style="background:var(--dark-3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:8px;">
+                        <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.7;">
+                            <strong style="color:var(--gold)">📌 To add new gallery photos</strong>, upload your photo
+                            files to the project folder, then open <code style="color:var(--gold)">gallery.html</code>
+                            and copy one existing <code
+                                style="color:var(--gold)">&lt;div class="gallery-card"&gt;</code> block.
+                            Update the <code style="color:var(--gold)">src</code>, <code
+                                style="color:var(--gold)">data-src</code>, <code
+                                style="color:var(--gold)">data-category</code>, <code
+                                style="color:var(--gold)">data-title</code>, and <code
+                                style="color:var(--gold)">data-desc</code> attributes.
+                            Available filter categories: <strong style="color:var(--teal)">community · china ·
+                                events</strong>. To add a new category, also add a matching filter button.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== PANEL: SOCIAL / CONTACT ========== -->
+            <div class="admin-panel" id="panel-social">
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">🔗</div>
+                        <div>
+                            <div class="panel-section-title">Links & Contact Info</div>
+                            <div class="panel-section-desc">These update site-wide — nav, footer, CTAs, and all social
+                                buttons</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Contact Email</label>
+                            <input type="email" id="s-email" class="form-control" placeholder="Info@travelnliv.com" />
+                        </div>
+                        <div class="form-group">
+                            <label>Global CTA Button Text</label>
+                            <input type="text" id="s-nav-cta-text" class="form-control"
+                                placeholder="Reserve Your Spot" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Global CTA Button URL</label>
+                            <input type="url" id="s-nav-cta-url" class="form-control" placeholder="upcoming.html" />
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram URL</label>
+                            <input type="url" id="s-instagram" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>TikTok URL</label>
+                            <input type="url" id="s-tiktok" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Facebook URL</label>
+                            <input type="url" id="s-facebook" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>WhatsApp Group Link</label>
+                            <input type="url" id="s-wa-group" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp Channel Link</label>
+                            <input type="url" id="s-wa-channel" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== PANEL: SETTINGS ========== -->
+            <div class="admin-panel" id="panel-settings">
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">🔑</div>
+                        <div>
+                            <div class="panel-section-title">Change Admin Password</div>
+                            <div class="panel-section-desc">Default password is <strong
+                                    style="color:var(--gold)">travelnliv2026</strong></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" id="new-pass" class="form-control"
+                                placeholder="Enter new password" />
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" id="confirm-pass" class="form-control"
+                                placeholder="Confirm new password" />
+                        </div>
+                    </div>
+                    <button class="btn-save" onclick="changePassword()" style="margin-top:8px;">Update Password</button>
+                </div>
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">⚠️</div>
+                        <div>
+                            <div class="panel-section-title">Reset All Content to Defaults</div>
+                            <div class="panel-section-desc">This will undo all admin changes and restore the original
+                                hardcoded content</div>
+                        </div>
+                    </div>
+                    <button class="btn-danger" onclick="resetDefaults()">Reset to Defaults</button>
+                </div>
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">📤</div>
+                        <div>
+                            <div class="panel-section-title">Export / Import Config</div>
+                            <div class="panel-section-desc">Download a backup of your settings or restore from a backup
+                                file</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                        <button class="btn-secondary" onclick="exportConfig()">⬇️ Export Config JSON</button>
+                        <label class="btn-secondary" style="cursor:pointer;">
+                            ⬆️ Import Config JSON
+                            <input type="file" accept=".json" onchange="importConfig(event)" style="display:none;" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </main><!-- end admin-main -->
+    </div><!-- end admin-app -->
+
+    <!-- Toast -->
+    <div id="toast"></div>
+
+    <script src="site-config.js"></script>
+    <script>
+        // ============================================================
+        // ADMIN PANEL LOGIC
+        // ============================================================
+
+        const DEFAULT_PASS_KEY = "tnliv_admin_pass";
+        const DEFAULT_PASS = "travelnliv2026";
+
+        // ── AUTH ─────────────────────────────────────────────────────
+        function checkLogin() {
+            const stored = localStorage.getItem("tnliv_authed");
+            if (stored === "1") { showApp(); }
+        }
+
+        function handleLogin() {
+            const pass = document.getElementById("login-password").value;
+            const saved = localStorage.getItem(DEFAULT_PASS_KEY) || DEFAULT_PASS;
+            if (pass === saved) {
+                localStorage.setItem("tnliv_authed", "1");
+                showApp();
+            } else {
+                document.getElementById("login-error").style.display = "block";
+            }
+        }
+
+        document.getElementById("login-password").addEventListener("keydown", e => {
+            if (e.key === "Enter") handleLogin();
+        });
+
+        function showApp() {
+            document.getElementById("login-screen").style.display = "none";
+            document.getElementById("admin-app").style.display = "flex";
+            loadAllFields();
+        }
+
+        function changePassword() {
+            const np = document.getElementById("new-pass").value;
+            const cp = document.getElementById("confirm-pass").value;
+            if (!np) return toast("Please enter a new password.");
+            if (np !== cp) return toast("Passwords don't match.", "error");
+            localStorage.setItem(DEFAULT_PASS_KEY, np);
+            toast("Password updated! ✓");
+        }
+
+        // ── NAVIGATION ───────────────────────────────────────────────
+        const panels = { home: "Homepage", trips: "Upcoming Trips", events: "Events", faqs: "FAQs", gallery: "Gallery", social: "Links & Contact", settings: "Settings" };
+        const subs = {
+            home: "Edit next trip card and past event recap",
+            trips: "Edit upcoming trip listings on the Trips page",
+            events: "Control the homepage event section",
+            faqs: "Add, edit, or remove FAQ questions",
+            gallery: "Update gallery stats",
+            social: "Update social links and contact info site-wide",
+            settings: "Password, reset, and backup settings",
+        };
+
+        function showPanel(id) {
+            document.querySelectorAll(".admin-panel").forEach(p => p.classList.remove("active"));
+            document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+            document.getElementById("panel-" + id).classList.add("active");
+            document.getElementById("nav-" + id).classList.add("active");
+            document.getElementById("panel-title").textContent = panels[id] || id;
+            document.getElementById("panel-sub").textContent = subs[id] || "";
+        }
+
+        // ── LOAD FIELDS FROM CONFIG ────────────────────────────────
+        function loadAllFields() {
+            const cfg = getSiteConfig();
+            const nt = cfg.nextTrip;
+            const pe = cfg.pastEvent;
+            const ev = cfg.event;
+            const gl = cfg.gallery;
+            const tr = cfg.trips;
+            const sc = cfg.social;
+            const nCta = cfg.navCta;
+
+            // Next Trip
+            v("nt-destination", nt.destination);
+            v("nt-badge", nt.badge);
+            v("nt-dates", nt.dates);
+            v("nt-duration", nt.duration);
+            v("nt-desc", nt.description);
+            v("nt-image", nt.image);
+            v("nt-price", nt.priceFrom);
+            v("nt-cta-text", nt.ctaText);
+            v("nt-cta-url", nt.ctaUrl);
+
+            // Past Event
+            v("pe-visible", String(pe.visible));
+            v("pe-city", pe.city);
+            v("pe-date", pe.date);
+            v("pe-title", pe.title);
+            v("pe-italic", pe.titleItalic);
+            v("pe-desc", pe.description);
+
+            // Event
+            const modeEl = document.querySelector('input[name="event-mode"][value="' + ev.mode + '"]');
+            if (modeEl) { modeEl.checked = true; toggleEventMode(ev.mode); }
+            v("ev-bg", ev.bgImage);
+            v("ev-eyebrow", ev.eyebrow);
+            v("ev-badge", ev.badgeText);
+            v("ev-heading", ev.heading);
+            v("ev-heading-italic", ev.headingItalic);
+            v("ev-desc", ev.description);
+            v("ev-sub-desc", ev.subDescription);
+            v("ev-live-name", ev.liveEventName);
+            v("ev-live-date", ev.liveEventDate);
+            v("ev-live-venue", ev.liveEventVenue);
+            v("ev-live-price", ev.livePriceDisplay);
+            v("ev-live-btn", ev.liveTicketBtn);
+            v("ev-live-url", ev.liveTicketUrl);
+
+            // Gallery
+            v("gallery-photos", gl.photoCount);
+            v("gallery-dests", gl.destinationCount);
+            v("gallery-trips", gl.tripCount);
+
+            // Trips
+            tr.forEach(function (trip, i) {
+                const p = "trip" + (i + 1);
+                v(p + "-status", trip.status, true);
+                v(p + "-destination", trip.destination);
+                v(p + "-image", trip.image);
+                v(p + "-month", trip.monthYear);
+                v(p + "-dates", trip.dates);
+                v(p + "-duration", trip.duration);
+                v(p + "-region", trip.region);
+                v(p + "-price", trip.priceDisplay);
+                v(p + "-desc", trip.description);
+                v(p + "-cta-text", trip.ctaText);
+                v(p + "-cta-url", trip.ctaUrl);
+            });
+
+            // Social
+            v("s-email", sc.email);
+            v("s-instagram", sc.instagram);
+            v("s-tiktok", sc.tiktok);
+            v("s-facebook", sc.facebook);
+            v("s-wa-group", sc.whatsappGroup);
+            v("s-wa-channel", sc.whatsappChannel);
+            v("s-nav-cta-text", nCta.text);
+            v("s-nav-cta-url", nCta.url);
+
+            // FAQs
+            renderFaqEditor(cfg.faqs || TNLIV_DEFAULTS.faqs);
+
+            // Mode toggle listeners
+            document.querySelectorAll('input[name="event-mode"]').forEach(function (r) {
+                r.addEventListener("change", function () { toggleEventMode(r.value); });
+            });
+        }
+
+        function v(id, val, isSelect) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (isSelect) { el.value = val || ""; }
+            else { el.tagName === "TEXTAREA" || el.tagName === "INPUT" ? (el.value = val || "") : (el.innerHTML = val || ""); }
+        }
+
+        function g(id) {
+            const el = document.getElementById(id);
+            return el ? el.value.trim() : "";
+        }
+
+        // ── SAVE ─────────────────────────────────────────────────────
+        function saveAll() {
+            const cfg = getSiteConfig();
+
+            cfg.nextTrip = {
+                badge: g("nt-badge"),
+                destination: g("nt-destination"),
+                dates: g("nt-dates"),
+                duration: g("nt-duration"),
+                description: g("nt-desc"),
+                image: g("nt-image"),
+                priceFrom: g("nt-price"),
+                ctaText: g("nt-cta-text"),
+                ctaUrl: g("nt-cta-url"),
+            };
+
+            cfg.pastEvent = {
+                visible: g("pe-visible") === "true",
+                city: g("pe-city"),
+                date: g("pe-date"),
+                title: g("pe-title"),
+                titleItalic: g("pe-italic"),
+                description: g("pe-desc"),
+            };
+
+            const mode = document.querySelector('input[name="event-mode"]:checked');
+            cfg.event = {
+                mode: mode ? mode.value : "coming-soon",
+                bgImage: g("ev-bg"),
+                eyebrow: g("ev-eyebrow"),
+                heading: g("ev-heading"),
+                headingItalic: g("ev-heading-italic"),
+                description: g("ev-desc"),
+                subDescription: g("ev-sub-desc"),
+                badgeText: g("ev-badge"),
+                liveEventName: g("ev-live-name"),
+                liveEventDate: g("ev-live-date"),
+                liveEventVenue: g("ev-live-venue"),
+                livePriceDisplay: g("ev-live-price"),
+                liveTicketBtn: g("ev-live-btn"),
+                liveTicketUrl: g("ev-live-url"),
+            };
+
+            cfg.gallery = {
+                photoCount: parseInt(g("gallery-photos")) || 0,
+                destinationCount: parseInt(g("gallery-dests")) || 0,
+                tripCount: parseInt(g("gallery-trips")) || 0,
+            };
+
+            cfg.trips = cfg.trips.map(function (trip, i) {
+                const p = "trip" + (i + 1);
+                return {
+                    id: trip.id,
+                    status: g(p + "-status"),
+                    destination: g(p + "-destination"),
+                    image: g(p + "-image"),
+                    monthYear: g(p + "-month"),
+                    dates: g(p + "-dates"),
+                    duration: g(p + "-duration"),
+                    region: g(p + "-region"),
+                    priceDisplay: g(p + "-price"),
+                    description: g(p + "-desc"),
+                    ctaText: g(p + "-cta-text"),
+                    ctaUrl: g(p + "-cta-url"),
+                    badge: g(p + "-status") === "booking-open" ? "Booking Open" : "Coming Soon",
+                };
+            });
+
+            cfg.social = {
+                email: g("s-email"),
+                instagram: g("s-instagram"),
+                tiktok: g("s-tiktok"),
+                facebook: g("s-facebook"),
+                whatsappGroup: g("s-wa-group"),
+                whatsappChannel: g("s-wa-channel"),
+            };
+
+            cfg.navCta = {
+                text: g("s-nav-cta-text"),
+                url: g("s-nav-cta-url"),
+            };
+
+            // FAQs — collect from editor
+            cfg.faqs = collectFaqs();
+
+            saveSiteConfig(cfg);
+            toast("✓ Changes saved! Reload any page to see updates.");
+        }
+
+        // ── EVENT MODE TOGGLE ────────────────────────────────────────
+        function toggleEventMode(mode) {
+            document.getElementById("cs-fields").style.display = mode === "coming-soon" ? "" : "none";
+            document.getElementById("live-fields").style.display = mode === "live" ? "" : "none";
+        }
+
+        // ── FAQ EDITOR ────────────────────────────────────────────────
+        const faqGroups = [
+            { key: "general", label: "🌍 General", icon: "🌍" },
+            { key: "trips", label: "✈️ Trips & Included", icon: "✈️" },
+            { key: "booking", label: "💳 Booking", icon: "💳" },
+            { key: "contact", label: "💬 Contact", icon: "💬" },
+        ];
+
+        function renderFaqEditor(faqs) {
+            const editor = document.getElementById("faq-editor");
+            editor.innerHTML = faqGroups.map(function (group) {
+                const items = (faqs[group.key] || []).map(function (item, idx) {
+                    return faqItemHTML(group.key, idx, item);
+                }).join("");
+                return '<div class="admin-divider"></div>' +
+                    '<div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;">' + group.label + '</div>' +
+                    '<div id="faq-group-' + group.key + '">' + items + '</div>' +
+                    '<button class="btn-add-faq" onclick="addFaqItem(\'' + group.key + '\')">+ Add Question</button>';
+            }).join("");
+        }
+
+        function faqItemHTML(groupKey, idx, item) {
+            return '<div class="faq-admin-item" id="faq-' + groupKey + '-' + idx + '">' +
+                '<button class="faq-remove" onclick="removeFaqItem(\'' + groupKey + '\',' + idx + ')">✕</button>' +
+                '<div class="form-group"><label>Question</label><input type="text" class="form-control faq-q-input" value="' + escapeAttr(item.q) + '" /></div>' +
+                '<div class="form-group" style="margin-bottom:0"><label>Answer</label><textarea class="form-control faq-a-input" rows="2">' + escHtml(item.a) + '</textarea></div>' +
+                '</div>';
+        }
+
+        function addFaqItem(groupKey) {
+            const cfg = getSiteConfig();
+            if (!cfg.faqs[groupKey]) cfg.faqs[groupKey] = [];
+            cfg.faqs[groupKey].push({ q: "New Question", a: "Answer goes here." });
+            saveSiteConfig(cfg);
+            renderFaqEditor(cfg.faqs);
+        }
+
+        function removeFaqItem(groupKey, idx) {
+            const cfg = getSiteConfig();
+            if (cfg.faqs[groupKey]) cfg.faqs[groupKey].splice(idx, 1);
+            saveSiteConfig(cfg);
+            renderFaqEditor(cfg.faqs);
+        }
+
+        function collectFaqs() {
+            const result = {};
+            faqGroups.forEach(function (group) {
+                const container = document.getElementById("faq-group-" + group.key);
+                if (!container) return;
+                result[group.key] = Array.from(container.querySelectorAll(".faq-admin-item")).map(function (item) {
+                    return {
+                        q: item.querySelector(".faq-q-input").value.trim(),
+                        a: item.querySelector(".faq-a-input").value.trim(),
+                    };
+                });
+            });
+            return result;
+        }
+
+        // ── EXPORT / IMPORT ──────────────────────────────────────────
+        function exportConfig() {
+            const cfg = getSiteConfig();
+            const blob = new Blob([JSON.stringify(cfg, null, 2)], { type: "application/json" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "travelnliv-config-" + new Date().toISOString().slice(0, 10) + ".json";
+            a.click();
+        }
+
+        function importConfig(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const cfg = JSON.parse(e.target.result);
+                    saveSiteConfig(cfg);
+                    loadAllFields();
+                    toast("✓ Config imported successfully!");
+                } catch (err) {
+                    toast("Import failed — invalid JSON file.", "error");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // ── RESET ─────────────────────────────────────────────────────
+        function resetDefaults() {
+            if (!confirm("Reset all content to defaults? This cannot be undone.")) return;
+            resetSiteConfig();
+            loadAllFields();
+            toast("✓ Reset to defaults.");
+        }
+
+        // ── TOAST ─────────────────────────────────────────────────────
+        function toast(msg, type) {
+            const el = document.getElementById("toast");
+            el.textContent = msg;
+            el.style.borderColor = type === "error" ? "rgba(224,90,78,0.5)" : "rgba(196,160,96,0.3)";
+            el.style.color = type === "error" ? "var(--danger)" : "var(--gold)";
+            el.classList.add("show");
+            setTimeout(function () { el.classList.remove("show"); }, 3200);
+        }
+
+        // ── UTILS ─────────────────────────────────────────────────────
+        function escapeAttr(s) { return (s || "").replace(/"/g, "&quot;"); }
+        function escHtml(s) { return (s || "").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+        // ── INIT ──────────────────────────────────────────────────────
+        checkLogin();
+    </script>
+</body>
+
+</html>
