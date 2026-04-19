@@ -8,6 +8,17 @@
     const cfg = window.getSiteConfig ? window.getSiteConfig() : window.TNLIV_DEFAULTS;
     const page = document.body.getAttribute("data-page");
 
+    // ── Image helper: returns admin-uploaded base64 OR falls back to filename ───
+    function getImg(key, fallback) {
+        var stored = localStorage.getItem("tnliv_img_" + key);
+        return stored || fallback;
+    }
+
+    function setImgSrc(id, key, fallback) {
+        var el = document.getElementById(id);
+        if (el) el.src = getImg(key, fallback);
+    }
+
     // ── Utility ─────────────────────────────────────────────────
     function set(id, html) {
         const el = document.getElementById(id);
@@ -47,9 +58,9 @@
                 eventSection.style.display = "none";
             } else {
                 eventSection.style.display = "";
-                // Background image
+                // Background image (checks for admin-uploaded override)
                 const bgImg = eventSection.querySelector(".event-bg img");
-                if (bgImg) bgImg.src = cfg.event.bgImage;
+                if (bgImg) bgImg.src = getImg("event_bg", cfg.event.bgImage);
 
                 if (cfg.event.mode === "coming-soon") {
                     const csEl = document.getElementById("event-coming-soon-view");
@@ -81,8 +92,7 @@
         set("next-trip-destination", cfg.nextTrip.destination);
         set("next-trip-dates", cfg.nextTrip.dates + (cfg.nextTrip.duration ? " · " + cfg.nextTrip.duration : ""));
         set("next-trip-desc", cfg.nextTrip.description);
-        const ntImg = document.getElementById("next-trip-img");
-        if (ntImg) ntImg.src = cfg.nextTrip.image;
+        setImgSrc("next-trip-img", "next_trip", cfg.nextTrip.image);
         setAttr("next-trip-cta", "href", cfg.nextTrip.ctaUrl);
         set("next-trip-cta", cfg.nextTrip.ctaText + ' <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>');
 
@@ -93,6 +103,12 @@
             set("past-event-location", cfg.pastEvent.city + " &mdash; " + cfg.pastEvent.date);
             set("past-event-title", cfg.pastEvent.title + ' <em>&mdash; ' + cfg.pastEvent.titleItalic + '</em>');
             set("past-event-desc", cfg.pastEvent.description);
+            // Apply admin-uploaded past event photos (0-6)
+            for (var pi = 0; pi < 7; pi++) {
+                var pEl = document.getElementById("lp-photo-" + pi);
+                var stored = localStorage.getItem("tnliv_img_lp_photo_" + pi);
+                if (pEl && stored) pEl.src = stored;
+            }
         }
     }
 
@@ -111,7 +127,10 @@
             }
 
             const imgEl = document.getElementById(prefix + "-img");
-            if (imgEl) { imgEl.src = trip.image; imgEl.alt = trip.destination; }
+            if (imgEl) {
+                imgEl.src = getImg("trip" + (i + 1), trip.image);
+                imgEl.alt = trip.destination;
+            }
 
             set(prefix + "-destination", trip.destination);
             set(prefix + "-month", trip.monthYear);

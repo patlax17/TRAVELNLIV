@@ -76,8 +76,7 @@
             <div class="admin-topbar">
                 <div>
                     <div class="admin-topbar-title" id="panel-title">Homepage</div>
-                    <div class="admin-topbar-sub" id="panel-sub">Edit hero, next trip, event section, and past event
-                        recap</div>
+                    <div class="admin-topbar-sub" id="panel-sub">Edit next trip card and past event recap</div>
                 </div>
                 <div class="topbar-actions">
                     <a href="index.html" target="_blank" class="btn-secondary">🔗 View Site</a>
@@ -98,6 +97,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- HERO IMAGE UPLOADER -->
+                    <div class="form-group">
+                        <label>Hero Image</label>
+                        <div class="img-upload-zone" id="zone-next_trip" onclick="openPicker('next_trip')"
+                            ondragover="event.preventDefault();this.classList.add('drag-over')"
+                            ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'next_trip')">
+                            <div class="img-upload-placeholder">
+                                <span class="img-upload-icon">🖼️</span>
+                                <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
+                                <span class="img-upload-hint">PNG · JPG · WebP — recommended 1200×800px</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-next_trip" accept="image/*" style="display:none"
+                            onchange="handleFilePick(event,'next_trip')" />
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label>Destination Name</label>
@@ -126,16 +142,6 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Hero Image Filename</label>
-                            <input type="text" id="nt-image" class="form-control" placeholder="e.g. bali_hero.png" />
-                        </div>
-                        <div class="form-group">
-                            <label>Price From (optional)</label>
-                            <input type="text" id="nt-price" class="form-control" placeholder="e.g. From $2,499" />
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
                             <label>CTA Button Text</label>
                             <input type="text" id="nt-cta-text" class="form-control" placeholder="Reserve Your Spot" />
                         </div>
@@ -143,6 +149,11 @@
                             <label>CTA Button URL</label>
                             <input type="url" id="nt-cta-url" class="form-control" placeholder="https://..." />
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Price From (optional)</label>
+                        <input type="text" id="nt-price" class="form-control" placeholder="e.g. From $2,499"
+                            style="max-width:260px;" />
                     </div>
                 </div>
 
@@ -152,13 +163,14 @@
                         <div class="panel-section-icon">🎊</div>
                         <div>
                             <div class="panel-section-title">Past Event Recap (Homepage)</div>
-                            <div class="panel-section-desc">The photo highlight section showing your most recent event's
-                                photos</div>
+                            <div class="panel-section-desc">The cinematic photo grid section showing your last event — 7
+                                photos total</div>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label>Show This Section?</label>
-                        <select id="pe-visible" class="form-control">
+                        <select id="pe-visible" class="form-control" style="max-width:260px;">
                             <option value="true">Yes — Show on homepage</option>
                             <option value="false">No — Hide for now</option>
                         </select>
@@ -187,10 +199,13 @@
                         <label>Recap Description</label>
                         <textarea id="pe-desc" class="form-control"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label style="color:var(--text-muted);font-size:0.72rem;">📸 To update the photos in this
-                            section, edit the image src paths directly in index.html under the #past-event section. Each
-                            <code style="color:var(--gold)">lp-item</code> div is one photo.</label>
+
+                    <!-- 7-PHOTO GRID -->
+                    <div class="form-group" style="margin-top:8px;">
+                        <label>Event Photos (drag &amp; drop or click each slot to upload)</label>
+                        <div class="pe-photo-grid" id="pe-photo-grid">
+                            <!-- Rendered by JS -->
+                        </div>
                     </div>
                 </div>
 
@@ -198,7 +213,6 @@
 
             <!-- ========== PANEL: UPCOMING TRIPS ========== -->
             <div class="admin-panel" id="panel-trips">
-
                 <div class="panel-section">
                     <div class="panel-section-header">
                         <div class="panel-section-icon">✈️</div>
@@ -213,25 +227,35 @@
                     <div class="trip-admin-card" id="trip-card-1">
                         <div class="trip-card-header">
                             <span class="trip-card-num">Trip 1</span>
-                            <div class="form-group" style="margin:0;min-width:160px;">
-                                <select id="trip1-status" class="form-control"
-                                    style="padding:6px 32px 6px 12px;font-size:0.78rem;">
-                                    <option value="booking-open">🟢 Booking Open</option>
-                                    <option value="coming-soon">🟡 Coming Soon</option>
-                                    <option value="hidden">🔴 Hidden</option>
-                                </select>
+                            <select id="trip1-status" class="form-control"
+                                style="margin:0;min-width:160px;padding:6px 32px 6px 12px;font-size:0.78rem;">
+                                <option value="booking-open">🟢 Booking Open</option>
+                                <option value="coming-soon">🟡 Coming Soon</option>
+                                <option value="hidden">🔴 Hidden</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Hero Image</label>
+                            <div class="img-upload-zone" id="zone-trip1" onclick="openPicker('trip1')"
+                                ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'trip1')">
+                                <div class="img-upload-placeholder">
+                                    <span class="img-upload-icon">🖼️</span>
+                                    <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
+                                    <span class="img-upload-hint">PNG · JPG · WebP — recommended 1200×800px</span>
+                                </div>
                             </div>
+                            <input type="file" id="file-trip1" accept="image/*" style="display:none"
+                                onchange="handleFilePick(event,'trip1')" />
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Destination</label>
-                                <input type="text" id="trip1-destination" class="form-control"
-                                    placeholder="e.g. Bali, Indonesia" />
+                                <input type="text" id="trip1-destination" class="form-control" />
                             </div>
                             <div class="form-group">
-                                <label>Hero Image Filename</label>
-                                <input type="text" id="trip1-image" class="form-control"
-                                    placeholder="e.g. bali_hero.png" />
+                                <label>Region / Country Tag</label>
+                                <input type="text" id="trip1-region" class="form-control" placeholder="Indonesia" />
                             </div>
                         </div>
                         <div class="form-row triple">
@@ -250,31 +274,25 @@
                                 <input type="text" id="trip1-duration" class="form-control" placeholder="7 Days" />
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Region / Country Tag</label>
-                                <input type="text" id="trip1-region" class="form-control" placeholder="Indonesia" />
-                            </div>
-                            <div class="form-group">
-                                <label>Price Display</label>
-                                <input type="text" id="trip1-price" class="form-control"
-                                    placeholder="Coming Soon / From $2,499" />
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label>Description</label>
                             <textarea id="trip1-desc" class="form-control"></textarea>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
+                                <label>Price Display</label>
+                                <input type="text" id="trip1-price" class="form-control"
+                                    placeholder="Coming Soon / From $2,499" />
+                            </div>
+                            <div class="form-group">
                                 <label>CTA Button Text</label>
                                 <input type="text" id="trip1-cta-text" class="form-control"
                                     placeholder="Secure Your Spot" />
                             </div>
-                            <div class="form-group">
-                                <label>CTA Button URL</label>
-                                <input type="url" id="trip1-cta-url" class="form-control" placeholder="https://..." />
-                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>CTA Button URL</label>
+                            <input type="url" id="trip1-cta-url" class="form-control" placeholder="https://..." />
                         </div>
                     </div>
 
@@ -282,126 +300,102 @@
                     <div class="trip-admin-card" id="trip-card-2">
                         <div class="trip-card-header">
                             <span class="trip-card-num">Trip 2</span>
-                            <div class="form-group" style="margin:0;min-width:160px;">
-                                <select id="trip2-status" class="form-control"
-                                    style="padding:6px 32px 6px 12px;font-size:0.78rem;">
-                                    <option value="booking-open">🟢 Booking Open</option>
-                                    <option value="coming-soon">🟡 Coming Soon</option>
-                                    <option value="hidden">🔴 Hidden</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Destination</label>
-                                <input type="text" id="trip2-destination" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label>Hero Image Filename</label>
-                                <input type="text" id="trip2-image" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="form-row triple">
-                            <div class="form-group">
-                                <label>Month / Year Display</label>
-                                <input type="text" id="trip2-month" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label>Exact Dates</label>
-                                <input type="text" id="trip2-dates" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label>Duration</label>
-                                <input type="text" id="trip2-duration" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Region / Country Tag</label>
-                                <input type="text" id="trip2-region" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label>Price Display</label>
-                                <input type="text" id="trip2-price" class="form-control" />
-                            </div>
+                            <select id="trip2-status" class="form-control"
+                                style="margin:0;min-width:160px;padding:6px 32px 6px 12px;font-size:0.78rem;">
+                                <option value="booking-open">🟢 Booking Open</option>
+                                <option value="coming-soon">🟡 Coming Soon</option>
+                                <option value="hidden">🔴 Hidden</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
-                            <textarea id="trip2-desc" class="form-control"></textarea>
+                            <label>Hero Image</label>
+                            <div class="img-upload-zone" id="zone-trip2" onclick="openPicker('trip2')"
+                                ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'trip2')">
+                                <div class="img-upload-placeholder">
+                                    <span class="img-upload-icon">🖼️</span>
+                                    <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
+                                    <span class="img-upload-hint">PNG · JPG · WebP — recommended 1200×800px</span>
+                                </div>
+                            </div>
+                            <input type="file" id="file-trip2" accept="image/*" style="display:none"
+                                onchange="handleFilePick(event,'trip2')" />
                         </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>CTA Button Text</label>
-                                <input type="text" id="trip2-cta-text" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label>CTA Button URL</label>
-                                <input type="url" id="trip2-cta-url" class="form-control" />
-                            </div>
+                            <div class="form-group"><label>Destination</label><input type="text" id="trip2-destination"
+                                    class="form-control" /></div>
+                            <div class="form-group"><label>Region / Country Tag</label><input type="text"
+                                    id="trip2-region" class="form-control" /></div>
                         </div>
+                        <div class="form-row triple">
+                            <div class="form-group"><label>Month / Year Display</label><input type="text"
+                                    id="trip2-month" class="form-control" /></div>
+                            <div class="form-group"><label>Exact Dates</label><input type="text" id="trip2-dates"
+                                    class="form-control" /></div>
+                            <div class="form-group"><label>Duration</label><input type="text" id="trip2-duration"
+                                    class="form-control" /></div>
+                        </div>
+                        <div class="form-group"><label>Description</label><textarea id="trip2-desc"
+                                class="form-control"></textarea></div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Price Display</label><input type="text" id="trip2-price"
+                                    class="form-control" /></div>
+                            <div class="form-group"><label>CTA Button Text</label><input type="text" id="trip2-cta-text"
+                                    class="form-control" /></div>
+                        </div>
+                        <div class="form-group"><label>CTA Button URL</label><input type="url" id="trip2-cta-url"
+                                class="form-control" /></div>
                     </div>
 
                     <!-- Trip 3 -->
                     <div class="trip-admin-card" id="trip-card-3">
                         <div class="trip-card-header">
                             <span class="trip-card-num">Trip 3</span>
-                            <div class="form-group" style="margin:0;min-width:160px;">
-                                <select id="trip3-status" class="form-control"
-                                    style="padding:6px 32px 6px 12px;font-size:0.78rem;">
-                                    <option value="booking-open">🟢 Booking Open</option>
-                                    <option value="coming-soon">🟡 Coming Soon</option>
-                                    <option value="hidden">🔴 Hidden</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Destination</label>
-                                <input type="text" id="trip3-destination" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label>Hero Image Filename</label>
-                                <input type="text" id="trip3-image" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="form-row triple">
-                            <div class="form-group">
-                                <label>Month / Year Display</label>
-                                <input type="text" id="trip3-month" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label>Exact Dates</label>
-                                <input type="text" id="trip3-dates" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label>Duration</label>
-                                <input type="text" id="trip3-duration" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Region / Country Tag</label>
-                                <input type="text" id="trip3-region" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label>Price Display</label>
-                                <input type="text" id="trip3-price" class="form-control" />
-                            </div>
+                            <select id="trip3-status" class="form-control"
+                                style="margin:0;min-width:160px;padding:6px 32px 6px 12px;font-size:0.78rem;">
+                                <option value="booking-open">🟢 Booking Open</option>
+                                <option value="coming-soon">🟡 Coming Soon</option>
+                                <option value="hidden">🔴 Hidden</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
-                            <textarea id="trip3-desc" class="form-control"></textarea>
+                            <label>Hero Image</label>
+                            <div class="img-upload-zone" id="zone-trip3" onclick="openPicker('trip3')"
+                                ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'trip3')">
+                                <div class="img-upload-placeholder">
+                                    <span class="img-upload-icon">🖼️</span>
+                                    <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
+                                    <span class="img-upload-hint">PNG · JPG · WebP — recommended 1200×800px</span>
+                                </div>
+                            </div>
+                            <input type="file" id="file-trip3" accept="image/*" style="display:none"
+                                onchange="handleFilePick(event,'trip3')" />
                         </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>CTA Button Text</label>
-                                <input type="text" id="trip3-cta-text" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label>CTA Button URL</label>
-                                <input type="url" id="trip3-cta-url" class="form-control" />
-                            </div>
+                            <div class="form-group"><label>Destination</label><input type="text" id="trip3-destination"
+                                    class="form-control" /></div>
+                            <div class="form-group"><label>Region / Country Tag</label><input type="text"
+                                    id="trip3-region" class="form-control" /></div>
                         </div>
+                        <div class="form-row triple">
+                            <div class="form-group"><label>Month / Year Display</label><input type="text"
+                                    id="trip3-month" class="form-control" /></div>
+                            <div class="form-group"><label>Exact Dates</label><input type="text" id="trip3-dates"
+                                    class="form-control" /></div>
+                            <div class="form-group"><label>Duration</label><input type="text" id="trip3-duration"
+                                    class="form-control" /></div>
+                        </div>
+                        <div class="form-group"><label>Description</label><textarea id="trip3-desc"
+                                class="form-control"></textarea></div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Price Display</label><input type="text" id="trip3-price"
+                                    class="form-control" /></div>
+                            <div class="form-group"><label>CTA Button Text</label><input type="text" id="trip3-cta-text"
+                                    class="form-control" /></div>
+                        </div>
+                        <div class="form-group"><label>CTA Button URL</label><input type="url" id="trip3-cta-url"
+                                class="form-control" /></div>
                     </div>
 
                 </div>
@@ -409,14 +403,13 @@
 
             <!-- ========== PANEL: EVENTS ========== -->
             <div class="admin-panel" id="panel-events">
-
                 <div class="panel-section">
                     <div class="panel-section-header">
                         <div class="panel-section-icon">📅</div>
                         <div>
                             <div class="panel-section-title">Upcoming Event Section (Homepage)</div>
-                            <div class="panel-section-desc">The "Upcoming Event" section at the bottom of the homepage —
-                                toggle between "stay tuned" mode and "live ticket" mode</div>
+                            <div class="panel-section-desc">Toggle between "stay tuned" mode and "live ticket" mode.
+                                Hero image swappable instantly.</div>
                         </div>
                     </div>
 
@@ -444,85 +437,67 @@
                         </div>
                     </div>
 
+                    <!-- BACKGROUND IMAGE UPLOADER -->
                     <div class="form-group">
-                        <label>Background Image Filename</label>
-                        <input type="text" id="ev-bg" class="form-control" placeholder="e.g. zanzibar_hero.png" />
+                        <label>Background / Hero Image</label>
+                        <div class="img-upload-zone" id="zone-event_bg" onclick="openPicker('event_bg')"
+                            ondragover="event.preventDefault();this.classList.add('drag-over')"
+                            ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'event_bg')">
+                            <div class="img-upload-placeholder">
+                                <span class="img-upload-icon">🌅</span>
+                                <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
+                                <span class="img-upload-hint">PNG · JPG · WebP — recommended 1600×900px wide shot</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-event_bg" accept="image/*" style="display:none"
+                            onchange="handleFilePick(event,'event_bg')" />
                     </div>
 
                     <div id="cs-fields">
                         <div class="admin-divider"></div>
                         <div
-                            style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">
+                            style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;">
                             📣 Stay Tuned Mode Fields</div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>Eyebrow Label</label>
-                                <input type="text" id="ev-eyebrow" class="form-control" placeholder="Upcoming Event" />
-                            </div>
-                            <div class="form-group">
-                                <label>Badge Text</label>
-                                <input type="text" id="ev-badge" class="form-control"
-                                    placeholder="Next Event Coming Soon" />
-                            </div>
+                            <div class="form-group"><label>Eyebrow Label</label><input type="text" id="ev-eyebrow"
+                                    class="form-control" placeholder="Upcoming Event" /></div>
+                            <div class="form-group"><label>Badge Text</label><input type="text" id="ev-badge"
+                                    class="form-control" placeholder="Next Event Coming Soon" /></div>
                         </div>
-                        <div class="form-group">
-                            <label>Main Heading</label>
-                            <input type="text" id="ev-heading" class="form-control"
-                                placeholder="The next event is coming..." />
-                        </div>
-                        <div class="form-group">
-                            <label>Heading Italic Suffix</label>
-                            <input type="text" id="ev-heading-italic" class="form-control" placeholder="stay tuned." />
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea id="ev-desc" class="form-control" rows="2"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Sub-Description (below email form)</label>
-                            <textarea id="ev-sub-desc" class="form-control" rows="2"></textarea>
-                        </div>
+                        <div class="form-group"><label>Main Heading</label><input type="text" id="ev-heading"
+                                class="form-control" placeholder="The next event is coming..." /></div>
+                        <div class="form-group"><label>Heading Italic Suffix</label><input type="text"
+                                id="ev-heading-italic" class="form-control" placeholder="stay tuned." /></div>
+                        <div class="form-group"><label>Description</label><textarea id="ev-desc" class="form-control"
+                                rows="2"></textarea></div>
+                        <div class="form-group"><label>Sub-Description (below email form)</label><textarea
+                                id="ev-sub-desc" class="form-control" rows="2"></textarea></div>
                     </div>
 
                     <div id="live-fields" style="display:none;">
                         <div class="admin-divider"></div>
                         <div
-                            style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">
+                            style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;">
                             🎟️ Live Event Mode Fields</div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>Event Name</label>
-                                <input type="text" id="ev-live-name" class="form-control"
-                                    placeholder="NYE Mixer 2026" />
-                            </div>
-                            <div class="form-group">
-                                <label>Event Date</label>
-                                <input type="text" id="ev-live-date" class="form-control"
-                                    placeholder="December 31, 2026" />
-                            </div>
+                            <div class="form-group"><label>Event Name</label><input type="text" id="ev-live-name"
+                                    class="form-control" placeholder="NYE Mixer 2026" /></div>
+                            <div class="form-group"><label>Event Date</label><input type="text" id="ev-live-date"
+                                    class="form-control" placeholder="December 31, 2026" /></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>Venue</label>
-                                <input type="text" id="ev-live-venue" class="form-control" placeholder="NYC — TBA" />
-                            </div>
-                            <div class="form-group">
-                                <label>Price Display</label>
-                                <input type="text" id="ev-live-price" class="form-control" placeholder="From $45" />
-                            </div>
+                            <div class="form-group"><label>Venue</label><input type="text" id="ev-live-venue"
+                                    class="form-control" placeholder="NYC — TBA" /></div>
+                            <div class="form-group"><label>Price Display</label><input type="text" id="ev-live-price"
+                                    class="form-control" placeholder="From $45" /></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>Ticket Button Text</label>
-                                <input type="text" id="ev-live-btn" class="form-control" placeholder="Get Tickets" />
-                            </div>
-                            <div class="form-group">
-                                <label>Ticket URL</label>
-                                <input type="url" id="ev-live-url" class="form-control" placeholder="https://..." />
-                            </div>
+                            <div class="form-group"><label>Ticket Button Text</label><input type="text" id="ev-live-btn"
+                                    class="form-control" placeholder="Get Tickets" /></div>
+                            <div class="form-group"><label>Ticket URL</label><input type="url" id="ev-live-url"
+                                    class="form-control" placeholder="https://..." /></div>
                         </div>
                     </div>
-
                 </div>
             </div><!-- end panel-events -->
 
@@ -533,25 +508,23 @@
                         <div class="panel-section-icon">❓</div>
                         <div>
                             <div class="panel-section-title">FAQ Management</div>
-                            <div class="panel-section-desc">Add, edit, or remove questions in each category. Changes
-                                save instantly to the live site.</div>
+                            <div class="panel-section-desc">Add, edit, or remove questions in each category</div>
                         </div>
                     </div>
-
-                    <div id="faq-editor">
-                        <!-- Rendered by JS -->
-                    </div>
+                    <div id="faq-editor"></div>
                 </div>
             </div>
 
             <!-- ========== PANEL: GALLERY ========== -->
             <div class="admin-panel" id="panel-gallery">
+
+                <!-- Stats -->
                 <div class="panel-section">
                     <div class="panel-section-header">
-                        <div class="panel-section-icon">📸</div>
+                        <div class="panel-section-icon">📊</div>
                         <div>
                             <div class="panel-section-title">Gallery Stats</div>
-                            <div class="panel-section-desc">These numbers appear in the gallery hero section</div>
+                            <div class="panel-section-desc">Numbers shown in the gallery hero section</div>
                         </div>
                     </div>
                     <div class="form-row triple">
@@ -568,23 +541,39 @@
                             <input type="number" id="gallery-trips" class="form-control" placeholder="1" />
                         </div>
                     </div>
+                </div>
+
+                <!-- Add New Photo -->
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">➕</div>
+                        <div>
+                            <div class="panel-section-title">Add New Gallery Photo</div>
+                            <div class="panel-section-desc">Upload a photo, fill in its details, and it will appear in
+                                the gallery. Remember to increase the photo count above.</div>
+                        </div>
+                    </div>
+
+                    <div id="gallery-add-list">
+                        <!-- Pending uploads rendered here -->
+                    </div>
+
+                    <button class="btn-add-faq" onclick="addGallerySlot()" style="margin-top:8px;">
+                        ➕ Add another photo slot
+                    </button>
+
                     <div
-                        style="background:var(--dark-3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:8px;">
+                        style="background:var(--dark-3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:20px;">
                         <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.7;">
-                            <strong style="color:var(--gold)">📌 To add new gallery photos</strong>, upload your photo
-                            files to the project folder, then open <code style="color:var(--gold)">gallery.html</code>
-                            and copy one existing <code
-                                style="color:var(--gold)">&lt;div class="gallery-card"&gt;</code> block.
-                            Update the <code style="color:var(--gold)">src</code>, <code
-                                style="color:var(--gold)">data-src</code>, <code
-                                style="color:var(--gold)">data-category</code>, <code
-                                style="color:var(--gold)">data-title</code>, and <code
-                                style="color:var(--gold)">data-desc</code> attributes.
-                            Available filter categories: <strong style="color:var(--teal)">community · china ·
-                                events</strong>. To add a new category, also add a matching filter button.
+                            <strong style="color:var(--gold)">📌 Note:</strong> Photos added here are stored in your
+                            browser's localStorage and appear in the gallery on reload.
+                            For permanent storage across all devices, also commit the image files to the project and add
+                            a matching <code style="color:var(--gold)">&lt;div class="gallery-card"&gt;</code> block in
+                            <code style="color:var(--gold)">gallery.html</code>.
                         </p>
                     </div>
                 </div>
+
             </div>
 
             <!-- ========== PANEL: SOCIAL / CONTACT ========== -->
@@ -599,45 +588,28 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Contact Email</label>
-                            <input type="email" id="s-email" class="form-control" placeholder="Info@travelnliv.com" />
-                        </div>
-                        <div class="form-group">
-                            <label>Global CTA Button Text</label>
-                            <input type="text" id="s-nav-cta-text" class="form-control"
-                                placeholder="Reserve Your Spot" />
-                        </div>
+                        <div class="form-group"><label>Contact Email</label><input type="email" id="s-email"
+                                class="form-control" placeholder="Info@travelnliv.com" /></div>
+                        <div class="form-group"><label>Global CTA Button Text</label><input type="text"
+                                id="s-nav-cta-text" class="form-control" placeholder="Reserve Your Spot" /></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Global CTA Button URL</label>
-                            <input type="url" id="s-nav-cta-url" class="form-control" placeholder="upcoming.html" />
-                        </div>
-                        <div class="form-group">
-                            <label>Instagram URL</label>
-                            <input type="url" id="s-instagram" class="form-control" />
-                        </div>
+                        <div class="form-group"><label>Global CTA Button URL</label><input type="url" id="s-nav-cta-url"
+                                class="form-control" /></div>
+                        <div class="form-group"><label>Instagram URL</label><input type="url" id="s-instagram"
+                                class="form-control" /></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>TikTok URL</label>
-                            <input type="url" id="s-tiktok" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Facebook URL</label>
-                            <input type="url" id="s-facebook" class="form-control" />
-                        </div>
+                        <div class="form-group"><label>TikTok URL</label><input type="url" id="s-tiktok"
+                                class="form-control" /></div>
+                        <div class="form-group"><label>Facebook URL</label><input type="url" id="s-facebook"
+                                class="form-control" /></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>WhatsApp Group Link</label>
-                            <input type="url" id="s-wa-group" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>WhatsApp Channel Link</label>
-                            <input type="url" id="s-wa-channel" class="form-control" />
-                        </div>
+                        <div class="form-group"><label>WhatsApp Group Link</label><input type="url" id="s-wa-group"
+                                class="form-control" /></div>
+                        <div class="form-group"><label>WhatsApp Channel Link</label><input type="url" id="s-wa-channel"
+                                class="form-control" /></div>
                     </div>
                 </div>
             </div>
@@ -654,25 +626,30 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>New Password</label>
-                            <input type="password" id="new-pass" class="form-control"
-                                placeholder="Enter new password" />
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm Password</label>
-                            <input type="password" id="confirm-pass" class="form-control"
-                                placeholder="Confirm new password" />
-                        </div>
+                        <div class="form-group"><label>New Password</label><input type="password" id="new-pass"
+                                class="form-control" placeholder="Enter new password" /></div>
+                        <div class="form-group"><label>Confirm Password</label><input type="password" id="confirm-pass"
+                                class="form-control" placeholder="Confirm new password" /></div>
                     </div>
                     <button class="btn-save" onclick="changePassword()" style="margin-top:8px;">Update Password</button>
+                </div>
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">🖼️</div>
+                        <div>
+                            <div class="panel-section-title">Clear All Uploaded Images</div>
+                            <div class="panel-section-desc">Remove all locally-stored image overrides (pages will fall
+                                back to default file-path images)</div>
+                        </div>
+                    </div>
+                    <button class="btn-danger" onclick="clearAllImages()">Clear All Image Uploads</button>
                 </div>
                 <div class="panel-section">
                     <div class="panel-section-header">
                         <div class="panel-section-icon">⚠️</div>
                         <div>
                             <div class="panel-section-title">Reset All Content to Defaults</div>
-                            <div class="panel-section-desc">This will undo all admin changes and restore the original
+                            <div class="panel-section-desc">Undoes all text & link changes and restores original
                                 hardcoded content</div>
                         </div>
                     </div>
@@ -697,8 +674,8 @@
                 </div>
             </div>
 
-        </main><!-- end admin-main -->
-    </div><!-- end admin-app -->
+        </main>
+    </div>
 
     <!-- Toast -->
     <div id="toast"></div>
@@ -706,7 +683,7 @@
     <script src="site-config.js"></script>
     <script>
         // ============================================================
-        // ADMIN PANEL LOGIC
+        // ADMIN PANEL — CORE LOGIC
         // ============================================================
 
         const DEFAULT_PASS_KEY = "tnliv_admin_pass";
@@ -714,8 +691,7 @@
 
         // ── AUTH ─────────────────────────────────────────────────────
         function checkLogin() {
-            const stored = localStorage.getItem("tnliv_authed");
-            if (stored === "1") { showApp(); }
+            if (localStorage.getItem("tnliv_authed") === "1") showApp();
         }
 
         function handleLogin() {
@@ -737,27 +713,28 @@
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("admin-app").style.display = "flex";
             loadAllFields();
+            renderPastEventPhotoGrid();
+            addGallerySlot(); // start with one empty slot
         }
 
         function changePassword() {
             const np = document.getElementById("new-pass").value;
             const cp = document.getElementById("confirm-pass").value;
-            if (!np) return toast("Please enter a new password.");
+            if (!np) return toast("Please enter a new password.", "error");
             if (np !== cp) return toast("Passwords don't match.", "error");
             localStorage.setItem(DEFAULT_PASS_KEY, np);
-            toast("Password updated! ✓");
+            toast("Password updated ✓");
         }
 
         // ── NAVIGATION ───────────────────────────────────────────────
-        const panels = { home: "Homepage", trips: "Upcoming Trips", events: "Events", faqs: "FAQs", gallery: "Gallery", social: "Links & Contact", settings: "Settings" };
-        const subs = {
-            home: "Edit next trip card and past event recap",
-            trips: "Edit upcoming trip listings on the Trips page",
-            events: "Control the homepage event section",
-            faqs: "Add, edit, or remove FAQ questions",
-            gallery: "Update gallery stats",
-            social: "Update social links and contact info site-wide",
-            settings: "Password, reset, and backup settings",
+        const PANELS = {
+            home: { title: "Homepage", sub: "Edit next trip card and past event recap" },
+            trips: { title: "Upcoming Trips", sub: "Edit upcoming trip listings on the Trips page" },
+            events: { title: "Events", sub: "Control the homepage event section" },
+            faqs: { title: "FAQs", sub: "Add, edit, or remove FAQ questions" },
+            gallery: { title: "Gallery", sub: "Update gallery stats and add new photos" },
+            social: { title: "Links & Contact", sub: "Update social links and contact info site-wide" },
+            settings: { title: "Settings", sub: "Password, image resets, and backup settings" },
         };
 
         function showPanel(id) {
@@ -765,94 +742,68 @@
             document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
             document.getElementById("panel-" + id).classList.add("active");
             document.getElementById("nav-" + id).classList.add("active");
-            document.getElementById("panel-title").textContent = panels[id] || id;
-            document.getElementById("panel-sub").textContent = subs[id] || "";
+            document.getElementById("panel-title").textContent = PANELS[id].title;
+            document.getElementById("panel-sub").textContent = PANELS[id].sub;
         }
 
-        // ── LOAD FIELDS FROM CONFIG ────────────────────────────────
+        // ── LOAD FIELDS ───────────────────────────────────────────────
         function loadAllFields() {
             const cfg = getSiteConfig();
-            const nt = cfg.nextTrip;
-            const pe = cfg.pastEvent;
-            const ev = cfg.event;
-            const gl = cfg.gallery;
-            const tr = cfg.trips;
-            const sc = cfg.social;
-            const nCta = cfg.navCta;
+            const nt = cfg.nextTrip, pe = cfg.pastEvent, ev = cfg.event,
+                gl = cfg.gallery, tr = cfg.trips, sc = cfg.social, nCta = cfg.navCta;
 
-            // Next Trip
-            v("nt-destination", nt.destination);
-            v("nt-badge", nt.badge);
-            v("nt-dates", nt.dates);
-            v("nt-duration", nt.duration);
-            v("nt-desc", nt.description);
-            v("nt-image", nt.image);
-            v("nt-price", nt.priceFrom);
-            v("nt-cta-text", nt.ctaText);
-            v("nt-cta-url", nt.ctaUrl);
+            // Next Trip text fields
+            v("nt-destination", nt.destination); v("nt-badge", nt.badge);
+            v("nt-dates", nt.dates); v("nt-duration", nt.duration);
+            v("nt-desc", nt.description); v("nt-price", nt.priceFrom);
+            v("nt-cta-text", nt.ctaText); v("nt-cta-url", nt.ctaUrl);
 
-            // Past Event
-            v("pe-visible", String(pe.visible));
-            v("pe-city", pe.city);
-            v("pe-date", pe.date);
-            v("pe-title", pe.title);
-            v("pe-italic", pe.titleItalic);
-            v("pe-desc", pe.description);
+            // Past Event fields
+            v("pe-visible", String(pe.visible)); v("pe-city", pe.city);
+            v("pe-date", pe.date); v("pe-title", pe.title);
+            v("pe-italic", pe.titleItalic); v("pe-desc", pe.description);
 
-            // Event
+            // Event fields
             const modeEl = document.querySelector('input[name="event-mode"][value="' + ev.mode + '"]');
             if (modeEl) { modeEl.checked = true; toggleEventMode(ev.mode); }
-            v("ev-bg", ev.bgImage);
-            v("ev-eyebrow", ev.eyebrow);
-            v("ev-badge", ev.badgeText);
-            v("ev-heading", ev.heading);
-            v("ev-heading-italic", ev.headingItalic);
-            v("ev-desc", ev.description);
-            v("ev-sub-desc", ev.subDescription);
-            v("ev-live-name", ev.liveEventName);
-            v("ev-live-date", ev.liveEventDate);
-            v("ev-live-venue", ev.liveEventVenue);
-            v("ev-live-price", ev.livePriceDisplay);
-            v("ev-live-btn", ev.liveTicketBtn);
-            v("ev-live-url", ev.liveTicketUrl);
+            v("ev-eyebrow", ev.eyebrow); v("ev-badge", ev.badgeText);
+            v("ev-heading", ev.heading); v("ev-heading-italic", ev.headingItalic);
+            v("ev-desc", ev.description); v("ev-sub-desc", ev.subDescription);
+            v("ev-live-name", ev.liveEventName); v("ev-live-date", ev.liveEventDate);
+            v("ev-live-venue", ev.liveEventVenue); v("ev-live-price", ev.livePriceDisplay);
+            v("ev-live-btn", ev.liveTicketBtn); v("ev-live-url", ev.liveTicketUrl);
 
             // Gallery
-            v("gallery-photos", gl.photoCount);
-            v("gallery-dests", gl.destinationCount);
-            v("gallery-trips", gl.tripCount);
+            v("gallery-photos", gl.photoCount); v("gallery-dests", gl.destinationCount); v("gallery-trips", gl.tripCount);
 
             // Trips
             tr.forEach(function (trip, i) {
                 const p = "trip" + (i + 1);
-                v(p + "-status", trip.status, true);
-                v(p + "-destination", trip.destination);
-                v(p + "-image", trip.image);
-                v(p + "-month", trip.monthYear);
-                v(p + "-dates", trip.dates);
-                v(p + "-duration", trip.duration);
-                v(p + "-region", trip.region);
-                v(p + "-price", trip.priceDisplay);
-                v(p + "-desc", trip.description);
-                v(p + "-cta-text", trip.ctaText);
-                v(p + "-cta-url", trip.ctaUrl);
+                v(p + "-status", trip.status, true); v(p + "-destination", trip.destination);
+                v(p + "-month", trip.monthYear); v(p + "-dates", trip.dates);
+                v(p + "-duration", trip.duration); v(p + "-region", trip.region);
+                v(p + "-price", trip.priceDisplay); v(p + "-desc", trip.description);
+                v(p + "-cta-text", trip.ctaText); v(p + "-cta-url", trip.ctaUrl);
+                // Restore image preview
+                restoreZone(p);
             });
 
             // Social
-            v("s-email", sc.email);
-            v("s-instagram", sc.instagram);
-            v("s-tiktok", sc.tiktok);
-            v("s-facebook", sc.facebook);
-            v("s-wa-group", sc.whatsappGroup);
-            v("s-wa-channel", sc.whatsappChannel);
-            v("s-nav-cta-text", nCta.text);
-            v("s-nav-cta-url", nCta.url);
+            v("s-email", sc.email); v("s-instagram", sc.instagram);
+            v("s-tiktok", sc.tiktok); v("s-facebook", sc.facebook);
+            v("s-wa-group", sc.whatsappGroup); v("s-wa-channel", sc.whatsappChannel);
+            v("s-nav-cta-text", nCta.text); v("s-nav-cta-url", nCta.url);
+
+            // Restore image previews for main uploaders
+            restoreZone("next_trip");
+            restoreZone("event_bg");
 
             // FAQs
             renderFaqEditor(cfg.faqs || TNLIV_DEFAULTS.faqs);
 
             // Mode toggle listeners
-            document.querySelectorAll('input[name="event-mode"]').forEach(function (r) {
-                r.addEventListener("change", function () { toggleEventMode(r.value); });
+            document.querySelectorAll('input[name="event-mode"]').forEach(r => {
+                r.addEventListener("change", () => toggleEventMode(r.value));
             });
         }
 
@@ -860,7 +811,7 @@
             const el = document.getElementById(id);
             if (!el) return;
             if (isSelect) { el.value = val || ""; }
-            else { el.tagName === "TEXTAREA" || el.tagName === "INPUT" ? (el.value = val || "") : (el.innerHTML = val || ""); }
+            else { "value" in el ? (el.value = val || "") : (el.innerHTML = val || ""); }
         }
 
         function g(id) {
@@ -868,47 +819,30 @@
             return el ? el.value.trim() : "";
         }
 
-        // ── SAVE ─────────────────────────────────────────────────────
+        // ── SAVE ALL ─────────────────────────────────────────────────
         function saveAll() {
             const cfg = getSiteConfig();
 
             cfg.nextTrip = {
-                badge: g("nt-badge"),
-                destination: g("nt-destination"),
-                dates: g("nt-dates"),
-                duration: g("nt-duration"),
-                description: g("nt-desc"),
-                image: g("nt-image"),
-                priceFrom: g("nt-price"),
-                ctaText: g("nt-cta-text"),
-                ctaUrl: g("nt-cta-url"),
+                badge: g("nt-badge"), destination: g("nt-destination"), dates: g("nt-dates"),
+                duration: g("nt-duration"), description: g("nt-desc"),
+                image: cfg.nextTrip.image, // preserve default filename
+                priceFrom: g("nt-price"), ctaText: g("nt-cta-text"), ctaUrl: g("nt-cta-url"),
             };
 
             cfg.pastEvent = {
-                visible: g("pe-visible") === "true",
-                city: g("pe-city"),
-                date: g("pe-date"),
-                title: g("pe-title"),
-                titleItalic: g("pe-italic"),
-                description: g("pe-desc"),
+                visible: g("pe-visible") === "true", city: g("pe-city"), date: g("pe-date"),
+                title: g("pe-title"), titleItalic: g("pe-italic"), description: g("pe-desc"),
             };
 
             const mode = document.querySelector('input[name="event-mode"]:checked');
             cfg.event = {
                 mode: mode ? mode.value : "coming-soon",
-                bgImage: g("ev-bg"),
-                eyebrow: g("ev-eyebrow"),
-                heading: g("ev-heading"),
-                headingItalic: g("ev-heading-italic"),
-                description: g("ev-desc"),
-                subDescription: g("ev-sub-desc"),
-                badgeText: g("ev-badge"),
-                liveEventName: g("ev-live-name"),
-                liveEventDate: g("ev-live-date"),
-                liveEventVenue: g("ev-live-venue"),
-                livePriceDisplay: g("ev-live-price"),
-                liveTicketBtn: g("ev-live-btn"),
-                liveTicketUrl: g("ev-live-url"),
+                bgImage: cfg.event.bgImage, // preserve default filename
+                eyebrow: g("ev-eyebrow"), heading: g("ev-heading"), headingItalic: g("ev-heading-italic"),
+                description: g("ev-desc"), subDescription: g("ev-sub-desc"), badgeText: g("ev-badge"),
+                liveEventName: g("ev-live-name"), liveEventDate: g("ev-live-date"), liveEventVenue: g("ev-live-venue"),
+                livePriceDisplay: g("ev-live-price"), liveTicketBtn: g("ev-live-btn"), liveTicketUrl: g("ev-live-url"),
             };
 
             cfg.gallery = {
@@ -920,109 +854,215 @@
             cfg.trips = cfg.trips.map(function (trip, i) {
                 const p = "trip" + (i + 1);
                 return {
-                    id: trip.id,
-                    status: g(p + "-status"),
-                    destination: g(p + "-destination"),
-                    image: g(p + "-image"),
-                    monthYear: g(p + "-month"),
-                    dates: g(p + "-dates"),
-                    duration: g(p + "-duration"),
-                    region: g(p + "-region"),
-                    priceDisplay: g(p + "-price"),
-                    description: g(p + "-desc"),
-                    ctaText: g(p + "-cta-text"),
-                    ctaUrl: g(p + "-cta-url"),
+                    id: trip.id, image: trip.image, // preserve default filename
+                    status: g(p + "-status"), destination: g(p + "-destination"), monthYear: g(p + "-month"),
+                    dates: g(p + "-dates"), duration: g(p + "-duration"), region: g(p + "-region"),
+                    priceDisplay: g(p + "-price"), description: g(p + "-desc"),
+                    ctaText: g(p + "-cta-text"), ctaUrl: g(p + "-cta-url"),
                     badge: g(p + "-status") === "booking-open" ? "Booking Open" : "Coming Soon",
                 };
             });
 
             cfg.social = {
-                email: g("s-email"),
-                instagram: g("s-instagram"),
-                tiktok: g("s-tiktok"),
-                facebook: g("s-facebook"),
-                whatsappGroup: g("s-wa-group"),
-                whatsappChannel: g("s-wa-channel"),
+                email: g("s-email"), instagram: g("s-instagram"), tiktok: g("s-tiktok"),
+                facebook: g("s-facebook"), whatsappGroup: g("s-wa-group"), whatsappChannel: g("s-wa-channel"),
             };
 
-            cfg.navCta = {
-                text: g("s-nav-cta-text"),
-                url: g("s-nav-cta-url"),
-            };
-
-            // FAQs — collect from editor
+            cfg.navCta = { text: g("s-nav-cta-text"), url: g("s-nav-cta-url") };
             cfg.faqs = collectFaqs();
 
             saveSiteConfig(cfg);
-            toast("✓ Changes saved! Reload any page to see updates.");
+            toast("✓ Changes saved! Reload any site page to see updates.");
         }
 
-        // ── EVENT MODE TOGGLE ────────────────────────────────────────
+        // ── EVENT MODE ────────────────────────────────────────────────
         function toggleEventMode(mode) {
             document.getElementById("cs-fields").style.display = mode === "coming-soon" ? "" : "none";
             document.getElementById("live-fields").style.display = mode === "live" ? "" : "none";
         }
 
-        // ── FAQ EDITOR ────────────────────────────────────────────────
-        const faqGroups = [
-            { key: "general", label: "🌍 General", icon: "🌍" },
-            { key: "trips", label: "✈️ Trips & Included", icon: "✈️" },
-            { key: "booking", label: "💳 Booking", icon: "💳" },
-            { key: "contact", label: "💬 Contact", icon: "💬" },
-        ];
+        // ============================================================
+        // IMAGE UPLOAD SYSTEM
+        // ============================================================
 
-        function renderFaqEditor(faqs) {
-            const editor = document.getElementById("faq-editor");
-            editor.innerHTML = faqGroups.map(function (group) {
-                const items = (faqs[group.key] || []).map(function (item, idx) {
-                    return faqItemHTML(group.key, idx, item);
-                }).join("");
-                return '<div class="admin-divider"></div>' +
-                    '<div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;">' + group.label + '</div>' +
-                    '<div id="faq-group-' + group.key + '">' + items + '</div>' +
-                    '<button class="btn-add-faq" onclick="addFaqItem(\'' + group.key + '\')">+ Add Question</button>';
+        // Opens the hidden file input for a given key
+        function openPicker(key) {
+            const f = document.getElementById("file-" + key);
+            if (f) f.click();
+        }
+
+        // File selected via file input
+        function handleFilePick(event, key) {
+            const file = event.target.files[0];
+            if (file) processImage(file, key);
+        }
+
+        // File dropped onto zone
+        function handleDrop(event, key) {
+            event.preventDefault();
+            const zone = document.getElementById("zone-" + key);
+            if (zone) zone.classList.remove("drag-over");
+            const file = (event.dataTransfer.files || [])[0];
+            if (file && file.type.startsWith("image/")) processImage(file, key);
+        }
+
+        // Convert file to base64, store, refresh zone
+        function processImage(file, key) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const base64 = e.target.result;
+                localStorage.setItem("tnliv_img_" + key, base64);
+                refreshZone(key, base64);
+                toast("✓ Image uploaded! Save Changes to apply.");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Remove image for a key
+        function removeImage(event, key) {
+            event.stopPropagation();
+            localStorage.removeItem("tnliv_img_" + key);
+            refreshZone(key, null);
+            toast("Image removed — default will be used.");
+        }
+
+        // Re-render a zone with new image or empty state
+        function refreshZone(key, base64) {
+            const zone = document.getElementById("zone-" + key);
+            if (!zone) return;
+            if (base64) {
+                zone.classList.add("has-image");
+                zone.innerHTML = `
+      <img class="img-upload-preview" src="${base64}" alt="Preview" />
+      <button class="img-remove-btn" onclick="removeImage(event,'${key}')" title="Remove image">✕</button>`;
+            } else {
+                zone.classList.remove("has-image");
+                zone.innerHTML = `
+      <div class="img-upload-placeholder">
+        <span class="img-upload-icon">🖼️</span>
+        <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
+        <span class="img-upload-hint">PNG · JPG · WebP accepted</span>
+      </div>`;
+            }
+            // Reset file input so same file can be reselected
+            const fi = document.getElementById("file-" + key);
+            if (fi) fi.value = "";
+        }
+
+        // Restore a zone's preview from stored base64
+        function restoreZone(key) {
+            const stored = localStorage.getItem("tnliv_img_" + key);
+            if (stored) refreshZone(key, stored);
+        }
+
+        // ── PAST EVENT PHOTO GRID ─────────────────────────────────────
+        const LP_LABELS = ["Welcome", "The Crew", "The Collective", "Mix & Bingo", "The Night", "Vibes", "The Community"];
+
+        function renderPastEventPhotoGrid() {
+            const grid = document.getElementById("pe-photo-grid");
+            if (!grid) return;
+            grid.innerHTML = LP_LABELS.map(function (label, i) {
+                const key = "lp_photo_" + i;
+                const stored = localStorage.getItem("tnliv_img_" + key);
+                return `<div>
+      <div class="img-upload-zone ${stored ? 'has-image' : ''}" id="zone-${key}"
+        onclick="openPicker('${key}')"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="handleDrop(event,'${key}')">
+        ${stored
+                        ? `<img class="img-upload-preview" src="${stored}" alt="${label}" />
+             <button class="img-remove-btn" onclick="removeImage(event,'${key}')" title="Remove">✕</button>`
+                        : `<div class="img-upload-placeholder">
+               <span class="img-upload-icon">📷</span>
+               <span class="img-upload-text" style="font-size:0.7rem;">Upload</span>
+             </div>`
+                    }
+      </div>
+      <input type="file" id="file-${key}" accept="image/*" style="display:none"
+        onchange="handleFilePick(event,'${key}');renderPastEventPhotoGrid()" />
+      <p class="pe-photo-label">${label}</p>
+    </div>`;
             }).join("");
         }
 
-        function faqItemHTML(groupKey, idx, item) {
-            return '<div class="faq-admin-item" id="faq-' + groupKey + '-' + idx + '">' +
-                '<button class="faq-remove" onclick="removeFaqItem(\'' + groupKey + '\',' + idx + ')">✕</button>' +
-                '<div class="form-group"><label>Question</label><input type="text" class="form-control faq-q-input" value="' + escapeAttr(item.q) + '" /></div>' +
-                '<div class="form-group" style="margin-bottom:0"><label>Answer</label><textarea class="form-control faq-a-input" rows="2">' + escHtml(item.a) + '</textarea></div>' +
-                '</div>';
+        // ── GALLERY UPLOAD SLOTS ──────────────────────────────────────
+        let gallerySlotCount = 0;
+
+        function addGallerySlot() {
+            const idx = gallerySlotCount++;
+            const key = "gallery_pending_" + idx;
+            const list = document.getElementById("gallery-add-list");
+            const div = document.createElement("div");
+            div.id = "gallery-slot-" + idx;
+            div.className = "gallery-add-row";
+            div.innerHTML = `
+    <div>
+      <div class="img-upload-zone" id="zone-${key}"
+        onclick="openPicker('${key}')"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="handleDrop(event,'${key}')">
+        <div class="img-upload-placeholder">
+          <span class="img-upload-icon">📷</span>
+          <span class="img-upload-text" style="font-size:0.72rem;">Drop or <strong>browse</strong></span>
+        </div>
+      </div>
+      <input type="file" id="file-${key}" accept="image/*" style="display:none" onchange="handleFilePick(event,'${key}')" />
+    </div>
+    <div>
+      <div class="form-group" style="margin-bottom:10px;">
+        <label>Photo Title</label>
+        <input type="text" id="gtitle-${idx}" class="form-control" placeholder="e.g. Rooftop Views" />
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label>Description</label>
+        <input type="text" id="gdesc-${idx}" class="form-control" placeholder="Short caption..." />
+      </div>
+    </div>
+    <div>
+      <div class="form-group" style="margin-bottom:10px;">
+        <label>Category (filter tag)</label>
+        <select id="gcat-${idx}" class="form-control">
+          <option value="community">Community</option>
+          <option value="china">China</option>
+          <option value="events">Events</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;align-items:flex-end;padding-bottom:4px;">
+      <button class="btn-danger" onclick="removeGallerySlot(${idx})" style="font-size:0.75rem;padding:8px 14px;">Remove</button>
+    </div>`;
+            list.appendChild(div);
         }
 
-        function addFaqItem(groupKey) {
-            const cfg = getSiteConfig();
-            if (!cfg.faqs[groupKey]) cfg.faqs[groupKey] = [];
-            cfg.faqs[groupKey].push({ q: "New Question", a: "Answer goes here." });
-            saveSiteConfig(cfg);
-            renderFaqEditor(cfg.faqs);
+        function removeGallerySlot(idx) {
+            const el = document.getElementById("gallery-slot-" + idx);
+            if (el) el.remove();
+            localStorage.removeItem("tnliv_img_gallery_pending_" + idx);
         }
 
-        function removeFaqItem(groupKey, idx) {
-            const cfg = getSiteConfig();
-            if (cfg.faqs[groupKey]) cfg.faqs[groupKey].splice(idx, 1);
-            saveSiteConfig(cfg);
-            renderFaqEditor(cfg.faqs);
-        }
-
-        function collectFaqs() {
-            const result = {};
-            faqGroups.forEach(function (group) {
-                const container = document.getElementById("faq-group-" + group.key);
-                if (!container) return;
-                result[group.key] = Array.from(container.querySelectorAll(".faq-admin-item")).map(function (item) {
-                    return {
-                        q: item.querySelector(".faq-q-input").value.trim(),
-                        a: item.querySelector(".faq-a-input").value.trim(),
-                    };
-                });
+        // ── RESET & CLEAR ─────────────────────────────────────────────
+        function clearAllImages() {
+            if (!confirm("Remove all uploaded images? Site pages will revert to default images.")) return;
+            Object.keys(localStorage).forEach(k => { if (k.startsWith("tnliv_img_")) localStorage.removeItem(k); });
+            // Reset all visible zones
+            document.querySelectorAll(".img-upload-zone").forEach(z => {
+                const key = z.id.replace("zone-", "");
+                refreshZone(key, null);
             });
-            return result;
+            renderPastEventPhotoGrid();
+            toast("✓ All image uploads cleared.");
         }
 
-        // ── EXPORT / IMPORT ──────────────────────────────────────────
+        function resetDefaults() {
+            if (!confirm("Reset all content to defaults? This cannot be undone.")) return;
+            resetSiteConfig();
+            loadAllFields();
+            toast("✓ Reset to defaults.");
+        }
+
+        // ── EXPORT / IMPORT ───────────────────────────────────────────
         function exportConfig() {
             const cfg = getSiteConfig();
             const blob = new Blob([JSON.stringify(cfg, null, 2)], { type: "application/json" });
@@ -1036,35 +1076,77 @@
             const file = event.target.files[0];
             if (!file) return;
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = e => {
                 try {
-                    const cfg = JSON.parse(e.target.result);
-                    saveSiteConfig(cfg);
+                    saveSiteConfig(JSON.parse(e.target.result));
                     loadAllFields();
                     toast("✓ Config imported successfully!");
-                } catch (err) {
-                    toast("Import failed — invalid JSON file.", "error");
-                }
+                } catch { toast("Import failed — invalid JSON.", "error"); }
             };
             reader.readAsText(file);
         }
 
-        // ── RESET ─────────────────────────────────────────────────────
-        function resetDefaults() {
-            if (!confirm("Reset all content to defaults? This cannot be undone.")) return;
-            resetSiteConfig();
-            loadAllFields();
-            toast("✓ Reset to defaults.");
+        // ── FAQs ─────────────────────────────────────────────────────
+        const faqGroups = [
+            { key: "general", label: "🌍 General" },
+            { key: "trips", label: "✈️ Trips & Included" },
+            { key: "booking", label: "💳 Booking" },
+            { key: "contact", label: "💬 Contact" },
+        ];
+
+        function renderFaqEditor(faqs) {
+            const editor = document.getElementById("faq-editor");
+            editor.innerHTML = faqGroups.map(function (group) {
+                const items = (faqs[group.key] || []).map((item, idx) => faqItemHTML(group.key, idx, item)).join("");
+                return `<div class="admin-divider"></div>
+      <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;">${group.label}</div>
+      <div id="faq-group-${group.key}">${items}</div>
+      <button class="btn-add-faq" onclick="addFaqItem('${group.key}')">+ Add Question</button>`;
+            }).join("");
+        }
+
+        function faqItemHTML(groupKey, idx, item) {
+            return `<div class="faq-admin-item" id="faq-${groupKey}-${idx}">
+    <button class="faq-remove" onclick="removeFaqItem('${groupKey}',${idx})">✕</button>
+    <div class="form-group"><label>Question</label><input type="text" class="form-control faq-q-input" value="${escapeAttr(item.q)}" /></div>
+    <div class="form-group" style="margin-bottom:0"><label>Answer</label><textarea class="form-control faq-a-input" rows="2">${escHtml(item.a)}</textarea></div>
+  </div>`;
+        }
+
+        function addFaqItem(groupKey) {
+            const cfg = getSiteConfig();
+            if (!cfg.faqs[groupKey]) cfg.faqs[groupKey] = [];
+            cfg.faqs[groupKey].push({ q: "New Question", a: "Answer goes here." });
+            saveSiteConfig(cfg); renderFaqEditor(cfg.faqs);
+        }
+
+        function removeFaqItem(groupKey, idx) {
+            const cfg = getSiteConfig();
+            if (cfg.faqs[groupKey]) cfg.faqs[groupKey].splice(idx, 1);
+            saveSiteConfig(cfg); renderFaqEditor(cfg.faqs);
+        }
+
+        function collectFaqs() {
+            const result = {};
+            faqGroups.forEach(function (group) {
+                const container = document.getElementById("faq-group-" + group.key);
+                if (!container) return;
+                result[group.key] = Array.from(container.querySelectorAll(".faq-admin-item")).map(item => ({
+                    q: item.querySelector(".faq-q-input").value.trim(),
+                    a: item.querySelector(".faq-a-input").value.trim(),
+                }));
+            });
+            return result;
         }
 
         // ── TOAST ─────────────────────────────────────────────────────
         function toast(msg, type) {
             const el = document.getElementById("toast");
             el.textContent = msg;
-            el.style.borderColor = type === "error" ? "rgba(224,90,78,0.5)" : "rgba(196,160,96,0.3)";
             el.style.color = type === "error" ? "var(--danger)" : "var(--gold)";
+            el.style.borderColor = type === "error" ? "rgba(224,90,78,0.4)" : "rgba(196,160,96,0.3)";
             el.classList.add("show");
-            setTimeout(function () { el.classList.remove("show"); }, 3200);
+            setTimeout(() => el.classList.remove("show"), 3400);
         }
 
         // ── UTILS ─────────────────────────────────────────────────────

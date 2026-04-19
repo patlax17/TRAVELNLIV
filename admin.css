@@ -672,3 +672,142 @@ select.form-control {
         padding: 14px 16px;
     }
 }
+
+/* ── IMAGE UPLOADER ───────────────────────────────────────── */
+.img-upload-zone {
+    background: var(--dark-3);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.img-upload-zone:hover,
+.img-upload-zone.drag-over {
+    border-color: var(--gold);
+    background: rgba(196, 160, 96, 0.06);
+}
+
+.img-upload-zone.has-image {
+    padding: 0;
+    min-height: 160px;
+    border-style: solid;
+    border-color: var(--border-gold);
+}
+
+.img-upload-preview {
+    width: 100%;
+    height: 100%;
+    min-height: 160px;
+    object-fit: cover;
+    display: block;
+    border-radius: calc(var(--radius) - 2px);
+}
+
+.img-upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.img-upload-icon {
+    font-size: 1.6rem;
+    opacity: 0.5;
+}
+
+.img-upload-text {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.img-upload-text strong {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.img-upload-hint {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    opacity: 0.55;
+    letter-spacing: 0.04em;
+}
+
+.img-remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid var(--border);
+    color: #fff;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    cursor: pointer;
+    z-index: 3;
+    transition: background 0.2s, border-color 0.2s;
+    line-height: 1;
+}
+
+.img-remove-btn:hover {
+    background: var(--danger);
+    border-color: var(--danger);
+}
+
+/* ── PAST EVENT PHOTO GRID ────────────────────────────────── */
+.pe-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.pe-photo-grid .img-upload-zone {
+    min-height: 90px;
+}
+
+.pe-photo-grid .img-upload-preview {
+    min-height: 90px;
+}
+
+.pe-photo-label {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 5px;
+    letter-spacing: 0.04em;
+}
+
+/* ── GALLERY UPLOAD TABLE ─────────────────────────────────── */
+.gallery-add-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr 120px;
+    gap: 12px;
+    align-items: start;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+}
+
+.gallery-add-row .img-upload-zone {
+    min-height: 100px;
+}
+
+.gallery-add-row .img-upload-preview {
+    min-height: 100px;
+}
