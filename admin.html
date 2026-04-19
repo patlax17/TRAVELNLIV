@@ -58,6 +58,10 @@
                 <button class="sidebar-link" onclick="showPanel('social')" id="nav-social">
                     <span class="sl-icon">🔗</span><span>Links & Contact</span>
                 </button>
+                <div class="sidebar-section-label" style="margin-top:12px;">Marketing</div>
+                <button class="sidebar-link" onclick="showPanel('marketing')" id="nav-marketing">
+                    <span class="sl-icon">📊</span><span>Marketing & Analytics</span>
+                </button>
                 <div class="sidebar-section-label" style="margin-top:12px;">Settings</div>
                 <button class="sidebar-link" onclick="showPanel('settings')" id="nav-settings">
                     <span class="sl-icon">⚙️</span><span>Settings</span>
@@ -614,6 +618,83 @@
                 </div>
             </div>
 
+            <!-- ========== PANEL: MARKETING & ANALYTICS ========== -->
+            <div class="admin-panel" id="panel-marketing">
+                <div class="panel-section">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">📊</div>
+                        <div>
+                            <div class="panel-section-title">Ad Tracking Pixels</div>
+                            <div class="panel-section-desc">Enter only your numeric or alphanumeric ID — not the full
+                                script. Scripts are injected asynchronously so they never slow the site down.</div>
+                        </div>
+                    </div>
+
+                    <!-- Live status badges -->
+                    <div class="tracking-status-row" id="tracking-status-row">
+                        <!-- rendered by loadMarketingFields() -->
+                    </div>
+
+                    <!-- META PIXEL -->
+                    <div class="form-group">
+                        <label class="label-with-tip">
+                            Meta (Facebook / Instagram) Pixel ID
+                            <span class="field-tip" tabindex="0">ℹ
+                                <span class="tip-text">Paste your numeric Pixel ID (e.g.
+                                    <strong>1234567890123456</strong>). Find it in Meta Business → Events Manager → your
+                                    Pixel → Settings. Do <strong>not</strong> paste the full &lt;script&gt; tag — only
+                                    the ID.</span>
+                            </span>
+                        </label>
+                        <input type="text" id="px-meta" class="form-control" placeholder="e.g. 1234567890123456"
+                            style="max-width:420px;" inputmode="numeric" />
+                    </div>
+
+                    <!-- TIKTOK PIXEL -->
+                    <div class="form-group">
+                        <label class="label-with-tip">
+                            TikTok Pixel ID
+                            <span class="field-tip" tabindex="0">ℹ
+                                <span class="tip-text">Paste your TikTok Pixel ID (e.g. <strong>C9ABCDE12345</strong>).
+                                    Find it in TikTok Ads Manager → Assets → Events → Web Events → your Pixel →
+                                    Settings. Only the ID, not the script.</span>
+                            </span>
+                        </label>
+                        <input type="text" id="px-tiktok" class="form-control" placeholder="e.g. C9ABCDE12345"
+                            style="max-width:420px;" />
+                    </div>
+
+                    <!-- GOOGLE TAG MANAGER -->
+                    <div class="form-group">
+                        <label class="label-with-tip">
+                            Google Tag Manager ID
+                            <span class="field-tip" tabindex="0">ℹ
+                                <span class="tip-text">Paste your GTM Container ID (e.g. <strong>GTM-XXXXXXX</strong>).
+                                    Find it in tagmanager.google.com → Admin → Container Settings. Only the GTM-XXXXXXX
+                                    portion.</span>
+                            </span>
+                        </label>
+                        <input type="text" id="px-gtm" class="form-control" placeholder="e.g. GTM-XXXXXXX"
+                            style="max-width:420px;" />
+                    </div>
+
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+                        <button class="btn-save" onclick="saveMarketing()">💾 Save Configuration</button>
+                        <button class="btn-secondary" onclick="clearTracking()">🗑 Clear All Pixels</button>
+                    </div>
+
+                    <div
+                        style="background:var(--dark-3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:24px;">
+                        <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.8;margin:0;">
+                            <strong style="color:var(--gold)">⚡ How it works:</strong>
+                            Once saved, <code style="color:var(--gold)">tracking.js</code> reads your IDs on every page
+                            load and injects the official vendor script asynchronously — meaning zero render-blocking,
+                            no performance hit. Removing or clearing an ID stops all tracking immediately.
+                        </p>
+                    </div>
+                </div>
+            </div><!-- end panel-marketing -->
+
             <!-- ========== PANEL: SETTINGS ========== -->
             <div class="admin-panel" id="panel-settings">
                 <div class="panel-section">
@@ -713,6 +794,7 @@
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("admin-app").style.display = "flex";
             loadAllFields();
+            loadMarketingFields();
             renderPastEventPhotoGrid();
             addGallerySlot(); // start with one empty slot
         }
@@ -734,6 +816,7 @@
             faqs: { title: "FAQs", sub: "Add, edit, or remove FAQ questions" },
             gallery: { title: "Gallery", sub: "Update gallery stats and add new photos" },
             social: { title: "Links & Contact", sub: "Update social links and contact info site-wide" },
+            marketing: { title: "Marketing & Analytics", sub: "Manage ad pixels — Meta, TikTok, and Google Tag Manager" },
             settings: { title: "Settings", sub: "Password, image resets, and backup settings" },
         };
 
@@ -1152,6 +1235,64 @@
         // ── UTILS ─────────────────────────────────────────────────────
         function escapeAttr(s) { return (s || "").replace(/"/g, "&quot;"); }
         function escHtml(s) { return (s || "").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+        // ── MARKETING & ANALYTICS ─────────────────────────────────────
+        const PIXEL_KEYS = [
+            { id: "px-meta", lsKey: "tnliv_pixel_meta", label: "Meta Pixel" },
+            { id: "px-tiktok", lsKey: "tnliv_pixel_tiktok", label: "TikTok Pixel" },
+            { id: "px-gtm", lsKey: "tnliv_pixel_gtm", label: "GTM" },
+        ];
+
+        function loadMarketingFields() {
+            PIXEL_KEYS.forEach(function (p) {
+                var el = document.getElementById(p.id);
+                if (el) el.value = localStorage.getItem(p.lsKey) || "";
+            });
+            renderTrackingStatus();
+        }
+
+        function renderTrackingStatus() {
+            var row = document.getElementById("tracking-status-row");
+            if (!row) return;
+            row.innerHTML = PIXEL_KEYS.map(function (p) {
+                var val = (localStorage.getItem(p.lsKey) || "").trim();
+                var active = !!val;
+                return '<div class="pixel-status-chip' + (active ? " active" : "") + '">' +
+                    '<div class="psc-dot"></div>' +
+                    p.label + (active ? " ✓ Live" : " — Not configured") +
+                    '</div>';
+            }).join("");
+        }
+
+        function saveMarketing() {
+            var anySet = false;
+            PIXEL_KEYS.forEach(function (p) {
+                var el = document.getElementById(p.id);
+                if (!el) return;
+                var val = el.value.trim();
+                if (val) {
+                    localStorage.setItem(p.lsKey, val);
+                    anySet = true;
+                } else {
+                    localStorage.removeItem(p.lsKey);
+                }
+            });
+            renderTrackingStatus();
+            toast(anySet
+                ? "✓ Tracking IDs saved — scripts are now live on every page!"
+                : "Tracking IDs cleared — no scripts will fire.");
+        }
+
+        function clearTracking() {
+            if (!confirm("Remove all pixel IDs? Tracking will stop on the next page load.")) return;
+            PIXEL_KEYS.forEach(function (p) {
+                localStorage.removeItem(p.lsKey);
+                var el = document.getElementById(p.id);
+                if (el) el.value = "";
+            });
+            renderTrackingStatus();
+            toast("All tracking pixels cleared.");
+        }
 
         // ── INIT ──────────────────────────────────────────────────────
         checkLogin();

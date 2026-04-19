@@ -811,3 +811,102 @@ select.form-control {
 .gallery-add-row .img-upload-preview {
     min-height: 100px;
 }
+
+/* ── MARKETING PANEL — LABEL WITH TOOLTIP ─────────────────── */
+.label-with-tip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.field-tip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: rgba(196, 160, 96, 0.15);
+    color: var(--gold);
+    font-size: 0.68rem;
+    font-weight: 700;
+    font-style: normal;
+    cursor: help;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+
+.field-tip:hover,
+.field-tip:focus {
+    background: rgba(196, 160, 96, 0.3);
+    outline: none;
+}
+
+.field-tip .tip-text {
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--dark-3);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    white-space: normal;
+    width: 280px;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.field-tip:hover .tip-text,
+.field-tip:focus .tip-text {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ── TRACKING STATUS ROW ──────────────────────────────────── */
+.tracking-status-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.pixel-status-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px 6px 10px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: border-color 0.2s;
+}
+
+.pixel-status-chip.active {
+    border-color: rgba(76, 175, 118, 0.4);
+    color: var(--success);
+}
+
+.pixel-status-chip.active .psc-dot {
+    background: var(--success);
+}
+
+.psc-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
