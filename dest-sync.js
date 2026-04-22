@@ -10,8 +10,11 @@
 
     function getDestinations() {
         try {
-            return JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || '[]');
-        } catch (e) { return []; }
+            var stored = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || 'null');
+            if (stored && stored.length) return stored;
+            // Fall back to baked-in defaults (loaded by site-defaults.js)
+            return window.SITE_DEST_DEFAULTS || [];
+        } catch (e) { return window.SITE_DEST_DEFAULTS || []; }
     }
 
     function destUrl(d) {

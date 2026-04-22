@@ -234,8 +234,7 @@
     <!-- NAV -->
     <nav id="nav">
         <div class="nav-inner">
-            <a href="/" class="nav-logo"><img src="/logo.jpg" alt="Travel & LIV Collective"
-                    class="nav-logo-img" /></a>
+            <a href="/" class="nav-logo"><img src="/logo.jpg" alt="Travel & LIV Collective" class="nav-logo-img" /></a>
             <ul class="nav-links" id="dynamic-nav-links">
                 <li><a href="/">Home</a></li>
                 <li><a href="/about.html">About</a></li>
@@ -482,6 +481,7 @@
     </footer>
 
     <script src="/main.js"></script>
+    <script src="/site-defaults.js"></script>
     <script src="/dest-sync.js"></script>
     <script>
         /* ── UNIVERSAL TRIP PAGE RENDERER ── */
@@ -490,18 +490,21 @@
             var slug = new URLSearchParams(window.location.search).get('slug') || '';
             if (!slug) { document.querySelector('h1').textContent = 'Trip not found.'; return; }
 
-            // Load all destinations from localStorage
+            // Load all destinations — localStorage first, then baked-in defaults (site-defaults.js)
             var list = [];
-            try { list = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || '[]'); } catch (e) { }
+            try {
+                var stored = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || 'null');
+                list = (stored && stored.length) ? stored : (window.SITE_DEST_DEFAULTS || []);
+            } catch (e) { list = window.SITE_DEST_DEFAULTS || []; }
 
-            // Fallback: pull individual key
+            // Find this slug
             var d = list.find(function (x) { return x.slug === slug; });
             if (!d) {
                 try { d = JSON.parse(localStorage.getItem('DEST_' + slug) || 'null'); } catch (e) { }
             }
-            if (!d) {
-                document.getElementById('trip-h1').textContent = 'Trip details coming soon.';
-                return;
+            // Final fallback: baked defaults
+            if (!d && window.SITE_DEST_DEFAULTS) {
+                d = window.SITE_DEST_DEFAULTS.find(function (x) { return x.slug === slug; });
             }
 
             // ── META ──
@@ -600,21 +603,23 @@
                 document.getElementById('trip-notif-wrap').style.display = 'block';
             }
 
-            // ── DROPDOWN NAV ── populate with all destinations
+            // ── DROPDOWN NAV — use defaults if localStorage empty
             var dd = document.getElementById('dynamic-dropdown');
             try {
-                var allDests = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || '[]');
+                var stored2 = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || 'null');
+                var allDests = (stored2 && stored2.length) ? stored2 : (window.SITE_DEST_DEFAULTS || []);
                 dd.innerHTML = allDests.map(function (dest) {
                     var badge = dest.status === 'booking_open' ? '<span class="dd-badge">Open</span>' : '';
-                    return '<a href="' + (dest.url || 'trip.html?slug=' + dest.slug) + '"><span class="dd-icon">' + (dest.emoji || '✈️') + '</span>' + dest.name + badge + '</a>';
+                    return '<a href="' + (dest.url || '/upcomingtrips/' + dest.slug) + '"><span class="dd-icon">' + (dest.emoji || '✈️') + '</span>' + dest.name + badge + '</a>';
                 }).join('') + '<div class="nav-dropdown-divider"></div><a href="/upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>';
             } catch (e) { }
 
             // ── FOOTER TRIP LINKS ──
             try {
-                var allDests2 = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || '[]');
+                var stored3 = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || 'null');
+                var allDests2 = (stored3 && stored3.length) ? stored3 : (window.SITE_DEST_DEFAULTS || []);
                 document.getElementById('footer-trips-links').innerHTML =
-                    allDests2.map(function (dest) { return '<li><a href="' + (dest.url || 'trip.html?slug=' + dest.slug) + '">' + dest.name + '</a></li>'; }).join('') +
+                    allDests2.map(function (dest) { return '<li><a href="' + (dest.url || '/upcomingtrips/' + dest.slug) + '">' + dest.name + '</a></li>'; }).join('') +
                     '<li><a href="/upcoming.html">All Upcoming Trips</a></li>';
             } catch (e) { }
         })();
