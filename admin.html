@@ -1578,7 +1578,7 @@
             var list = getDestinations();
             var d = list[idx];
             if (!d) return;
-            if (!confirm('Delete "' + d.name + '"? This will remove it from the admin and the nav dropdown. The actual .html page will remain live but won't appear in the dropdown.')) return;
+            if (!confirm('Delete "' + d.name + '"? This removes it from admin and the nav dropdown. The .html page stays live but will not appear in the dropdown.')) return;
             list.splice(idx, 1);
             saveDestinations(list);
             localStorage.removeItem('DEST_' + d.slug);
