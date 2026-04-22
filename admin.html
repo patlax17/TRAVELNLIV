@@ -1526,10 +1526,20 @@
                     // seed defaults on first load
                     stored = DEST_DEFAULTS;
                     localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(stored));
+                    stored.forEach(function (d) { localStorage.setItem('DEST_' + d.slug, JSON.stringify(d)); });
                 }
                 return stored;
             } catch (e) { return DEST_DEFAULTS; }
         }
+        // Always ensure individual DEST_ keys exist for trip pages to read
+        (function seedDestKeys() {
+            try {
+                var list = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || 'null');
+                if (!list) return;
+                list.forEach(function (d) { localStorage.setItem('DEST_' + d.slug, JSON.stringify(d)); });
+            } catch (e) { }
+        })();
+
 
         function saveDestinations(list) {
             localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(list));
