@@ -284,6 +284,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /* ================================================
+   GLOBAL — Squadtrip Inline Booking Panel (homepage)
+   Lazy-loads the iframe src on first open so it doesn't
+   block page load. Arrow rotates to signal open/closed.
+   ================================================ */
+(function () {
+  var panelOpen = false;
+
+  function loadIframe() {
+    var iframe = document.getElementById('home-booking-iframe');
+    if (iframe && !iframe.src) {
+      iframe.src = iframe.getAttribute('data-src');
+    }
+  }
+
+  window.toggleBookingPanel = function () {
+    var panel = document.getElementById('home-booking-panel');
+    var arrow = document.getElementById('booking-arrow');
+    if (!panel) return;
+    panelOpen = !panelOpen;
+    if (panelOpen) {
+      loadIframe();
+      panel.style.maxHeight = '800px';
+      panel.style.opacity = '1';
+      if (arrow) arrow.style.transform = 'rotate(180deg)';
+      setTimeout(function () {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    } else {
+      panel.style.maxHeight = '0';
+      panel.style.opacity = '0';
+      if (arrow) arrow.style.transform = 'rotate(0deg)';
+    }
+  };
+
+  window.openBookingPanel = function () {
+    var panel = document.getElementById('home-booking-panel');
+    var arrow = document.getElementById('booking-arrow');
+    if (!panel) return;
+    if (!panelOpen) {
+      panelOpen = true;
+      loadIframe();
+      panel.style.maxHeight = '800px';
+      panel.style.opacity = '1';
+      if (arrow) arrow.style.transform = 'rotate(180deg)';
+      setTimeout(function () {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  };
+})();
+
+/* ================================================
    GLOBAL — Event Notify Form Handler (legacy index form)
    ================================================ */
 function handleEventNotify(e) {
