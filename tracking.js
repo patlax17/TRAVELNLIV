@@ -7,6 +7,24 @@
 // when no ID is configured.
 // =====================================================================
 
+/* ── MAILERLITE UNIVERSAL SIGNUP POPUP ──────────────────────────────
+   Account: 2007153  |  Form: 175168034363671920
+   Call  showMailerLiteForm()  from any "Get Notified" button.
+────────────────────────────────────────────────────────────────────── */
+(function (w, d, e, u, f, l, n) {
+    w[f] = w[f] || function () { (w[f].q = w[f].q || []).push(arguments); };
+    l = d.createElement(e); l.async = 1; l.src = u;
+    n = d.getElementsByTagName(e)[0]; n.parentNode.insertBefore(l, n);
+})(window, document, 'script', 'https://assets.mailerlite.com/js/universal.js', 'ml');
+ml('account', '2007153');
+
+// Global helper — call this from any button to open the signup popup
+window.showMailerLiteForm = function () {
+    if (typeof ml === 'function') {
+        ml('show', '175168034363671920', true);
+    }
+};
+
 (function () {
     'use strict';
 
@@ -20,7 +38,7 @@
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return; n = f.fbq = function () {
                 n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
             };
             if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
             n.queue = []; t = b.createElement(e); t.async = !0;
