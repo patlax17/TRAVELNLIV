@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="trip-page-title">Trip — Travel & LIV Collective</title>
+    <meta name="description" id="trip-page-meta"
+        content="Luxury group travel experience with Travel & LIV Collective." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="zanzibar.css" />
+    <script src="tracking.js"></script>
+    <style>
+        /* ── UNIVERSAL TRIP PAGE STYLES ── */
+        .trip-photo-grid-dynamic {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 200px;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .trip-photo-grid-dynamic .tpg-ph {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .trip-photo-grid-dynamic .tpg-ph img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .trip-photo-grid-dynamic .tpg-ph:hover img {
+            transform: scale(1.06);
+        }
+
+        .trip-photo-grid-dynamic .tpg-ph.wide {
+            grid-column: span 2;
+        }
+
+        .itin-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .itin-tab {
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .itin-tab:hover {
+            border-color: var(--teal);
+            color: var(--white);
+        }
+
+        .itin-tab.active {
+            background: var(--teal);
+            border-color: var(--teal);
+            color: var(--dark-1);
+        }
+
+        .itin-day-panel {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .itin-day-panel.active {
+            display: grid;
+        }
+
+        .itin-panel-img {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--dark-3);
+        }
+
+        .itin-panel-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .itin-panel-body h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .itin-panel-body p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 14px;
+        }
+
+        .itin-hl-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .itin-hl {
+            background: var(--teal-pale);
+            border: 1px solid var(--border-gold);
+            color: var(--teal);
+            border-radius: 999px;
+            padding: 5px 14px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .includes-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 36px;
+        }
+
+        .inc2-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .inc2-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .inc2-body h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .inc2-body p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 22px;
+            margin-top: 36px;
+        }
+
+        .room-card {
+            background: var(--dark-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: border-color 0.25s;
+        }
+
+        .room-card:hover {
+            border-color: var(--border-gold);
+        }
+
+        .room-card-body {
+            padding: 22px;
+        }
+
+        .room-card-body h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .room-card-body .room-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin: 8px 0 4px;
+        }
+
+        .room-card-body .room-deposit {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .room-badge-tag {
+            display: inline-block;
+            background: var(--teal);
+            color: var(--dark-1);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+        }
+
+        .cs-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.75) 100%);
+        }
+
+        @media(max-width:768px) {
+            .itin-day-panel.active {
+                grid-template-columns: 1fr;
+            }
+
+            .includes-2col {
+                grid-template-columns: 1fr;
+            }
+
+            .trip-photo-grid-dynamic {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Travel & LIV Collective"
+                    class="nav-logo-img" /></a>
+            <ul class="nav-links" id="dynamic-nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li class="nav-dropdown">
+                    <a href="upcoming.html">Upcoming Trips</a>
+                    <div class="nav-dropdown-menu" id="dynamic-dropdown">
+                        <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
+                    </div>
+                </li>
+                <li><a href="partnerships.html">Partners</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+            </ul>
+            <a href="#trip-book" class="btn btn-gold nav-cta" id="trip-nav-cta">Secure Your Spot</a>
+            <button class="nav-hamburger" id="hamburger"
+                aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+        <a href="index.html">Home</a><a href="about.html">About</a>
+        <a href="upcoming.html">Upcoming Trips</a><a href="partnerships.html">Partners</a>
+        <a href="gallery.html">Gallery</a><a href="faqs.html">FAQs</a>
+        <a href="#trip-book" class="btn btn-gold" style="margin-top:16px;" id="trip-mobile-cta">Secure Your Spot</a>
+    </div>
+
+    <!-- HERO -->
+    <section id="trip-hero" style="min-height:90vh;display:flex;align-items:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;" id="trip-hero-bg-wrap">
+            <img id="trip-hero-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;" />
+            <div class="cs-hero-overlay"></div>
+        </div>
+        <div class="container" style="position:relative;z-index:2;padding-top:120px;padding-bottom:80px;">
+            <div class="trip-breadcrumb animate-fade-in" id="trip-breadcrumb">
+                <a href="index.html">Home</a><span>›</span>
+                <a href="upcoming.html">Upcoming Trips</a><span>›</span>
+                <span class="text-gold" id="trip-breadcrumb-name">Trip</span>
+            </div>
+            <span class="eyebrow animate-fade-up" style="margin-top:20px;display:block;">Travel & LIV Collective
+                Presents</span>
+            <h1 class="display-xl animate-fade-up" id="trip-h1" style="margin-top:16px;"></h1>
+            <p class="animate-fade-up" id="trip-hero-meta"
+                style="font-size:1.1rem;color:var(--text-muted);margin-top:12px;"></p>
+            <div class="animate-fade-up" id="trip-hero-badges"
+                style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;"></div>
+            <div class="animate-fade-up" style="margin-top:32px;">
+                <a href="#trip-book" class="btn btn-gold" id="trip-hero-cta">
+                    Secure Your Spot
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
+                        viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUICK STATS -->
+    <div class="trip-quick-stats" id="trip-stats-bar">
+        <div class="container">
+            <div class="quick-stats-grid" id="trip-stats-grid">
+                <div class="quick-stat"><span class="qs-icon">📅</span><span class="qs-label">Dates</span><span
+                        class="qs-value" id="qs-dates">—</span></div>
+                <div class="quick-stat"><span class="qs-icon">🏨</span><span class="qs-label">Accommodation</span><span
+                        class="qs-value">5★ Private Villas</span></div>
+                <div class="quick-stat"><span class="qs-icon">📸</span><span class="qs-label">Photographer</span><span
+                        class="qs-value">Included</span></div>
+                <div class="quick-stat"><span class="qs-icon">✈️</span><span class="qs-label">Flights</span><span
+                        class="qs-value">Not Included</span></div>
+                <div class="quick-stat"><span class="qs-icon">💳</span><span class="qs-label">Deposit</span><span
+                        class="qs-value">$500 to Reserve</span></div>
+                <div class="quick-stat"><span class="qs-icon">💰</span><span class="qs-label">Starting From</span><span
+                        class="qs-value text-gold" id="qs-price">—</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE NAV -->
+    <div class="page-nav-sticky" id="pageNav">
+        <div class="container">
+            <div class="page-nav-inner">
+                <a href="#trip-desc" class="page-nav-link">Details</a>
+                <a href="#trip-itin" class="page-nav-link">Itinerary</a>
+                <a href="#trip-includes" class="page-nav-link">Included</a>
+                <a href="#trip-rooms" class="page-nav-link">Rooms</a>
+                <a href="#trip-book" class="page-nav-link">Book</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <section class="section" id="trip-desc" style="background:var(--dark-2);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="eyebrow"><span class="gold-line"></span>Trip Details</span>
+                <h2 class="display-md" style="margin-top:16px;" id="trip-desc-heading">About This Trip</h2>
+            </div>
+            <div class="reveal" style="max-width:760px;margin-top:28px;" id="trip-desc-body"></div>
+        </div>
+    </section>
+
+    <!-- ITINERARY TABS -->
+    <section class="section" id="trip-itin">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="eyebrow"><span class="gold-line"></span>Day-by-Day</span>
+                <h2 class="display-md" style="margin-top:16px;">Your Journey</h2>
+            </div>
+            <div class="itin-tabs reveal" id="trip-itin-tabs"></div>
+            <div id="trip-itin-panels"></div>
+            <div id="trip-itin-empty" style="display:none;padding:40px;text-align:center;color:var(--text-muted);">
+                <p style="font-size:1.1rem;">The itinerary for this trip is being finalized. Check back soon or <button
+                        onclick="showMailerLiteForm()"
+                        style="background:none;border:none;color:var(--teal);cursor:pointer;text-decoration:underline;">get
+                        notified</button> when it drops.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT'S INCLUDED -->
+    <section class="section" id="trip-includes" style="background:var(--dark-2);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="eyebrow"><span class="gold-line"></span>Everything You Get</span>
+                <h2 class="display-md" style="margin-top:16px;">Included in Registration</h2>
+            </div>
+            <div class="includes-2col reveal" id="trip-includes-grid"></div>
+            <div id="trip-includes-empty" style="display:none;padding:40px;text-align:center;color:var(--text-muted);">
+                Inclusions will be announced soon.</div>
+        </div>
+    </section>
+
+    <!-- ROOM OPTIONS -->
+    <section class="section" id="trip-rooms">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <span class="eyebrow">Your Stay</span>
+                <h2 class="display-md" style="margin-top:16px;">Choose Your Room</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="room-grid reveal" id="trip-rooms-grid"></div>
+            <div id="trip-rooms-empty" style="display:none;text-align:center;padding:40px;color:var(--text-muted);">Room
+                options are being finalized.</div>
+        </div>
+    </section>
+
+    <!-- BOOKING WIDGET -->
+    <section class="section" id="trip-book" style="background:var(--dark-2);">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <span class="eyebrow">Ready to Go?</span>
+                <h2 class="display-md" style="margin-top:16px;">Lock In Your Spot</h2>
+                <div class="divider"></div>
+                <p class="text-muted" id="trip-book-sub" style="max-width:560px;margin:20px auto 0;line-height:1.8;">
+                    Spots are limited. Pay a deposit to reserve your place — flexible payment plans available, no credit
+                    check required.</p>
+            </div>
+            <div id="trip-squadtrip-wrap" class="reveal" style="margin-top:40px;">
+                <div style="text-align:center;margin-bottom:28px;">
+                    <button onclick="toggleTripBooking()" class="btn btn-gold" id="trip-book-toggle"
+                        style="padding:16px 40px;font-size:1rem;">
+                        Open Booking Widget
+                        <svg id="trip-book-arrow" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="2.5" viewBox="0 0 24 24" style="transition:transform 0.3s ease;">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="trip-booking-panel"
+                    style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;opacity:0;">
+                    <div
+                        style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-1);box-shadow:var(--shadow-gold);">
+                        <iframe id="trip-squadtrip-iframe"
+                            style="width:100%;min-height:700px;height:auto;border:none;display:block;" src=""
+                            data-src="" title="Booking" allow="payment"></iframe>
+                    </div>
+                    <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:16px;">Secure
+                        checkout powered by <strong style="color:var(--teal);">Squadtrip</strong></p>
+                    <div style="text-align:center;margin-top:20px;padding-bottom:8px;">
+                        <button onclick="toggleTripBooking()"
+                            style="background:#c0392b;border:none;border-radius:999px;color:#fff;padding:12px 32px;font-size:0.9rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(192,57,43,0.45);"
+                            onmouseover="this.style.background='#a93226'" onmouseout="this.style.background='#c0392b'">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                                viewBox="0 0 24 24">
+                                <path d="M18 15l-6-6-6 6" />
+                            </svg>
+                            Close Booking Widget
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Coming soon fallback -->
+            <div id="trip-notif-wrap" style="display:none;text-align:center;margin-top:40px;">
+                <p class="text-muted" style="margin-bottom:20px;">Booking for this trip isn't open yet. Drop your email
+                    and you'll be the first to know.</p>
+                <button onclick="showMailerLiteForm()" class="btn btn-gold">Get Notified When Booking Opens</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo"><img src="logo.jpg" alt="Travel & LIV Collective"
+                            class="footer-logo-img" /></div>
+                    <p class="footer-desc">A curated collective of like-minded people who value experience, connection,
+                        and the finer things in life.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/travelnlivcollective" target="_blank" rel="noopener"
+                            class="social-icon">📷</a>
+                        <a href="https://www.tiktok.com/@travelnlivcollective" target="_blank" rel="noopener"
+                            class="social-icon">🎵</a>
+                        <a href="https://www.facebook.com/Travelnlivcollective" target="_blank" rel="noopener"
+                            class="social-icon">📘</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer-heading">Trips</div>
+                    <ul class="footer-links" id="footer-trips-links">
+                        <li><a href="upcoming.html">All Upcoming Trips</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-heading">Explore</div>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="faqs.html">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-heading">Info</div>
+                    <ul class="footer-links">
+                        <li><a href="mailto:Info@travelnliv.com">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Travel & LIV Collective. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        /* ── UNIVERSAL TRIP PAGE RENDERER ── */
+        (function () {
+            // Get slug from URL ?slug=xxx
+            var slug = new URLSearchParams(window.location.search).get('slug') || '';
+            if (!slug) { document.querySelector('h1').textContent = 'Trip not found.'; return; }
+
+            // Load all destinations from localStorage
+            var list = [];
+            try { list = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || '[]'); } catch (e) { }
+
+            // Fallback: pull individual key
+            var d = list.find(function (x) { return x.slug === slug; });
+            if (!d) {
+                try { d = JSON.parse(localStorage.getItem('DEST_' + slug) || 'null'); } catch (e) { }
+            }
+            if (!d) {
+                document.getElementById('trip-h1').textContent = 'Trip details coming soon.';
+                return;
+            }
+
+            // ── META ──
+            document.title = d.name + ' — Travel & LIV Collective';
+            document.getElementById('trip-page-meta').content = d.tagline || '';
+            document.getElementById('trip-breadcrumb-name').textContent = d.name;
+            document.getElementById('trip-h1').textContent = d.name;
+            document.getElementById('trip-hero-meta').textContent = (d.dates || '') + (d.price ? ' · ' + d.price : '');
+            document.getElementById('qs-dates').textContent = d.dates || 'TBA';
+            document.getElementById('qs-price').textContent = d.price || 'TBA';
+
+            // Status badge
+            var badgeWrap = document.getElementById('trip-hero-badges');
+            if (d.badge) badgeWrap.innerHTML = '<span class="tag tag-gold">' + d.badge + '</span>';
+            if (d.status === 'booking_open') badgeWrap.innerHTML += '<span class="tag tag-teal">$500 Deposit to Reserve</span>';
+
+            // ── HERO BG ── (use first photo from photos array, fallback gradient)
+            var heroImg = document.getElementById('trip-hero-img');
+            if (d.photos && d.photos.length) { heroImg.src = d.photos[0]; heroImg.alt = d.name; }
+            else {
+                document.getElementById('trip-hero-bg-wrap').style.background = 'linear-gradient(135deg, #181818 0%, #1a2e1f 100%)';
+                heroImg.style.display = 'none';
+            }
+
+            // ── DESCRIPTION ──
+            var descBody = document.getElementById('trip-desc-body');
+            if (d.description) {
+                descBody.innerHTML = d.description.split('\n\n').map(function (p) { return '<p style="color:var(--text-muted);line-height:1.9;font-size:1.05rem;margin-bottom:18px;">' + p + '</p>'; }).join('');
+            } else {
+                descBody.innerHTML = '<p style="color:var(--text-muted);">Full trip details will be announced soon. <button onclick="showMailerLiteForm()" style="background:none;border:none;color:var(--teal);cursor:pointer;text-decoration:underline;">Get notified.</button></p>';
+            }
+            document.getElementById('trip-desc-heading').textContent = 'About ' + d.name;
+
+            // ── ITINERARY TABS ──
+            var tabsEl = document.getElementById('trip-itin-tabs');
+            var panelsEl = document.getElementById('trip-itin-panels');
+            var emptyEl = document.getElementById('trip-itin-empty');
+            if (d.days && d.days.length) {
+                d.days.forEach(function (day, i) {
+                    // tab
+                    var tab = document.createElement('button');
+                    tab.className = 'itin-tab' + (i === 0 ? ' active' : '');
+                    tab.textContent = 'Day ' + (i + 1);
+                    tab.onclick = function () { showDay(i + 1); };
+                    tabsEl.appendChild(tab);
+                    // panel
+                    var panel = document.createElement('div');
+                    panel.className = 'itin-day-panel' + (i === 0 ? ' active' : '');
+                    panel.id = 'trip-day-' + (i + 1);
+                    var hl = (day.highlights || []).map(function (h) { return '<span class="itin-hl">' + h + '</span>'; }).join('');
+                    panel.innerHTML =
+                        '<div class="itin-panel-img"><div style="width:100%;height:100%;background:var(--dark-3);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:3rem;">🏝️</div></div>' +
+                        '<div class="itin-panel-body"><h3>' + (day.title || 'Day ' + (i + 1)) + '</h3><p>' + (day.body || '').replace(/\n/g, '</p><p>') + '</p><div class="itin-hl-list">' + hl + '</div></div>';
+                    panelsEl.appendChild(panel);
+                });
+            } else {
+                tabsEl.style.display = 'none';
+                emptyEl.style.display = 'block';
+            }
+
+            function showDay(num) {
+                document.querySelectorAll('.itin-day-panel').forEach(function (p) { p.classList.remove('active'); });
+                document.querySelectorAll('.itin-tab').forEach(function (t) { t.classList.remove('active'); });
+                var p = document.getElementById('trip-day-' + num);
+                var tabs = document.querySelectorAll('.itin-tab');
+                if (p) p.classList.add('active');
+                if (tabs[num - 1]) tabs[num - 1].classList.add('active');
+            }
+
+            // ── INCLUDES ──
+            var incGrid = document.getElementById('trip-includes-grid');
+            var incEmpty = document.getElementById('trip-includes-empty');
+            if (d.includes && d.includes.length) {
+                incGrid.innerHTML = d.includes.map(function (inc) {
+                    return '<div class="inc2-item"><div class="inc2-icon">' + (inc.icon || '✅') + '</div><div class="inc2-body"><h4>' + inc.title + '</h4><p>' + inc.desc + '</p></div></div>';
+                }).join('');
+            } else { incGrid.style.display = 'none'; incEmpty.style.display = 'block'; }
+
+            // ── ROOMS ──
+            var roomGrid = document.getElementById('trip-rooms-grid');
+            var roomEmpty = document.getElementById('trip-rooms-empty');
+            if (d.rooms && d.rooms.length) {
+                roomGrid.innerHTML = d.rooms.map(function (r) {
+                    return '<div class="room-card"><div class="room-card-body">' +
+                        (r.badge ? '<div class="room-badge-tag">' + r.badge + '</div><br>' : '') +
+                        '<h3>' + r.title + '</h3><div class="room-price">' + r.price + '</div><div class="room-deposit">' + r.deposit + '</div></div></div>';
+                }).join('');
+            } else { roomGrid.style.display = 'none'; roomEmpty.style.display = 'block'; }
+
+            // ── SQUADTRIP BOOKING ──
+            var squadtripUrl = d.squadtrip || '';
+            if (squadtripUrl) {
+                document.getElementById('trip-squadtrip-iframe').setAttribute('data-src', squadtripUrl);
+            } else {
+                document.getElementById('trip-squadtrip-wrap').style.display = 'none';
+                document.getElementById('trip-notif-wrap').style.display = 'block';
+            }
+
+            // ── DROPDOWN NAV ── populate with all destinations
+            var dd = document.getElementById('dynamic-dropdown');
+            try {
+                var allDests = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || '[]');
+                dd.innerHTML = allDests.map(function (dest) {
+                    var badge = dest.status === 'booking_open' ? '<span class="dd-badge">Open</span>' : '';
+                    return '<a href="' + (dest.url || 'trip.html?slug=' + dest.slug) + '"><span class="dd-icon">' + (dest.emoji || '✈️') + '</span>' + dest.name + badge + '</a>';
+                }).join('') + '<div class="nav-dropdown-divider"></div><a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>';
+            } catch (e) { }
+
+            // ── FOOTER TRIP LINKS ──
+            try {
+                var allDests2 = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || '[]');
+                document.getElementById('footer-trips-links').innerHTML =
+                    allDests2.map(function (dest) { return '<li><a href="' + (dest.url || 'trip.html?slug=' + dest.slug) + '">' + dest.name + '</a></li>'; }).join('') +
+                    '<li><a href="upcoming.html">All Upcoming Trips</a></li>';
+            } catch (e) { }
+        })();
+
+        /* ── BOOKING TOGGLE ── */
+        var tripBookOpen = false;
+        function toggleTripBooking() {
+            var panel = document.getElementById('trip-booking-panel');
+            var arrow = document.getElementById('trip-book-arrow');
+            var btn = document.getElementById('trip-book-toggle');
+            if (!panel) return;
+            tripBookOpen = !tripBookOpen;
+            if (tripBookOpen) {
+                var iframe = document.getElementById('trip-squadtrip-iframe');
+                if (iframe) { var ds = iframe.getAttribute('data-src'); if (ds && iframe.src !== ds) iframe.src = ds; }
+                panel.style.maxHeight = '1500px'; panel.style.opacity = '1';
+                if (arrow) arrow.style.transform = 'rotate(180deg)';
+                if (btn) btn.textContent = 'Close Booking Widget';
+                setTimeout(function () { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
+            } else {
+                panel.style.maxHeight = '0'; panel.style.opacity = '0';
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+                if (btn) btn.textContent = 'Open Booking Widget';
+            }
+        }
+
+        // Auto-open if URL has #trip-book
+        if (window.location.hash === '#trip-book') {
+            setTimeout(function () { toggleTripBooking(); }, 800);
+        }
+    </script>
+</body>
+
+</html>

@@ -766,7 +766,8 @@
                         <div class="panel-section-icon">🗺️</div>
                         <div>
                             <div class="panel-section-title">Destination Pages</div>
-                            <div class="panel-section-desc">Manage individual trip pages — edit info, mark as coming soon or booking open, delete concluded trips, and add brand new destinations.</div>
+                            <div class="panel-section-desc">Manage individual trip pages — edit info, mark as coming
+                                soon or booking open, delete concluded trips, and add brand new destinations.</div>
                         </div>
                     </div>
 
@@ -775,26 +776,31 @@
 
                     <!-- Add New Button -->
                     <div style="margin-top:24px;">
-                        <button class="btn-admin-primary" onclick="openAddDestForm()" id="add-dest-btn" style="display:flex;align-items:center;gap:8px;">
+                        <button class="btn-admin-primary" onclick="openAddDestForm()" id="add-dest-btn"
+                            style="display:flex;align-items:center;gap:8px;">
                             ➕ Add New Destination
                         </button>
                     </div>
 
                     <!-- Add New Form (hidden by default) -->
-                    <div id="add-dest-form" style="display:none;margin-top:24px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:24px;">
+                    <div id="add-dest-form"
+                        style="display:none;margin-top:24px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:24px;">
                         <h3 style="margin-bottom:16px;font-size:1rem;">New Destination</h3>
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
                             <div class="form-group">
                                 <label>Destination Name *</label>
-                                <input type="text" id="new-dest-name" class="form-control" placeholder="e.g. Santorini, Greece" />
+                                <input type="text" id="new-dest-name" class="form-control"
+                                    placeholder="e.g. Santorini, Greece" />
                             </div>
                             <div class="form-group">
                                 <label>URL Slug * <small style="color:#888;">(no spaces, lowercase)</small></label>
-                                <input type="text" id="new-dest-slug" class="form-control" placeholder="e.g. santorini" />
+                                <input type="text" id="new-dest-slug" class="form-control"
+                                    placeholder="e.g. santorini" />
                             </div>
                             <div class="form-group">
                                 <label>Dates</label>
-                                <input type="text" id="new-dest-dates" class="form-control" placeholder="e.g. Oct 5–12, 2027" />
+                                <input type="text" id="new-dest-dates" class="form-control"
+                                    placeholder="e.g. Oct 5–12, 2027" />
                             </div>
                             <div class="form-group">
                                 <label>Starting Price</label>
@@ -810,11 +816,13 @@
                             </div>
                             <div class="form-group" style="grid-column:span 2;">
                                 <label>Short Tagline</label>
-                                <input type="text" id="new-dest-tagline" class="form-control" placeholder="e.g. Cliffside villas, volcanic sunsets..." />
+                                <input type="text" id="new-dest-tagline" class="form-control"
+                                    placeholder="e.g. Cliffside villas, volcanic sunsets..." />
                             </div>
                             <div class="form-group" style="grid-column:span 2;">
                                 <label>Teaser Description</label>
-                                <textarea id="new-dest-teaser" class="form-control" rows="3" placeholder="A short paragraph about the trip (for the coming soon page)..."></textarea>
+                                <textarea id="new-dest-teaser" class="form-control" rows="3"
+                                    placeholder="A short paragraph about the trip (for the coming soon page)..."></textarea>
                             </div>
                             <div class="form-group" style="grid-column:span 2;">
                                 <label>Emoji / Flag</label>
@@ -826,7 +834,8 @@
                             <button class="btn-secondary" onclick="closeAddDestForm()">Cancel</button>
                         </div>
                         <p style="font-size:0.8rem;color:#888;margin-top:12px;">
-                            ℹ️ Creating a destination saves it to the site config. A new page stub will be generated — you can then fill in the full itinerary, photos, and room info.
+                            ℹ️ Creating a destination saves it to the site config. A new page stub will be generated —
+                            you can then fill in the full itinerary, photos, and room info.
                         </p>
                     </div>
                 </div>
@@ -865,7 +874,8 @@
                         </div>
                         <div class="form-group" style="grid-column:span 2;">
                             <label>Status Badge Text</label>
-                            <input type="text" id="edit-dest-badge" class="form-control" placeholder="e.g. ✈️ Coming Soon — Details Dropping" />
+                            <input type="text" id="edit-dest-badge" class="form-control"
+                                placeholder="e.g. ✈️ Coming Soon — Details Dropping" />
                         </div>
                         <div class="form-group" style="grid-column:span 2;">
                             <label>Short Tagline</label>
@@ -876,22 +886,69 @@
                             <textarea id="edit-dest-teaser" class="form-control" rows="4"></textarea>
                         </div>
                         <div class="form-group" style="grid-column:span 2;">
-                            <label>Trip Page URL <small style="color:#888;">(the .html file for this trip)</small></label>
+                            <label>Trip Page URL <small style="color:#888;">(the .html file for this
+                                    trip)</small></label>
                             <input type="text" id="edit-dest-url" class="form-control" placeholder="e.g. bali.html" />
                         </div>
                         <div class="form-group" style="grid-column:span 2;">
-                            <label>Squadtrip Embed URL <small style="color:#888;">(paste the full URL from Squadtrip)</small></label>
-                            <input type="text" id="edit-dest-squadtrip" class="form-control" placeholder="https://travelnlivcollective.squadtrip.com/trip/..." />
+                            <label>Squadtrip Embed URL <small style="color:#888;">(paste the full URL from
+                                    Squadtrip)</small></label>
+                            <input type="text" id="edit-dest-squadtrip" class="form-control"
+                                placeholder="https://travelnlivcollective.squadtrip.com/trip/..." />
                         </div>
                     </div>
-                    <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
-                        <button class="btn-admin-primary" onclick="saveEditDest()">✓ Save Changes</button>
-                        <button class="btn-secondary" onclick="closeEditDest()">Cancel</button>
+                    <!-- Full Description -->
+                    <div class="form-group" style="grid-column:span 2;margin-top:4px;">
+                        <label>Full Trip Description <small style="color:#888;">(shown on the trip page)</small></label>
+                        <textarea id="edit-dest-desc" class="form-control" rows="5"
+                            placeholder="Describe the full trip experience..."></textarea>
                     </div>
+
+                    <!-- ── ITINERARY EDITOR ── -->
+                    <div style="grid-column:span 2;margin-top:16px;">
+                        <label
+                            style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green,#8FBF9F);margin-bottom:10px;">Day-by-Day
+                            Itinerary</label>
+                        <div id="itin-editor-list" style="display:flex;flex-direction:column;gap:12px;"></div>
+                        <button onclick="addItinDayField()" class="btn-secondary"
+                            style="margin-top:10px;font-size:0.82rem;">+ Add Day</button>
+                    </div>
+
+                    <!-- ── INCLUDES EDITOR ── -->
+                    <div style="grid-column:span 2;margin-top:16px;">
+                        <label
+                            style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green,#8FBF9F);margin-bottom:10px;">What's
+                            Included</label>
+                        <div id="includes-editor-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+                        <button onclick="addIncludeField()" class="btn-secondary"
+                            style="margin-top:10px;font-size:0.82rem;">+ Add Inclusion</button>
+                    </div>
+
+                    <!-- ── ROOM OPTIONS EDITOR ── -->
+                    <div style="grid-column:span 2;margin-top:16px;">
+                        <label
+                            style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green,#8FBF9F);margin-bottom:10px;">Room
+                            Options</label>
+                        <div id="rooms-editor-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+                        <button onclick="addRoomField()" class="btn-secondary"
+                            style="margin-top:10px;font-size:0.82rem;">+ Add Room</button>
+                    </div>
+
+                </div><!-- end edit grid -->
+                <p
+                    style="font-size:0.78rem;color:#888;margin-top:12px;padding:10px 14px;background:rgba(143,191,159,0.07);border-radius:8px;border-left:2px solid #8FBF9F;">
+                    💡 <strong>How updates work:</strong> Changes saved here update the live site automatically via
+                    localStorage. For new destinations, visit <code>trip.html?slug=YOUR_SLUG</code> to see the full
+                    rendered page.
+                </p>
+                <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+                    <button class="btn-admin-primary" onclick="saveEditDest()">✓ Save All Changes</button>
+                    <button class="btn-secondary" onclick="closeEditDest()">Cancel</button>
                 </div>
             </div>
+    </div>
 
-        </main>
+    </main>
     </div>
 
     <!-- Toast -->
@@ -1433,10 +1490,33 @@
 
 
         // ── DESTINATIONS MANAGER ────────────────────────────────────
+        var BALI_DAYS = [
+            { title: 'Arrival, Connect & Seafood Welcome Dinner by the Beach', body: 'Warmly welcomed and transferred into nature. Settle into your 5-star luxury villa, explore your surroundings, then gather for an intimate seafood welcome dinner by the beach.', highlights: ['🛬 Airport Transfer', '🏨 Villa Check-in', '🦞 Welcome Seafood Dinner'] },
+            { title: 'Waterfalls & Wonders of Bali', body: 'Private guide from 9:30 AM. First stop: the breathtaking Tegenungan Waterfall, cascading waters surrounded by lush jungle. Continue to the historic Elephant Cave (Goa Gajah) — ancient carvings and tranquil surroundings.', highlights: ['🍳 Breakfast Included', '💧 Tegenungan Waterfall', '🐘 Elephant Cave (Goa Gajah)', '📸 Photo Moments'] },
+            { title: 'Sunset in a Landscape Shaped by Time', body: 'Relaxed breakfast then guide meets you at 2:00 PM. Journey to Mount Batur Geopark for a Black Lava Jeep tour at 4:00 PM — dramatic volcanic landscapes and sweeping panoramic views. Reach the sunset viewpoint around 6:00 PM where the sky transforms into a stunning display of color.', highlights: ['🍳 Breakfast Included', '🚙 Black Lava Jeep Tour', '🌋 Mount Batur Geopark', '🌅 Sunset Viewpoint'] },
+            { title: 'Rice Terraces & Village Life', body: 'Early pickup at 7:30 AM. At 9:00 AM begin a guided e-bike tour through Jatiluwih Rice Terraces — a UNESCO World Heritage site. Ride through an agro farm, bee farm, bamboo forest, and Jatiluwih Village. Afternoon: check-in at Pullman Bali Legian Beach.', highlights: ['🍳 Breakfast Included', '🍽️ Lunch & Dinner Included', '🚲 UNESCO E-Bike Tour', '🌾 Jatiluwih Village', '🏨 Hotel Move: Pullman Bali'] },
+            { title: 'Yacht Day in Bali', body: 'Pickup at 6:30 AM to Sanur Pier. Board at 7:30 AM and cruise to Nusa Lembongan. Step aboard the Utopia Catamaran (8:30 AM–1:30 PM) — welcome drink, snorkeling with equipment and safety gear, curated lunch, GoPro photos & video. Shaded lounges onboard.', highlights: ['🍳 Breakfast & Dinner Included', '⛵ Utopia Catamaran Cruise', '🤿 Snorkeling Included', '🎥 GoPro Photos & Video', '🍹 Welcome Drinks'] },
+            { title: "Asia's Hottest Beach Club", body: 'Relaxed breakfast then half day at leisure. Your guide transfers you to Finns Beach Club — one of Bali\'s most iconic beachfront destinations. Lounge by the pool, sip cocktails by the beach, or catch the sunset over the water.', highlights: ['🍳 Breakfast Included', '🏖️ Finns Beach Club', '🌅 Sunset by the Ocean', '🍹 Oceanfront Cocktails'] },
+            { title: "This Is Not Goodbye — See You Next Time!", body: 'Final breakfast at the hotel, then leisure hours — last dip in the pool or a beach stroll. Transfer to Ngurah Rai International Airport for departure. Leave with unforgettable memories, new friendships, and a camera roll that will make everyone wish they came.', highlights: ['🍳 Final Breakfast', '🏖️ Leisure Morning', '🚐 Airport Transfer', '✈️ Ngurah Rai International'] }
+        ];
+        var BALI_INCLUDES = [
+            { icon: '🏨', title: 'Accommodation / Lodging', desc: 'Luxury private villa stays and curated boutique accommodations — kept secret until reveal day.' },
+            { icon: '🎭', title: 'Events & Activities', desc: '7 carefully curated mystery experiences unveiled throughout the trip.' },
+            { icon: '🚐', title: 'Transportation', desc: 'Private transfers and curated transportation for all scheduled group activities.' },
+            { icon: '📸', title: 'Professional Photographer', desc: "Liv shoots everything — Sony digital camera, DJI Osmo Pocket, DJI Mini 3 drone. You'll come home with a full camera roll." },
+            { icon: '🍽️', title: 'Food & Beverages', desc: 'Welcome drinks, all breakfasts, 2 lunches, and 3 curated group dinners.' },
+            { icon: '🥂', title: 'Alcohol', desc: 'Welcome drink on Travel & LIV Collective.' },
+            { icon: '🤝', title: 'Community & Connections', desc: 'You may just find your next bestie or boo on this trip.' }
+        ];
+        var BALI_ROOMS = [
+            { title: 'Mystery Trip — Double Occupancy (Bringing a friend/couple)', price: '$2,350', deposit: '$500 deposit · Payment plan available', badge: '' },
+            { title: 'Mystery Trip — Double Occupancy (Solo/roommate matching)', price: '$2,400', deposit: '$530 deposit · 3 payments of $623 · No credit check', badge: 'Only 4 remaining!' },
+            { title: 'Mystery Trip — Single Occupancy', price: '$2,850', deposit: '$500 deposit · Your own private room', badge: '' }
+        ];
         var DEST_DEFAULTS = [
-            { slug:'bali',      name:'Bali, Indonesia',       emoji:'🏝️', url:'bali.html',      status:'booking_open', dates:'July 30 – Aug 5, 2026', price:'Starting at $2,350', badge:'🟢 Booking Open',        tagline:'Sacred rice terraces, rooftop infinity pools...', teaserDesc:'7 days of luxury, culture and connection in Bali.', squadtrip:'https://travelnlivcollective.squadtrip.com/trip/travel-liv-collective-signature-mystery-trip-where-luxury-meets-relaxation-and-connection-13016?color=abcca8' },
-            { slug:'puntacana', name:'Punta Cana, D.R.',      emoji:'🌴', url:'puntacana.html', status:'coming_soon',  dates:'TBA',                   price:'TBA',                badge:'✈️ Coming Soon — Details Dropping', tagline:'All trip information will be revealed soon.', teaserDesc:'The details are being finalized. Expect the same luxury and community.',  squadtrip:'' },
-            { slug:'rio',       name:'Rio de Janeiro, Brazil',emoji:'🎉', url:'rio.html',       status:'coming_soon',  dates:'TBA',                   price:'TBA',                badge:'✈️ Coming Soon — Details Dropping', tagline:'All trip information will be revealed soon.', teaserDesc:'The details are being finalized. Expect the same luxury and community.',  squadtrip:'' }
+            { slug: 'bali', name: 'Bali, Indonesia', emoji: '🏝️', url: 'bali.html', status: 'booking_open', dates: 'July 30 – Aug 5, 2026', price: 'Starting at $2,350', badge: '🟢 Booking Open', tagline: 'Sacred rice terraces, rooftop infinity pools, volcanic sunrises, and nights you will never forget.', teaserDesc: '7 days of luxury, culture and connection in Bali.', description: 'Your journey begins the moment you arrive, where you will be seamlessly welcomed and transported into nature. Throughout the trip, you will stay in hand-selected 5-star luxury local resorts and private villas, each chosen for their setting, serenity, and wow factor.', squadtrip: 'https://travelnlivcollective.squadtrip.com/trip/travel-liv-collective-signature-mystery-trip-where-luxury-meets-relaxation-and-connection-13016?color=abcca8', days: BALI_DAYS, includes: BALI_INCLUDES, rooms: BALI_ROOMS },
+            { slug: 'puntacana', name: 'Punta Cana, D.R.', emoji: '🌴', url: 'puntacana.html', status: 'coming_soon', dates: 'TBA', price: 'TBA', badge: '✈️ Coming Soon — Details Dropping', tagline: 'All trip information will be revealed soon.', teaserDesc: 'The details are being finalized. Expect the same luxury and community.', description: '', squadtrip: '', days: [], includes: [], rooms: [] },
+            { slug: 'rio', name: 'Rio de Janeiro, Brazil', emoji: '🎉', url: 'rio.html', status: 'coming_soon', dates: 'TBA', price: 'TBA', badge: '✈️ Coming Soon — Details Dropping', tagline: 'All trip information will be revealed soon.', teaserDesc: 'The details are being finalized. Expect the same luxury and community.', description: '', squadtrip: '', days: [], includes: [], rooms: [] }
         ];
 
         function getDestinations() {
@@ -1448,22 +1528,22 @@
                     localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(stored));
                 }
                 return stored;
-            } catch(e) { return DEST_DEFAULTS; }
+            } catch (e) { return DEST_DEFAULTS; }
         }
 
         function saveDestinations(list) {
             localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(list));
             // also save individual DEST_ keys so trip pages can read them
-            list.forEach(function(d) {
+            list.forEach(function (d) {
                 localStorage.setItem('DEST_' + d.slug, JSON.stringify(d));
             });
         }
 
         var STATUS_LABELS = {
-            booking_open:'🟢 Booking Open',
-            coming_soon:'✈️ Coming Soon',
-            sold_out:'🔴 Sold Out',
-            concluded:'🏁 Concluded'
+            booking_open: '🟢 Booking Open',
+            coming_soon: '✈️ Coming Soon',
+            sold_out: '🔴 Sold Out',
+            concluded: '🏁 Concluded'
         };
 
         function renderDestList() {
@@ -1474,21 +1554,21 @@
                 el.innerHTML = '<p style="color:#888;font-style:italic;">No destinations yet. Add one below.</p>';
                 return;
             }
-            el.innerHTML = list.map(function(d, i) {
+            el.innerHTML = list.map(function (d, i) {
                 var statusColor = d.status === 'booking_open' ? '#4caf72' : d.status === 'concluded' ? '#888' : '#e8a838';
                 return '<div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
-                    '<div style="font-size:2rem;">' + (d.emoji||'✈️') + '</div>' +
+                    '<div style="font-size:2rem;">' + (d.emoji || '✈️') + '</div>' +
                     '<div style="flex:1;min-width:200px;">' +
-                        '<div style="font-weight:700;font-size:1rem;">' + d.name + '</div>' +
-                        '<div style="font-size:0.8rem;color:#888;margin-top:2px;">' + d.dates + ' · ' + d.price + '</div>' +
-                        '<div style="display:inline-block;margin-top:6px;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:' + statusColor + '20;color:' + statusColor + ';border:1px solid ' + statusColor + '40;">' + (STATUS_LABELS[d.status]||d.status) + '</div>' +
+                    '<div style="font-weight:700;font-size:1rem;">' + d.name + '</div>' +
+                    '<div style="font-size:0.8rem;color:#888;margin-top:2px;">' + d.dates + ' · ' + d.price + '</div>' +
+                    '<div style="display:inline-block;margin-top:6px;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:' + statusColor + '20;color:' + statusColor + ';border:1px solid ' + statusColor + '40;">' + (STATUS_LABELS[d.status] || d.status) + '</div>' +
                     '</div>' +
                     '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-                        '<a href="' + d.url + '" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">�� View Page</a>' +
-                        '<button onclick="openEditDest(' + i + ')" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">✏️ Edit</button>' +
-                        '<button onclick="deleteDest(' + i + ')" style="background:#c0392b;border:none;border-radius:8px;color:#fff;padding:8px 14px;font-size:0.8rem;cursor:pointer;">🗑️ Delete</button>' +
+                    '<a href="' + d.url + '" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">�� View Page</a>' +
+                    '<button onclick="openEditDest(' + i + ')" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">✏️ Edit</button>' +
+                    '<button onclick="deleteDest(' + i + ')" style="background:#c0392b;border:none;border-radius:8px;color:#fff;padding:8px 14px;font-size:0.8rem;cursor:pointer;">🗑️ Delete</button>' +
                     '</div>' +
-                '</div>';
+                    '</div>';
             }).join('');
         }
 
@@ -1500,26 +1580,26 @@
         function closeAddDestForm() {
             document.getElementById('add-dest-form').style.display = 'none';
             document.getElementById('add-dest-btn').style.display = 'flex';
-            ['new-dest-name','new-dest-slug','new-dest-dates','new-dest-price','new-dest-tagline','new-dest-teaser','new-dest-emoji'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+            ['new-dest-name', 'new-dest-slug', 'new-dest-dates', 'new-dest-price', 'new-dest-tagline', 'new-dest-teaser', 'new-dest-emoji'].forEach(function (id) { var el = document.getElementById(id); if (el) el.value = ''; });
         }
 
         function saveNewDest() {
-            var name  = (document.getElementById('new-dest-name').value||'').trim();
-            var slug  = (document.getElementById('new-dest-slug').value||'').trim().toLowerCase().replace(/[^a-z0-9]/g,'');
-            if (!name || !slug) { toast('Name and slug are required.','error'); return; }
+            var name = (document.getElementById('new-dest-name').value || '').trim();
+            var slug = (document.getElementById('new-dest-slug').value || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+            if (!name || !slug) { toast('Name and slug are required.', 'error'); return; }
             var list = getDestinations();
-            if (list.find(function(d){ return d.slug === slug; })) { toast('A destination with that slug already exists.','error'); return; }
+            if (list.find(function (d) { return d.slug === slug; })) { toast('A destination with that slug already exists.', 'error'); return; }
             var status = document.getElementById('new-dest-status').value;
             var newDest = {
-                slug:      slug,
-                name:      name,
-                emoji:     document.getElementById('new-dest-emoji').value || '✈️',
-                url:       slug + '.html',
-                status:    status,
-                dates:     document.getElementById('new-dest-dates').value || 'TBA',
-                price:     document.getElementById('new-dest-price').value || 'TBA',
-                badge:     status === 'booking_open' ? '🟢 Booking Open' : '✈️ Coming Soon — Details Dropping',
-                tagline:   document.getElementById('new-dest-tagline').value || 'All trip information will be revealed soon.',
+                slug: slug,
+                name: name,
+                emoji: document.getElementById('new-dest-emoji').value || '✈️',
+                url: slug + '.html',
+                status: status,
+                dates: document.getElementById('new-dest-dates').value || 'TBA',
+                price: document.getElementById('new-dest-price').value || 'TBA',
+                badge: status === 'booking_open' ? '🟢 Booking Open' : '✈️ Coming Soon — Details Dropping',
+                tagline: document.getElementById('new-dest-tagline').value || 'All trip information will be revealed soon.',
                 teaserDesc: document.getElementById('new-dest-teaser').value || 'The details are being finalized.',
                 squadtrip: ''
             };
@@ -1530,24 +1610,135 @@
             toast('✓ Destination "' + name + '" created! Update the page URL and Squadtrip link in Edit.');
         }
 
+        /* ── ITINERARY EDITOR HELPERS ── */
+        function renderItinEditor(days) {
+            var c = document.getElementById('itin-editor-list');
+            if (!c) return;
+            c.innerHTML = '';
+            (days || []).forEach(function (day, i) { _addItinRow(day, i); });
+        }
+        function _addItinRow(day, i) {
+            var c = document.getElementById('itin-editor-list');
+            var div = document.createElement('div');
+            div.style.cssText = 'background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:10px;padding:14px 16px;';
+            div.innerHTML =
+                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">' +
+                '<strong style="font-size:0.85rem;">Day ' + (i + 1) + '</strong>' +
+                '<button onclick="this.parentElement.parentElement.remove()" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:0.8rem;">✕ Remove</button>' +
+                '</div>' +
+                '<input type="text" placeholder="Day title (e.g. Arrival & Welcome Dinner)" value="' + (day.title || '').replace(/"/g, '&quot;') + '" class="form-control itin-day-title" style="margin-bottom:8px;" />' +
+                '<textarea placeholder="Day description..." class="form-control itin-day-body" rows="3" style="margin-bottom:8px;">' + (day.body || '') + '</textarea>' +
+                '<input type="text" placeholder="Highlights (comma separated: 🛬 Airport · 🏨 Villa Check-in)" value="' + (day.highlights || []).join(' · ').replace(/"/g, '&quot;') + '" class="form-control itin-day-hl" />';
+            div.setAttribute('data-irow', '1');
+            c.appendChild(div);
+        }
+        function addItinDayField() {
+            var rows = document.querySelectorAll('#itin-editor-list [data-irow]').length;
+            _addItinRow({ title: '', body: '', highlights: [] }, rows);
+        }
+        function getItinData() {
+            var rows = document.querySelectorAll('#itin-editor-list [data-irow]');
+            var days = [];
+            rows.forEach(function (row) {
+                var title = row.querySelector('.itin-day-title').value.trim();
+                var body = row.querySelector('.itin-day-body').value.trim();
+                var hl = row.querySelector('.itin-day-hl').value.trim();
+                days.push({ title: title, body: body, highlights: hl ? hl.split('·').map(function (x) { return x.trim(); }) : [] });
+            });
+            return days;
+        }
+
+        /* ── INCLUDES EDITOR HELPERS ── */
+        function renderIncludesEditor(includes) {
+            var c = document.getElementById('includes-editor-list');
+            if (!c) return;
+            c.innerHTML = '';
+            (includes || []).forEach(function (inc) { _addIncludeRow(inc); });
+        }
+        function _addIncludeRow(inc) {
+            var c = document.getElementById('includes-editor-list');
+            var div = document.createElement('div');
+            div.setAttribute('data-inc-row', '1');
+            div.style.cssText = 'display:grid;grid-template-columns:60px 1fr 2fr auto;gap:8px;align-items:center;';
+            div.innerHTML =
+                '<input type="text" value="' + (inc.icon || '').replace(/"/g, '&quot;') + '" placeholder="Icon" class="form-control inc-icon" style="text-align:center;font-size:1.2rem;" />' +
+                '<input type="text" value="' + (inc.title || '').replace(/"/g, '&quot;') + '" placeholder="Title" class="form-control inc-title" />' +
+                '<input type="text" value="' + (inc.desc || '').replace(/"/g, '&quot;') + '" placeholder="Description" class="form-control inc-desc" />' +
+                '<button onclick="this.parentElement.remove()" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:1rem;">✕</button>';
+            c.appendChild(div);
+        }
+        function addIncludeField() { _addIncludeRow({ icon: '✅', title: '', desc: '' }); }
+        function getIncludesData() {
+            var rows = document.querySelectorAll('#includes-editor-list [data-inc-row]');
+            var list = [];
+            rows.forEach(function (row) {
+                list.push({
+                    icon: row.querySelector('.inc-icon').value.trim(),
+                    title: row.querySelector('.inc-title').value.trim(),
+                    desc: row.querySelector('.inc-desc').value.trim()
+                });
+            });
+            return list;
+        }
+
+        /* ── ROOMS EDITOR HELPERS ── */
+        function renderRoomsEditor(rooms) {
+            var c = document.getElementById('rooms-editor-list');
+            if (!c) return;
+            c.innerHTML = '';
+            (rooms || []).forEach(function (r) { _addRoomRow(r); });
+        }
+        function _addRoomRow(r) {
+            var c = document.getElementById('rooms-editor-list');
+            var div = document.createElement('div');
+            div.setAttribute('data-room-row', '1');
+            div.style.cssText = 'display:grid;grid-template-columns:2fr 1fr 2fr 80px auto;gap:8px;align-items:center;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:8px;padding:10px 14px;';
+            div.innerHTML =
+                '<input type="text" value="' + (r.title || '').replace(/"/g, '&quot;') + '" placeholder="Room name" class="form-control room-title" />' +
+                '<input type="text" value="' + (r.price || '').replace(/"/g, '&quot;') + '" placeholder="Price ($2,350)" class="form-control room-price" />' +
+                '<input type="text" value="' + (r.deposit || '').replace(/"/g, '&quot;') + '" placeholder="Deposit note" class="form-control room-deposit" />' +
+                '<input type="text" value="' + (r.badge || '').replace(/"/g, '&quot;') + '" placeholder="Badge" class="form-control room-badge" />' +
+                '<button onclick="this.parentElement.remove()" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:1rem;">✕</button>';
+            c.appendChild(div);
+        }
+        function addRoomField() { _addRoomRow({ title: '', price: '', deposit: '', badge: '' }); }
+        function getRoomsData() {
+            var rows = document.querySelectorAll('#rooms-editor-list [data-room-row]');
+            var list = [];
+            rows.forEach(function (row) {
+                list.push({
+                    title: row.querySelector('.room-title').value.trim(),
+                    price: row.querySelector('.room-price').value.trim(),
+                    deposit: row.querySelector('.room-deposit').value.trim(),
+                    badge: row.querySelector('.room-badge').value.trim()
+                });
+            });
+            return list;
+        }
+
+        /* ── OPEN / SAVE / CLOSE ── */
         function openEditDest(idx) {
             var list = getDestinations();
             var d = list[idx];
             if (!d) return;
             document.getElementById('edit-dest-slug-hidden').value = d.slug;
-            document.getElementById('edit-dest-name').value       = d.name        || '';
-            document.getElementById('edit-dest-dates').value      = d.dates       || '';
-            document.getElementById('edit-dest-price').value      = d.price       || '';
-            document.getElementById('edit-dest-badge').value      = d.badge       || '';
-            document.getElementById('edit-dest-tagline').value    = d.tagline     || '';
-            document.getElementById('edit-dest-teaser').value     = d.teaserDesc  || '';
-            document.getElementById('edit-dest-url').value        = d.url         || '';
-            document.getElementById('edit-dest-squadtrip').value  = d.squadtrip   || '';
+            document.getElementById('edit-dest-name').value = d.name || '';
+            document.getElementById('edit-dest-dates').value = d.dates || '';
+            document.getElementById('edit-dest-price').value = d.price || '';
+            document.getElementById('edit-dest-badge').value = d.badge || '';
+            document.getElementById('edit-dest-tagline').value = d.tagline || '';
+            document.getElementById('edit-dest-teaser').value = d.teaserDesc || '';
+            document.getElementById('edit-dest-url').value = d.url || '';
+            document.getElementById('edit-dest-squadtrip').value = d.squadtrip || '';
+            document.getElementById('edit-dest-desc').value = d.description || '';
             var sel = document.getElementById('edit-dest-status');
             if (sel) sel.value = d.status || 'coming_soon';
+            renderItinEditor(d.days || []);
+            renderIncludesEditor(d.includes || []);
+            renderRoomsEditor(d.rooms || []);
             document.getElementById('edit-dest-drawer-title').textContent = 'Edit: ' + d.name;
             document.getElementById('dest-edit-drawer').style.display = 'block';
-            document.getElementById('dest-edit-drawer').scrollIntoView({ behavior:'smooth' });
+            setTimeout(function () { document.getElementById('dest-edit-drawer').scrollIntoView({ behavior: 'smooth' }); }, 100);
         }
 
         function closeEditDest() {
@@ -1557,21 +1748,25 @@
         function saveEditDest() {
             var slug = document.getElementById('edit-dest-slug-hidden').value;
             var list = getDestinations();
-            var idx  = list.findIndex(function(d){ return d.slug === slug; });
-            if (idx < 0) { toast('Destination not found.','error'); return; }
-            list[idx].name      = document.getElementById('edit-dest-name').value;
-            list[idx].dates     = document.getElementById('edit-dest-dates').value;
-            list[idx].price     = document.getElementById('edit-dest-price').value;
-            list[idx].badge     = document.getElementById('edit-dest-badge').value;
-            list[idx].tagline   = document.getElementById('edit-dest-tagline').value;
+            var idx = list.findIndex(function (d) { return d.slug === slug; });
+            if (idx < 0) { toast('Destination not found.', 'error'); return; }
+            list[idx].name = document.getElementById('edit-dest-name').value;
+            list[idx].dates = document.getElementById('edit-dest-dates').value;
+            list[idx].price = document.getElementById('edit-dest-price').value;
+            list[idx].badge = document.getElementById('edit-dest-badge').value;
+            list[idx].tagline = document.getElementById('edit-dest-tagline').value;
             list[idx].teaserDesc = document.getElementById('edit-dest-teaser').value;
-            list[idx].url       = document.getElementById('edit-dest-url').value;
+            list[idx].url = document.getElementById('edit-dest-url').value;
             list[idx].squadtrip = document.getElementById('edit-dest-squadtrip').value;
-            list[idx].status    = document.getElementById('edit-dest-status').value;
+            list[idx].description = document.getElementById('edit-dest-desc').value;
+            list[idx].status = document.getElementById('edit-dest-status').value;
+            list[idx].days = getItinData();
+            list[idx].includes = getIncludesData();
+            list[idx].rooms = getRoomsData();
             saveDestinations(list);
             renderDestList();
             closeEditDest();
-            toast('✓ "' + list[idx].name + '" updated successfully!');
+            toast('✓ "' + list[idx].name + '" — all changes saved and live!');
         }
 
         function deleteDest(idx) {
@@ -1588,7 +1783,7 @@
 
         // Hook into showPanel to render destinations list when opened
         var _origShowPanel = showPanel;
-        showPanel = function(id) {
+        showPanel = function (id) {
             _origShowPanel(id);
             if (id === 'destinations') renderDestList();
         };
