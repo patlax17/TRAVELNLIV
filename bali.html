@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bali, Indonesia 2026 — Travel & LIV Collective | 7-Day Luxury Group Trip</title>
+    <meta name="description"
+        content="7 days in Bali with Travel & LIV Collective. Sacred rice terraces, volcano sunrises, private villas, curated experiences and a professional photographer included. Starting at $2,350." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="zanzibar.css" />
+    <script src="tracking.js"></script>
+    <style>
+        /* ── BALI-SPECIFIC OVERRIDES ── */
+        .bali-photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 220px;
+            gap: 10px;
+            margin-top: 48px;
+        }
+
+        .bali-photo-grid .bali-photo {
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .bali-photo-grid .bali-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .bali-photo-grid .bali-photo:hover img {
+            transform: scale(1.06);
+        }
+
+        .bali-photo-grid .bali-photo.wide {
+            grid-column: span 2;
+        }
+
+        .bali-photo-grid .bali-photo.tall {
+            grid-row: span 2;
+        }
+
+        /* Day-tab itinerary */
+        .itin-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 36px;
+        }
+
+        .itin-tab {
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .itin-tab:hover {
+            border-color: var(--teal);
+            color: var(--white);
+        }
+
+        .itin-tab.active {
+            background: var(--teal);
+            border-color: var(--teal);
+            color: var(--dark-1);
+        }
+
+        .itin-day-panel {
+            display: none;
+        }
+
+        .itin-day-panel.active {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .itin-panel-img {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+
+        .itin-panel-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .itin-panel-body h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .itin-panel-body p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 14px;
+        }
+
+        .itin-hl-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        /* Includes grid */
+        .includes-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin-top: 40px;
+        }
+
+        .inc2-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .inc2-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .inc2-body h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .inc2-body p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* Room cards */
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .room-card {
+            background: var(--dark-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .room-card:hover {
+            border-color: var(--border-gold);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .room-card.featured {
+            border-color: var(--teal);
+        }
+
+        .room-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .room-card-body {
+            padding: 24px;
+        }
+
+        .room-card-body h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .room-card-body .room-price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin: 10px 0 4px;
+        }
+
+        .room-card-body .room-deposit {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .room-badge {
+            display: inline-block;
+            background: var(--teal);
+            color: var(--dark-1);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .bali-photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 160px;
+            }
+
+            .itin-day-panel.active {
+                grid-template-columns: 1fr;
+            }
+
+            .includes-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body data-page="bali">
+
+    <!-- ======== NAVIGATION ======== -->
+    <nav id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Travel & LIV Collective"
+                    class="nav-logo-img" /></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="upcoming.html">Upcoming Trips</a></li>
+                <li><a href="partnerships.html">Partners</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+            </ul>
+            <a href="#bali-book" class="btn btn-gold nav-cta" id="bali-nav-book">Secure Your Spot</a>
+            <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="upcoming.html">Upcoming Trips</a>
+        <a href="partnerships.html">Partners</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="faqs.html">FAQs</a>
+        <a href="#bali-book" class="btn btn-gold" style="margin-top:16px;">Secure Your Spot</a>
+    </div>
+
+    <!-- ======== TRIP HERO ======== -->
+    <section id="trip-hero">
+        <div class="trip-hero-bg">
+            <img src="bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg"
+                alt="Bali, Indonesia aerial view" />
+            <div class="trip-hero-overlay"></div>
+        </div>
+        <div class="trip-hero-content container">
+            <div class="trip-breadcrumb animate-fade-in">
+                <a href="index.html">Home</a>
+                <span>›</span>
+                <a href="upcoming.html">Upcoming Trips</a>
+                <span>›</span>
+                <span class="text-gold">Bali 2026</span>
+            </div>
+            <span class="eyebrow animate-fade-up animate-delay-1">Travel & LIV Collective Presents</span>
+            <h1 class="display-xl animate-fade-up animate-delay-2">
+                Bali<em>,</em><br />Indonesia
+            </h1>
+            <p class="trip-hero-sub animate-fade-up animate-delay-3">
+                7 Days · July 30 – August 5, 2026 · Starting at $2,350
+            </p>
+            <div class="trip-hero-badges animate-fade-up animate-delay-4">
+                <span class="tag tag-gold">🟢 Booking Open</span>
+                <span class="tag tag-teal">$500 Deposit to Reserve</span>
+            </div>
+            <div class="animate-fade-up animate-delay-4" style="margin-top:32px;">
+                <a href="#bali-book" class="btn btn-gold" id="hero-book-btn"
+                    onclick="event.preventDefault();document.getElementById('bali-book').scrollIntoView({behavior:'smooth'});setTimeout(()=>openBaliBooking(),400);">
+                    Secure Your Spot
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
+                        viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <!-- Sticky CTA -->
+        <div class="trip-sticky-cta" id="stickyCta">
+            <div class="container">
+                <div class="sticky-inner">
+                    <div>
+                        <span class="sticky-title">Bali, Indonesia 2026</span>
+                        <span class="sticky-sub text-muted">Starting at $2,350 · 7 Days</span>
+                    </div>
+                    <a href="#bali-book" class="btn btn-gold btn-sm" id="sticky-book-btn"
+                        onclick="event.preventDefault();document.getElementById('bali-book').scrollIntoView({behavior:'smooth'});setTimeout(()=>openBaliBooking(),400);">Book
+                        Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== QUICK STATS ======== -->
+    <div class="trip-quick-stats">
+        <div class="container">
+            <div class="quick-stats-grid">
+                <div class="quick-stat">
+                    <span class="qs-icon">📅</span>
+                    <span class="qs-label">Duration</span>
+                    <span class="qs-value">7 Days / 6 Nights</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="qs-icon">🏝️</span>
+                    <span class="qs-label">Location</span>
+                    <span class="qs-value">Bali, Indonesia</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="qs-icon">🏨</span>
+                    <span class="qs-label">Accommodation</span>
+                    <span class="qs-value">5★ Private Villas</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="qs-icon">👥</span>
+                    <span class="qs-label">Group Size</span>
+                    <span class="qs-value">Small & Exclusive</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="qs-icon">✈️</span>
+                    <span class="qs-label">Flights</span>
+                    <span class="qs-value">Not Included</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="qs-icon">💰</span>
+                    <span class="qs-label">Starting From</span>
+                    <span class="qs-value text-gold">$2,350</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page nav -->
+    <div class="page-nav-sticky" id="pageNav">
+        <div class="container">
+            <div class="page-nav-inner">
+                <a href="#bali-gallery" class="page-nav-link" data-section="bali-gallery">Photos</a>
+                <a href="#bali-details" class="page-nav-link" data-section="bali-details">Trip Details</a>
+                <a href="#bali-itinerary" class="page-nav-link" data-section="bali-itinerary">Itinerary</a>
+                <a href="#bali-includes" class="page-nav-link" data-section="bali-includes">What's Included</a>
+                <a href="#bali-book" class="page-nav-link" data-section="bali-book">Book</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== PHOTO GALLERY ======== -->
+    <section class="section" id="bali-gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="eyebrow"><span class="gold-line"></span>See It First</span>
+                <h2 class="display-md" style="margin-top:16px;">A Glimpse of Bali</h2>
+            </div>
+            <div class="bali-photo-grid reveal">
+                <div class="bali-photo wide tall">
+                    <img src="bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg"
+                        alt="Kelingking Beach, Nusa Penida Bali" loading="lazy" />
+                </div>
+                <div class="bali-photo">
+                    <img src="bali/jatiluwih-warisan-budaya_f4caf68e-bd5a-4190-834f-4645784211f5.jpeg"
+                        alt="Jatiluwih Rice Terraces Bali" loading="lazy" />
+                </div>
+                <div class="bali-photo">
+                    <img src="bali/bali-mount-batur-jeep-sunrise-17370345941_831c16a5-8602-4c8a-b439-bc9251c2b50c.jpeg"
+                        alt="Mount Batur Jeep Sunrise Bali" loading="lazy" />
+                </div>
+                <div class="bali-photo">
+                    <img src="bali/utopia-catamaran-floating-beach-club-aerial-view_7d80a1cd-173f-48cf-94ab-ef690209fa34.jpeg"
+                        alt="Catamaran Floating Beach Club Bali" loading="lazy" />
+                </div>
+                <div class="bali-photo">
+                    <img src="bali/bali-tegenungan-waterfall_e16b7917-e41a-4766-829a-abaeeb24a256.jpeg"
+                        alt="Tegenungan Waterfall Bali" loading="lazy" />
+                </div>
+                <div class="bali-photo wide">
+                    <img src="bali/MountBaturJeepSunriseComboExperienceinBali-KlookUnitedStates_c593a0b2-3eb4-4973-aa28-3e4128bb7787.jpeg"
+                        alt="Bali Jeep Sunrise Experience" loading="lazy" />
+                </div>
+                <div class="bali-photo">
+                    <img src="bali/Finns_5507ce8c-35bc-4059-9e33-63e9b0f552c0.png" alt="Finns Beach Club Bali"
+                        loading="lazy" />
+                </div>
+                <div class="bali-photo">
+                    <img src="bali/Bali-Nightlife-Featured-image_a2cd03ed-8904-4a76-a030-fe42501455d7.jpeg"
+                        alt="Bali Nightlife" loading="lazy" />
+                </div>
+                <div class="bali-photo">
+                    <img src="bali/slide2_afcc89ef-2f18-423d-b9bd-cf88edce1482.jpeg" alt="Bali Experience"
+                        loading="lazy" />
+                </div>
+                <div class="bali-photo">
+                    <img src="bali/DSC08538_a040ac40-a59f-49a5-a2d6-ea0f1853a3a9.jpeg" alt="Bali Group Photo"
+                        loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== TRIP DESCRIPTION ======== -->
+    <section class="section" id="bali-details" style="background:var(--dark-2);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="eyebrow"><span class="gold-line"></span>Trip Details</span>
+                <h2 class="display-md" style="margin-top:16px;">What Awaits You in Bali</h2>
+            </div>
+            <div class="reveal" style="max-width:760px;margin-top:32px;">
+                <p style="color:var(--text-muted);line-height:1.9;font-size:1.05rem;margin-bottom:20px;">
+                    Your journey begins the moment you arrive, where you'll be seamlessly welcomed and transported into
+                    nature. Throughout the trip, you'll stay in hand-selected 5-star luxury local resorts and private
+                    villas, each chosen for their setting, serenity, and wow factor. Expect lush surroundings, elevated
+                    comfort, and spaces that feel deeply connected to the land.
+                </p>
+                <p style="color:var(--text-muted);line-height:1.9;font-size:1.05rem;margin-bottom:20px;">
+                    You'll wake up in places you've never imagined before — breathing in fresh air, opening your eyes to
+                    stunning views, and feeling completely removed from everyday life.
+                </p>
+                <p style="color:var(--text-muted);line-height:1.9;font-size:1.05rem;margin-bottom:20px;">
+                    Over the course of the experience, your days will blend adventure, culture, and leisure. Think
+                    hidden natural wonders, early-morning excursions that reward you with unforgettable views, immersive
+                    cultural moments, and time to simply relax and take it all in. Some days are designed for
+                    exploration, others for slowing down — because balance is part of the luxury.
+                </p>
+                <p style="color:var(--text-muted);line-height:1.9;font-size:1.05rem;margin-bottom:20px;">
+                    Meals are thoughtfully included throughout the trip, featuring a mix of local cuisine, unique dining
+                    settings, and memorable group dinners — some with views you'll still be talking about long after you
+                    return home.
+                </p>
+                <p style="color:var(--text-muted);line-height:1.9;font-size:1.05rem;">
+                    This is not just a place you're visiting — it's a feeling you're stepping into.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== ITINERARY ======== -->
+    <section class="section" id="bali-itinerary">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="eyebrow"><span class="gold-line"></span>Day-by-Day</span>
+                <h2 class="display-md" style="margin-top:16px;">Your 7-Day Journey</h2>
+            </div>
+
+            <!-- Day Tabs -->
+            <div class="itin-tabs reveal" id="itinTabs">
+                <button class="itin-tab active" onclick="showDay(1)">Day 1</button>
+                <button class="itin-tab" onclick="showDay(2)">Day 2</button>
+                <button class="itin-tab" onclick="showDay(3)">Day 3</button>
+                <button class="itin-tab" onclick="showDay(4)">Day 4</button>
+                <button class="itin-tab" onclick="showDay(5)">Day 5</button>
+                <button class="itin-tab" onclick="showDay(6)">Day 6</button>
+                <button class="itin-tab" onclick="showDay(7)">Day 7</button>
+            </div>
+
+            <!-- Day 1 -->
+            <div class="itin-day-panel active" id="day-1">
+                <div class="itin-panel-img">
+                    <img src="bali/caption_c5af5872-9077-4fd4-8177-3f1dfee01954.jpeg" alt="Bali Welcome Dinner" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Arrival, Connect & Seafood Welcome Dinner by the Beach</h3>
+                    <p>You'll be warmly welcomed and transferred into nature, where you'll settle into your 5-star
+                        luxury local accommodation with time to unwind, explore your surroundings, and ease into the
+                        experience.</p>
+                    <p>We'll gather for an intimate nearby welcome seafood dinner by the beach — the perfect way to meet
+                        your travel crew and kick off seven days in paradise.</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">🛬 Airport Transfer</span>
+                        <span class="itin-hl">🏨 Villa Check-in</span>
+                        <span class="itin-hl">🦞 Welcome Seafood Dinner</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 2 — Placeholder -->
+            <div class="itin-day-panel" id="day-2">
+                <div class="itin-panel-img">
+                    <img src="bali/jatiluwih-warisan-budaya_f4caf68e-bd5a-4190-834f-4645784211f5.jpeg"
+                        alt="Bali Day 2" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Day 2 — Coming Soon</h3>
+                    <p>Full itinerary details for Day 2 will be added shortly. Stay tuned!</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">📍 Details Dropping Soon</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="itin-day-panel" id="day-3">
+                <div class="itin-panel-img">
+                    <img src="bali/bali-mount-batur-jeep-sunrise-17370345941_831c16a5-8602-4c8a-b439-bc9251c2b50c.jpeg"
+                        alt="Mount Batur Sunrise" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Day 3 — Coming Soon</h3>
+                    <p>Full itinerary details for Day 3 will be added shortly. Stay tuned!</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">📍 Details Dropping Soon</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="itin-day-panel" id="day-4">
+                <div class="itin-panel-img">
+                    <img src="bali/utopia-catamaran-floating-beach-club-aerial-view_7d80a1cd-173f-48cf-94ab-ef690209fa34.jpeg"
+                        alt="Catamaran Day" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Day 4 — Coming Soon</h3>
+                    <p>Full itinerary details for Day 4 will be added shortly. Stay tuned!</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">📍 Details Dropping Soon</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="itin-day-panel" id="day-5">
+                <div class="itin-panel-img">
+                    <img src="bali/bali-tegenungan-waterfall_e16b7917-e41a-4766-829a-abaeeb24a256.jpeg"
+                        alt="Bali Waterfall" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Day 5 — Coming Soon</h3>
+                    <p>Full itinerary details for Day 5 will be added shortly. Stay tuned!</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">📍 Details Dropping Soon</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="itin-day-panel" id="day-6">
+                <div class="itin-panel-img">
+                    <img src="bali/Finns_5507ce8c-35bc-4059-9e33-63e9b0f552c0.png" alt="Finns Beach Club" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Day 6 — Coming Soon</h3>
+                    <p>Full itinerary details for Day 6 will be added shortly. Stay tuned!</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">📍 Details Dropping Soon</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 7 -->
+            <div class="itin-day-panel" id="day-7">
+                <div class="itin-panel-img">
+                    <img src="bali/Bali-Nightlife-Featured-image_a2cd03ed-8904-4a76-a030-fe42501455d7.jpeg"
+                        alt="Farewell Bali" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Day 7 — Farewell & Departure</h3>
+                    <p>After a final slow morning in paradise, it's time to check out and head to the airport. We hope
+                        you're leaving with new friendships, unforgettable memories, and a camera roll full of pure
+                        magic.</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">🍳 Final Breakfast</span>
+                        <span class="itin-hl">🛬 Airport Transfer</span>
+                        <span class="itin-hl">✈️ Departure</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ======== WHAT'S INCLUDED ======== -->
+    <section class="section" id="bali-includes" style="background:var(--dark-2);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="eyebrow"><span class="gold-line"></span>Everything You Get</span>
+                <h2 class="display-md" style="margin-top:16px;">Included in Registration</h2>
+            </div>
+            <div class="includes-2col reveal">
+                <div class="inc2-item">
+                    <div class="inc2-icon">🏨</div>
+                    <div class="inc2-body">
+                        <h4>Accommodation / Lodging</h4>
+                        <p>Luxury private villa stays and curated boutique accommodations — kept secret until reveal
+                            day.</p>
+                    </div>
+                </div>
+                <div class="inc2-item">
+                    <div class="inc2-icon">🎭</div>
+                    <div class="inc2-body">
+                        <h4>Events & Activities</h4>
+                        <p>7 carefully curated mystery experiences will be unveiled throughout the trip.</p>
+                    </div>
+                </div>
+                <div class="inc2-item">
+                    <div class="inc2-icon">🚐</div>
+                    <div class="inc2-body">
+                        <h4>Transportation</h4>
+                        <p>Private transfers and curated transportation are included for all scheduled group activities.
+                        </p>
+                    </div>
+                </div>
+                <div class="inc2-item">
+                    <div class="inc2-icon">📸</div>
+                    <div class="inc2-body">
+                        <h4>Professional Photographer</h4>
+                        <p>Liv has all the camera equipment you can think of — Sony digital camera, DJI Osmo Pocket, DJI
+                            Mini 3 drone. We're getting every shot to make sure you shut Instagram down!</p>
+                    </div>
+                </div>
+                <div class="inc2-item">
+                    <div class="inc2-icon">🍽️</div>
+                    <div class="inc2-body">
+                        <h4>Food & Beverages</h4>
+                        <p>Welcome drinks, all breakfasts, 2 lunches, and 3 dinners included.</p>
+                    </div>
+                </div>
+                <div class="inc2-item">
+                    <div class="inc2-icon">🍹</div>
+                    <div class="inc2-body">
+                        <h4>Alcohol</h4>
+                        <p>Welcome drink on Travel & LIV Collective.</p>
+                    </div>
+                </div>
+                <div class="inc2-item">
+                    <div class="inc2-icon">🤝</div>
+                    <div class="inc2-body">
+                        <h4>Community & Connections</h4>
+                        <p>You may just find your next bestie or boo on this trip.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== ROOM OPTIONS ======== -->
+    <section class="section" id="bali-rooms">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <span class="eyebrow">Your Stay</span>
+                <h2 class="display-md" style="margin-top:16px;">Choose Your Room</h2>
+                <div class="divider"></div>
+                <p class="text-muted" style="max-width:560px;margin:20px auto 0;line-height:1.8;">
+                    All rooms are in luxury 5-star private villas. The only difference is how you share the space.
+                </p>
+            </div>
+            <div class="room-grid reveal">
+                <div class="room-card">
+                    <img src="bali/27ea4d6e_fbd36235-e900-4c1c-896b-f246125f8159.avif" alt="Double Occupancy Room" />
+                    <div class="room-card-body">
+                        <h3>Mystery Trip — Double Occupancy<br><small
+                                style="font-weight:400;color:var(--text-muted);">Bringing a friend / couple</small></h3>
+                        <div class="room-price">$2,350</div>
+                        <div class="room-deposit">Deposit: $500 · No credit check payment plan available</div>
+                    </div>
+                </div>
+                <div class="room-card featured">
+                    <div class="room-badge">Only 4 remaining!</div>
+                    <img src="bali/57c7c690_35af58b3-1d1d-47f5-8375-1ce438bebcc3.avif"
+                        alt="Solo Roommate Matching Room" />
+                    <div class="room-card-body">
+                        <h3>Mystery Trip — Double Occupancy<br><small
+                                style="font-weight:400;color:var(--text-muted);">Solo / roommate matching</small></h3>
+                        <div class="room-price">$2,400</div>
+                        <div class="room-deposit">Deposit: $530 · 3 payments of $623 · No credit check</div>
+                    </div>
+                </div>
+                <div class="room-card">
+                    <img src="bali/9c63c812_24a09dcc-c0e9-4d55-8855-06087aaea7d1.avif" alt="Single Occupancy Room" />
+                    <div class="room-card-body">
+                        <h3>Mystery Trip — Single Occupancy</h3>
+                        <div class="room-price">$2,850</div>
+                        <div class="room-deposit">Deposit: $500 · Your own private room</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== BOOKING WIDGET ======== -->
+    <section class="section" id="bali-book" style="background:var(--dark-2);">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <span class="eyebrow">Ready to Go?</span>
+                <h2 class="display-md" style="margin-top:16px;">Lock In Your Spot</h2>
+                <div class="divider"></div>
+                <p class="text-muted" style="max-width:560px;margin:24px auto 0;line-height:1.8;">
+                    Spots are limited. Pay a $500 deposit to reserve your place — flexible payment plans available, no
+                    credit check required.
+                </p>
+            </div>
+
+            <div class="reveal" style="margin-top:40px;">
+                <!-- Toggle button -->
+                <div style="text-align:center;margin-bottom:32px;">
+                    <button onclick="toggleBaliBooking()" class="btn btn-gold" id="bali-book-toggle"
+                        style="font-size:1rem;padding:16px 40px;">
+                        Open Booking Widget
+                        <svg id="bali-book-arrow" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="2.5" viewBox="0 0 24 24" style="transition:transform 0.3s ease;">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Collapsible panel -->
+                <div id="bali-booking-panel"
+                    style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;opacity:0;">
+                    <div
+                        style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-1);box-shadow:var(--shadow-gold);">
+                        <iframe id="bali-booking-iframe"
+                            style="width:100%;min-height:700px;height:auto;border:none;display:block;" src=""
+                            data-src="https://travelnlivcollective.squadtrip.com/trip/travel-liv-collective-signature-mystery-trip-where-luxury-meets-relaxation-and-connection-13016?color=abcca8"
+                            title="Bali 2026 — Book Your Spot" allow="payment">
+                        </iframe>
+                    </div>
+                    <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:16px;">
+                        Secure checkout powered by <strong style="color:var(--teal);">Squadtrip</strong> · Flexible
+                        payment plans available
+                    </p>
+                    <div style="text-align:center;margin-top:24px;padding-bottom:8px;">
+                        <button onclick="toggleBaliBooking()"
+                            style="background:#c0392b;border:none;border-radius:999px;color:#fff;padding:12px 32px;font-size:0.9rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(192,57,43,0.45);transition:all 0.2s ease;"
+                            onmouseover="this.style.background='#a93226'" onmouseout="this.style.background='#c0392b'">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                                viewBox="0 0 24 24">
+                                <path d="M18 15l-6-6-6 6" />
+                            </svg>
+                            Close Booking Widget
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== FOOTER ======== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo"><img src="logo.jpg" alt="Travel & LIV Collective"
+                            class="footer-logo-img" /></div>
+                    <p class="footer-desc">A curated collective of like-minded people who value experience, connection,
+                        and the finer things in life.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/travelnlivcollective" target="_blank" rel="noopener"
+                            class="social-icon" aria-label="Instagram">📷</a>
+                        <a href="https://www.tiktok.com/@travelnlivcollective" target="_blank" rel="noopener"
+                            class="social-icon" aria-label="TikTok">🎵</a>
+                        <a href="https://www.facebook.com/Travelnlivcollective" target="_blank" rel="noopener"
+                            class="social-icon" aria-label="Facebook">📘</a>
+                        <a href="https://chat.whatsapp.com/Ii7bQKfuOZoLcWfmj8C1Q5?mode=gi_t" target="_blank"
+                            rel="noopener" class="social-icon" aria-label="WhatsApp">💬</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer-heading">Trips</div>
+                    <ul class="footer-links">
+                        <li><a href="bali.html">Bali 2026</a></li>
+                        <li><a href="upcoming.html">All Upcoming Trips</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-heading">Explore</div>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="partnerships.html">Partnerships</a></li>
+                        <li><a href="faqs.html">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-heading">Info</div>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="mailto:Info@travelnliv.com">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Travel & LIV Collective. All rights reserved.</p>
+                <p>Crafted with ✦ for those who actually make it out</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script src="site-config.js"></script>
+    <script src="content-loader.js"></script>
+    <script>
+        /* ── BALI PAGE: Day tab switcher ── */
+        function showDay(num) {
+            document.querySelectorAll('.itin-day-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.itin-tab').forEach(t => t.classList.remove('active'));
+            var panel = document.getElementById('day-' + num);
+            var tabs = document.querySelectorAll('.itin-tab');
+            if (panel) panel.classList.add('active');
+            if (tabs[num - 1]) tabs[num - 1].classList.add('active');
+        }
+
+        /* ── BALI PAGE: Booking widget toggle ── */
+        var baliBookOpen = false;
+        function toggleBaliBooking() {
+            var panel = document.getElementById('bali-booking-panel');
+            var arrow = document.getElementById('bali-book-arrow');
+            var btn = document.getElementById('bali-book-toggle');
+            if (!panel) return;
+            baliBookOpen = !baliBookOpen;
+            if (baliBookOpen) {
+                var iframe = document.getElementById('bali-booking-iframe');
+                if (iframe) {
+                    var ds = iframe.getAttribute('data-src');
+                    if (ds && iframe.src !== ds) iframe.src = ds;
+                }
+                panel.style.maxHeight = '1500px';
+                panel.style.opacity = '1';
+                if (arrow) arrow.style.transform = 'rotate(180deg)';
+                if (btn) btn.textContent = '';
+                if (btn) btn.innerHTML = 'Close Booking Widget <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="transition:transform 0.3s ease;transform:rotate(180deg)"><path d="M6 9l6 6 6-6"/></svg>';
+                setTimeout(function () {
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            } else {
+                panel.style.maxHeight = '0';
+                panel.style.opacity = '0';
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+                if (btn) btn.innerHTML = 'Open Booking Widget <svg id="bali-book-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="transition:transform 0.3s ease;"><path d="M6 9l6 6 6-6"/></svg>';
+            }
+        }
+        function openBaliBooking() {
+            if (!baliBookOpen) toggleBaliBooking();
+        }
+    </script>
+</body>
+
+</html>
