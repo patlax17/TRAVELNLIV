@@ -238,117 +238,10 @@
 
             </div>
 
-            <!-- Trip 2 — Punta Cana, Dominican Republic -->
-            <div class="upcoming-trip-row reveal" id="trip2-row" style="margin-top:80px;">
-                <div class="upcoming-trip-img-wrap">
-                    <img src="punta_cana_hero.png" alt="Punta Cana — Travel and LIV Collective" id="trip2-img" />
-                    <div class="upcoming-trip-img-overlay">
-                        <span class="tag tag-teal" id="trip2-badge">Coming Soon</span>
-                    </div>
-                </div>
-                <div class="upcoming-trip-details">
-                    <div class="upcoming-trip-meta-row">
-                        <span class="tag tag-teal" id="trip2-month">October 2026</span>
-                        <span class="tag" id="trip2-region"
-                            style="background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid var(--border);">Dominican
-                            Republic</span>
-                    </div>
-                    <h2 class="display-md" id="trip2-destination" style="margin-top:20px;">Punta Cana, Dominican
-                        Republic</h2>
-                    <p class="text-muted" id="trip2-desc" style="font-size:1rem;line-height:1.8;margin:16px 0 24px;">
-                        White-sand beaches, crystal-clear waters, and the warmth of the Caribbean — Punta Cana is the
-                        perfect backdrop for an unforgettable collective experience. Full details dropping soon.
-                    </p>
-                    <div class="upcoming-includes">
-                        <div class="upcoming-include"><span>🏖️</span> Beachfront Accommodations</div>
-                        <div class="upcoming-include"><span>🍹</span> Group Experiences</div>
-                        <div class="upcoming-include"><span>💳</span> Flexible Payments</div>
-                        <div class="upcoming-include"><span>🧳</span> Solo-Friendly</div>
-                    </div>
-                    <div class="upcoming-departures">
-                        <div class="upcoming-departure">
-                            <span class="dep-date" id="trip2-dates">October 2026</span>
-                            <span class="tag tag-teal" style="font-size:0.7rem;">Details Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="upcoming-price-row">
-                        <div>
-                            <span class="price-from">Price</span>
-                            <span class="price-amount" id="trip2-price-val" style="font-size:1.4rem;">TBA</span>
-                        </div>
-                        <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
-                            <button onclick="showMailerLiteForm()" class="btn btn-gold" id="trip2-cta">
-                                Get Notified When Booking Opens
-                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
-                                    viewBox="0 0 24 24">
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                            <a href="/upcomingtrips/puntacana" class="btn btn-outline"
-                                style="font-size:0.85rem;padding:10px 20px;">
-                                View Full Trip Details →
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Dynamic trips (Trip 2+) — populated by dest-sync.js from admin Destinations -->
+            <div id="dynamic-trips-container"></div>
 
-            <!-- Trip 3 — Rio de Janeiro, Brazil -->
-            <div class="upcoming-trip-row reveal" id="trip3-row" style="margin-top:80px;">
-                <div class="upcoming-trip-img-wrap">
-                    <img src="rio_hero.png" alt="Rio de Janeiro — Travel and LIV Collective" id="trip3-img" />
-                    <div class="upcoming-trip-img-overlay">
-                        <span class="tag tag-teal" id="trip3-badge">Coming Soon</span>
-                    </div>
-                </div>
-                <div class="upcoming-trip-details">
-                    <div class="upcoming-trip-meta-row">
-                        <span class="tag tag-teal" id="trip3-month">December 2026</span>
-                        <span class="tag" id="trip3-region"
-                            style="background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid var(--border);">Brazil</span>
-                    </div>
-                    <h2 class="display-md" id="trip3-destination" style="margin-top:20px;">Rio de Janeiro, Brazil</h2>
-                    <p class="text-muted" id="trip3-desc" style="font-size:1rem;line-height:1.8;margin:16px 0 24px;">
-                        End 2026 right. Carnival energy, iconic beaches, Christ the Redeemer, and samba nights —
-                        Rio is electric, and we're bringing the collective there for a December experience you won't
-                        forget.
-                    </p>
-                    <div class="upcoming-includes">
-                        <div class="upcoming-include"><span>🌊</span> Iconic Locations</div>
-                        <div class="upcoming-include"><span>🎶</span> Cultural Experiences</div>
-                        <div class="upcoming-include"><span>💳</span> Flexible Payments</div>
-                        <div class="upcoming-include"><span>🧳</span> Solo-Friendly</div>
-                    </div>
-                    <div class="upcoming-departures">
-                        <div class="upcoming-departure">
-                            <span class="dep-date" id="trip3-dates">December 2026</span>
-                            <span class="tag tag-teal" style="font-size:0.7rem;">Details Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="upcoming-price-row">
-                        <div>
-                            <span class="price-from">Price</span>
-                            <span class="price-amount" id="trip3-price-val" style="font-size:1.4rem;">TBA</span>
-                        </div>
-                        <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
-                            <button onclick="showMailerLiteForm()" class="btn btn-gold" id="trip3-cta">
-                                Get Notified When Booking Opens
-                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
-                                    viewBox="0 0 24 24">
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                            <a href="/upcomingtrips/rio" class="btn btn-outline"
-                                style="font-size:0.85rem;padding:10px 20px;">
-                                View Full Trip Details →
-                            </a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Social Banner -->
+                        <!-- Social Banner -->
             <div class="coming-soon-banner reveal" style="margin-top:80px;">
                 <div class="csb-inner">
                     <div>
@@ -540,7 +433,7 @@
                 </div>
                 <div>
                     <div class="footer-heading">Trips</div>
-                    <ul class="footer-links">
+<ul class="footer-links footer-trips-list">
                         <li class="nav-dropdown">
                             <a href="upcoming.html">Upcoming Trips</a>
                             <div class="nav-dropdown-menu">
@@ -582,6 +475,7 @@
     <script src="main.js"></script>
     <script src="site-config.js"></script>
     <script src="content-loader.js"></script>
+    <script src="dest-sync.js"></script>
 </body>
 
 </html>

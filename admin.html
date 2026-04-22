@@ -43,11 +43,8 @@
                 <button class="sidebar-link active" onclick="showPanel('home')" id="nav-home">
                     <span class="sl-icon">🏠</span><span>Homepage</span>
                 </button>
-                <button class="sidebar-link" onclick="showPanel('trips')" id="nav-trips">
-                    <span class="sl-icon">✈️</span><span>Upcoming Trips</span>
-                </button>
                 <button class="sidebar-link" onclick="showPanel('destinations')" id="nav-destinations">
-                    <span class="sl-icon">🗺️</span><span>Destinations</span>
+                    <span class="sl-icon">🗺️</span><span>Destinations & Trips</span>
                 </button>
                 <button class="sidebar-link" onclick="showPanel('events')" id="nav-events">
                     <span class="sl-icon">🎉</span><span>Events</span>
@@ -1004,8 +1001,8 @@
         // ── NAVIGATION ───────────────────────────────────────────────
         const PANELS = {
             home: { title: "Homepage", sub: "Edit next trip card and past event recap" },
-            destinations: { title: "Destinations", sub: "Add, edit, and remove individual trip destination pages" },
-            trips: { title: "Upcoming Trips", sub: "Edit upcoming trip listings on the Trips page" },
+            destinations: { title: "Destinations & Trips", sub: "Add new trips, edit existing ones, manage itinerary, inclusions, rooms, and booking links" },
+            trips: { title: "[Legacy] Upcoming Trips", sub: "Legacy panel — use Destinations & Trips instead" },
             events: { title: "Events", sub: "Control the homepage event section" },
             faqs: { title: "FAQs", sub: "Add, edit, or remove FAQ questions" },
             gallery: { title: "Gallery", sub: "Update gallery stats and add new photos" },
@@ -1543,6 +1540,8 @@
 
         function saveDestinations(list) {
             localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(list));
+            // Also write individual DEST_ keys so trip pages always have fresh data
+            list.forEach(function(d){ localStorage.setItem('DEST_'+d.slug, JSON.stringify(d)); });
             // also save individual DEST_ keys so trip pages can read them
             list.forEach(function (d) {
                 localStorage.setItem('DEST_' + d.slug, JSON.stringify(d));
