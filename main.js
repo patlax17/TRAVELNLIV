@@ -293,8 +293,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function loadIframe() {
     var iframe = document.getElementById('home-booking-iframe');
-    if (iframe && !iframe.src) {
-      iframe.src = iframe.getAttribute('data-src');
+    var dataSrc = iframe && iframe.getAttribute('data-src');
+    if (dataSrc && iframe.src !== dataSrc) {
+      iframe.src = dataSrc;
     }
   }
 
@@ -305,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
     panelOpen = !panelOpen;
     if (panelOpen) {
       loadIframe();
-      panel.style.maxHeight = '800px';
+      panel.style.maxHeight = '1500px';
       panel.style.opacity = '1';
       if (arrow) arrow.style.transform = 'rotate(180deg)';
       setTimeout(function () {
@@ -325,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!panelOpen) {
       panelOpen = true;
       loadIframe();
-      panel.style.maxHeight = '800px';
+      panel.style.maxHeight = '1500px';
       panel.style.opacity = '1';
       if (arrow) arrow.style.transform = 'rotate(180deg)';
       setTimeout(function () {
