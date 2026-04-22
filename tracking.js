@@ -7,9 +7,9 @@
 // when no ID is configured.
 // =====================================================================
 
-/* ── MAILERLITE UNIVERSAL SIGNUP POPUP ──────────────────────────────
+/* ── MAILERLITE UNIVERSAL SCRIPT ────────────────────────────────────
+   Initialises MailerLite for any dashboard-configured auto-popups.
    Account: 2007153  |  Form: 175168034363671920
-   Call  showMailerLiteForm()  from any "Get Notified" button.
 ────────────────────────────────────────────────────────────────────── */
 (function (w, d, e, u, f, l, n) {
     w[f] = w[f] || function () { (w[f].q = w[f].q || []).push(arguments); };
@@ -18,12 +18,6 @@
 })(window, document, 'script', 'https://assets.mailerlite.com/js/universal.js', 'ml');
 ml('account', '2007153');
 
-// Global helper — call this from any button to open the signup popup
-window.showMailerLiteForm = function () {
-    if (typeof ml === 'function') {
-        ml('show', '175168034363671920', true);
-    }
-};
 
 (function () {
     'use strict';

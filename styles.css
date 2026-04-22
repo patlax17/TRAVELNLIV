@@ -627,6 +627,68 @@ footer {
     color: var(--text-dim);
 }
 
+/* ——— MAILERLITE SIGNUP MODAL ——— */
+#ml-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+#ml-modal-overlay.open {
+    display: flex;
+    animation: fadeIn 0.25s ease both;
+}
+
+#ml-modal-box {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    background: var(--dark-2);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-gold);
+    animation: fadeUp 0.3s ease both;
+}
+
+#ml-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    z-index: 10;
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+    line-height: 1;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+}
+
+#ml-modal-close:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#ml-modal-iframe {
+    display: block;
+    width: 100%;
+    height: 560px;
+    border: none;
+    background: var(--dark-2);
+}
+
 /* ——— RESPONSIVE ——— */
 @media (max-width: 768px) {
 

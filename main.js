@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /* ================================================
-   GLOBAL — Event Notify Form Handler
+   GLOBAL — Event Notify Form Handler (legacy index form)
    ================================================ */
 function handleEventNotify(e) {
   e.preventDefault();
@@ -295,3 +295,70 @@ function handleEventNotify(e) {
     success.style.display = 'block';
   }
 }
+
+/* ================================================
+   GLOBAL — MailerLite Signup Modal
+   Opens the MailerLite form in a branded iframe modal
+   so visitors never leave the site.
+   ================================================ */
+(function () {
+  const ML_FORM_URL = 'https://preview.mailerlite.io/forms/2007153/175168034363671920/share';
+
+  // Inject modal HTML once into the page
+  function injectModal() {
+    if (document.getElementById('ml-modal-overlay')) return;
+    const overlay = document.createElement('div');
+    overlay.id = 'ml-modal-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Stay in the loop — sign up');
+    overlay.innerHTML = `
+      <div id="ml-modal-box">
+        <button id="ml-modal-close" aria-label="Close signup form">✕</button>
+        <iframe id="ml-modal-iframe" src="" title="Stay in the loop — Travel & LIV Collective" allow="forms"></iframe>
+      </div>`;
+    document.body.appendChild(overlay);
+
+    // Close on ✕ button
+    document.getElementById('ml-modal-close').addEventListener('click', closeModal);
+
+    // Close on backdrop click
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeModal();
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  }
+
+  function openModal() {
+    const overlay = document.getElementById('ml-modal-overlay');
+    const iframe = document.getElementById('ml-modal-iframe');
+    if (!overlay || !iframe) return;
+    // Load form URL into iframe (only on first open)
+    if (!iframe.src || iframe.src === window.location.href) {
+      iframe.src = ML_FORM_URL;
+    }
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const overlay = document.getElementById('ml-modal-overlay');
+    if (!overlay) return;
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Build modal as soon as DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectModal);
+  } else {
+    injectModal();
+  }
+
+  // Expose globally so any button can call it
+  window.showMailerLiteForm = openModal;
+})();
