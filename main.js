@@ -350,6 +350,40 @@ function handleEventNotify(e) {
 }
 
 /* ================================================
+   UPCOMING PAGE — Squadtrip Booking Panel Toggle
+   ================================================ */
+(function () {
+  var upcomingOpen = false;
+
+  window.toggleUpcomingBooking = function () {
+    var panel  = document.getElementById('bali-booking');
+    var arrow  = document.getElementById('upcoming-booking-arrow');
+    if (!panel) return;
+    upcomingOpen = !upcomingOpen;
+    if (upcomingOpen) {
+      // Lazy-load the iframe
+      var iframe = document.getElementById('trip-view-frame');
+      if (iframe) {
+        var dataSrc = iframe.getAttribute('data-src');
+        if (dataSrc && iframe.src !== dataSrc) iframe.src = dataSrc;
+      }
+      panel.style.maxHeight = '1500px';
+      panel.style.opacity   = '1';
+      panel.style.marginTop = '40px';
+      if (arrow) arrow.style.transform = 'rotate(180deg)';
+      setTimeout(function () {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    } else {
+      panel.style.maxHeight = '0';
+      panel.style.opacity   = '0';
+      panel.style.marginTop = '0';
+      if (arrow) arrow.style.transform = 'rotate(0deg)';
+    }
+  };
+})();
+
+/* ================================================
    GLOBAL — MailerLite Signup Modal
    Opens the MailerLite form in a branded iframe modal
    so visitors never leave the site.
