@@ -88,14 +88,25 @@ window.SITE_DEST_DEFAULTS = [
     }
 ];
 
-// Seed localStorage on first visit if no admin data exists
-(function seedIfEmpty() {
+
+
+
+// ── DATA VERSION SYSTEM ────────────────────────────────────────────────
+// Bump DEST_DATA_VERSION whenever URL structure or critical data changes.
+// This forces ALL visitors' stale localStorage to be replaced automatically.
+var DEST_DATA_VERSION = '3'; // v3: clean /upcomingtrips/ URLs
+
+(function seedOrRefresh() {
     try {
-        if (!localStorage.getItem('DESTINATIONS_LIST')) {
+        var storedVersion = localStorage.getItem('DEST_DATA_VERSION');
+        var hasList = localStorage.getItem('DESTINATIONS_LIST');
+        // Force-refresh if stale version OR first visit
+        if (storedVersion !== DEST_DATA_VERSION || !hasList) {
             localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(window.SITE_DEST_DEFAULTS));
             window.SITE_DEST_DEFAULTS.forEach(function (d) {
                 localStorage.setItem('DEST_' + d.slug, JSON.stringify(d));
             });
+            localStorage.setItem('DEST_DATA_VERSION', DEST_DATA_VERSION);
         }
     } catch (e) { }
 })();
