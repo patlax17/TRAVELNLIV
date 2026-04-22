@@ -102,64 +102,35 @@
                         </div>
                     </div>
 
-                    <!-- HERO IMAGE UPLOADER -->
-                    <div class="form-group">
-                        <label>Hero Image</label>
-                        <div class="img-upload-zone" id="zone-next_trip" onclick="openPicker('next_trip')"
-                            ondragover="event.preventDefault();this.classList.add('drag-over')"
-                            ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'next_trip')">
-                            <div class="img-upload-placeholder">
-                                <span class="img-upload-icon">🖼️</span>
-                                <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
-                                <span class="img-upload-hint">PNG · JPG · WebP — recommended 1200×800px</span>
-                            </div>
-                        </div>
-                        <input type="file" id="file-next_trip" accept="image/*" style="display:none"
-                            onchange="handleFilePick(event,'next_trip')" />
-                    </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Destination Name</label>
-                            <input type="text" id="nt-destination" class="form-control"
-                                placeholder="e.g. Bali, Indonesia" />
-                        </div>
-                        <div class="form-group">
-                            <label>Badge Label</label>
-                            <input type="text" id="nt-badge" class="form-control" placeholder="e.g. Booking Open" />
-                        </div>
+                    <div class="form-group" style="max-width:420px;margin-top:4px;">
+                        <label>⭐ Featured Trip on Homepage</label>
+                        <select id="featured-trip-slug" class="form-control" style="font-size:1rem;padding:12px 16px;">
+                            <option value="">— Auto (first Booking Open trip) —</option>
+                        </select>
+                        <p style="font-size:0.78rem;color:#888;margin-top:8px;">Choose which destination is featured in
+                            the "Where We're Going Next" card on the homepage. Changing this updates the card
+                            automatically — no code needed.</p>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Dates</label>
-                            <input type="text" id="nt-dates" class="form-control"
-                                placeholder="e.g. July 30 – August 5, 2026" />
-                        </div>
-                        <div class="form-group">
-                            <label>Duration</label>
-                            <input type="text" id="nt-duration" class="form-control" placeholder="e.g. 7 Days" />
-                        </div>
+                    <div style="margin-top:16px;">
+                        <button class="btn-admin-primary" onclick="saveFeaturedTrip()">✓ Set as Featured</button>
                     </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="nt-desc" class="form-control"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>CTA Button Text</label>
-                            <input type="text" id="nt-cta-text" class="form-control" placeholder="Reserve Your Spot" />
+                    <div id="featured-trip-preview"
+                        style="margin-top:20px;padding:16px 20px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;display:none;">
+                        <strong
+                            style="font-size:0.8rem;color:#888;text-transform:uppercase;letter-spacing:0.08em;">Currently
+                            Featured</strong>
+                        <div id="featured-trip-preview-name" style="font-size:1.2rem;font-weight:700;margin-top:6px;">
                         </div>
-                        <div class="form-group">
-                            <label>CTA Button URL</label>
-                            <input type="url" id="nt-cta-url" class="form-control" placeholder="https://..." />
+                        <div id="featured-trip-preview-dates" style="font-size:0.85rem;color:#888;margin-top:2px;">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Price From (optional)</label>
-                        <input type="text" id="nt-price" class="form-control" placeholder="e.g. From $2,499"
-                            style="max-width:260px;" />
+                        <a id="featured-trip-preview-link" href="#" target="_blank"
+                            style="font-size:0.82rem;color:var(--green,#8FBF9F);margin-top:8px;display:inline-block;">View
+                            live page →</a>
                     </div>
                 </div>
+
+
 
                 <!-- Past Event Recap -->
                 <div class="panel-section">
@@ -960,6 +931,37 @@
         const DEFAULT_PASS_KEY = "tnliv_admin_pass";
         const DEFAULT_PASS = "travelnliv2026";
 
+        // ── FEATURED TRIP (Homepage) ─────────────────────────────────────
+        function populateFeaturedTripSelect() {
+            var sel = document.getElementById('featured-trip-slug');
+            if (!sel) return;
+            var dests = getDestinations();
+            var current = localStorage.getItem('FEATURED_TRIP_SLUG') || '';
+            sel.innerHTML = '<option value="">— Auto (first Booking Open trip) —</option>' +
+                dests.map(function(d){
+                    return '<option value="' + d.slug + '"' + (d.slug===current?' selected':'') + '>' +
+                        (d.emoji||'✈️') + ' ' + d.name + ' (' + (d.status==='booking_open'?'Booking Open':'Coming Soon') + ')</option>';
+                }).join('');
+            // Update preview
+            var d = dests.find(function(x){ return x.slug===current; });
+            if (!d && dests.length) d = dests.find(function(x){ return x.status==='booking_open'; }) || dests[0];
+            var preview = document.getElementById('featured-trip-preview');
+            if (preview && d) {
+                preview.style.display = 'block';
+                document.getElementById('featured-trip-preview-name').textContent = (d.emoji||'') + ' ' + d.name;
+                document.getElementById('featured-trip-preview-dates').textContent = d.dates || 'Dates TBA';
+                var lnk = document.getElementById('featured-trip-preview-link');
+                if (lnk) { lnk.href = d.url || ('/upcomingtrips/'+d.slug); }
+            }
+        }
+        function saveFeaturedTrip() {
+            var sel = document.getElementById('featured-trip-slug');
+            var slug = sel ? sel.value : '';
+            localStorage.setItem('FEATURED_TRIP_SLUG', slug);
+            populateFeaturedTripSelect();
+            toast('✓ Homepage featured trip updated!');
+        }
+
         // ── AUTH ─────────────────────────────────────────────────────
         function checkLogin() {
             if (localStorage.getItem("tnliv_authed") === "1") showApp();
@@ -987,6 +989,7 @@
             loadMarketingFields();
             renderPastEventPhotoGrid();
             addGallerySlot(); // start with one empty slot
+            populateFeaturedTripSelect();
         }
 
         function changePassword() {
@@ -1541,7 +1544,7 @@
         function saveDestinations(list) {
             localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(list));
             // Also write individual DEST_ keys so trip pages always have fresh data
-            list.forEach(function(d){ localStorage.setItem('DEST_'+d.slug, JSON.stringify(d)); });
+            list.forEach(function (d) { localStorage.setItem('DEST_' + d.slug, JSON.stringify(d)); });
             // also save individual DEST_ keys so trip pages can read them
             list.forEach(function (d) {
                 localStorage.setItem('DEST_' + d.slug, JSON.stringify(d));
@@ -1573,7 +1576,7 @@
                     '<div style="display:inline-block;margin-top:6px;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:' + statusColor + '20;color:' + statusColor + ';border:1px solid ' + statusColor + '40;">' + (STATUS_LABELS[d.status] || d.status) + '</div>' +
                     '</div>' +
                     '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-                    '<a href="' + (d.url||('/upcomingtrips/'+d.slug)) + '" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">�� View Page</a>' +
+                    '<a href="' + (d.url || ('/upcomingtrips/' + d.slug)) + '" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">�� View Page</a>' +
                     '<button onclick="openEditDest(' + i + ')" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">✏️ Edit</button>' +
                     '<button onclick="deleteDest(' + i + ')" style="background:#c0392b;border:none;border-radius:8px;color:#fff;padding:8px 14px;font-size:0.8rem;cursor:pointer;">🗑️ Delete</button>' +
                     '</div>' +

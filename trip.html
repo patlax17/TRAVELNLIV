@@ -7,9 +7,9 @@
     <title id="trip-page-title">Trip — Travel & LIV Collective</title>
     <meta name="description" id="trip-page-meta"
         content="Luxury group travel experience with Travel & LIV Collective." />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="zanzibar.css" />
-    <script src="tracking.js"></script>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/zanzibar.css" />
+    <script src="/tracking.js"></script>
     <style>
         /* ── UNIVERSAL TRIP PAGE STYLES ── */
         .trip-photo-grid-dynamic {
@@ -234,20 +234,20 @@
     <!-- NAV -->
     <nav id="nav">
         <div class="nav-inner">
-            <a href="index.html" class="nav-logo"><img src="logo.jpg" alt="Travel & LIV Collective"
+            <a href="/" class="nav-logo"><img src="/logo.jpg" alt="Travel & LIV Collective"
                     class="nav-logo-img" /></a>
             <ul class="nav-links" id="dynamic-nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about.html">About</a></li>
                 <li class="nav-dropdown">
-                    <a href="upcoming.html">Upcoming Trips</a>
+                    <a href="/upcoming.html">Upcoming Trips</a>
                     <div class="nav-dropdown-menu" id="dynamic-dropdown">
-                        <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
+                        <a href="/upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
                     </div>
                 </li>
-                <li><a href="partnerships.html">Partners</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="faqs.html">FAQs</a></li>
+                <li><a href="/partnerships.html">Partners</a></li>
+                <li><a href="/gallery.html">Gallery</a></li>
+                <li><a href="/faqs.html">FAQs</a></li>
             </ul>
             <a href="#trip-book" class="btn btn-gold nav-cta" id="trip-nav-cta">Secure Your Spot</a>
             <button class="nav-hamburger" id="hamburger"
@@ -256,9 +256,9 @@
     </nav>
     <div class="mobile-nav" id="mobileNav">
         <button class="mobile-nav-close" id="mobileNavClose">✕</button>
-        <a href="index.html">Home</a><a href="about.html">About</a>
-        <a href="upcoming.html">Upcoming Trips</a><a href="partnerships.html">Partners</a>
-        <a href="gallery.html">Gallery</a><a href="faqs.html">FAQs</a>
+        <a href="/">Home</a><a href="/about.html">About</a>
+        <a href="/upcoming.html">Upcoming Trips</a><a href="/partnerships.html">Partners</a>
+        <a href="/gallery.html">Gallery</a><a href="/faqs.html">FAQs</a>
         <a href="#trip-book" class="btn btn-gold" style="margin-top:16px;" id="trip-mobile-cta">Secure Your Spot</a>
     </div>
 
@@ -270,8 +270,8 @@
         </div>
         <div class="container" style="position:relative;z-index:2;padding-top:120px;padding-bottom:80px;">
             <div class="trip-breadcrumb animate-fade-in" id="trip-breadcrumb">
-                <a href="index.html">Home</a><span>›</span>
-                <a href="upcoming.html">Upcoming Trips</a><span>›</span>
+                <a href="/">Home</a><span>›</span>
+                <a href="/upcoming.html">Upcoming Trips</a><span>›</span>
                 <span class="text-gold" id="trip-breadcrumb-name">Trip</span>
             </div>
             <span class="eyebrow animate-fade-up" style="margin-top:20px;display:block;">Travel & LIV Collective
@@ -441,7 +441,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <div class="footer-logo"><img src="logo.jpg" alt="Travel & LIV Collective"
+                    <div class="footer-logo"><img src="/logo.jpg" alt="Travel & LIV Collective"
                             class="footer-logo-img" /></div>
                     <p class="footer-desc">A curated collective of like-minded people who value experience, connection,
                         and the finer things in life.</p>
@@ -457,15 +457,15 @@
                 <div>
                     <div class="footer-heading">Trips</div>
                     <ul class="footer-links" id="footer-trips-links">
-                        <li><a href="upcoming.html">All Upcoming Trips</a></li>
+                        <li><a href="/upcoming.html">All Upcoming Trips</a></li>
                     </ul>
                 </div>
                 <div>
                     <div class="footer-heading">Explore</div>
                     <ul class="footer-links">
-                        <li><a href="about.html">Our Story</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                        <li><a href="faqs.html">FAQs</a></li>
+                        <li><a href="/about.html">Our Story</a></li>
+                        <li><a href="/gallery.html">Gallery</a></li>
+                        <li><a href="/faqs.html">FAQs</a></li>
                     </ul>
                 </div>
                 <div>
@@ -481,8 +481,8 @@
         </div>
     </footer>
 
-    <script src="main.js"></script>
-    <script src="dest-sync.js"></script>
+    <script src="/main.js"></script>
+    <script src="/dest-sync.js"></script>
     <script>
         /* ── UNIVERSAL TRIP PAGE RENDERER ── */
         (function () {
@@ -607,7 +607,7 @@
                 dd.innerHTML = allDests.map(function (dest) {
                     var badge = dest.status === 'booking_open' ? '<span class="dd-badge">Open</span>' : '';
                     return '<a href="' + (dest.url || 'trip.html?slug=' + dest.slug) + '"><span class="dd-icon">' + (dest.emoji || '✈️') + '</span>' + dest.name + badge + '</a>';
-                }).join('') + '<div class="nav-dropdown-divider"></div><a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>';
+                }).join('') + '<div class="nav-dropdown-divider"></div><a href="/upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>';
             } catch (e) { }
 
             // ── FOOTER TRIP LINKS ──
@@ -615,7 +615,7 @@
                 var allDests2 = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || '[]');
                 document.getElementById('footer-trips-links').innerHTML =
                     allDests2.map(function (dest) { return '<li><a href="' + (dest.url || 'trip.html?slug=' + dest.slug) + '">' + dest.name + '</a></li>'; }).join('') +
-                    '<li><a href="upcoming.html">All Upcoming Trips</a></li>';
+                    '<li><a href="/upcoming.html">All Upcoming Trips</a></li>';
             } catch (e) { }
         })();
 

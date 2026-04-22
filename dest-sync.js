@@ -33,24 +33,35 @@
         lists.forEach(function (ul) { ul.innerHTML = html; });
     }
 
-    // ── 2. NAV DROPDOWN (dynamic-dropdown element) ────────────────────
-    // Only updates if the element exists (currently only trip.html uses it dynamically)
-    // All static pages have hardcoded nav (covered by Issue 1 if/when needed)
+    // ── 2. NAV DROPDOWN — ALL pages ────────────────────────────────────
+    // Works on both static pages (hardcoded nav-dropdown-menu) and
+    // dynamic pages (dynamic-dropdown id). Fully replaces trip links
+    // so adding a new destination from admin updates every page's nav.
     function updateNavDropdown() {
-        var dd = document.getElementById('dynamic-dropdown');
-        if (!dd) return;
         var dests = getDestinations().filter(function (d) {
             return d.status !== 'concluded';
         });
         if (!dests.length) return;
-        dd.innerHTML = dests.map(function (d) {
+
+        var tripLinks = dests.map(function (d) {
             var badge = d.status === 'booking_open'
                 ? '<span class="dd-badge">Open</span>' : '';
             return '<a href="' + destUrl(d) + '"><span class="dd-icon">' +
                 (d.emoji || '✈️') + '</span>' + d.name + badge + '</a>';
         }).join('') +
             '<div class="nav-dropdown-divider"></div>' +
-            '<a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>';
+            '<a href="/upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>';
+
+        // Update #dynamic-dropdown (trip.html)
+        var dd = document.getElementById('dynamic-dropdown');
+        if (dd) dd.innerHTML = tripLinks;
+
+        // Update all .nav-dropdown-menu elements on static pages
+        var menus = document.querySelectorAll('.nav-dropdown-menu');
+        menus.forEach(function (menu) {
+            if (menu.id === 'dynamic-dropdown') return; // already handled
+            menu.innerHTML = tripLinks;
+        });
     }
 
     // ── 3. UPCOMING.HTML dynamic trip cards (trips 2+) ─────────────────
@@ -131,6 +142,56 @@
                 '</div>' +
                 '</div>';
         }).join('');
+    }
+
+
+    // ── 4. HOMEPAGE FEATURED TRIP CARD ───────────────────────────────
+    // Reads FEATURED_TRIP_SLUG from localStorage (set by admin)
+    // Falls back to first booking_open trip, then first trip overall
+    function updateHomepageFeatured() {
+        // Only run on pages with the featured card
+        if (!document.getElementById('next-trip-destination')) return;
+
+        var dests = getDestinations();
+        if (!dests.length) return;
+
+        var featuredSlug = localStorage.getItem('FEATURED_TRIP_SLUG') || '';
+        var d = dests.find(function(x){ return x.slug === featuredSlug; });
+        // Fallback: first booking_open, then just first
+        if (!d) d = dests.find(function(x){ return x.status === 'booking_open'; });
+        if (!d) d = dests[0];
+        if (!d) return;
+
+        var url = d.url || ('/upcomingtrips/' + d.slug);
+        var isOpen = d.status === 'booking_open';
+
+        var img = document.getElementById('next-trip-img');
+        if (img) {
+            if (d.photos && d.photos.length) { img.src = d.photos[0]; img.alt = d.name; }
+        }
+        var badge = document.getElementById('next-trip-badge');
+        if (badge) badge.textContent = isOpen ? 'Booking Open' : 'Coming Soon';
+
+        var dest = document.getElementById('next-trip-destination');
+        if (dest) dest.textContent = d.name;
+
+        var dates = document.getElementById('next-trip-dates');
+        if (dates) dates.textContent = d.dates || 'Dates TBA';
+
+        var desc = document.getElementById('next-trip-desc');
+        if (desc && (d.teaserDesc || d.tagline)) desc.textContent = d.teaserDesc || d.tagline;
+
+        var cta = document.getElementById('next-trip-cta');
+        if (cta) {
+            cta.href = url + (isOpen ? '#trip-book' : '');
+            cta.style.display = isOpen ? '' : 'none';
+        }
+        var detBtn = document.getElementById('next-trip-details-btn');
+        if (detBtn) detBtn.href = url;
+
+        // Show notify button if coming soon
+        var notifyBtn = document.getElementById('next-trip-notify-btn');
+        if (notifyBtn) notifyBtn.style.display = isOpen ? 'none' : '';
     }
 
     // ── RUN EVERYTHING ON DOM READY ───────────────────────────────────
