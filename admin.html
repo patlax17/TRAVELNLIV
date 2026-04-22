@@ -1574,7 +1574,7 @@
                     '<div style="display:inline-block;margin-top:6px;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:' + statusColor + '20;color:' + statusColor + ';border:1px solid ' + statusColor + '40;">' + (STATUS_LABELS[d.status] || d.status) + '</div>' +
                     '</div>' +
                     '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-                    '<a href="' + d.url + '" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">�� View Page</a>' +
+                    '<a href="' + (d.url||('/upcomingtrips/'+d.slug)) + '" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">�� View Page</a>' +
                     '<button onclick="openEditDest(' + i + ')" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">✏️ Edit</button>' +
                     '<button onclick="deleteDest(' + i + ')" style="background:#c0392b;border:none;border-radius:8px;color:#fff;padding:8px 14px;font-size:0.8rem;cursor:pointer;">🗑️ Delete</button>' +
                     '</div>' +

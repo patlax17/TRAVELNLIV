@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/upcomingtrips/bali",       "destination": "/bali.html" },
+    { "source": "/upcomingtrips/:slug",       "destination": "/trip.html?slug=:slug" }
+  ]
+}
