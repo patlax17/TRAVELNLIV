@@ -105,44 +105,22 @@
                             <span class="price-amount" id="trip1-price-val" style="font-size:1.4rem;">Starting at
                                 $2,350</span>
                         </div>
-                        <button onclick="toggleUpcomingBooking()" class="btn btn-gold" id="trip1-cta">
-                            Secure Your Spot
-                            <svg id="upcoming-booking-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="transition:transform 0.3s ease;">
-                                <path d="M6 9l6 6 6-6" />
-                            </svg>
-                        </button>
+                        <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
+                            <a href="bali.html#bali-book" class="btn btn-gold" id="trip1-cta">
+                                Secure Your Spot
+                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                            <a href="bali.html" class="btn btn-outline" id="trip1-details-btn" style="font-size:0.85rem;padding:10px 20px;">
+                                View Full Trip Details →
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ── SQUADTRIP BOOKING WIDGET — Bali 2026 (collapsible) ── -->
-            <div id="bali-booking" style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;opacity:0;margin-top:0;">
-                <div style="padding-top:40px;">
-                    <div style="text-align:center;margin-bottom:24px;">
-                        <span class="eyebrow">Book Your Spot</span>
-                        <h2 class="display-sm" style="margin-top:12px;">Ready to go? Lock in your seat.</h2>
-                        <div class="divider" style="margin:16px auto 0;"></div>
-                    </div>
-                    <div style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-2);box-shadow:var(--shadow-gold);">
-                        <iframe id="trip-view-frame"
-                            style="width:100%;min-height:700px;height:auto;border:none;display:block;"
-                            src=""
-                            data-src="https://travelnlivcollective.squadtrip.com/trip/travel-liv-collective-signature-mystery-trip-where-luxury-meets-relaxation-and-connection-13016?color=abcca8"
-                            title="Bali 2026 — Book Your Spot with Travel & LIV Collective"
-                            allow="payment">
-                        </iframe>
-                    </div>
-                    <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:16px;">
-                        Secure checkout powered by <strong style="color:var(--teal);">Squadtrip</strong> · Flexible payment plans available
-                    </p>
-                    <div style="text-align:center;margin-top:24px;padding-bottom:8px;">
-                        <button onclick="toggleUpcomingBooking()" style="background:#c0392b;border:none;border-radius:999px;color:#fff;padding:12px 32px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(192,57,43,0.45);" onmouseover="this.style.background='#a93226';this.style.boxShadow='0 6px 24px rgba(192,57,43,0.6)'" onmouseout="this.style.background='#c0392b';this.style.boxShadow='0 4px 18px rgba(192,57,43,0.45)'" id="upcoming-close-btn">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-                            Close Booking Widget
-                        </button>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- Trip 2 — Punta Cana, Dominican Republic -->
             <div class="upcoming-trip-row reveal" id="trip2-row" style="margin-top:80px;">
