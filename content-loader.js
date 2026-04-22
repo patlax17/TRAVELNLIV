@@ -141,10 +141,18 @@
 
             const ctaEl = document.getElementById(prefix + "-cta");
             if (ctaEl) {
-                ctaEl.textContent = trip.ctaText;
-                ctaEl.href = trip.ctaUrl;
-                ctaEl.className = "btn " + (trip.status === "booking-open" ? "btn-gold" : "btn-outline");
+                // Only update booking-open trips — "Get Notified" buttons are
+                // <button> elements that trigger the MailerLite popup and
+                // should not have their text or href overwritten.
+                if (trip.status === "booking-open") {
+                    ctaEl.textContent = trip.ctaText;
+                    if (ctaEl.tagName === "A") ctaEl.href = trip.ctaUrl;
+                    ctaEl.className = "btn btn-gold";
+                } else {
+                    ctaEl.className = "btn btn-outline";
+                }
             }
+
         });
     }
 
