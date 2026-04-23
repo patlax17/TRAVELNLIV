@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="about.css" />
     <script src="tracking.js"></script>
+    <script src="site-config.js"></script>
 </head>
 
 <body>
@@ -23,15 +24,16 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html" class="active">About</a></li>
                 <li class="nav-dropdown">
-                <a href="upcoming.html">Upcoming Trips</a>
-                <div class="nav-dropdown-menu">
-                    <a href="/bali.html"><span class="dd-icon">🏝️</span>Bali, Indonesia<span class="dd-badge">Open</span></a>
-                    <a href="/puntacana.html"><span class="dd-icon">🌴</span>Punta Cana, D.R.</a>
-                    <a href="/rio.html"><span class="dd-icon">🎉</span>Rio de Janeiro</a>
-                    <div class="nav-dropdown-divider"></div>
-                    <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
-                </div>
-            </li>
+                    <a href="upcoming.html">Upcoming Trips</a>
+                    <div class="nav-dropdown-menu">
+                        <a href="/bali.html"><span class="dd-icon">🏝️</span>Bali, Indonesia<span
+                                class="dd-badge">Open</span></a>
+                        <a href="/puntacana.html"><span class="dd-icon">🌴</span>Punta Cana, D.R.</a>
+                        <a href="/rio.html"><span class="dd-icon">🎉</span>Rio de Janeiro</a>
+                        <div class="nav-dropdown-divider"></div>
+                        <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
+                    </div>
+                </li>
                 <li><a href="partnerships.html">Partners</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="faqs.html">FAQs</a></li>
@@ -48,7 +50,19 @@
         <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">✕</button>
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="upcoming.html">Upcoming Trips</a>
+        <div class="mobile-nav-accordion">
+            <button class="mobile-nav-accordion-trigger"
+                onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+                Upcoming Trips <span class="mob-arrow">&#9662;</span>
+            </button>
+            <div class="mobile-nav-accordion-items">
+                <a href="/bali.html">🏝️ Bali, Indonesia <span
+                        style="background:var(--teal);color:#111;font-size:0.6rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:4px;">Open</span></a>
+                <a href="/puntacana.html">🌴 Punta Cana, D.R.</a>
+                <a href="/rio.html">🎉 Rio de Janeiro</a>
+                <a href="/upcoming.html">✈️ View All Trips</a>
+            </div>
+        </div>
         <a href="partnerships.html">Partners</a>
         <a href="gallery.html">Gallery</a>
         <a href="faqs.html">FAQs</a>
@@ -77,35 +91,35 @@
                     <img src="olivia_photo.jpg" alt="Olivia Owen — Founder of Travel & LIV Collective"
                         class="story-img" />
                     <div class="story-quote glass">
-                        <p>"You arrive as a stranger. You leave as a community."</p>
+                        <p id="about-founder-quote">"You arrive as a stranger. You leave as a community."</p>
                     </div>
                 </div>
                 <div class="story-text reveal">
                     <span class="eyebrow"><span class="gold-line"></span>Meet Olivia</span>
                     <h2 class="display-md" style="margin:20px 0 24px;">Hi, I'm Olivia Owen — <em>the founder of Travel &
                             LIV Collective.</em></h2>
-                    <p class="text-muted" style="font-size:1rem;line-height:1.9;margin-bottom:20px;">
+                    <p class="text-muted" id="about-p1" style="font-size:1rem;line-height:1.9;margin-bottom:20px;">
                         Travel & LIV started two years ago when I was solo traveling and realized something so many
                         people feel: we want to see the world, but we don't always have the right people to go with.
                     </p>
-                    <p class="text-muted" style="font-size:1rem;line-height:1.9;margin-bottom:20px;">
+                    <p class="text-muted" id="about-p2" style="font-size:1rem;line-height:1.9;margin-bottom:20px;">
                         Most group trip ideas stay stuck in the chat, and planning everything alone can feel
                         overwhelming. As I became a travel agent, I realized my gift wasn't just planning trips — it was
                         bringing people together. Turning strangers into friends, and creating experiences where
                         destinations become connections and unforgettable memories.
                     </p>
-                    <p class="text-muted" style="font-size:1rem;line-height:1.9;margin-bottom:20px;">
+                    <p class="text-muted" id="about-p3" style="font-size:1rem;line-height:1.9;margin-bottom:20px;">
                         I started small — a few trips with couples and friends, then a 20-person trip to Jamaica, then
                         hosting for one of NYC's largest run clubs. And most recently, our sold-out China trip in March
                         2026, where strangers became friends and shared some of the most life-changing experiences
                         together.
                     </p>
-                    <p class="text-muted" style="font-size:1rem;line-height:1.9;margin-bottom:20px;">
+                    <p class="text-muted" id="about-p4" style="font-size:1rem;line-height:1.9;margin-bottom:20px;">
                         At Travel & LIV Collective, we don't do large, impersonal tour groups. Each destination is
                         intentionally curated and thoughtfully designed to create an environment where real connections
                         can happen naturally. Because at the end of the day, travel feels different when it's shared.
                     </p>
-                    <p class="text-muted" style="font-size:1rem;line-height:1.9;margin-bottom:32px;">
+                    <p class="text-muted" id="about-p5" style="font-size:1rem;line-height:1.9;margin-bottom:32px;">
                         And my goal is simple: To build a community where connection is at the center of every journey.
                     </p>
                     <div class="story-values">
@@ -178,9 +192,10 @@
                 </p>
             </div>
 
-            <div class="past-trips-grid">
-                <!-- Trip 1 -->
-                <div class="past-trip-card reveal animate-delay-1">
+            <div class="past-trips-grid" id="past-trips-grid">
+                <!-- Rendered by JS from admin config -->
+                <!-- Static fallback (hidden if JS runs) -->
+                <div class="past-trip-card reveal animate-delay-1" id="past-trip-fallback">
                     <div class="past-trip-media" style="position:relative;overflow:hidden;">
                         <video src="worldstallestelevator.mp4" autoplay muted loop playsinline class="past-trip-img"
                             style="width:100%;height:100%;object-fit:cover;display:block;"></video>
@@ -190,11 +205,11 @@
                     </div>
                     <div class="past-trip-content">
                         <h3>China 2026</h3>
-                        <p class="text-muted">10 unforgettable days across Shanghai, Xi'an, Beijing, and beyond. 20+
+                        <p class="text-muted">14 unforgettable days across Shanghai, Xi'an, Beijing, and beyond. 20+
                             travelers. A sold-out debut that turned strangers into lifelong friends.</p>
                         <div class="past-trip-meta">
                             <span class="past-trip-tag">March 2026</span>
-                            <span class="past-trip-tag">10 Days</span>
+                            <span class="past-trip-tag">14 Days</span>
                             <span class="past-trip-tag">20+ Travelers</span>
                         </div>
                     </div>
@@ -337,17 +352,18 @@
                 </div>
                 <div>
                     <div class="footer-heading">Trips</div>
-<ul class="footer-links footer-trips-list">
+                    <ul class="footer-links footer-trips-list">
                         <li class="nav-dropdown">
-                <a href="upcoming.html">Upcoming Trips</a>
-                <div class="nav-dropdown-menu">
-                    <a href="/bali.html"><span class="dd-icon">🏝️</span>Bali, Indonesia<span class="dd-badge">Open</span></a>
-                    <a href="/puntacana.html"><span class="dd-icon">🌴</span>Punta Cana, D.R.</a>
-                    <a href="/rio.html"><span class="dd-icon">🎉</span>Rio de Janeiro</a>
-                    <div class="nav-dropdown-divider"></div>
-                    <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
-                </div>
-            </li>
+                            <a href="upcoming.html">Upcoming Trips</a>
+                            <div class="nav-dropdown-menu">
+                                <a href="/bali.html"><span class="dd-icon">🏝️</span>Bali, Indonesia<span
+                                        class="dd-badge">Open</span></a>
+                                <a href="/puntacana.html"><span class="dd-icon">🌴</span>Punta Cana, D.R.</a>
+                                <a href="/rio.html"><span class="dd-icon">🎉</span>Rio de Janeiro</a>
+                                <div class="nav-dropdown-divider"></div>
+                                <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <div>
@@ -378,6 +394,71 @@
     <script src="main.js"></script>
     <script src="/site-defaults.js"></script>
     <script src="dest-sync.js"></script>
+    <script>
+        // ── About Page Dynamic Renderer ──────────────────────────────
+        (function renderAboutPage() {
+            // Wait for DOM
+            if (!window.getSiteConfig) return; // site-config.js not loaded yet (shouldn't happen)
+            var cfg = getSiteConfig();
+
+            // ── Bio ──
+            var bio = cfg.aboutBio;
+            if (bio) {
+                var setTxt = function (id, val) {
+                    var el = document.getElementById(id);
+                    if (el && val) el.textContent = val;
+                };
+                setTxt('about-founder-quote', '"' + bio.founderQuote + '"');
+                setTxt('about-p1', bio.para1);
+                setTxt('about-p2', bio.para2);
+                setTxt('about-p3', bio.para3);
+                setTxt('about-p4', bio.para4);
+                setTxt('about-p5', bio.para5);
+            }
+
+            // ── Past Trips Grid ──
+            var pastTrips = Array.isArray(cfg.pastTrips) ? cfg.pastTrips : null;
+            var grid = document.getElementById('past-trips-grid');
+            if (grid && pastTrips && pastTrips.length) {
+                // Hide the static fallback
+                var fb = document.getElementById('past-trip-fallback');
+                if (fb) fb.style.display = 'none';
+
+                // Render each past trip card dynamically
+                var cards = pastTrips.map(function (t, i) {
+                    var mediaHtml = '';
+                    if (t.videoSrc) {
+                        mediaHtml = '<video src="' + escHtml(t.videoSrc) + '" autoplay muted loop playsinline class="past-trip-img" style="width:100%;height:100%;object-fit:cover;display:block;"></video>';
+                    } else if (t.heroImage) {
+                        mediaHtml = '<img src="' + escHtml(t.heroImage) + '" alt="' + escHtml(t.title) + '" class="past-trip-img" style="width:100%;height:100%;object-fit:cover;display:block;" />';
+                    } else {
+                        mediaHtml = '<div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;font-size:3rem;">✈️</div>';
+                    }
+                    var metaTags = '';
+                    if (t.monthYear) metaTags += '<span class="past-trip-tag">' + escHtml(t.monthYear) + '</span>';
+                    if (t.duration) metaTags += '<span class="past-trip-tag">' + escHtml(t.duration) + '</span>';
+                    if (t.travelerCount) metaTags += '<span class="past-trip-tag">' + escHtml(t.travelerCount) + '</span>';
+                    var delay = i === 0 ? 'animate-delay-1' : i === 1 ? 'animate-delay-2' : 'animate-delay-3';
+                    return '<div class="past-trip-card reveal ' + delay + '">' +
+                        '<div class="past-trip-media" style="position:relative;overflow:hidden;">' +
+                        mediaHtml +
+                        '<div class="past-trip-overlay"><span class="tag tag-gold">' + escHtml(t.label || t.title) + '</span></div>' +
+                        '</div>' +
+                        '<div class="past-trip-content">' +
+                        '<h3>' + escHtml(t.title) + '</h3>' +
+                        '<p class="text-muted">' + escHtml(t.description) + '</p>' +
+                        '<div class="past-trip-meta">' + metaTags + '</div>' +
+                        '</div></div>';
+                }).join('');
+                // Prepend dynamic cards before fallback
+                grid.insertAdjacentHTML('afterbegin', cards);
+            }
+
+            function escHtml(s) {
+                return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            }
+        })();
+    </script>
 </body>
 
 </html>

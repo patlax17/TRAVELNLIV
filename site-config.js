@@ -5,7 +5,7 @@
 // =============================================================
 
 const TNLIV_DEFAULTS = {
-    version: "1.0",
+    version: "1.1",
 
     // ── SOCIAL LINKS (used site-wide in nav, footer, CTAs) ───────
     social: {
@@ -110,6 +110,33 @@ const TNLIV_DEFAULTS = {
             priceDisplay: "TBA",
             ctaText: "Get Notified",
             ctaUrl: "https://chat.whatsapp.com/Ii7bQKfuOZoLcWfmj8C1Q5?mode=gi_t",
+        },
+    ],
+
+    // ── ABOUT PAGE ────────────────────────────────────────────────
+    aboutBio: {
+        founderQuote: "You arrive as a stranger. You leave as a community.",
+        para1: "Travel & LIV started two years ago when I was solo traveling and realized something so many people feel: we want to see the world, but we don't always have the right people to go with.",
+        para2: "Most group trip ideas stay stuck in the chat, and planning everything alone can feel overwhelming. As I became a travel agent, I realized my gift wasn't just planning trips — it was bringing people together. Turning strangers into friends, and creating experiences where destinations become connections and unforgettable memories.",
+        para3: "I started small — a few trips with couples and friends, then a 20-person trip to Jamaica, then hosting for one of NYC's largest run clubs. And most recently, our sold-out China trip in March 2026, where strangers became friends and shared some of the most life-changing experiences together.",
+        para4: "At Travel & LIV Collective, we don't do large, impersonal tour groups. Each destination is intentionally curated and thoughtfully designed to create an environment where real connections can happen naturally. Because at the end of the day, travel feels different when it's shared.",
+        para5: "And my goal is simple: To build a community where connection is at the center of every journey.",
+    },
+
+    // ── PAST TRIPS (About page) ───────────────────────────────────
+    pastTrips: [
+        {
+            id: "china-2026",
+            label: "China",
+            title: "China 2026",
+            description: "14 unforgettable days across Shanghai, Xi'an, Beijing, and beyond. 20+ travelers. A sold-out debut that turned strangers into lifelong friends.",
+            monthYear: "March 2026",
+            duration: "14 Days",
+            travelerCount: "20+ Travelers",
+            videoSrc: "worldstallestelevator.mp4",
+            heroImage: "",
+            autoArchived: false,
+            sourceSlug: "",
         },
     ],
 
