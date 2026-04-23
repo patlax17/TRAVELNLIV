@@ -23,15 +23,15 @@
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li class="nav-dropdown">
-                <a href="upcoming.html">Upcoming Trips</a>
-                <div class="nav-dropdown-menu">
-                    <a href="/bali.html"><span class="dd-icon">🏝️</span>Bali, Indonesia<span class="dd-badge">Open</span></a>
-                    <a href="/puntacana.html"><span class="dd-icon">🌴</span>Punta Cana, D.R.</a>
-                    <a href="/rio.html"><span class="dd-icon">🎉</span>Rio de Janeiro</a>
-                    <div class="nav-dropdown-divider"></div>
-                    <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
-                </div>
-            </li>
+          <a href="upcoming.html">Upcoming Trips</a>
+          <div class="nav-dropdown-menu">
+            <a href="/bali.html"><span class="dd-icon">🏝️</span>Bali, Indonesia<span class="dd-badge">Open</span></a>
+            <a href="/puntacana.html"><span class="dd-icon">🌴</span>Punta Cana, D.R.</a>
+            <a href="/rio.html"><span class="dd-icon">🎉</span>Rio de Janeiro</a>
+            <div class="nav-dropdown-divider"></div>
+            <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
+          </div>
+        </li>
         <li><a href="partnerships.html">Partners</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="faqs.html">FAQs</a></li>
@@ -86,11 +86,7 @@
         </div>
       </div>
       <div class="hero-stat-bar glass animate-fade-in animate-delay-4">
-        <div class="hero-stat">
-          <span class="stat-number">20+</span>
-          <span class="stat-label">Trips Taken</span>
-        </div>
-        <div class="stat-divider"></div>
+
         <div class="hero-stat">
           <span class="stat-number">4–5★</span>
           <span class="stat-label">Stays Only</span>
@@ -466,35 +462,41 @@
 
     </div>
 
-      <!-- ── SQUADTRIP INLINE BOOKING DROPDOWN ── -->
-      <div id="home-booking-panel" style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;opacity:0;">
-        <div style="padding-top:40px;">
-          <div style="text-align:center;margin-bottom:24px;">
-            <span class="eyebrow">Book Your Spot</span>
-            <h3 class="display-sm" style="margin-top:10px;">Ready to go? Lock in your seat.</h3>
-            <div class="divider" style="margin:14px auto 0;"></div>
-          </div>
-          <div style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-2);box-shadow:var(--shadow-gold);">
-            <iframe
-              id="home-booking-iframe"
-              style="width:100%;min-height:700px;height:auto;border:none;display:block;"
-              src=""
-              data-src="https://travelnlivcollective.squadtrip.com/trip/travel-liv-collective-signature-mystery-trip-where-luxury-meets-relaxation-and-connection-13016?color=abcca8"
-              title="Bali 2026 — Book Your Spot"
-              allow="payment">
-            </iframe>
-          </div>
-          <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:14px;">
-            Secure checkout powered by <strong style="color:var(--teal);">Squadtrip</strong> · Flexible payment plans available
-          </p>
-          <div style="text-align:center;margin-top:24px;padding-bottom:8px;">
-            <button onclick="toggleBookingPanel()" style="background:#c0392b;border:none;border-radius:999px;color:#fff;padding:12px 32px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(192,57,43,0.45);" onmouseover="this.style.background='#a93226';this.style.boxShadow='0 6px 24px rgba(192,57,43,0.6)'" onmouseout="this.style.background='#c0392b';this.style.boxShadow='0 4px 18px rgba(192,57,43,0.45)'" id="booking-close-btn">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-              Close Booking Widget
-            </button>
-          </div>
+    <!-- ── SQUADTRIP INLINE BOOKING DROPDOWN ── -->
+    <div id="home-booking-panel"
+      style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;opacity:0;">
+      <div style="padding-top:40px;">
+        <div style="text-align:center;margin-bottom:24px;">
+          <span class="eyebrow">Book Your Spot</span>
+          <h3 class="display-sm" style="margin-top:10px;">Ready to go? Lock in your seat.</h3>
+          <div class="divider" style="margin:14px auto 0;"></div>
+        </div>
+        <div
+          style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-2);box-shadow:var(--shadow-gold);">
+          <iframe id="home-booking-iframe" style="width:100%;min-height:700px;height:auto;border:none;display:block;"
+            src=""
+            data-src="https://travelnlivcollective.squadtrip.com/trip/travel-liv-collective-signature-mystery-trip-where-luxury-meets-relaxation-and-connection-13016?color=abcca8"
+            title="Bali 2026 — Book Your Spot" allow="payment">
+          </iframe>
+        </div>
+        <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:14px;">
+          Secure checkout powered by <strong style="color:var(--teal);">Squadtrip</strong> · Flexible payment plans
+          available
+        </p>
+        <div style="text-align:center;margin-top:24px;padding-bottom:8px;">
+          <button onclick="toggleBookingPanel()"
+            style="background:#c0392b;border:none;border-radius:999px;color:#fff;padding:12px 32px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(192,57,43,0.45);"
+            onmouseover="this.style.background='#a93226';this.style.boxShadow='0 6px 24px rgba(192,57,43,0.6)'"
+            onmouseout="this.style.background='#c0392b';this.style.boxShadow='0 4px 18px rgba(192,57,43,0.45)'"
+            id="booking-close-btn">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M18 15l-6-6-6 6" />
+            </svg>
+            Close Booking Widget
+          </button>
         </div>
       </div>
+    </div>
 
   </section>
 
@@ -631,16 +633,17 @@
         </div>
         <div>
           <div class="footer-heading">Trips</div>
-<ul class="footer-links footer-trips-list">
+          <ul class="footer-links footer-trips-list">
             <li class="nav-dropdown">
-                <a href="upcoming.html">Upcoming Trips</a>
-                <div class="nav-dropdown-menu">
-                    <a href="/bali.html"><span class="dd-icon">🏝️</span>Bali, Indonesia<span class="dd-badge">Open</span></a>
-                    <a href="/puntacana.html"><span class="dd-icon">🌴</span>Punta Cana, D.R.</a>
-                    <a href="/rio.html"><span class="dd-icon">🎉</span>Rio de Janeiro</a>
-                    <div class="nav-dropdown-divider"></div>
-                    <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
-                </div>
+              <a href="upcoming.html">Upcoming Trips</a>
+              <div class="nav-dropdown-menu">
+                <a href="/bali.html"><span class="dd-icon">🏝️</span>Bali, Indonesia<span
+                    class="dd-badge">Open</span></a>
+                <a href="/puntacana.html"><span class="dd-icon">🌴</span>Punta Cana, D.R.</a>
+                <a href="/rio.html"><span class="dd-icon">🎉</span>Rio de Janeiro</a>
+                <div class="nav-dropdown-divider"></div>
+                <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
+              </div>
             </li>
           </ul>
         </div>
@@ -672,8 +675,8 @@
   <script src="main.js"></script>
   <script src="site-config.js"></script>
   <script src="content-loader.js"></script>
-    <script src="/site-defaults.js"></script>
-    <script src="dest-sync.js"></script>
+  <script src="/site-defaults.js"></script>
+  <script src="dest-sync.js"></script>
 </body>
 
 </html>
