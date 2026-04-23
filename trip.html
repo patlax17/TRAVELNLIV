@@ -610,7 +610,7 @@
                 var allDests = (stored2 && stored2.length) ? stored2 : (window.SITE_DEST_DEFAULTS || []);
                 dd.innerHTML = allDests.map(function (dest) {
                     var badge = dest.status === 'booking_open' ? '<span class="dd-badge">Open</span>' : '';
-                    return '<a href="' + (dest.url || '/upcomingtrips/' + dest.slug) + '"><span class="dd-icon">' + (dest.emoji || '✈️') + '</span>' + dest.name + badge + '</a>';
+                    return '<a href="' + (dest.url || '/' + dest.slug + '.html') + '"><span class="dd-icon">' + (dest.emoji || '✈️') + '</span>' + dest.name + badge + '</a>';
                 }).join('') + '<div class="nav-dropdown-divider"></div><a href="/upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>';
             } catch (e) { }
 
@@ -619,7 +619,7 @@
                 var stored3 = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || 'null');
                 var allDests2 = (stored3 && stored3.length) ? stored3 : (window.SITE_DEST_DEFAULTS || []);
                 document.getElementById('footer-trips-links').innerHTML =
-                    allDests2.map(function (dest) { return '<li><a href="' + (dest.url || '/upcomingtrips/' + dest.slug) + '">' + dest.name + '</a></li>'; }).join('') +
+                    allDests2.map(function (dest) { return '<li><a href="' + (dest.url || '/' + dest.slug + '.html') + '">' + dest.name + '</a></li>'; }).join('') +
                     '<li><a href="/upcoming.html">All Upcoming Trips</a></li>';
             } catch (e) { }
         })();

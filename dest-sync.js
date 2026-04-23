@@ -18,7 +18,7 @@
     }
 
     function destUrl(d) {
-        return d.url || ('/upcomingtrips/' + d.slug);
+        return d.url || ('/' + d.slug + '.html');
     }
 
     // ── 1. FOOTER TRIP LINKS ──────────────────────────────────────────

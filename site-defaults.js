@@ -9,7 +9,7 @@ window.SITE_DEST_DEFAULTS = [
         slug: 'bali',
         name: 'Bali, Indonesia',
         emoji: '🏝️',
-        url: '/upcomingtrips/bali',
+        url: '/bali.html',
         status: 'booking_open',
         dates: 'July 30 – Aug 5, 2026',
         price: 'Starting at $2,350',
@@ -46,7 +46,7 @@ window.SITE_DEST_DEFAULTS = [
         slug: 'puntacana',
         name: 'Punta Cana, Dominican Republic',
         emoji: '🌴',
-        url: '/upcomingtrips/puntacana',
+        url: '/puntacana.html',
         status: 'coming_soon',
         dates: 'October 2026',
         price: 'TBA',
@@ -68,7 +68,7 @@ window.SITE_DEST_DEFAULTS = [
         slug: 'rio',
         name: 'Rio de Janeiro, Brazil',
         emoji: '🎉',
-        url: '/upcomingtrips/rio',
+        url: '/rio.html',
         status: 'coming_soon',
         dates: 'December 2026',
         price: 'TBA',
@@ -94,7 +94,7 @@ window.SITE_DEST_DEFAULTS = [
 // ── DATA VERSION SYSTEM ────────────────────────────────────────────────
 // Bump DEST_DATA_VERSION whenever URL structure or critical data changes.
 // This forces ALL visitors' stale localStorage to be replaced automatically.
-var DEST_DATA_VERSION = '3'; // v3: clean /upcomingtrips/ URLs
+var DEST_DATA_VERSION = '4'; // v4: direct .html URLs, no rewrites // v3: clean /upcomingtrips/ URLs
 
 (function seedOrRefresh() {
     try {
