@@ -53,7 +53,7 @@ const TNLIV_DEFAULTS = {
         description: "Sacred rice terraces, rooftop infinity pools, temple sunrises, and nights the group chat will never let you forget. This is Bali with the collective.",
         image: "bali_hero.png",
         ctaText: "Reserve Your Spot",
-        ctaUrl: "https://chat.whatsapp.com/Ii7bQKfuOZoLcWfmj8C1Q5?mode=gi_t",
+        squadtripUrl: "https://travelnlivcollective.squadtrip.com/trip/travel-liv-collective-signature-mystery-trip-where-luxury-meets-relaxation-and-connection-13016?color=abcca8",
         priceFrom: "",
     },
 

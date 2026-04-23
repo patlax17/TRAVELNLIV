@@ -118,6 +118,20 @@
                     <div style="margin-top:16px;">
                         <button class="btn-admin-primary" onclick="saveFeaturedTrip()">✓ Set as Featured</button>
                     </div>
+
+                    <!-- Squadtrip Booking Widget URL -->
+                    <div class="form-group"
+                        style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border-color,#2a2a2a);">
+                        <label style="display:flex;align-items:center;gap:8px;">🔗 Squadtrip Booking URL <span
+                                style="font-size:0.75rem;color:#888;font-weight:400;">(powers the "Reserve Your Spot"
+                                booking widget on the homepage)</span></label>
+                        <input type="url" id="nt-squadtrip-url" class="form-control"
+                            placeholder="https://travelnlivcollective.squadtrip.com/trip/your-trip-slug" />
+                        <p style="font-size:0.78rem;color:#888;margin-top:8px;">When a new trip goes live, paste the new
+                            Squadtrip link here and hit <strong>Save Changes</strong>. The booking widget will
+                            automatically update — no code needed.</p>
+                    </div>
+
                     <div id="featured-trip-preview"
                         style="margin-top:20px;padding:16px 20px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;display:none;">
                         <strong
@@ -1042,7 +1056,8 @@
             v("nt-destination", nt.destination); v("nt-badge", nt.badge);
             v("nt-dates", nt.dates); v("nt-duration", nt.duration);
             v("nt-desc", nt.description); v("nt-price", nt.priceFrom);
-            v("nt-cta-text", nt.ctaText); v("nt-cta-url", nt.ctaUrl);
+            v("nt-cta-text", nt.ctaText);
+            v("nt-squadtrip-url", nt.squadtripUrl);
 
             // Past Event fields
             v("pe-visible", String(pe.visible)); v("pe-city", pe.city);
@@ -1113,7 +1128,8 @@
                 badge: g("nt-badge"), destination: g("nt-destination"), dates: g("nt-dates"),
                 duration: g("nt-duration"), description: g("nt-desc"),
                 image: cfg.nextTrip.image, // preserve default filename
-                priceFrom: g("nt-price"), ctaText: g("nt-cta-text"), ctaUrl: g("nt-cta-url"),
+                priceFrom: g("nt-price"), ctaText: g("nt-cta-text"),
+                squadtripUrl: g("nt-squadtrip-url"),
             };
 
             cfg.pastEvent = {

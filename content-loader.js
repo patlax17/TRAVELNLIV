@@ -93,8 +93,10 @@
         set("next-trip-dates", cfg.nextTrip.dates + (cfg.nextTrip.duration ? " · " + cfg.nextTrip.duration : ""));
         set("next-trip-desc", cfg.nextTrip.description);
         setImgSrc("next-trip-img", "next_trip", cfg.nextTrip.image);
-        setAttr("next-trip-cta", "href", cfg.nextTrip.ctaUrl);
-        set("next-trip-cta", cfg.nextTrip.ctaText + ' <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>');
+        // Wire the Squadtrip booking iframe src from admin config
+        if (cfg.nextTrip.squadtripUrl) {
+            setAttr("home-booking-iframe", "data-src", cfg.nextTrip.squadtripUrl);
+        }
 
         // --- Past Event Recap ---
         const pastSection = document.getElementById("past-event");
