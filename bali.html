@@ -177,6 +177,89 @@
             border-color: var(--teal);
         }
 
+        /* ── ROOM SELECTION ── */
+        .room-card {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .room-card.selected {
+            border-color: var(--gold) !important;
+            box-shadow: 0 0 0 2px var(--gold), var(--shadow-gold);
+        }
+
+        .room-card .room-check {
+            display: none;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            background: var(--gold);
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: #111;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .room-card.selected .room-check {
+            display: flex;
+        }
+
+        /* Selected room summary bar */
+        #room-selected-summary {
+            display: none;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(143, 191, 159, 0.08));
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 20px 28px;
+            margin: 32px 0 0;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        #room-selected-summary.visible {
+            display: flex;
+        }
+
+        .rss-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .rss-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+
+        .rss-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .rss-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .rss-deposit {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
         .room-card img {
             width: 100%;
             height: 180px;
@@ -245,15 +328,16 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li class="nav-dropdown">
-                <a href="upcoming.html">Upcoming Trips</a>
-                <div class="nav-dropdown-menu">
-                    <a href="/bali.html"><span class="dd-icon">🏝️</span>Bali, Indonesia<span class="dd-badge">Open</span></a>
-                    <a href="/puntacana.html"><span class="dd-icon">🌴</span>Punta Cana, D.R.</a>
-                    <a href="/rio.html"><span class="dd-icon">🎉</span>Rio de Janeiro</a>
-                    <div class="nav-dropdown-divider"></div>
-                    <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
-                </div>
-            </li>
+                    <a href="upcoming.html">Upcoming Trips</a>
+                    <div class="nav-dropdown-menu">
+                        <a href="/bali.html"><span class="dd-icon">🏝️</span>Bali, Indonesia<span
+                                class="dd-badge">Open</span></a>
+                        <a href="/puntacana.html"><span class="dd-icon">🌴</span>Punta Cana, D.R.</a>
+                        <a href="/rio.html"><span class="dd-icon">🎉</span>Rio de Janeiro</a>
+                        <div class="nav-dropdown-divider"></div>
+                        <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
+                    </div>
+                </li>
                 <li><a href="partnerships.html">Partners</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="faqs.html">FAQs</a></li>
@@ -320,7 +404,7 @@
                 <div class="sticky-inner">
                     <div>
                         <span class="sticky-title">Bali, Indonesia 2026</span>
-                        <span class="sticky-sub text-muted">Starting at $2,350 · 7 Days</span>
+                        <span class="sticky-sub text-muted" id="sticky-sub-text">Starting at $2,350 · 7 Days</span>
                     </div>
                     <a href="#bali-book" class="btn btn-gold btn-sm" id="sticky-book-btn"
                         onclick="event.preventDefault();document.getElementById('bali-book').scrollIntoView({behavior:'smooth'});setTimeout(()=>openBaliBooking(),400);">Book
@@ -575,8 +659,12 @@
                 </div>
                 <div class="itin-panel-body">
                     <h3>Asia's Hottest Beach Club</h3>
-                    <p>Enjoy a relaxed morning with breakfast at the hotel, then a <strong>half day at leisure</strong> to unwind or explore at your own pace. Later, your guide will transfer you to <strong>Finns Beach Club</strong> — one of Bali's most iconic beachfront destinations.</p>
-                    <p>Spend the afternoon soaking in the vibrant atmosphere: world-class facilities, oceanfront views, curated experiences on your own terms. Lounge by the pool, sip cocktails by the beach, or catch the sunset over the water — this is Bali luxury at its most effortless.</p>
+                    <p>Enjoy a relaxed morning with breakfast at the hotel, then a <strong>half day at leisure</strong>
+                        to unwind or explore at your own pace. Later, your guide will transfer you to <strong>Finns
+                            Beach Club</strong> — one of Bali's most iconic beachfront destinations.</p>
+                    <p>Spend the afternoon soaking in the vibrant atmosphere: world-class facilities, oceanfront views,
+                        curated experiences on your own terms. Lounge by the pool, sip cocktails by the beach, or catch
+                        the sunset over the water — this is Bali luxury at its most effortless.</p>
                     <div class="itin-hl-list">
                         <span class="itin-hl">🍳 Breakfast Included</span>
                         <span class="itin-hl">🏖️ Finns Beach Club</span>
@@ -683,8 +771,11 @@
                     All rooms are in luxury 5-star private villas. The only difference is how you share the space.
                 </p>
             </div>
-            <div class="room-grid reveal">
-                <div class="room-card">
+            <div class="room-grid reveal" id="room-grid">
+                <div class="room-card" data-room="double-friend"
+                    data-title="Double Occupancy — Bringing a friend / couple" data-price="$2,350"
+                    data-deposit="$500 deposit · No credit check payment plan available" onclick="selectRoom(this)">
+                    <div class="room-check">✓</div>
                     <img src="bali/27ea4d6e_fbd36235-e900-4c1c-896b-f246125f8159.avif" alt="Double Occupancy Room" />
                     <div class="room-card-body">
                         <h3>Mystery Trip — Double Occupancy<br><small
@@ -693,7 +784,10 @@
                         <div class="room-deposit">Deposit: $500 · No credit check payment plan available</div>
                     </div>
                 </div>
-                <div class="room-card featured">
+                <div class="room-card featured" data-room="double-solo"
+                    data-title="Double Occupancy — Solo / roommate matching" data-price="$2,400"
+                    data-deposit="$530 deposit · 3 payments of $623 · No credit check" onclick="selectRoom(this)">
+                    <div class="room-check">✓</div>
                     <div class="room-badge">Only 4 remaining!</div>
                     <img src="bali/57c7c690_35af58b3-1d1d-47f5-8375-1ce438bebcc3.avif"
                         alt="Solo Roommate Matching Room" />
@@ -704,7 +798,9 @@
                         <div class="room-deposit">Deposit: $530 · 3 payments of $623 · No credit check</div>
                     </div>
                 </div>
-                <div class="room-card">
+                <div class="room-card" data-room="single" data-title="Single Occupancy — Private room"
+                    data-price="$2,850" data-deposit="$500 deposit · Your own private room" onclick="selectRoom(this)">
+                    <div class="room-check">✓</div>
                     <img src="bali/9c63c812_24a09dcc-c0e9-4d55-8855-06087aaea7d1.avif" alt="Single Occupancy Room" />
                     <div class="room-card-body">
                         <h3>Mystery Trip — Single Occupancy</h3>
@@ -713,6 +809,26 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Selected room summary + CTA -->
+            <div id="room-selected-summary">
+                <div class="rss-info">
+                    <span class="rss-label">Your selected room</span>
+                    <span class="rss-name" id="rss-name"></span>
+                    <span class="rss-deposit" id="rss-deposit"></span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+                    <span class="rss-price" id="rss-price"></span>
+                    <button onclick="bookSelectedRoom()" class="btn btn-gold" style="padding:14px 36px;font-size:1rem;">
+                        Book This Room
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
+                            viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -795,7 +911,7 @@
                 </div>
                 <div>
                     <div class="footer-heading">Trips</div>
-<ul class="footer-links footer-trips-list">
+                    <ul class="footer-links footer-trips-list">
                         <li><a href="/bali.html">Bali 2026</a></li>
                         <li><a href="upcoming.html">All Upcoming Trips</a></li>
                     </ul>
@@ -829,6 +945,36 @@
     <script src="site-config.js"></script>
     <script src="content-loader.js"></script>
     <script>
+        /* ── ROOM SELECTION ── */
+        function selectRoom(card) {
+            // Deselect all
+            document.querySelectorAll('.room-card').forEach(function (c) { c.classList.remove('selected'); });
+            card.classList.add('selected');
+
+            var title = card.dataset.title;
+            var price = card.dataset.price;
+            var deposit = card.dataset.deposit;
+
+            // Update summary bar
+            document.getElementById('rss-name').textContent = title;
+            document.getElementById('rss-price').textContent = price;
+            document.getElementById('rss-deposit').textContent = deposit;
+            document.getElementById('room-selected-summary').classList.add('visible');
+
+            // Update sticky bar
+            document.getElementById('sticky-sub-text').textContent = price + ' · 7 Days';
+
+            // Smooth scroll to summary
+            setTimeout(function () {
+                document.getElementById('room-selected-summary').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 120);
+        }
+
+        function bookSelectedRoom() {
+            document.getElementById('bali-book').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(function () { openBaliBooking(); }, 500);
+        }
+
         /* ── BALI PAGE: Day tab switcher ── */
         function showDay(num) {
             document.querySelectorAll('.itin-day-panel').forEach(p => p.classList.remove('active'));
