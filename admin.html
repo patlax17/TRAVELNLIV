@@ -354,6 +354,37 @@
                         </div>
                     </div>
 
+                    <!-- ── CARD PHOTO — most important thing in this section ── -->
+                    <div class="form-group"
+                        style="margin-bottom:28px;padding-bottom:28px;border-bottom:2px solid var(--border-color,#2a2a2a);">
+                        <label
+                            style="font-size:0.82rem;font-weight:700;color:var(--text,#eee);display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                            📸 Card Photo — <em style="font-weight:400;color:#888;font-style:normal;">The image that
+                                shows on the homepage trip card</em>
+                        </label>
+                        <div class="img-upload-zone" id="zone-next_trip" onclick="openPicker('next_trip')"
+                            ondragover="event.preventDefault();this.classList.add('drag-over')"
+                            ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'next_trip')"
+                            style="min-height:200px;">
+                            <div class="img-upload-placeholder">
+                                <span class="img-upload-icon">🌴</span>
+                                <span class="img-upload-text">Drop photo here or <strong>click to browse</strong></span>
+                                <span class="img-upload-hint">Recommended: 800×600px · JPG or WebP · replaces the
+                                    default Bali photo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-next_trip" accept="image/*" style="display:none"
+                            onchange="handleFilePick(event,'next_trip')" />
+                        <div style="margin-top:10px;display:flex;align-items:center;gap:10px;">
+                            <p style="font-size:0.78rem;color:#888;margin:0;">Upload a new card photo to change what
+                                visitors see. If no photo is uploaded, the default destination image is used
+                                automatically.</p>
+                            <button class="btn-secondary" onclick="removeImage(event,'next_trip')"
+                                style="flex-shrink:0;font-size:0.75rem;padding:7px 14px;white-space:nowrap;">✕ Remove —
+                                use default</button>
+                        </div>
+                    </div>
+
                     <div class="form-group" style="max-width:420px;">
                         <label>⭐ Featured Trip on Homepage</label>
                         <select id="featured-trip-slug" class="form-control" style="font-size:1rem;padding:12px 16px;">
@@ -364,6 +395,7 @@
                     </div>
                     <div style="margin-top:12px;"><button class="btn-admin-primary" onclick="saveFeaturedTrip()">✓ Set
                             as Featured</button></div>
+
 
                     <div id="featured-trip-preview"
                         style="margin-top:20px;padding:16px 20px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;display:none;">
