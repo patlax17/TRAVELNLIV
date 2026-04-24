@@ -2225,15 +2225,23 @@
             if (fi) fi.value = "";
         }
 
-        // Restore a zone's preview from stored URL
+        // Restore a zone's preview from stored URL or Site Defaults
         function restoreZone(key) {
+            const defaults = {
+                'hero_img': 'hero-bg.jpg',
+                'founder_photo': 'olivia.jpg',
+                'cta_bg': 'cta-bg.jpg',
+                'next_trip': 'bali-hero.jpg'
+            };
+
             const stored = localStorage.getItem("tnliv_img_" + key);
-            if (stored) refreshZone(key, stored);
-            else {
-                // Check if in globalImages (from showApp sync)
-                if (window.globalImages && window.globalImages[key]) {
-                    refreshZone(key, window.globalImages[key]);
-                }
+            if (stored) {
+                refreshZone(key, stored);
+            } else if (window.globalImages && window.globalImages[key]) {
+                refreshZone(key, window.globalImages[key]);
+            } else if (defaults[key]) {
+                // Show the existing hardcoded site asset inside the gold border
+                refreshZone(key, defaults[key]);
             }
         }
 
