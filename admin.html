@@ -1037,6 +1037,49 @@
 
             <!-- ========== PANEL: SETTINGS ========== -->
             <div class="admin-panel" id="panel-settings">
+
+                <!-- ── GITHUB PUBLISH — must be first ── -->
+                <div class="panel-section" style="border-top:3px solid var(--gold,#c4a060);">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">🌐</div>
+                        <div>
+                            <div class="panel-section-title">Publish to Live Site — Required</div>
+                            <div class="panel-section-desc">Without this, changes only appear in <em>your</em> browser.
+                                Set this once and every Save + image upload goes live for <strong>everyone</strong>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="gh-status-bar"
+                        style="padding:12px 16px;border-radius:10px;background:rgba(196,160,96,0.08);border:1px solid rgba(196,160,96,0.2);font-size:0.82rem;margin-bottom:20px;">
+                        🔍 Checking publish connection...
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-size:0.78rem;">GitHub Personal Access Token (classic)</label>
+                        <div style="display:flex;gap:10px;">
+                            <input type="password" id="gh-token-input" class="form-control"
+                                placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="font-family:monospace;" />
+                            <button class="btn-secondary" onclick="testAndSaveToken()"
+                                style="flex-shrink:0;white-space:nowrap;">Test & Save</button>
+                        </div>
+                        <div
+                            style="margin-top:12px;padding:14px 16px;background:var(--dark-3,#111);border-radius:10px;font-size:0.77rem;color:#888;line-height:1.7;">
+                            <strong style="color:var(--text,#eee);">How to get your token (one-time
+                                setup):</strong><br />
+                            1. Go to <a href="https://github.com/settings/tokens" target="_blank"
+                                style="color:var(--gold);">github.com/settings/tokens</a><br />
+                            2. Click <strong>Generate new token (classic)</strong><br />
+                            3. Give it a name like <em>TravelNLiv Admin</em><br />
+                            4. Check the <strong>repo</strong> scope (full repo access)<br />
+                            5. Click <strong>Generate token</strong> — copy it and paste above<br />
+                            <br />
+                            <span style="color:var(--gold,#c4a060);">⚡ After saving, every image upload and "Save
+                                Changes" will automatically go live for all visitors within ~30 seconds.</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="panel-section">
                     <div class="panel-section-header">
                         <div class="panel-section-icon">🔑</div>
@@ -1054,6 +1097,7 @@
                     </div>
                     <button class="btn-save" onclick="changePassword()" style="margin-top:8px;">Update Password</button>
                 </div>
+
                 <div class="panel-section">
                     <div class="panel-section-header">
                         <div class="panel-section-icon">🖼️</div>
@@ -1295,7 +1339,9 @@
     <div id="toast"></div>
 
     <script src="site-config.js"></script>
+    <script src="publisher.js"></script>
     <script>
+
         // ============================================================
         // ADMIN PANEL — CORE LOGIC
         // ============================================================
@@ -1362,7 +1408,9 @@
             renderPastEventPhotoGrid();
             addGallerySlot(); // start with one empty slot
             populateFeaturedTripSelect();
+            loadGhStatusPanel(); // check GitHub publish connection
         }
+
 
         function changePassword() {
             const np = document.getElementById("new-pass").value;
@@ -1371,6 +1419,55 @@
             if (np !== cp) return toast("Passwords don't match.", "error");
             localStorage.setItem(DEFAULT_PASS_KEY, np);
             toast("Password updated ✓");
+        }
+
+        // ── GITHUB PUBLISH STATUS ────────────────────────────────────
+        function renderGhStatus(connected) {
+            const bar = document.getElementById("gh-status-bar");
+            if (!bar) return;
+            if (connected === null) {
+                bar.style.background = "rgba(196,160,96,0.08)";
+                bar.style.borderColor = "rgba(196,160,96,0.2)";
+                bar.innerHTML = "🔍 Checking publish connection...";
+            } else if (connected) {
+                bar.style.background = "rgba(110,198,160,0.1)";
+                bar.style.borderColor = "rgba(110,198,160,0.3)";
+                bar.innerHTML = "✅ <strong style='color:#8FBF9F'>Connected</strong> — saves and image uploads now go live for everyone (~30s via Vercel).";
+            } else {
+                bar.style.background = "rgba(224,90,78,0.08)";
+                bar.style.borderColor = "rgba(224,90,78,0.2)";
+                bar.innerHTML = "⚠ <strong style='color:#e05a4e'>Not connected</strong> — changes save locally only. Add a valid GitHub token below.";
+            }
+        }
+
+        async function testAndSaveToken() {
+            const inp = document.getElementById("gh-token-input");
+            const token = (inp ? inp.value : "").trim();
+            if (!token) return toast("Paste a token first.", "error");
+            toast("Testing connection...");
+            renderGhStatus(null);
+            const ok = await window.checkGhToken(token);
+            if (ok) {
+                window.saveGhToken(token);
+                inp.value = "";
+                renderGhStatus(true);
+                toast("✅ Token saved! Publish is now active.");
+            } else {
+                renderGhStatus(false);
+                toast("Token invalid or no repo access. Check the scope.", "error");
+            }
+        }
+
+        function loadGhStatusPanel() {
+            const token = window.getGhToken ? window.getGhToken() : "";
+            const inp = document.getElementById("gh-token-input");
+            if (inp && token) inp.value = token; // show masked existing token
+            if (token) {
+                // Quick async verify
+                window.checkGhToken(token).then(ok => renderGhStatus(ok)).catch(() => renderGhStatus(false));
+            } else {
+                renderGhStatus(false);
+            }
         }
 
         // ── NAVIGATION ───────────────────────────────────────────────
@@ -1617,8 +1714,21 @@
             cfg.navCta = { text: g("s-nav-cta-text"), url: g("s-nav-cta-url") };
             cfg.faqs = collectFaqs();
 
+            // 1️⃣ Save locally immediately (instant preview for admin)
             saveSiteConfig(cfg);
-            toast("✓ Saved! Reload the homepage to see updates.");
+            toast("✓ Saved locally. Publishing to live site...");
+
+            // 2️⃣ Push to GitHub → triggers Vercel redeploy → visible to everyone
+            if (window.publishConfig) {
+                window.publishConfig(cfg)
+                    .then(function (ok) {
+                        if (ok) toast("✅ Published! Live site updates in ~30 seconds.");
+                        else toast("✓ Saved locally. Add GitHub token in Settings to publish globally.", "warn");
+                    })
+                    .catch(function (e) {
+                        toast("⚠ Local save OK, but publish failed: " + e.message, "error");
+                    });
+            }
         }
 
         // ── HOW IT WORKS STEPS EDITOR ─────────────────────────────────
@@ -1721,24 +1831,41 @@
         }
 
         // Convert file to base64, store, refresh zone
+        // Convert file to base64, store locally + publish to GitHub
         function processImage(file, key) {
             const reader = new FileReader();
             reader.onload = function (e) {
                 const base64 = e.target.result;
+                // 1️⃣ Store locally for instant admin preview
                 localStorage.setItem("tnliv_img_" + key, base64);
                 refreshZone(key, base64);
-                toast("✓ Image uploaded! Save Changes to apply.");
+                toast("✓ Photo saved. Publishing to live site...");
+
+                // 2️⃣ Commit to GitHub → visible to ALL visitors after ~30s deploy
+                if (window.publishImage) {
+                    window.publishImage(key, base64)
+                        .then(function (url) {
+                            if (url) toast("✅ Photo published! Live site updates in ~30 seconds.");
+                            else toast("✓ Photo saved locally. Add GitHub token in Settings to publish globally.", "warn");
+                        })
+                        .catch(function (e) {
+                            toast("⚠ Photo saved locally, publish failed: " + e.message, "error");
+                        });
+                }
             };
             reader.readAsDataURL(file);
         }
 
-        // Remove image for a key
+        // Remove image for a key (local + global)
         function removeImage(event, key) {
             event.stopPropagation();
             localStorage.removeItem("tnliv_img_" + key);
             refreshZone(key, null);
-            toast("Image removed — default will be used.");
+            toast("Image removed.");
+            // Also remove from GitHub site-data.json
+            if (window.unpublishImage) window.unpublishImage(key);
         }
+
 
         // Re-render a zone with new image or empty state
         function refreshZone(key, base64) {
