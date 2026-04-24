@@ -1038,45 +1038,19 @@
             <!-- ========== PANEL: SETTINGS ========== -->
             <div class="admin-panel" id="panel-settings">
 
-                <!-- ── GITHUB PUBLISH — must be first ── -->
+                <!-- ── PUBLISH STATUS ── -->
                 <div class="panel-section" style="border-top:3px solid var(--gold,#c4a060);">
                     <div class="panel-section-header">
                         <div class="panel-section-icon">🌐</div>
                         <div>
-                            <div class="panel-section-title">Publish to Live Site — Required</div>
-                            <div class="panel-section-desc">Without this, changes only appear in <em>your</em> browser.
-                                Set this once and every Save + image upload goes live for <strong>everyone</strong>.
-                            </div>
+                            <div class="panel-section-title">Live Site Publish Status</div>
+                            <div class="panel-section-desc">Every Save Changes and image upload automatically goes live
+                                for <strong>all visitors</strong> on any device — no setup needed.</div>
                         </div>
                     </div>
-
                     <div id="gh-status-bar"
-                        style="padding:12px 16px;border-radius:10px;background:rgba(196,160,96,0.08);border:1px solid rgba(196,160,96,0.2);font-size:0.82rem;margin-bottom:20px;">
+                        style="padding:14px 18px;border-radius:10px;background:rgba(196,160,96,0.08);border:1px solid rgba(196,160,96,0.2);font-size:0.85rem;">
                         🔍 Checking publish connection...
-                    </div>
-
-                    <div class="form-group">
-                        <label style="font-size:0.78rem;">GitHub Personal Access Token (classic)</label>
-                        <div style="display:flex;gap:10px;">
-                            <input type="password" id="gh-token-input" class="form-control"
-                                placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="font-family:monospace;" />
-                            <button class="btn-secondary" onclick="testAndSaveToken()"
-                                style="flex-shrink:0;white-space:nowrap;">Test & Save</button>
-                        </div>
-                        <div
-                            style="margin-top:12px;padding:14px 16px;background:var(--dark-3,#111);border-radius:10px;font-size:0.77rem;color:#888;line-height:1.7;">
-                            <strong style="color:var(--text,#eee);">How to get your token (one-time
-                                setup):</strong><br />
-                            1. Go to <a href="https://github.com/settings/tokens" target="_blank"
-                                style="color:var(--gold);">github.com/settings/tokens</a><br />
-                            2. Click <strong>Generate new token (classic)</strong><br />
-                            3. Give it a name like <em>TravelNLiv Admin</em><br />
-                            4. Check the <strong>repo</strong> scope (full repo access)<br />
-                            5. Click <strong>Generate token</strong> — copy it and paste above<br />
-                            <br />
-                            <span style="color:var(--gold,#c4a060);">⚡ After saving, every image upload and "Save
-                                Changes" will automatically go live for all visitors within ~30 seconds.</span>
-                        </div>
                     </div>
                 </div>
 
@@ -1421,7 +1395,7 @@
             toast("Password updated ✓");
         }
 
-        // ── GITHUB PUBLISH STATUS ────────────────────────────────────
+        // ── PUBLISH STATUS (server-managed, no token in browser) ─────
         function renderGhStatus(connected) {
             const bar = document.getElementById("gh-status-bar");
             if (!bar) return;
@@ -1432,42 +1406,21 @@
             } else if (connected) {
                 bar.style.background = "rgba(110,198,160,0.1)";
                 bar.style.borderColor = "rgba(110,198,160,0.3)";
-                bar.innerHTML = "✅ <strong style='color:#8FBF9F'>Connected</strong> — saves and image uploads now go live for everyone (~30s via Vercel).";
+                bar.innerHTML = "✅ <strong style='color:#8FBF9F'>Connected</strong> — all saves and image uploads go live for everyone in ~30 seconds. Works on any device automatically.";
             } else {
                 bar.style.background = "rgba(224,90,78,0.08)";
                 bar.style.borderColor = "rgba(224,90,78,0.2)";
-                bar.innerHTML = "⚠ <strong style='color:#e05a4e'>Not connected</strong> — changes save locally only. Add a valid GitHub token below.";
+                bar.innerHTML = "⚠ <strong style='color:#e05a4e'>Not connected</strong> — GH_TOKEN not set in Vercel environment variables. Contact your developer.";
             }
         }
 
-        async function testAndSaveToken() {
-            const inp = document.getElementById("gh-token-input");
-            const token = (inp ? inp.value : "").trim();
-            if (!token) return toast("Paste a token first.", "error");
-            toast("Testing connection...");
+        // No token needed — just ping the server
+        async function testAndSaveToken() { await loadGhStatusPanel(); }
+
+        async function loadGhStatusPanel() {
             renderGhStatus(null);
-            const ok = await window.checkGhToken(token);
-            if (ok) {
-                window.saveGhToken(token);
-                inp.value = "";
-                renderGhStatus(true);
-                toast("✅ Token saved! Publish is now active.");
-            } else {
-                renderGhStatus(false);
-                toast("Token invalid or no repo access. Check the scope.", "error");
-            }
-        }
-
-        function loadGhStatusPanel() {
-            const token = window.getGhToken ? window.getGhToken() : "";
-            const inp = document.getElementById("gh-token-input");
-            if (inp && token) inp.value = token; // show masked existing token
-            if (token) {
-                // Quick async verify
-                window.checkGhToken(token).then(ok => renderGhStatus(ok)).catch(() => renderGhStatus(false));
-            } else {
-                renderGhStatus(false);
-            }
+            const ok = window.checkPublishStatus ? await window.checkPublishStatus() : false;
+            renderGhStatus(ok);
         }
 
         // ── NAVIGATION ───────────────────────────────────────────────
