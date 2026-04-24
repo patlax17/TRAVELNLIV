@@ -1518,6 +1518,68 @@
                             style="margin-top:10px;font-size:0.82rem;">+ Add Room</button>
                     </div>
 
+                    <!-- ── PHOTO MANAGEMENT ── -->
+                    <div
+                        style="grid-column:span 2;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-color,#2a2a2a);">
+                        <label
+                            style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold,#c4a060);margin-bottom:16px;">
+                            📷 Page Photo Management
+                        </label>
+                        <p style="font-size:0.8rem;color:#888;margin-bottom:20px;line-height:1.6;">
+                            Upload photos for this destination's page. Changes push to GitHub and go live for all
+                            visitors in ~30s.
+                        </p>
+
+                        <!-- Trip Card + Hero row -->
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+                            <div>
+                                <label
+                                    style="font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;display:block;margin-bottom:8px;">🃏
+                                    Trip Card Photo <span style="font-weight:400;color:#666;">— upcoming.html
+                                        card</span></label>
+                                <div class="img-upload-zone" id="zone-dest-card" onclick="openPicker('dest_card')"
+                                    style="min-height:110px;"
+                                    ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                    ondragleave="this.classList.remove('drag-over')"
+                                    ondrop="handleDrop(event,'dest_card')">
+                                    <div class="img-upload-placeholder"><span class="img-upload-icon"
+                                            style="font-size:1.4rem;">🃏</span><span
+                                            class="img-upload-text"><strong>Click to upload</strong></span></div>
+                                </div>
+                                <input type="file" id="file-dest_card" accept="image/*" style="display:none"
+                                    onchange="handleDestPhoto(event,'card')" />
+                            </div>
+                            <div>
+                                <label
+                                    style="font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;display:block;margin-bottom:8px;">🖼️
+                                    Page Hero <span style="font-weight:400;color:#666;">— full-bleed
+                                        background</span></label>
+                                <div class="img-upload-zone" id="zone-dest-hero" onclick="openPicker('dest_hero')"
+                                    style="min-height:110px;"
+                                    ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                    ondragleave="this.classList.remove('drag-over')"
+                                    ondrop="handleDrop(event,'dest_hero')">
+                                    <div class="img-upload-placeholder"><span class="img-upload-icon"
+                                            style="font-size:1.4rem;">🏔️</span><span
+                                            class="img-upload-text"><strong>Click to upload</strong></span></div>
+                                </div>
+                                <input type="file" id="file-dest_hero" accept="image/*" style="display:none"
+                                    onchange="handleDestPhoto(event,'hero')" />
+                            </div>
+                        </div>
+
+                        <!-- Gallery grid — dynamically populated -->
+                        <label
+                            style="font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;display:block;margin-bottom:10px;">
+                            📷 Gallery Photos <span style="font-weight:400;color:#666;">— the photo grid on the trip
+                                page (click any slot to replace)</span>
+                        </label>
+                        <div id="dest-gallery-grid"
+                            style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;">
+                            <!-- Populated by renderDestPhotoGrid() when edit drawer opens -->
+                        </div>
+                    </div>
+
                 </div><!-- end edit grid -->
                 <p
                     style="font-size:0.78rem;color:#888;margin-top:12px;padding:10px 14px;background:rgba(143,191,159,0.07);border-radius:8px;border-left:2px solid #8FBF9F;">
@@ -2600,12 +2662,92 @@
             renderRoomsEditor(d.rooms || []);
             document.getElementById('edit-dest-drawer-title').textContent = 'Edit: ' + d.name;
             document.getElementById('dest-edit-drawer').style.display = 'block';
+             renderDestPhotoGrid(d.slug);
             setTimeout(function () { document.getElementById('dest-edit-drawer').scrollIntoView({ behavior: 'smooth' }); }, 100);
         }
 
         function closeEditDest() {
             document.getElementById('dest-edit-drawer').style.display = 'none';
         }
+
+         // ── DESTINATION PHOTO MANAGEMENT ─────────────────────────────
+         function renderDestPhotoGrid(slug) {
+             var grid = document.getElementById('dest-gallery-grid');
+             if (!grid) return;
+             restoreZoneKey(slug + '_card', 'zone-dest-card');
+             restoreZoneKey(slug + '_hero', 'zone-dest-hero');
+             grid.innerHTML = '';
+             for (var i = 0; i < 10; i++) {
+                 var key = slug + '_g_' + i;
+                 var stored = localStorage.getItem('tnliv_img_' + key);
+                 var slot = document.createElement('div');
+                 slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
+                     '<div class="img-upload-zone" id="zone-dg-' + i + '" onclick="openPickerDg(' + i + ')" style="min-height:90px;border-radius:8px;" ' +
+                     'ondragover="event.preventDefault();this.classList.add(\'drag-over\')" ondragleave="this.classList.remove(\'drag-over\')">' +
+                     (stored ? '<img src="' + stored + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />' :
+                         '<div class="img-upload-placeholder" style="gap:2px;"><span style="font-size:1rem;">📷</span><span style="font-size:0.67rem;">Upload</span></div>') +
+                     '</div>' +
+                     '<input type="file" id="file-dg-' + i + '" accept="image/*" style="display:none" onchange="handleDestGalleryPick(event,' + i + ')" />';
+                 grid.appendChild(slot);
+             }
+         }
+
+         function openPickerDg(idx) {
+             var inp = document.getElementById('file-dg-' + idx);
+             if (inp) inp.click();
+         }
+
+         function restoreZoneKey(key, zoneId) {
+             var stored = localStorage.getItem('tnliv_img_' + key);
+             if (!stored) return;
+             var zone = document.getElementById(zoneId);
+             if (!zone) return;
+             zone.innerHTML = '<img src="' + stored + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />';
+         }
+
+         function handleDestPhoto(event, type) {
+             var slug = document.getElementById('edit-dest-slug-hidden').value;
+             var file = event.target.files[0];
+             if (!file) return;
+             var key = slug + '_' + type;
+             var zoneId = type === 'card' ? 'zone-dest-card' : 'zone-dest-hero';
+             var reader = new FileReader();
+             reader.onload = function (e) {
+                 var dataUrl = e.target.result;
+                 localStorage.setItem('tnliv_img_' + key, dataUrl);
+                 var zone = document.getElementById(zoneId);
+                 if (zone) zone.innerHTML = '<img src="' + dataUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />';
+                 toast('Uploading ' + type + ' photo...');
+                 if (window.publishImage) {
+                     window.publishImage(key, dataUrl)
+                         .then(function () { toast('\u2705 ' + (type === 'card' ? 'Card' : 'Hero') + ' photo is now live!'); })
+                         .catch(function (err) { toast('Saved locally. ' + err.message, 'error'); });
+                 }
+             };
+             reader.readAsDataURL(file);
+         }
+
+         function handleDestGalleryPick(event, idx) {
+             var slug = document.getElementById('edit-dest-slug-hidden').value;
+             var file = event.target.files[0];
+             if (!file) return;
+             var key = slug + '_g_' + idx;
+             var reader = new FileReader();
+             reader.onload = function (e) {
+                 var dataUrl = e.target.result;
+                 localStorage.setItem('tnliv_img_' + key, dataUrl);
+                 var zone = document.getElementById('zone-dg-' + idx);
+                 if (zone) zone.innerHTML = '<img src="' + dataUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />';
+                 toast('Uploading gallery photo ' + (idx + 1) + '...');
+                 if (window.publishImage) {
+                     window.publishImage(key, dataUrl)
+                         .then(function () { toast('\u2705 Gallery photo ' + (idx + 1) + ' is now live!'); })
+                         .catch(function (err) { toast('Saved locally. ' + err.message, 'error'); });
+                 }
+             };
+             reader.readAsDataURL(file);
+         }
+
 
         function saveEditDest() {
             var slug = document.getElementById('edit-dest-slug-hidden').value;
