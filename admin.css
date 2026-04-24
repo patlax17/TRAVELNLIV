@@ -1052,3 +1052,11 @@ select.form-control {
     background: rgba(255, 255, 255, 0.2);
     flex-shrink: 0;
 }
+/* ── ADMIN GALLERY GRID ENFORCEMENT ──────────────────────── */
+.admin-gallery-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 20px !important;
+    width: 100% !important;
+    margin-top: 24px !important;
+}
