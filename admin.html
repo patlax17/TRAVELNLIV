@@ -1186,8 +1186,9 @@
                                 </div>
                             </div>
 
-                            <div id="gallery-add-list" class="gallery-admin-grid">
-                                <!-- Pending/Existing uploads rendered here by renderGalleryAdmin() -->
+                            <div id="gallery-grid-container" class="gallery-grid"
+                                style="display:grid !important; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)) !important; gap:20px !important; width:100% !important; margin-top:20px;">
+                                <!-- Populated by renderGalleryAdmin() from Supabase gallery_images -->
                             </div>
                         </div>
 
@@ -2330,7 +2331,7 @@
 
         // ── GALLERY MANAGEMENT (Supabase Powered: gallery_images) ────
         async function renderGalleryAdmin() {
-            const grid = document.getElementById("gallery-add-list");
+            const grid = document.getElementById("gallery-grid-container");
             if (!grid) return;
             grid.innerHTML = '<div style="grid-column: span 3; text-align: center; padding: 40px;"><div class="loader"></div><p>Refetching live gallery...</p></div>';
 
@@ -2339,16 +2340,16 @@
                 if (error || !data) throw error;
 
                 grid.innerHTML = data.map(item => `
-                    <div class="gallery-admin-card" style="border: 1px dashed var(--gold);">
-                        <div style="position:relative; height:160px;">
-                            <img src="${item.url}" alt="Gallery Photo" style="width:100%; height:100%; object-fit:cover;" />
-                            <div class="img-upload-overlay" style="opacity:1 !important; background:rgba(0,0,0,0.3); display:flex; align-items:flex-start; padding:10px;">
-                                <span style="background:var(--gold); color:#000; padding:2px 8px; border-radius:4px; font-size:0.6rem; font-weight:800;">LIVE</span>
+                    <div class="gallery-card-admin" style="border: 2px dashed var(--gold); border-radius:12px; overflow:hidden; background:var(--dark-3); position:relative; transition: transform 0.2s;">
+                        <div style="position:relative; height:180px;">
+                            <img src="${item.url}" alt="Gallery Photo" style="width:100%; height:100%; object-fit:cover; filter: brightness(0.6);" />
+                            <div style="position:absolute; top:12px; left:12px;">
+                                <span style="background:var(--gold); color:#000; padding:4px 12px; border-radius:999px; font-size:0.65rem; font-weight:800; box-shadow:0 4px 10px rgba(0,0,0,0.3);">CURRENT</span>
                             </div>
                         </div>
-                        <div class="gac-info" style="padding:12px;">
-                            <div class="gac-tag" style="color:var(--gold); font-size:0.7rem; font-weight:700; margin-bottom:10px;">${item.category || 'COMMUNITY'}</div>
-                            <button class="btn-danger" style="width:100%;" onclick="deleteGalleryItem('${item.id}', '${item.url}')">🗑 Remove from Live site</button>
+                        <div style="padding:16px;">
+                            <div style="color:var(--gold); font-size:0.72rem; font-weight:700; margin-bottom:12px; letter-spacing:1px; text-transform:uppercase;">${item.category || 'COMMUNITY'}</div>
+                            <button class="btn-danger" style="width:100%; padding:10px; font-size:0.8rem; border-radius:8px;" onclick="deleteGalleryItem('${item.id}', '${item.url}')">🗑 Remove from Live site</button>
                         </div>
                     </div>
                 `).join("");
