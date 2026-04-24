@@ -151,6 +151,55 @@ textarea.form-control {
     display: none;
 }
 
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+}
+
+/* ── PRECISION CENTER-ALIGNMENT ──────────────────────────── */
+.admin-main {
+    display: flex !important;
+    justify-content: center !important;
+    /* Center horizontally */
+    width: 100% !important;
+    height: 100vh !important;
+    padding-left: 280px !important;
+    /* Fixed Sidebar space */
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    background: var(--dark) !important;
+    position: relative !important;
+}
+
+/* Constrained Workspace */
+.admin-content {
+    width: 100% !important;
+    max-width: 900px !important;
+    /* Precision Constraint */
+    margin: 0 auto !important;
+    padding: 60px 40px !important;
+}
+
+.management-container {
+    width: 100% !important;
+    max-width: 860px !important;
+    margin: 0 auto !important;
+}
+
+.admin-topbar {
+    padding: 18px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--dark-2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
 /* ── APP SHELL ───────────────────────────────────────────── */
 #admin-app {
     display: flex;
@@ -264,28 +313,6 @@ textarea.form-control {
 
 .status-dot {
     width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--success);
-}
-
-/* ── MAIN CONTENT FORCE-ALIGNMENT ────────────────────────── */
-.admin-main {
-    margin-left: 280px !important;
-    /* Fixed offset from sidebar */
-    width: calc(100% - 280px) !important;
-    height: 100vh !important;
-    overflow-y: auto !important;
-    padding: 0 !important;
-    background: var(--dark) !important;
-    position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-.admin-topbar {
-    padding: 18px 32px;
-    border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
