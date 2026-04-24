@@ -7,6 +7,32 @@
     <title>Admin — Travel & LIV Collective</title>
     <meta name="robots" content="noindex, nofollow" />
     <link rel="stylesheet" href="admin.css?v=FINAL_RESCUE" />
+    <style>
+        .management-container {
+            display: none;
+            flex-direction: column;
+            padding: 40px;
+            margin-left: 280px;
+            width: calc(100% - 280px);
+            min-height: 100vh;
+            background: #0a0a0a;
+        }
+
+        .show-section {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .hp-jump-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0 0 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 24px;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,10 +42,10 @@
         <div class="login-card">
             <img src="logo.jpg" alt="Travel & LIV Collective" class="login-logo" />
             <h1>Admin Dashboard</h1>
-            <p>Sign in to manage your website content</p>
+            <p>Enter password to manage content</p>
             <div class="form-group">
-                <label for="login-password">Password</label>
-                <input type="password" id="login-password" class="form-control" placeholder="Enter admin password" />
+                <label>Password</label>
+                <input type="password" id="login-password" class="form-control" placeholder="••••••••" />
             </div>
             <button class="btn-admin-primary" onclick="handleLogin()">Sign In</button>
             <p class="login-error" id="login-error">Incorrect password. Please try again.</p>
@@ -30,2607 +56,402 @@
     <div id="admin-app" style="display:none;">
 
         <!-- SIDEBAR -->
-        <aside class="admin-sidebar">
-            <div class="sidebar-brand">
-                <img src="logo.jpg" alt="T&LIV" />
+        <aside class="admin-sidebar"
+            style="position:fixed; left:0; top:0; width:280px; height:100vh; border-right:1px solid #222; background:#111; z-index:1000;">
+            <div class="sidebar-brand" style="padding:24px 20px; border-bottom:1px solid #222;">
+                <img src="logo.jpg" alt="Logo" style="width:40px; height:40px; border-radius:8px;" />
                 <div>
-                    <div class="sidebar-brand-text">Travel & LIV</div>
-                    <div class="sidebar-brand-sub">Admin Panel</div>
+                    <div style="font-weight:700; color:#fff; font-size:0.9rem;">Travel & LIV</div>
+                    <div style="color:#c4a060; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em;">
+                        Management</div>
                 </div>
             </div>
-            <nav class="sidebar-nav">
-                <div class="sidebar-section-label">Site Sections</div>
-                <button class="sidebar-link active" onclick="showPanel('home')">
-                    <span class="sl-icon">🏠</span> Homepage
-                </button>
-                <button class="sidebar-link" onclick="showPanel('destinations')">
-                    <span class="sl-icon">🏝️</span> Destinations
-                </button>
-                <button class="sidebar-link" onclick="showPanel('events')">
-                    <span class="sl-icon">🎉</span> Events
-                </button>
-                <button class="sidebar-link" onclick="showPanel('gallery')">
-                    <span class="sl-icon">🖼️</span> Gallery
-                </button>
-                <button class="sidebar-link" onclick="showPanel('faqs')">
-                    <span class="sl-icon">❓</span> FAQs
-                </button>
-                <button class="sidebar-link" onclick="showPanel('about')">
-                    <span class="sl-icon">✨</span> About Page
-                </button>
-                <button class="sidebar-link" onclick="showPanel('social')">
-                    <span class="sl-icon">🔗</span> Links & Contact
-                </button>
-                <button class="sidebar-link" onclick="showPanel('marketing')">
-                    <span class="sl-icon">📈</span> Marketing & Pixels
-                </button>
-                <button class="sidebar-link" onclick="showPanel('settings')">
-                    <span class="sl-icon">⚙️</span> Settings
-                </button>
+            <nav class="sidebar-nav" style="padding:20px 10px;">
+                <button class="sidebar-link" id="btn-panel-home" onclick="switchTab('panel-home')">🏠 Homepage</button>
+                <button class="sidebar-link" id="btn-panel-destinations" onclick="switchTab('panel-destinations')">🏝️
+                    Trip Pages</button>
+                <button class="sidebar-link" id="btn-panel-gallery" onclick="switchTab('panel-gallery')">🖼️
+                    Gallery</button>
+                <button class="sidebar-link" id="btn-panel-about" onclick="switchTab('panel-about')">✨ About
+                    Story</button>
+                <button class="sidebar-link" id="btn-panel-marketing" onclick="switchTab('panel-marketing')">📈
+                    Marketing</button>
+                <button class="sidebar-link" id="btn-panel-settings" onclick="switchTab('panel-settings')">⚙️
+                    Settings</button>
             </nav>
-            <div class="sidebar-footer">
-                <div class="sidebar-status">
-                    <div class="status-dot"></div>
-                    <span>Connected</span>
-                </div>
-            </div>
+            <div style="position:absolute; bottom:20px; left:20px; color:#555; font-size:0.7rem;">Dashboard V3 — Rescue
+                Mode</div>
         </aside>
 
-        <!-- MAIN -->
-        <main class="admin-main">
-            <div class="admin-topbar">
-                <div>
-                    <div class="admin-topbar-title" id="panel-title">Homepage</div>
-                    <div class="admin-topbar-sub" id="panel-sub">Edit next trip card and past event recap</div>
+        <!-- TOPBAR -->
+        <div class="admin-topbar"
+            style="position:fixed; top:0; left:280px; right:0; height:70px; background:rgba(10,10,10,0.8); backdrop-filter:blur(10px); border-bottom:1px solid #222; z-index:900; display:flex; align-items:center; justify-content:space-between; padding:0 40px;">
+            <div id="panel-title" style="font-size:1.1rem; font-weight:700; color:#fff;">DASHBOARD</div>
+            <div style="display:flex; gap:12px;">
+                <a href="index.html" target="_blank" class="btn-secondary"
+                    style="padding:8px 16px; font-size:0.8rem;">View Live Site</a>
+                <button class="btn-save" onclick="saveAll()"
+                    style="background:#c4a060; color:#000; padding:8px 24px; border-radius:99px; font-weight:700; border:none; cursor:pointer;">SAVE
+                    CHANGES</button>
+            </div>
+        </div>
+
+        <div style="height:70px;"></div>
+
+        <!-- ========== PANEL: HOMEPAGE ========== -->
+        <div id="panel-home" class="management-container">
+            <div class="hp-jump-nav"
+                style="background:#111; padding:15px; border-radius:12px; margin-bottom:30px; display:flex; gap:10px; border:1px solid #222;">
+                <a href="#h-hero" class="hp-jump">🖼 Hero</a>
+                <a href="#h-ticker" class="hp-jump">📣 Ticker</a>
+                <a href="#h-identity" class="hp-jump">🙌 Who We Are</a>
+                <a href="#h-proof" class="hp-jump">📊 Proof</a>
+                <a href="#h-process" class="hp-jump">🗺 Process</a>
+                <a href="#h-next" class="hp-jump">✈️ Next Trip</a>
+                <a href="#h-past" class="hp-jump">🎊 Past Event</a>
+                <a href="#h-why" class="hp-jump">⭐ Why Us</a>
+            </div>
+
+            <!-- Hero Section -->
+            <div id="h-hero" class="panel-section" style="scroll-margin-top:100px;">
+                <div class="panel-header">
+                    <h3>1. Hero Content</h3>
                 </div>
-                <div class="topbar-actions">
-                    <a href="index.html" target="_blank" class="btn-secondary">🔗 View Site</a>
-                    <button class="btn-save" onclick="saveAll()">Save Changes</button>
+                <div class="form-row">
+                    <div class="form-group"><label>Eyebrow</label><input type="text" id="hero-eyebrow-val"
+                            class="form-control" /></div>
+                    <div class="form-group"><label>Main Heading</label><input type="text" id="hero-heading-val"
+                            class="form-control" /></div>
+                </div>
+                <div class="form-group"><label>Italic End</label><input type="text" id="hero-heading-italic-val"
+                        class="form-control" /></div>
+                <div class="form-group"><label>Subtitle</label><textarea id="hero-subtitle-val" class="form-control"
+                        rows="3"></textarea></div>
+            </div>
+
+            <!-- Ticker -->
+            <div id="h-ticker" class="panel-section">
+                <div class="panel-header">
+                    <h3>2. Scrolling Ticker</h3>
+                </div>
+                <div class="form-group">
+                    <label>Items (One per line)</label>
+                    <textarea id="ticker-items-val" class="form-control" rows="6"></textarea>
                 </div>
             </div>
 
-            <!-- ========== PANEL: HOMEPAGE ========== -->
-            <div class="admin-panel active" id="panel-home">
-                <div class="management-container">
-                    <!-- ── SECTION JUMP NAV ── -->
-                    <div
-                        style="display:flex;flex-wrap:wrap;gap:8px;padding:0 0 24px;border-bottom:1px solid var(--border,#2a2a2a);margin-bottom:8px;">
-                        <a href="#hs-hero" class="hp-jump">🖼 Hero</a>
-                        <a href="#hs-ticker" class="hp-jump">📣 Ticker</a>
-                        <a href="#hs-identity" class="hp-jump">🙌 Who We Are</a>
-                        <a href="#hs-proof" class="hp-jump">📊 Social Proof</a>
-                        <a href="#hs-hiw" class="hp-jump">🗺 How It Works</a>
-                        <a href="#hs-trip" class="hp-jump">✈️ Next Trip</a>
-                        <a href="#hs-past" class="hp-jump">🎊 Past Event</a>
-                        <a href="#hs-why" class="hp-jump">⭐ Why Us</a>
-                        <a href="#hs-cta" class="hp-jump">🚀 Final CTA</a>
-                    </div>
-
-                    <!-- ─────────────────────────────────────────── -->
-                    <!-- 1. HERO SECTION                            -->
-                    <!-- ─────────────────────────────────────────── -->
-                    <div class="panel-section" id="hs-hero" style="scroll-margin-top:80px;">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">🖼</div>
-                            <div>
-                                <div class="panel-section-title">Hero — Section 1</div>
-                                <div class="panel-section-desc">The full-screen opening image, headline, subtitle, and
-                                    stat
-                                    bar</div>
-                            </div>
-                        </div>
-
-                        <!-- Hero image -->
-                        <div class="form-group">
-                            <label>Background Hero Image</label>
-                            <div class="img-upload-zone" id="zone-hero_img" onclick="openPicker('hero_img')"
-                                ondragover="event.preventDefault();this.classList.add('drag-over')"
-                                ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'hero_img')">
-                                <div class="img-upload-placeholder">
-                                    <span class="img-upload-icon">🌅</span>
-                                    <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
-                                    <span class="img-upload-hint">Recommended: 2400×1600px landscape</span>
-                                </div>
-                            </div>
-                            <input type="file" id="file-hero_img" accept="image/*" style="display:none"
-                                onchange="handleFilePick(event,'hero_img')" />
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Eyebrow Text</label>
-                                <input type="text" id="hero-eyebrow-val" class="form-control"
-                                    placeholder="Travel & LIV Collective" />
-                            </div>
-                            <div class="form-group">
-                                <label>Primary CTA Button Text</label>
-                                <input type="text" id="hero-cta-primary-val" class="form-control"
-                                    placeholder="Join the Next Experience" />
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Headline — Main</label>
-                                <input type="text" id="hero-heading-val" class="form-control"
-                                    placeholder="Where destinations" />
-                            </div>
-                            <div class="form-group">
-                                <label>Headline — Italic Ending</label>
-                                <input type="text" id="hero-heading-italic-val" class="form-control"
-                                    placeholder="become connections" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Subtitle Paragraph</label>
-                            <textarea id="hero-subtitle-val" class="form-control" rows="2"></textarea>
-                        </div>
-
-                        <div
-                            style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:16px 0 10px;">
-                            Stat Bar (3 figures)</div>
-                        <div class="form-row triple">
-                            <div class="form-group">
-                                <label>Stat 1 Number</label>
-                                <input type="text" id="hero-stat1-num-val" class="form-control" placeholder="4–5★" />
-                            </div>
-                            <div class="form-group">
-                                <label>Stat 1 Label</label>
-                                <input type="text" id="hero-stat1-label-val" class="form-control"
-                                    placeholder="Stays Only" />
-                            </div>
-                            <div class="form-group" style="grid-column:span 1"><!-- spacer --></div>
-                        </div>
-                        <div class="form-row triple">
-                            <div class="form-group">
-                                <label>Stat 2 Number</label>
-                                <input type="text" id="hero-stat2-num-val" class="form-control" placeholder="Global" />
-                            </div>
-                            <div class="form-group">
-                                <label>Stat 2 Label</label>
-                                <input type="text" id="hero-stat2-label-val" class="form-control"
-                                    placeholder="Destinations" />
-                            </div>
-                            <div class="form-group" style="grid-column:span 1"><!-- spacer --></div>
-                        </div>
-                        <div class="form-row triple">
-                            <div class="form-group">
-                                <label>Stat 3 Number / Icon</label>
-                                <input type="text" id="hero-stat3-num-val" class="form-control" placeholder="💳" />
-                            </div>
-                            <div class="form-group">
-                                <label>Stat 3 Label</label>
-                                <input type="text" id="hero-stat3-label-val" class="form-control"
-                                    placeholder="Flexible Payment Plans Available" />
-                            </div>
-                            <div class="form-group" style="grid-column:span 1"><!-- spacer --></div>
-                        </div>
-                    </div>
-
-                    <!-- ─────────────────────────────────────────── -->
-                    <!-- 2. TICKER                                  -->
-                    <!-- ─────────────────────────────────────────── -->
-                    <div class="panel-section" id="hs-ticker" style="scroll-margin-top:80px;">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">📣</div>
-                            <div>
-                                <div class="panel-section-title">Marquee Ticker — Section 2</div>
-                                <div class="panel-section-desc">The scrolling banner below the hero. One item per line.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Ticker Items (one per line)</label>
-                            <textarea id="ticker-items-val" class="form-control" rows="8"
-                                placeholder="Pre-Trip Meet &amp; Greets&#10;Welcome Dinners&#10;4–5 Star Stays Only"></textarea>
-                            <p style="font-size:0.78rem;color:#888;margin-top:8px;">Each line becomes one ticker item
-                                separated by ✦. The strip automatically duplicates for a seamless loop.</p>
-                        </div>
-                    </div>
-
-                    <!-- ─────────────────────────────────────────── -->
-                    <!-- 3. WHO WE ARE                              -->
-                    <!-- ─────────────────────────────────────────── -->
-                    <div class="panel-section" id="hs-identity" style="scroll-margin-top:80px;">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">🙌</div>
-                            <div>
-                                <div class="panel-section-title">Who We Are — Section 3</div>
-                                <div class="panel-section-desc">The brand identity copy beneath the hero video</div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Eyebrow</label>
-                                <input type="text" id="identity-eyebrow-val" class="form-control"
-                                    placeholder="Who We Are" />
-                            </div>
-                            <div class="form-group">
-                                <label>Heading — Main</label>
-                                <input type="text" id="identity-heading-val" class="form-control"
-                                    placeholder="This isn't a travel group." />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Heading — Italic Ending</label>
-                            <input type="text" id="identity-heading-italic-val" class="form-control"
-                                placeholder="It's your kind of people." />
-                        </div>
-                        <div class="form-group">
-                            <label>Paragraph 1</label>
-                            <textarea id="identity-para1-val" class="form-control" rows="2"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Paragraph 2</label>
-                            <textarea id="identity-para2-val" class="form-control" rows="2"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Paragraph 3</label>
-                            <textarea id="identity-para3-val" class="form-control" rows="2"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- ─────────────────────────────────────────── -->
-                    <!-- 4. SOCIAL PROOF                            -->
-                    <!-- ─────────────────────────────────────────── -->
-                    <div class="panel-section" id="hs-proof" style="scroll-margin-top:80px;">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">📊</div>
-                            <div>
-                                <div class="panel-section-title">Social Proof — Section 4</div>
-                                <div class="panel-section-desc">The dark stats strip with the community photo mosaic
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Eyebrow</label>
-                                <input type="text" id="sp-eyebrow-val" class="form-control"
-                                    placeholder="Social Proof" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Body Text</label>
-                            <textarea id="sp-body-val" class="form-control" rows="2"></textarea>
-                        </div>
-                        <div
-                            style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:10px 0 10px;">
-                            Three Stats</div>
-                        <div class="form-row triple">
-                            <div class="form-group"><label>Stat 1 Number</label><input type="text" id="sp-stat1-num-val"
-                                    class="form-control" placeholder="20+" /></div>
-                            <div class="form-group"><label>Stat 1 Label</label><input type="text"
-                                    id="sp-stat1-label-val" class="form-control" placeholder="Strangers Connected" />
-                            </div>
-                            <div class="form-group" style="grid-column:span 1"></div>
-                        </div>
-                        <div class="form-row triple">
-                            <div class="form-group"><label>Stat 2 Number</label><input type="text" id="sp-stat2-num-val"
-                                    class="form-control" placeholder="100%" /></div>
-                            <div class="form-group"><label>Stat 2 Label</label><input type="text"
-                                    id="sp-stat2-label-val" class="form-control" placeholder="Would Go Again" /></div>
-                            <div class="form-group" style="grid-column:span 1"></div>
-                        </div>
-                        <div class="form-row triple">
-                            <div class="form-group"><label>Stat 3 Number</label><input type="text" id="sp-stat3-num-val"
-                                    class="form-control" placeholder="∞" /></div>
-                            <div class="form-group"><label>Stat 3 Label</label><input type="text"
-                                    id="sp-stat3-label-val" class="form-control" placeholder="Memories Made" /></div>
-                            <div class="form-group" style="grid-column:span 1"></div>
-                        </div>
-                    </div>
-
-                    <!-- ─────────────────────────────────────────── -->
-                    <!-- 5. HOW IT WORKS                            -->
-                    <!-- ─────────────────────────────────────────── -->
-                    <div class="panel-section" id="hs-hiw" style="scroll-margin-top:80px;">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">🗺</div>
-                            <div>
-                                <div class="panel-section-title">How It Works — Section 5</div>
-                                <div class="panel-section-desc">The 4-step process cards</div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label>Eyebrow</label><input type="text" id="hiw-eyebrow-val"
-                                    class="form-control" placeholder="The Process" /></div>
-                            <div class="form-group"><label>Section Heading</label><input type="text"
-                                    id="hiw-heading-val" class="form-control"
-                                    placeholder="It's easier than you think." /></div>
-                        </div>
-                        <div id="hiw-steps-editor" style="display:flex;flex-direction:column;gap:16px;margin-top:8px;">
-                            <!-- Rendered by JS -->
-                        </div>
-                    </div>
-
-                    <!-- ─────────────────────────────────────────── -->
-                    <!-- 6. FEATURED NEXT TRIP                      -->
-                    <!-- ─────────────────────────────────────────── -->
-                    <div class="panel-section" id="hs-trip" style="scroll-margin-top:80px;">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">✈️</div>
-                            <div>
-                                <div class="panel-section-title">Featured Trip Card — Section 6</div>
-                                <div class="panel-section-desc">The "Where We're Going Next" booking card + the
-                                    Squadtrip
-                                    widget</div>
-                            </div>
-                        </div>
-
-                        <!-- ── CARD PHOTO — most important thing in this section ── -->
-                        <div class="form-group"
-                            style="margin-bottom:28px;padding-bottom:28px;border-bottom:2px solid var(--border-color,#2a2a2a);">
-                            <label
-                                style="font-size:0.82rem;font-weight:700;color:var(--text,#eee);display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-                                📸 Card Photo — <em style="font-weight:400;color:#888;font-style:normal;">The image that
-                                    shows on the homepage trip card</em>
-                            </label>
-                            <div class="img-upload-zone" id="zone-next_trip" onclick="openPicker('next_trip')"
-                                ondragover="event.preventDefault();this.classList.add('drag-over')"
-                                ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'next_trip')"
-                                style="min-height:200px;">
-                                <div class="img-upload-placeholder">
-                                    <span class="img-upload-icon">🌴</span>
-                                    <span class="img-upload-text">Drop photo here or <strong>click to
-                                            browse</strong></span>
-                                    <span class="img-upload-hint">Recommended: 800×600px · JPG or WebP · replaces the
-                                        default Bali photo</span>
-                                </div>
-                            </div>
-                            <input type="file" id="file-next_trip" accept="image/*" style="display:none"
-                                onchange="handleFilePick(event,'next_trip')" />
-                            <div style="margin-top:10px;display:flex;align-items:center;gap:10px;">
-                                <p style="font-size:0.78rem;color:#888;margin:0;">Upload a new card photo to change what
-                                    visitors see. If no photo is uploaded, the default destination image is used
-                                    automatically.</p>
-                                <button class="btn-secondary" onclick="removeImage(event,'next_trip')"
-                                    style="flex-shrink:0;font-size:0.75rem;padding:7px 14px;white-space:nowrap;">✕
-                                    Remove —
-                                    use default</button>
-                            </div>
-                        </div>
-
-                        <div class="form-group" style="max-width:420px;">
-                            <label>⭐ Featured Trip on Homepage</label>
-                            <select id="featured-trip-slug" class="form-control"
-                                style="font-size:1rem;padding:12px 16px;">
-                                <option value="">— Auto (first Booking Open trip) —</option>
-                            </select>
-                            <p style="font-size:0.78rem;color:#888;margin-top:8px;">Choose which destination is
-                                featured.
-                                Changing this updates the card automatically.</p>
-                        </div>
-                        <div style="margin-top:12px;"><button class="btn-admin-primary" onclick="saveFeaturedTrip()">✓
-                                Set
-                                as Featured</button></div>
-
-
-                        <div id="featured-trip-preview"
-                            style="margin-top:20px;padding:16px 20px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;display:none;">
-                            <strong
-                                style="font-size:0.8rem;color:#888;text-transform:uppercase;letter-spacing:0.08em;">Currently
-                                Featured</strong>
-                            <div id="featured-trip-preview-name"
-                                style="font-size:1.2rem;font-weight:700;margin-top:6px;">
-                            </div>
-                            <div id="featured-trip-preview-dates" style="font-size:0.85rem;color:#888;margin-top:2px;">
-                            </div>
-                            <a id="featured-trip-preview-link" href="#" target="_blank"
-                                style="font-size:0.82rem;color:var(--green,#8FBF9F);margin-top:8px;display:inline-block;">View
-                                live page →</a>
-                        </div>
-
-                        <div class="form-group"
-                            style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border-color,#2a2a2a);">
-                            <label style="display:flex;align-items:center;gap:8px;">🔗 Squadtrip Booking URL <span
-                                    style="font-size:0.75rem;color:#888;font-weight:400;">(powers the "Reserve Your
-                                    Spot"
-                                    widget)</span></label>
-                            <input type="url" id="nt-squadtrip-url" class="form-control"
-                                placeholder="https://travelnlivcollective.squadtrip.com/trip/..." />
-                            <p style="font-size:0.78rem;color:#888;margin-top:8px;">Paste the new Squadtrip link when a
-                                trip
-                                goes live — the booking iframe updates automatically.</p>
-                        </div>
-
-                        <!-- card text overrides -->
-                        <div
-                            style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:20px 0 10px;">
-                            Manual Card Text Overrides</div>
-                        <div class="form-row">
-                            <div class="form-group"><label>Badge Text</label><input type="text" id="nt-badge"
-                                    class="form-control" placeholder="Booking Open" /></div>
-                            <div class="form-group"><label>Destination Name</label><input type="text"
-                                    id="nt-destination" class="form-control" placeholder="Bali, Indonesia" /></div>
-                        </div>
-                        <div class="form-row triple">
-                            <div class="form-group"><label>Dates</label><input type="text" id="nt-dates"
-                                    class="form-control" placeholder="July 30 – August 5, 2026" /></div>
-                            <div class="form-group"><label>Duration</label><input type="text" id="nt-duration"
-                                    class="form-control" placeholder="7 Days" /></div>
-                            <div class="form-group"><label>Price Display</label><input type="text" id="nt-price"
-                                    class="form-control" placeholder="From $2,350" /></div>
-                        </div>
-                        <div class="form-group"><label>Description</label><textarea id="nt-desc" class="form-control"
-                                rows="3"></textarea></div>
-                        <div class="form-group"><label>CTA Button Text</label><input type="text" id="nt-cta-text"
-                                class="form-control" placeholder="Reserve Your Spot" /></div>
-                    </div>
-
-                    <!-- ─────────────────────────────────────────── -->
-                    <!-- 7. PAST EVENT RECAP                        -->
-                    <!-- ─────────────────────────────────────────── -->
-                    <div class="panel-section" id="hs-past" style="scroll-margin-top:80px;">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">🎊</div>
-                            <div>
-                                <div class="panel-section-title">Past Event Recap — Section 7</div>
-                                <div class="panel-section-desc">The cinematic 7-photo grid showing your last event</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Show This Section?</label>
-                            <select id="pe-visible" class="form-control" style="max-width:260px;">
-                                <option value="true">Yes — Show on homepage</option>
-                                <option value="false">No — Hide for now</option>
-                            </select>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label>City</label><input type="text" id="pe-city"
-                                    class="form-control" placeholder="e.g. NYC" /></div>
-                            <div class="form-group"><label>Date</label><input type="text" id="pe-date"
-                                    class="form-control" placeholder="e.g. April 2025" /></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label>Event Title</label><input type="text" id="pe-title"
-                                    class="form-control" placeholder="e.g. The Launch Party" /></div>
-                            <div class="form-group"><label>Title Italic Suffix</label><input type="text" id="pe-italic"
-                                    class="form-control" placeholder="e.g. it was a vibe." /></div>
-                        </div>
-                        <div class="form-group"><label>Recap Description</label><textarea id="pe-desc"
-                                class="form-control" rows="3"></textarea></div>
-                        <div class="form-group" style="margin-top:8px;">
-                            <label>Event Photos — 7 Grid Slots (click or drag to upload)</label>
-                            <div class="pe-photo-grid" id="pe-photo-grid"><!-- Rendered by JS --></div>
-                        </div>
-                    </div>
-
-                    <!-- ─────────────────────────────────────────── -->
-                    <!-- 8. WHY TRAVEL & LIV                        -->
-                    <!-- ─────────────────────────────────────────── -->
-                    <div class="panel-section" id="hs-why" style="scroll-margin-top:80px;">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">⭐</div>
-                            <div>
-                                <div class="panel-section-title">Why Travel & LIV — Section 8</div>
-                                <div class="panel-section-desc">The 4 trust-building value cards</div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label>Eyebrow</label><input type="text" id="why-eyebrow-val"
-                                    class="form-control" placeholder="The Travel &amp; LIV Way" /></div>
-                            <div class="form-group"><label>Section Heading</label><input type="text"
-                                    id="why-heading-val" class="form-control" placeholder="Why Travel &amp; LIV?" />
-                            </div>
-                        </div>
-                        <div class="form-group"><label>Section Subheading</label><textarea id="why-body-val"
-                                class="form-control" rows="2"></textarea></div>
-                        <div id="why-cards-editor" style="display:flex;flex-direction:column;gap:16px;margin-top:8px;">
-                            <!-- Rendered by JS -->
-                        </div>
-                    </div>
-
-                    <!-- ─────────────────────────────────────────── -->
-                    <!-- 9. FINAL CTA                               -->
-                    <!-- ─────────────────────────────────────────── -->
-                    <div class="panel-section" id="hs-cta" style="scroll-margin-top:80px;">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">🚀</div>
-                            <div>
-                                <div class="panel-section-title">Final CTA — Section 9</div>
-                                <div class="panel-section-desc">The full-width closing call-to-action with background
-                                    photo
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Background Image</label>
-                            <div class="img-upload-zone" id="zone-cta_bg" onclick="openPicker('cta_bg')"
-                                ondragover="event.preventDefault();this.classList.add('drag-over')"
-                                ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'cta_bg')">
-                                <div class="img-upload-placeholder">
-                                    <span class="img-upload-icon">🌊</span>
-                                    <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
-                                    <span class="img-upload-hint">Recommended: 2400×1200px landscape</span>
-                                </div>
-                            </div>
-                            <input type="file" id="file-cta_bg" accept="image/*" style="display:none"
-                                onchange="handleFilePick(event,'cta_bg')" />
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group"><label>Eyebrow</label><input type="text" id="cta-eyebrow-val"
-                                    class="form-control" placeholder="Make Your Move" /></div>
-                            <div class="form-group"><label>CTA Button Text</label><input type="text"
-                                    id="cta-btn-text-val" class="form-control"
-                                    placeholder="Join Travel &amp; LIV Collective" /></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label>Headline — Main</label><input type="text"
-                                    id="cta-heading-val" class="form-control"
-                                    placeholder="You'll either be on the next trip..." /></div>
-                            <div class="form-group"><label>Headline — Italic Ending</label><input type="text"
-                                    id="cta-heading-italic-val" class="form-control"
-                                    placeholder="or watching it on Instagram." /></div>
-                        </div>
-                        <div class="form-group"><label>Body Text</label><textarea id="cta-body-val" class="form-control"
-                                rows="2"></textarea></div>
-                    </div>
-
-                </div><!-- end panel-home -->
-
-                <!-- ========== PANEL: DESTINATIONS ========== -->
-                <div id="panel-destinations" class="admin-panel" style="display:none;">
-                    <div class="management-container">
-                        <div class="panel-header">
-                            <div class="panel-header-info">
-                                <div class="panel-icon">🏝️</div>
-                                <div>
-                                    <h2>Destination Pages</h2>
-                                    <p>Manage individual trip pages — edit info, mark as coming soon or booking open.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="dest-list" style="margin-top:24px;display:flex;flex-direction:column;gap:16px;">
-                            <!-- Static Fallback / List populated by renderDestList() -->
-                            <div class="trip-admin-card"
-                                style="border: 2px dashed var(--gold); padding:20px; text-align:center;">
-                                <p>No destinations found. Check Supabase connection.</p>
-                                <button class="btn-admin-primary" onclick="openAddDestForm()">+ Add Your First
-                                    Trip</button>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Identity -->
+            <div id="h-identity" class="panel-section">
+                <div class="panel-header">
+                    <h3>3. Who We Are</h3>
                 </div>
+                <div class="form-group"><label>Heading</label><input type="text" id="identity-heading-val"
+                        class="form-control" /></div>
+                <div class="form-group"><label>Heading Italic</label><input type="text" id="identity-heading-italic-val"
+                        class="form-control" /></div>
+                <div class="form-group"><label>Paragraph 1</label><textarea id="identity-para1-val"
+                        class="form-control"></textarea></div>
+            </div>
 
-                <!-- ========== PANEL: EVENTS ========== -->
-                <div id="panel-events" class="admin-panel" style="display:none;">
-                    <div class="management-container">
-                        <div class="panel-header">
-                            <div class="panel-header-info">
-                                <div class="panel-icon">🎉</div>
-                                <div>
-                                    <h2>Upcoming Events</h2>
-                                    <p>Manage the homepage event teaser and ticket links.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-section">
-                            <div class="form-group">
-                                <label>Section Visibility</label>
-                                <select class="form-control" id="ev-mode-select" onchange="toggleEventMode(this.value)">
-                                    <option value="coming-soon">📣 Stay Tuned Mode</option>
-                                    <option value="live">🎟️ Live Ticket Mode</option>
-                                    <option value="hidden">🚫 Hidden</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Event Heading</label>
-                                <input type="text" id="ev-heading" class="form-control"
-                                    placeholder="The Next Event is Coming..." />
-                            </div>
-                            <button class="btn-save" onclick="saveAll()">Save Event Config</button>
-                        </div>
-                    </div>
+            <!-- Next Trip -->
+            <div id="h-next" class="panel-section">
+                <div class="panel-header">
+                    <h3>6. Featured Homepage Trip</h3>
                 </div>
-
-                <!-- ========== PANEL: ABOUT ========== -->
-                <div id="panel-about" class="admin-panel" style="display:none;">
-                    <div class="management-container">
-                        <div class="panel-header">
-                            <div class="panel-header-info">
-                                <div class="panel-icon">✨</div>
-                                <div>
-                                    <h2>About Page</h2>
-                                    <p>Manage founder bio, mission statement, and past trip history.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-section">
-                            <div class="form-group">
-                                <label>Founder Bio</label>
-                                <textarea id="about-bio-val" class="form-control" rows="5"
-                                    placeholder="I started Travel & LIV Collective because..."></textarea>
-                            </div>
-                            <button class="btn-save" onclick="saveAll()">Update Bio</button>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Badge</label><input type="text" id="nt-badge" class="form-control" />
                     </div>
+                    <div class="form-group"><label>Destination</label><input type="text" id="nt-destination"
+                            class="form-control" /></div>
                 </div>
+                <div class="form-group"><label>Squadtrip URL</label><input type="url" id="nt-squadtrip-url"
+                        class="form-control" /></div>
+            </div>
+        </div>
 
-                <!-- ========== PANEL: FAQS ========== -->
-                <div id="panel-faqs" class="admin-panel" style="display:none;">
-                    <div class="management-container">
-                        <div class="panel-header">
-                            <div class="panel-header-info">
-                                <div class="panel-icon">❓</div>
-                                <div>
-                                    <h2>FAQs</h2>
-                                    <p>Add and manage frequently asked questions.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="faq-editor" style="margin-top:20px;">
-                            <!-- Populated by renderFaqEditor() -->
-                        </div>
-                        <button class="btn-save" onclick="saveAll()">Apply FAQ Changes</button>
-                    </div>
-                </div>
+        <!-- ========== PANEL: DESTINATIONS ========== -->
+        <div id="panel-destinations" class="management-container">
+            <div class="panel-header">
+                <h2>Trip Destinations</h2>
+                <p>Manage the dynamic trip pages.</p>
+            </div>
+            <div id="dest-list">Loading...</div>
+        </div>
 
-                <!-- ========== PANEL: SOCIAL / CONTACT ========== -->
-                <div id="panel-social" class="admin-panel" style="display:none;">
-                    <div class="management-container">
-                        <div class="panel-header">
-                            <div class="panel-header-info">
-                                <div class="panel-icon">🔗</div>
-                                <div>
-                                    <h2>Links & Contact</h2>
-                                    <p>Update site-wide email, social media, and WhatsApp links.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-section">
-                            <div class="form-row">
-                                <div class="form-group"><label>Support Email</label><input type="email" id="s-email"
-                                        class="form-control" placeholder="info@travelnliv.com" /></div>
-                                <div class="form-group"><label>Instagram URL</label><input type="url" id="s-instagram"
-                                        class="form-control" placeholder="https://instagram.com/travelnliv" /></div>
-                            </div>
-                            <button class="btn-save" onclick="saveAll()">Update Links</button>
-                        </div>
-                    </div>
-                </div>
+        <!-- ========== PANEL: GALLERY ========== -->
+        <div id="panel-gallery" class="management-container">
+            <div class="panel-header">
+                <h2>Image Gallery</h2>
+                <p>Manage community photos.</p>
+            </div>
+            <div id="gallery-grid-container" class="admin-gallery-grid"></div>
+        </div>
 
-                <!-- ── GALLERY PANEL ── -->
-                <div id="panel-gallery" class="admin-panel" style="display:none;">
-                    <div class="management-container">
-                        <div class="panel-header">
-                            <div class="panel-header-info">
-                                <div class="panel-icon"><img
-                                        src="https://api.iconify.design/material-symbols:images-outline.svg?color=%23cca471"
-                                        width="24"></div>
-                                <div>
-                                    <h2>Gallery Management</h2>
-                                    <p>Curate your high-res community photos and China trip memories.</p>
-                                </div>
-                            </div>
-                        </div>
+        <!-- ========== PANEL: ABOUT ========== -->
+        <div id="panel-about" class="management-container">
+            <div class="panel-header">
+                <h2>Our Story</h2>
+                <p>About Page bio & past trip history.</p>
+            </div>
+            <div class="form-group">
+                <label>Founder Bio</label>
+                <textarea id="about-bio-val" class="form-control" rows="15"></textarea>
+            </div>
+        </div>
 
-                        <div class="panel-section">
-                            <div class="gallery-management-header"
-                                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
-                                <div>
-                                    <h3 style="margin:0; font-size:1.1rem;">Gallery Assets</h3>
-                                    <p style="margin:6px 0 0; font-size:0.8rem; color:var(--text-muted);">
-                                        Manage your high-res community photos.</p>
-                                </div>
-                                <label class="btn-admin-primary" style="width:auto; cursor:pointer;">
-                                    📸 + Add New Photo
-                                    <input type="file" accept="image/*" style="display:none;"
-                                        onchange="addGalleryPhoto(event)" />
-                                </label>
-                            </div>
+        <!-- ========== PANEL: MARKETING ========== -->
+        <div id="panel-marketing" class="management-container">
+            <div class="panel-header">
+                <h2>Marketing Pixels</h2>
+                <p>Tracking codes for Meta, TikTok, GTM.</p>
+            </div>
+            <div class="form-group"><label>Meta Pixel ID</label><input type="text" id="px-meta" class="form-control" />
+            </div>
+            <div class="form-group"><label>TikTok Pixel ID</label><input type="text" id="px-tiktok"
+                    class="form-control" /></div>
+            <div class="form-group"><label>Google Tag Manager ID</label><input type="text" id="px-gtm"
+                    class="form-control" /></div>
+        </div>
 
-                            <div id="gallery-grid-container" class="admin-gallery-grid">
-                                <!-- Populated by renderGallery() from Supabase gallery_images -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- ========== PANEL: SETTINGS ========== -->
+        <div id="panel-settings" class="management-container">
+            <div class="panel-header">
+                <h2>System Settings</h2>
+            </div>
+            <button class="btn-secondary" onclick="localStorage.clear();location.reload();">⚠️ Factory Reset
+                Dashboard</button>
+        </div>
 
-                <!-- ========== PANEL: ABOUT ========== -->
-                <div id="panel-about" class="admin-panel" style="display:none;">
-                    <div class="management-container">
-                        <h2>About Page</h2>
-                        <p>Manage founder bio and past trips.</p>
-                    </div>
-                </div>
+        <div id="toast"
+            style="position:fixed; bottom:30px; right:30px; background:#c4a060; color:#000; padding:15px 30px; border-radius:12px; font-weight:700; transform:translateY(100px); transition:0.3s; opacity:0; z-index:9999;">
+            ✓ Saved</div>
 
-                <!-- ========== PANEL: MARKETING & ANALYTICS ========== -->
-                <div class="admin-panel" id="panel-marketing" style="display:none;">
-                    <div class="panel-section">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">📊</div>
-                            <div>
-                                <div class="panel-section-title">Ad Tracking Pixels</div>
-                                <div class="panel-section-desc">Enter only your numeric or alphanumeric ID — not
-                                    the full
-                                    script. Scripts are injected asynchronously so they never slow the site
-                                    down.</div>
-                            </div>
-                        </div>
+    </div>
 
-                        <div class="tracking-status-row" id="tracking-status-row">
-                            <!-- rendered by loadMarketingFields() -->
-                        </div>
-
-                        <div class="form-group">
-                            <label class="label-with-tip">Meta (Facebook / Instagram) Pixel ID</label>
-                            <input type="text" id="px-meta" class="form-control" placeholder="e.g. 1234567890123456"
-                                style="max-width:420px;" inputmode="numeric" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="label-with-tip">TikTok Pixel ID</label>
-                            <input type="text" id="px-tiktok" class="form-control" placeholder="e.g. C9ABCDE12345"
-                                style="max-width:420px;" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="label-with-tip">Google Tag Manager ID</label>
-                            <input type="text" id="px-gtm" class="form-control" placeholder="e.g. GTM-XXXXXXX"
-                                style="max-width:420px;" />
-                        </div>
-
-                        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
-                            <button class="btn-save" onclick="saveMarketing()">💾 Save Configuration</button>
-                            <button class="btn-secondary" onclick="clearTracking()">🗑 Clear All Pixels</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ========== PANEL: SETTINGS ========== -->
-                <div class="admin-panel" id="panel-settings" style="display:none;">
-                    <div class="panel-section" style="border-top:3px solid var(--gold,#c4a060);">
-                        <div class="panel-section-header">
-                            <div class="panel-section-icon">🌐</div>
-                            <div>
-                                <div class="panel-section-title">Live Site Publish Status</div>
-                                <div class="panel-section-desc">Every Save Changes and image upload
-                                    automatically goes live
-                                    for <strong>all visitors</strong> on any device — no setup needed.</div>
-                            </div>
-                        </div>
-                        <div id="gh-status-bar"
-                            style="padding:14px 18px;border-radius:10px;background:rgba(196,160,96,0.08);border:1px solid rgba(196,160,96,0.2);font-size:0.85rem;">
-                            🔍 Checking publish connection...
-                        </div>
-                    </div>
-                </div>
-
-        </main>
-        <div id="toast"></div>
-    </div><!-- end admin-app -->
-
+    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="site-config.js"></script>
     <script src="publisher.js"></script>
     <script>
-
-        // ============================================================
-        // ADMIN PANEL — CORE LOGIC
-        // ============================================================
-
         const SUPABASE_URL = "https://ziejdpdrhpxqxrhkwpew.supabase.co";
         const SUPABASE_KEY = "sb_publishable_raXNn8hTDaSHzkSeD1R3SQ_0EPZzUPX";
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        const DEFAULT_PASS_KEY = "tnliv_admin_pass";
-        const DEFAULT_PASS = "travelnliv2026";
+        function switchTab(targetId) {
+            console.log("Switching to:", targetId);
+            // Hide all
+            document.querySelectorAll('.management-container').forEach(el => {
+                el.classList.remove('show-section');
+                el.style.display = 'none';
+            });
+            // Show target
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.style.display = 'flex';
+                target.classList.add('show-section');
 
-        // ── FEATURED TRIP (Homepage) ─────────────────────────────────────
-        function populateFeaturedTripSelect() {
-            var sel = document.getElementById('featured-trip-slug');
-            if (!sel) return;
-            var dests = getDestinations();
-            var current = localStorage.getItem('FEATURED_TRIP_SLUG') || '';
-            sel.innerHTML = '<option value="">— Auto (first Booking Open trip) —</option>' +
-                dests.map(function (d) {
-                    return '<option value="' + d.slug + '"' + (d.slug === current ? ' selected' : '') + '>' +
-                        (d.emoji || '✈️') + ' ' + d.name + ' (' + (d.status === 'booking_open' ? 'Booking Open' : 'Coming Soon') + ')</option>';
-                }).join('');
-            // Update preview
-            var d = dests.find(function (x) { return x.slug === current; });
-            if (!d && dests.length) d = dests.find(function (x) { return x.status === 'booking_open'; }) || dests[0];
-            var preview = document.getElementById('featured-trip-preview');
-            if (preview && d) {
-                preview.style.display = 'block';
-                document.getElementById('featured-trip-preview-name').textContent = (d.emoji || '') + ' ' + d.name;
-                document.getElementById('featured-trip-preview-dates').textContent = d.dates || 'Dates TBA';
-                var lnk = document.getElementById('featured-trip-preview-link');
-                if (lnk) { lnk.href = d.url || ('/upcomingtrips/' + d.slug); }
+                // Re-render specific lists
+                if (targetId === 'panel-gallery') renderGallery();
+                if (targetId === 'panel-destinations') renderDestList();
             }
-        }
-        function saveFeaturedTrip() {
-            var sel = document.getElementById('featured-trip-slug');
-            var slug = sel ? sel.value : '';
-            localStorage.setItem('FEATURED_TRIP_SLUG', slug);
-            populateFeaturedTripSelect();
-            toast('✓ Homepage featured trip updated!');
-        }
+            // Update sidebar
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            const activeBtn = document.getElementById('btn-' + targetId);
+            if (activeBtn) activeBtn.classList.add('active');
 
-        function checkLogin() {
-            if (localStorage.getItem("tnliv_authed") === "1") showApp();
+            document.getElementById('panel-title').innerText = targetId.replace('panel-', '').toUpperCase();
+            localStorage.setItem('LAST_TAB', targetId);
         }
 
         function handleLogin() {
-            const pass = document.getElementById("login-password").value;
-            const saved = localStorage.getItem(DEFAULT_PASS_KEY) || DEFAULT_PASS;
-            if (pass === saved) {
+            const pass = document.getElementById('login-password').value;
+            if (pass === "travelnliv2026") {
                 localStorage.setItem("tnliv_authed", "1");
-                showApp();
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-app').style.display = 'block';
+                const last = localStorage.getItem('LAST_TAB') || 'panel-home';
+                switchTab(last);
+                loadAllFields();
+                toast("Welcome, Olivia!");
             } else {
-                document.getElementById("login-error").style.display = "block";
+                document.getElementById('login-error').style.display = 'block';
             }
-        }
-
-        document.getElementById("login-password").addEventListener("keydown", e => {
-            if (e.key === "Enter") handleLogin();
-        });
-
-        async function showApp() {
-            document.getElementById("login-screen").style.display = "none";
-            document.getElementById("admin-app").style.display = "flex";
-
-            toast('🔄 Syncing Supabase Assets...');
-            const config = await window.getSiteConfig();
-            const dests = await window.getDestinations();
-            const imagesRes = await window.fetchSiteData();
-
-            if (imagesRes && imagesRes.images) {
-                window.globalImages = imagesRes.images;
-                const coreSlots = ['hero_img', 'founder_photo', 'cta_bg', 'next_trip'];
-                coreSlots.forEach(slot => restoreZone(slot));
-            }
-
-            loadAllFields();
-            populateFeaturedTripSelect();
-            renderDestList();
-            renderPastTripsAdmin();
-            renderAutoArchiveCandidates();
-
-            toast('✅ Supabase Connection: Active');
-        }
-
-        /**
-         * saveSiteConfig: Overridden to push to Supabase
-         */
-        async function saveSiteConfig(cfg) {
-            localStorage.setItem('tnliv_config', JSON.stringify(cfg));
-            const client = supabaseClient;
-
-            const sections = ['hero', 'ticker', 'identity', 'socialProof', 'howItWorks', 'whyUs', 'finalCta', 'social', 'navCta', 'nextTrip', 'pastEvent', 'event', 'gallery', 'aboutBio', 'marketing'];
-
-            for (const s of sections) {
-                if (cfg[s]) {
-                    await client.from('site_config').upsert({ section_key: s, data: cfg[s], updated_at: new Date() });
-                }
-            }
-
-            if (window.publishConfig) window.publishConfig(cfg);
-        }
-
-        function showPanel(id) {
-            // 1. Reset all sidebar links
-            document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
-
-            // 2. Hide all panels
-            document.querySelectorAll(".admin-panel").forEach(p => {
-                p.style.display = "none";
-                p.classList.remove("active");
-            });
-
-            // 3. Activate target
-            const panel = document.getElementById("panel-" + id);
-            const link = document.querySelector(`.sidebar-link[onclick*="'${id}'"]`);
-
-            if (panel) {
-                panel.style.display = "block";
-                panel.classList.add("active");
-
-                // 4. Trigger category-specific load
-                if (id === 'gallery') renderGallery();
-                if (id === 'marketing') loadMarketingFields();
-                if (id === 'about') { loadAboutFields(); renderPastTripsAdmin(); }
-                if (id === 'destinations') renderDestList();
-                if (id === 'faqs') loadAllFields(); // Refresh FAQs
-            }
-
-            if (link) link.classList.add("active");
-            toast(`Viewing: ${id.toUpperCase()}`);
         }
 
         function loadAllFields() {
             const cfg = getSiteConfig();
-            const nt = cfg.nextTrip, pe = cfg.pastEvent, ev = cfg.event,
-                gl = cfg.gallery, tr = cfg.trips, sc = cfg.social, nCta = cfg.navCta;
 
-            // ── HERO ──
+            // Hero
             const hr = cfg.hero || {};
-            v('hero-eyebrow-val', hr.eyebrow); v('hero-heading-val', hr.heading);
-            v('hero-heading-italic-val', hr.headingItalic); v('hero-subtitle-val', hr.subtitle);
-            v('hero-stat1-num-val', hr.stat1Number); v('hero-stat1-label-val', hr.stat1Label);
-            v('hero-stat2-num-val', hr.stat2Number); v('hero-stat2-label-val', hr.stat2Label);
-            v('hero-stat3-num-val', hr.stat3Number); v('hero-stat3-label-val', hr.stat3Label);
-            v('hero-cta-primary-val', hr.ctaPrimaryText);
-            restoreZone('hero_img');
+            v('hero-eyebrow-val', hr.eyebrow);
+            v('hero-heading-val', hr.heading);
+            v('hero-heading-italic-val', hr.headingItalic);
+            v('hero-subtitle-val', hr.subtitle);
 
-            // ── TICKER ──
-            const tk = cfg.ticker || [];
-            v('ticker-items-val', tk.join('\n'));
+            // Ticker
+            v('ticker-items-val', (cfg.ticker || []).join('\n'));
 
-            // ── IDENTITY ──
+            // Identity
             const id = cfg.identity || {};
-            v('identity-eyebrow-val', id.eyebrow); v('identity-heading-val', id.heading);
+            v('identity-heading-val', id.heading);
             v('identity-heading-italic-val', id.headingItalic);
-            v('identity-para1-val', id.para1); v('identity-para2-val', id.para2); v('identity-para3-val', id.para3);
+            v('identity-para1-val', id.para1);
 
-            // ── SOCIAL PROOF ──
-            const sp = cfg.socialProof || {};
-            v('sp-eyebrow-val', sp.eyebrow); v('sp-body-val', sp.body);
-            v('sp-stat1-num-val', sp.stat1Number); v('sp-stat1-label-val', sp.stat1Label);
-            v('sp-stat2-num-val', sp.stat2Number); v('sp-stat2-label-val', sp.stat2Label);
-            v('sp-stat3-num-val', sp.stat3Number); v('sp-stat3-label-val', sp.stat3Label);
+            // Next Trip
+            const nt = cfg.nextTrip || {};
+            v('nt-badge', nt.badge);
+            v('nt-destination', nt.destination);
+            v('nt-squadtrip-url', nt.squadtripUrl);
 
-            // ── HOW IT WORKS ──
-            const hiw = cfg.howItWorks || {};
-            v('hiw-eyebrow-val', hiw.eyebrow); v('hiw-heading-val', hiw.heading);
-            renderHiwStepsEditor(hiw.steps || []);
+            // Marketing
+            const mk = cfg.marketing || {};
+            v('px-meta', mk.metaId);
+            v('px-tiktok', mk.tiktokId);
+            v('px-gtm', mk.gtmId);
 
-            // ── NEXT TRIP ──
-            v('nt-destination', nt.destination); v('nt-badge', nt.badge);
-            v('nt-dates', nt.dates); v('nt-duration', nt.duration);
-            v('nt-desc', nt.description); v('nt-price', nt.priceFrom);
-            v('nt-cta-text', nt.ctaText); v('nt-squadtrip-url', nt.squadtripUrl);
-
-            // ── PAST EVENT ──
-            v('pe-visible', String(pe.visible)); v('pe-city', pe.city);
-            v('pe-date', pe.date); v('pe-title', pe.title);
-            v('pe-italic', pe.titleItalic); v('pe-desc', pe.description);
-
-            // ── WHY US ──
-            const wu = cfg.whyUs || {};
-            v('why-eyebrow-val', wu.eyebrow); v('why-heading-val', wu.heading); v('why-body-val', wu.body);
-            renderWhyCardsEditor(wu.cards || []);
-
-            // ── FINAL CTA ──
-            const fc = cfg.finalCta || {};
-            v('cta-eyebrow-val', fc.eyebrow); v('cta-heading-val', fc.heading);
-            v('cta-heading-italic-val', fc.headingItalic); v('cta-body-val', fc.body);
-            v('cta-btn-text-val', fc.ctaText);
-            restoreZone('cta_bg');
-
-            // Event fields
-            const modeEl = document.querySelector('input[name="event-mode"][value="' + ev.mode + '"]');
-            if (modeEl) { modeEl.checked = true; toggleEventMode(ev.mode); }
-            v('ev-eyebrow', ev.eyebrow); v('ev-badge', ev.badgeText);
-            v('ev-heading', ev.heading); v('ev-heading-italic', ev.headingItalic);
-            v('ev-desc', ev.description); v('ev-sub-desc', ev.subDescription);
-            v('ev-live-name', ev.liveEventName); v('ev-live-date', ev.liveEventDate);
-            v('ev-live-venue', ev.liveEventVenue); v('ev-live-price', ev.livePriceDisplay);
-            v('ev-live-btn', ev.liveTicketBtn); v('ev-live-url', ev.liveTicketUrl);
-
-            // Gallery
-            v('gallery-photos', gl.photoCount); v('gallery-dests', gl.destinationCount); v('gallery-trips', gl.tripCount);
-
-            // Trips
-            tr.forEach(function (trip, i) {
-                const p = 'trip' + (i + 1);
-                v(p + '-status', trip.status, true); v(p + '-destination', trip.destination);
-                v(p + '-month', trip.monthYear); v(p + '-dates', trip.dates);
-                v(p + '-duration', trip.duration); v(p + '-region', trip.region);
-                v(p + '-price', trip.priceDisplay); v(p + '-desc', trip.description);
-                v(p + '-cta-text', trip.ctaText); v(p + '-cta-url', trip.ctaUrl);
-                restoreZone(p);
-            });
-
-            // Social
-            v('s-email', sc.email); v('s-instagram', sc.instagram);
-            v('s-tiktok', sc.tiktok); v('s-facebook', sc.facebook);
-            v('s-wa-group', sc.whatsappGroup); v('s-wa-channel', sc.whatsappChannel);
-            v('s-nav-cta-text', nCta.text); v('s-nav-cta-url', nCta.url);
-
-            restoreZone('next_trip'); restoreZone('event_bg');
-            // Bali page image zones
-            restoreZone('bali_hero');
-            for (var _bi = 0; _bi < 10; _bi++) restoreZone('bali_g_' + _bi);
-            for (var _ri = 0; _ri < 3; _ri++) restoreZone('bali_room_' + _ri);
-
-            // FAQs
-            renderFaqEditor(cfg.faqs || TNLIV_DEFAULTS.faqs);
-
-            // Mode toggle listeners
-            document.querySelectorAll('input[name="event-mode"]').forEach(r => {
-                r.addEventListener('change', () => toggleEventMode(r.value));
-            });
+            toast("Data synced with local storage.");
         }
 
-        function v(id, val, isSelect) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            if (isSelect) { el.value = val || ""; }
-            else { "value" in el ? (el.value = val || "") : (el.innerHTML = val || ""); }
-        }
+        // ── DATA RENDERING ───────────────────────────────────────────
 
-        function g(id) {
-            const el = document.getElementById(id);
-            return el ? el.value.trim() : "";
-        }
-
-        // ── SAVE ALL ─────────────────────────────────────────────────
-        function saveAll() {
-            const cfg = getSiteConfig();
-
-            // ── HERO ──
-            cfg.hero = {
-                eyebrow: g('hero-eyebrow-val'), heading: g('hero-heading-val'),
-                headingItalic: g('hero-heading-italic-val'), subtitle: g('hero-subtitle-val'),
-                stat1Number: g('hero-stat1-num-val'), stat1Label: g('hero-stat1-label-val'),
-                stat2Number: g('hero-stat2-num-val'), stat2Label: g('hero-stat2-label-val'),
-                stat3Number: g('hero-stat3-num-val'), stat3Label: g('hero-stat3-label-val'),
-                ctaPrimaryText: g('hero-cta-primary-val'),
-                image: (cfg.hero || {}).image || 'zanzibar_hero.png',
-            };
-
-            // ── TICKER ──
-            const tickerRaw = (document.getElementById('ticker-items-val') || {}).value || '';
-            cfg.ticker = tickerRaw.split('\n').map(s => s.trim()).filter(Boolean);
-
-            // ── IDENTITY / WHO WE ARE ──
-            cfg.identity = {
-                eyebrow: g('identity-eyebrow-val'), heading: g('identity-heading-val'),
-                headingItalic: g('identity-heading-italic-val'),
-                para1: g('identity-para1-val'), para2: g('identity-para2-val'), para3: g('identity-para3-val'),
-            };
-
-            // ── SOCIAL PROOF ──
-            cfg.socialProof = {
-                eyebrow: g('sp-eyebrow-val'), body: g('sp-body-val'),
-                stat1Number: g('sp-stat1-num-val'), stat1Label: g('sp-stat1-label-val'),
-                stat2Number: g('sp-stat2-num-val'), stat2Label: g('sp-stat2-label-val'),
-                stat3Number: g('sp-stat3-num-val'), stat3Label: g('sp-stat3-label-val'),
-            };
-
-            // ── HOW IT WORKS ──
-            cfg.howItWorks = {
-                eyebrow: g('hiw-eyebrow-val'), heading: g('hiw-heading-val'),
-                steps: collectHiwSteps(),
-            };
-
-            // ── NEXT TRIP ──
-            cfg.nextTrip = {
-                badge: g("nt-badge"), destination: g("nt-destination"), dates: g("nt-dates"),
-                duration: g("nt-duration"), description: g("nt-desc"),
-                image: cfg.nextTrip.image,
-                priceFrom: g("nt-price"), ctaText: g("nt-cta-text"),
-                squadtripUrl: g("nt-squadtrip-url"),
-            };
-
-            // ── PAST EVENT ──
-            cfg.pastEvent = {
-                visible: g("pe-visible") === "true", city: g("pe-city"), date: g("pe-date"),
-                title: g("pe-title"), titleItalic: g("pe-italic"), description: g("pe-desc"),
-            };
-
-            // ── WHY US ──
-            cfg.whyUs = {
-                eyebrow: g('why-eyebrow-val'), heading: g('why-heading-val'), body: g('why-body-val'),
-                cards: collectWhyCards(),
-            };
-
-            // ── FINAL CTA ──
-            cfg.finalCta = {
-                eyebrow: g('cta-eyebrow-val'), heading: g('cta-heading-val'),
-                headingItalic: g('cta-heading-italic-val'), body: g('cta-body-val'),
-                ctaText: g('cta-btn-text-val'),
-                image: (cfg.finalCta || {}).image || 'snorkeling_mnemba.png',
-            };
-
-            const mode = document.querySelector('input[name="event-mode"]:checked');
-            cfg.event = {
-                mode: mode ? mode.value : "coming-soon",
-                bgImage: cfg.event.bgImage,
-                eyebrow: g("ev-eyebrow"), heading: g("ev-heading"), headingItalic: g("ev-heading-italic"),
-                description: g("ev-desc"), subDescription: g("ev-sub-desc"), badgeText: g("ev-badge"),
-                liveEventName: g("ev-live-name"), liveEventDate: g("ev-live-date"), liveEventVenue: g("ev-live-venue"),
-                livePriceDisplay: g("ev-live-price"), liveTicketBtn: g("ev-live-btn"), liveTicketUrl: g("ev-live-url"),
-            };
-
-            cfg.gallery = {
-                photoCount: parseInt(g("gallery-photos")) || 0,
-                destinationCount: parseInt(g("gallery-dests")) || 0,
-                tripCount: parseInt(g("gallery-trips")) || 0,
-            };
-
-            cfg.trips = cfg.trips.map(function (trip, i) {
-                const p = "trip" + (i + 1);
-                return {
-                    id: trip.id, image: trip.image,
-                    status: g(p + "-status"), destination: g(p + "-destination"), monthYear: g(p + "-month"),
-                    dates: g(p + "-dates"), duration: g(p + "-duration"), region: g(p + "-region"),
-                    priceDisplay: g(p + "-price"), description: g(p + "-desc"),
-                    ctaText: g(p + "-cta-text"), ctaUrl: g(p + "-cta-url"),
-                    badge: g(p + "-status") === "booking-open" ? "Booking Open" : "Coming Soon",
-                };
-            });
-
-            cfg.social = {
-                email: g("s-email"), instagram: g("s-instagram"), tiktok: g("s-tiktok"),
-                facebook: g("s-facebook"), whatsappGroup: g("s-wa-group"), whatsappChannel: g("s-wa-channel"),
-            };
-
-            cfg.navCta = { text: g("s-nav-cta-text"), url: g("s-nav-cta-url") };
-            cfg.faqs = collectFaqs();
-
-            // 1️⃣ Save locally immediately (instant preview for admin)
-            saveSiteConfig(cfg);
-            toast("✓ Saved locally. Publishing to live site...");
-
-            // 2️⃣ Push to GitHub → triggers Vercel redeploy → visible to everyone
-            if (window.publishConfig) {
-                window.publishConfig(cfg)
-                    .then(function (ok) {
-                        if (ok) toast("✅ Published! Live site updates in ~30 seconds.");
-                        else toast("✓ Saved locally. Add GitHub token in Settings to publish globally.", "warn");
-                    })
-                    .catch(function (e) {
-                        toast("⚠ Local save OK, but publish failed: " + e.message, "error");
-                    });
-            }
-        }
-
-        // ── HOW IT WORKS STEPS EDITOR ─────────────────────────────────
-        function renderHiwStepsEditor(steps) {
-            const editor = document.getElementById('hiw-steps-editor');
-            if (!editor) return;
-            editor.innerHTML = steps.map((step, i) => `
-              <div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:18px 20px;">
-                <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Step ${i + 1}</div>
-                <div style="display:grid;grid-template-columns:64px 1fr 1fr;gap:12px;">
-                  <div class="form-group" style="margin-bottom:0">
-                    <label>Icon</label>
-                    <input type="text" class="form-control" id="hiw-step-icon-${i}" value="${escapeAttr(step.icon || '')}" />
-                  </div>
-                  <div class="form-group" style="margin-bottom:0">
-                    <label>Title</label>
-                    <input type="text" class="form-control" id="hiw-step-title-${i}" value="${escapeAttr(step.title || '')}" />
-                  </div>
-                  <div class="form-group" style="margin-bottom:0">
-                    <label>Body</label>
-                    <input type="text" class="form-control" id="hiw-step-body-${i}" value="${escapeAttr(step.body || '')}" />
-                  </div>
-                </div>
-              </div>`).join('');
-        }
-
-        function collectHiwSteps() {
-            const steps = []; let i = 0;
-            while (document.getElementById('hiw-step-title-' + i)) {
-                steps.push({
-                    icon: (document.getElementById('hiw-step-icon-' + i) || {}).value || '',
-                    title: (document.getElementById('hiw-step-title-' + i) || {}).value || '',
-                    body: (document.getElementById('hiw-step-body-' + i) || {}).value || '',
-                });
-                i++;
-            }
-            return steps;
-        }
-
-        // ── WHY US CARDS EDITOR ───────────────────────────────────────
-        function renderWhyCardsEditor(cards) {
-            const editor = document.getElementById('why-cards-editor');
-            if (!editor) return;
-            editor.innerHTML = cards.map((card, i) => `
-              <div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:18px 20px;">
-                <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Card ${i + 1}</div>
-                <div class="form-group" style="margin-bottom:10px;">
-                  <label>Card Title</label>
-                  <input type="text" class="form-control" id="why-card-title-${i}" value="${escapeAttr(card.title || '')}" />
-                </div>
-                <div class="form-group" style="margin-bottom:0">
-                  <label>Card Body</label>
-                  <textarea class="form-control" id="why-card-body-${i}" rows="2">${escHtml(card.body || '')}</textarea>
-                </div>
-              </div>`).join('');
-        }
-
-        function collectWhyCards() {
-            const cards = []; let i = 0;
-            while (document.getElementById('why-card-title-' + i)) {
-                cards.push({
-                    title: (document.getElementById('why-card-title-' + i) || {}).value || '',
-                    body: (document.getElementById('why-card-body-' + i) || {}).value || '',
-                });
-                i++;
-            }
-            return cards;
-        }
-
-        // ── EVENT MODE ────────────────────────────────────────────────
-        function toggleEventMode(mode) {
-            document.getElementById("cs-fields").style.display = mode === "coming-soon" ? "" : "none";
-            document.getElementById("live-fields").style.display = mode === "live" ? "" : "none";
-        }
-
-
-        // ============================================================
-        // IMAGE UPLOAD SYSTEM
-        // ============================================================
-
-        // Opens the hidden file input for a given key
-        function openPicker(key) {
-            const f = document.getElementById("file-" + key);
-            if (f) f.click();
-        }
-
-        // File selected via file input
-        function handleFilePick(event, key) {
-            const file = event.target.files[0];
-            if (file) processImage(file, key);
-        }
-
-        // File dropped onto zone
-        function handleDrop(event, key) {
-            event.preventDefault();
-            const zone = document.getElementById("zone-" + key);
-            if (zone) zone.classList.remove("drag-over");
-            const file = (event.dataTransfer.files || [])[0];
-            if (file && file.type.startsWith("image/")) processImage(file, key);
-        }
-
-        // Convert file to base64 for instant preview, then push to Supabase Storage
-        async function processImage(file, key) {
-            const reader = new FileReader();
-            reader.onload = async function (e) {
-                const base64 = e.target.result;
-
-                // 1. Instant Admin Preview
-                refreshZone(key, base64);
-                toast("⏳ Uploading to Supabase Storage...");
-
-                // 2. Push to Supabase
-                if (window.publishImage) {
-                    const publicUrl = await window.publishImage(key, file);
-                    if (publicUrl) {
-                        toast("✅ Photo live in Supabase!");
-                        // Update preview with real URL
-                        refreshZone(key, publicUrl);
-                        // Save mapping to localStorage as cache
-                        localStorage.setItem("tnliv_img_" + key, publicUrl);
-                    } else {
-                        toast("❌ Upload failed.", "error");
-                    }
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // Remove image for a key (local + Supabase Storage)
-        async function removeImage(event, key) {
-            if (event) event.stopPropagation();
-            if (!confirm("Permanently delete this image from Supabase Storage?")) return;
-
-            toast("🗑 Deleting...");
-            const ok = await window.removeImage(key);
-            if (ok) {
-                localStorage.removeItem("tnliv_img_" + key);
-                refreshZone(key, null);
-                toast("✓ Image removed.");
-            } else {
-                toast("❌ Delete failed.", "error");
-            }
-        }
-
-        // Re-render a zone with new image or empty state
-        function refreshZone(key, url) {
-            const zone = document.getElementById("zone-" + key);
-            if (!zone) return;
-            if (url) {
-                zone.classList.add("has-image");
-                // Mandatory UI Pattern: Dashed border + Overlay label + Trash
-                zone.innerHTML = `
-                    <div class="img-upload-overlay" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
-                        <span style="background:var(--gold); color:#000; padding:4px 12px; border-radius:999px; font-size:0.65rem; font-weight:800; margin-bottom:8px;">CURRENT</span>
-                        <span class="overlay-text" style="font-size:0.75rem;">Click to Replace</span>
-                    </div>
-                    <img class="img-upload-preview" src="${url}" alt="Preview" style="filter: brightness(0.6);" />
-                    <button class="img-remove-btn" onclick="removeImage(event,'${key}')" title="Delete Permanent">🗑</button>`;
-            } else {
-                zone.classList.remove("has-image");
-                zone.innerHTML = `
-                    <div class="img-upload-placeholder" style="border: 2px dashed var(--gold); background: rgba(196,160,96,0.05); width:100%; height:100%; border-radius:inherit; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-                        <span class="img-upload-icon" style="font-size:2rem; margin-bottom:12px;">🖼️</span>
-                        <span class="img-upload-text"><strong>Click to select photo</strong></span>
-                        <span class="img-upload-hint" style="font-size:0.65rem; color:var(--text-muted);">Lead Engineer Standard</span>
-                    </div>`;
-            }
-            // Reset file input
-            const fi = document.getElementById("file-" + key);
-            if (fi) fi.value = "";
-        }
-
-        // Restore a zone's preview from stored URL or Site Defaults
-        function restoreZone(key) {
-            const defaults = {
-                'hero_img': 'hero-bg.jpg',
-                'founder_photo': 'olivia.jpg',
-                'cta_bg': 'cta-bg.jpg',
-                'next_trip': 'bali-hero.jpg'
-            };
-
-            const liveUrl = (window.globalImages && window.globalImages[key]) ? window.globalImages[key] : null;
-
-            if (liveUrl) {
-                refreshZone(key, liveUrl);
-            } else if (localStorage.getItem("tnliv_img_" + key)) {
-                refreshZone(key, localStorage.getItem("tnliv_img_" + key));
-            } else if (defaults[key]) {
-                refreshZone(key, defaults[key]);
-            }
-        }
-
-        // ── PAST EVENT PHOTO GRID ─────────────────────────────────────
-        const LP_LABELS = ["Welcome", "The Crew", "The Collective", "Mix & Bingo", "The Night", "Vibes", "The Community"];
-
-        function renderPastEventPhotoGrid() {
-            const grid = document.getElementById("pe-photo-grid");
-            if (!grid) return;
-            grid.innerHTML = LP_LABELS.map(function (label, i) {
-                const key = "lp_photo_" + i;
-                const stored = localStorage.getItem("tnliv_img_" + key);
-                return `<div>
-      <div class="img-upload-zone ${stored ? 'has-image' : ''}" id="zone-${key}"
-        onclick="openPicker('${key}')"
-        ondragover="event.preventDefault();this.classList.add('drag-over')"
-        ondragleave="this.classList.remove('drag-over')"
-        ondrop="handleDrop(event,'${key}')">
-        ${stored
-                        ? `<img class="img-upload-preview" src="${stored}" alt="${label}" />
-             <button class="img-remove-btn" onclick="removeImage(event,'${key}')" title="Remove">✕</button>`
-                        : `<div class="img-upload-placeholder">
-               <span class="img-upload-icon">📷</span>
-               <span class="img-upload-text" style="font-size:0.7rem;">Upload</span>
-             </div>`
-                    }
-      </div>
-      <input type="file" id="file-${key}" accept="image/*" style="display:none"
-        onchange="handleFilePick(event,'${key}');renderPastEventPhotoGrid()" />
-      <p class="pe-photo-label">${label}</p>
-    </div>`;
-            }).join("");
-        }
-
-        // ── GALLERY MANAGEMENT (Supabase Powered: gallery_images) ────
         async function renderGallery() {
-            const grid = document.getElementById("gallery-grid-container");
-            if (!grid) return;
-            grid.innerHTML = '<div style="grid-column: span 3; text-align: center; padding: 40px;"><div class="loader"></div><p>Refetching live gallery assets...</p></div>';
+            const container = document.getElementById('gallery-grid-container');
+            if (!container) return;
+            container.innerHTML = "<p style='color:#888;'>Loading live gallery...</p>";
 
-            try {
-                const { data, error } = await supabaseClient.from('gallery_images').select('*').order('created_at', { ascending: false });
-                if (error || !data) throw error;
+            const { data, error } = await supabaseClient
+                .from('gallery_images')
+                .select('*')
+                .order('display_order', { ascending: true });
 
-                grid.innerHTML = data.map(item => `
-                    <div class="gallery-card-admin" style="border: 2px dashed var(--gold); border-radius:12px; overflow:hidden; background:var(--dark-3); position:relative;">
-                        <div style="position:relative; height:180px;">
-                            <img src="${item.url}" alt="Gallery Photo" style="width:100%; height:100%; object-fit:cover; filter: brightness(0.6);" />
-                            <div style="position:absolute; top:12px; left:12px;">
-                                <span style="background:var(--gold); color:#000; padding:4px 12px; border-radius:999px; font-size:0.65rem; font-weight:800; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">CURRENT</span>
+            if (error) {
+                container.innerHTML = "<p style='color:red;'>Error loading gallery: " + error.message + "</p>";
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                container.innerHTML = "<p style='color:#888;'>Gallery is empty. Upload your first photo!</p>";
+            } else {
+                container.innerHTML = data.map(img => `
+                    <div class="gallery-admin-item" style="position:relative; background:#111; border-radius:8px; overflow:hidden;">
+                        <img src="${img.url}" style="width:100%; height:150px; object-fit:cover;" />
+                        <button onclick="deleteGalleryItem('${img.id}')" style="position:absolute; top:5px; right:5px; background:rgba(0,0,0,0.5); border:none; color:white; border-radius:4px; cursor:pointer; padding:4px;">✕</button>
+                    </div>
+                `).join('');
+                container.style.display = 'grid';
+                container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(150px, 1fr))';
+                container.style.gap = '15px';
+            }
+        }
+
+        async function renderDestList() {
+            const container = document.getElementById('dest-list');
+            if (!container) return;
+            container.innerHTML = "<p style='color:#888;'>Loading destinations from cloud...</p>";
+
+            // For now use defaults if database is empty, but try to fetch
+            const cfg = getSiteConfig();
+            const trips = cfg.trips || [];
+
+            if (trips.length === 0) {
+                container.innerHTML = "<div class='trip-admin-card' style='border:2px dashed #333; padding:40px; text-align:center;'>No trips created yet.</div>";
+            } else {
+                container.innerHTML = trips.map((trip, idx) => `
+                    <div class="dest-card" style="background:#111; border:1px solid #222; padding:15px; border-radius:10px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <div style="font-size:1.5rem;">${trip.emoji || "✈️"}</div>
+                            <div>
+                                <div style="font-weight:700; color:#fff;">${trip.destination}</div>
+                                <div style="font-size:0.75rem; color:#888;">${trip.monthYear} · ${trip.status === 'booking-open' ? '🟢 Open' : '🟡 Coming Soon'}</div>
                             </div>
                         </div>
-                        <div style="padding:16px;">
-                            <div style="color:var(--gold); font-size:0.75rem; font-weight:700; margin-bottom:12px; letter-spacing:1px; text-transform:uppercase;">${item.category || 'COMMUNITY'}</div>
-                            <button class="btn-danger" style="width:100%; padding:10px; font-size:0.8rem; border-radius:8px;" onclick="deleteGalleryItem('${item.id}', '${item.url}')">🗑 Remove from Live site</button>
+                        <div style="display:flex; gap:10px;">
+                            <button onclick="editTrip(${idx})" class="btn-secondary" style="font-size:0.75rem; padding:6px 12px;">Edit</button>
+                            <button onclick="deleteTrip(${idx})" class="btn-danger" style="font-size:0.75rem; padding:6px 12px; color:#ff4444; border-color:#442222;">Delete</button>
                         </div>
                     </div>
-                `).join("");
-            } catch (e) {
-                grid.innerHTML = '<div style="grid-column: span 3; text-align: center; padding: 40px; color:var(--danger);">Error loading gallery from gallery_images table.</div>';
+                `).join('');
             }
         }
 
-        async function addGalleryPhoto(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            toast("📤 Uploading high-res asset...");
-            const publicUrl = await window.publishImage(`gallery_${Date.now()}`, file);
-            if (publicUrl) {
-                await supabaseClient.from('gallery_images').insert({
-                    url: publicUrl,
-                    category: document.getElementById('new-gallery-cat').value,
-                    display_order: 0
-                });
-                // Real-time UI refresh
-                renderGalleryAdmin();
-                toast("✅ Gallery expanded!");
-            }
+        async function deleteGalleryItem(id) {
+            if (!confirm("Remove this image from the live gallery?")) return;
+            toast("Removing...");
+            const { error } = await supabaseClient.from('gallery_images').delete().eq('id', id);
+            if (error) toast("Error: " + error.message);
+            else { toast("✓ Removed from gallery"); renderGallery(); }
         }
 
-        async function deleteGalleryItem(id, url) {
-            if (!confirm("Permanently delete this gallery photo? This cannot be undone.")) return;
-            toast("🗑 Deleting...");
-
-            const parts = url.split('/');
-            const fileName = parts[parts.length - 1];
-            await supabaseClient.storage.from('site-assets').remove([fileName]);
-            await supabaseClient.from('gallery_images').delete().eq('id', id);
-
-            // Real-time UI refresh
-            renderGalleryAdmin();
-            toast("✓ Asset purged.");
-        }
-
-        // ── RESET & CLEAR ─────────────────────────────────────────────
-        function clearAllImages() {
-            if (!confirm("Remove all uploaded images? Site pages will revert to default images.")) return;
-            Object.keys(localStorage).forEach(k => { if (k.startsWith("tnliv_img_")) localStorage.removeItem(k); });
-            // Reset all visible zones
-            document.querySelectorAll(".img-upload-zone").forEach(z => {
-                const key = z.id.replace("zone-", "");
-                refreshZone(key, null);
-            });
-            renderPastEventPhotoGrid();
-            toast("✓ All image uploads cleared.");
-        }
-
-        function resetDefaults() {
-            if (!confirm("Reset all content to defaults? This cannot be undone.")) return;
-            resetSiteConfig();
-            loadAllFields();
-            toast("✓ Reset to defaults.");
-        }
-
-        // ── EXPORT / IMPORT ───────────────────────────────────────────
-        function exportConfig() {
-            const cfg = getSiteConfig();
-            const blob = new Blob([JSON.stringify(cfg, null, 2)], { type: "application/json" });
-            const a = document.createElement("a");
-            a.href = URL.createObjectURL(blob);
-            a.download = "travelnliv-config-" + new Date().toISOString().slice(0, 10) + ".json";
-            a.click();
-        }
-
-        function importConfig(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = e => {
-                try {
-                    saveSiteConfig(JSON.parse(e.target.result));
-                    loadAllFields();
-                    toast("✓ Config imported successfully!");
-                } catch { toast("Import failed — invalid JSON.", "error"); }
-            };
-            reader.readAsText(file);
-        }
-
-        // ── FAQs ─────────────────────────────────────────────────────
-        const faqGroups = [
-            { key: "general", label: "🌍 General" },
-            { key: "trips", label: "✈️ Trips & Included" },
-            { key: "booking", label: "💳 Booking" },
-            { key: "contact", label: "💬 Contact" },
-        ];
-
-        function renderFaqEditor(faqs) {
-            const editor = document.getElementById("faq-editor");
-            editor.innerHTML = faqGroups.map(function (group) {
-                const items = (faqs[group.key] || []).map((item, idx) => faqItemHTML(group.key, idx, item)).join("");
-                return `<div class="admin-divider"></div>
-      <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;">${group.label}</div>
-      <div id="faq-group-${group.key}">${items}</div>
-      <button class="btn-add-faq" onclick="addFaqItem('${group.key}')">+ Add Question</button>`;
-            }).join("");
-        }
-
-        function faqItemHTML(groupKey, idx, item) {
-            return `<div class="faq-admin-item" id="faq-${groupKey}-${idx}">
-    <button class="faq-remove" onclick="removeFaqItem('${groupKey}',${idx})">✕</button>
-    <div class="form-group"><label>Question</label><input type="text" class="form-control faq-q-input" value="${escapeAttr(item.q)}" /></div>
-    <div class="form-group" style="margin-bottom:0"><label>Answer</label><textarea class="form-control faq-a-input" rows="2">${escHtml(item.a)}</textarea></div>
-  </div>`;
-        }
-
-        function addFaqItem(groupKey) {
-            const cfg = getSiteConfig();
-            if (!cfg.faqs[groupKey]) cfg.faqs[groupKey] = [];
-            cfg.faqs[groupKey].push({ q: "New Question", a: "Answer goes here." });
-            saveSiteConfig(cfg); renderFaqEditor(cfg.faqs);
-        }
-
-        function removeFaqItem(groupKey, idx) {
-            const cfg = getSiteConfig();
-            if (cfg.faqs[groupKey]) cfg.faqs[groupKey].splice(idx, 1);
-            saveSiteConfig(cfg); renderFaqEditor(cfg.faqs);
-        }
-
-        function collectFaqs() {
-            const result = {};
-            faqGroups.forEach(function (group) {
-                const container = document.getElementById("faq-group-" + group.key);
-                if (!container) return;
-                result[group.key] = Array.from(container.querySelectorAll(".faq-admin-item")).map(item => ({
-                    q: item.querySelector(".faq-q-input").value.trim(),
-                    a: item.querySelector(".faq-a-input").value.trim(),
-                }));
-            });
-            return result;
-        }
-
-        // ── TOAST ─────────────────────────────────────────────────────
-        function toast(msg, type) {
-            const el = document.getElementById("toast");
-            el.textContent = msg;
-            el.style.color = type === "error" ? "var(--danger)" : "var(--gold)";
-            el.style.borderColor = type === "error" ? "rgba(224,90,78,0.4)" : "rgba(196,160,96,0.3)";
-            el.classList.add("show");
-            setTimeout(() => el.classList.remove("show"), 3400);
-        }
-
-        // ── UTILS ─────────────────────────────────────────────────────
-        function escapeAttr(s) { return (s || "").replace(/"/g, "&quot;"); }
-        function escHtml(s) { return (s || "").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-
-        // ── MARKETING & ANALYTICS ─────────────────────────────────────
-        const PIXEL_KEYS = [
-            { id: "px-meta", lsKey: "tnliv_pixel_meta", label: "Meta Pixel" },
-            { id: "px-tiktok", lsKey: "tnliv_pixel_tiktok", label: "TikTok Pixel" },
-            { id: "px-gtm", lsKey: "tnliv_pixel_gtm", label: "GTM" },
-        ];
-
-        async function loadMarketingFields() {
-            var row = document.getElementById("tracking-status-row");
-            if (row) row.innerHTML = "⏳ Loading...";
-
-            const client = supabaseClient;
-            const { data } = await client.from('site_config').select('*').eq('section_key', 'marketing').single();
-            const config = data ? data.data : {};
-
-            PIXEL_KEYS.forEach(function (p) {
-                var el = document.getElementById(p.id);
-                if (el) el.value = config[p.id] || "";
-            });
-            renderTrackingStatus(config);
-        }
-
-        function renderTrackingStatus(config) {
-            var row = document.getElementById("tracking-status-row");
-            if (!row) return;
-            row.innerHTML = PIXEL_KEYS.map(function (p) {
-                var val = (config[p.id] || "").trim();
-                var active = !!val;
-                return '<div class="pixel-status-chip' + (active ? " active" : "") + '">' +
-                    '<div class="psc-dot"></div>' +
-                    p.label + (active ? " ✓ Live" : " — Not configured") +
-                    '</div>';
-            }).join("");
-        }
-
-        async function saveMarketing() {
-            var config = {};
-            PIXEL_KEYS.forEach(function (p) {
-                var el = document.getElementById(p.id);
-                if (el) config[p.id] = el.value.trim();
-            });
-
-            toast('💾 Syncing Marketing IDs...');
-            await supabaseClient.from('site_config').upsert({
-                section_key: 'marketing',
-                data: config,
-                updated_at: new Date()
-            }, { onConflict: 'section_key' });
-
-            loadMarketingFields();
-            toast("✓ Marketing IDs synced to Supabase!");
-        }
-
-        async function clearTracking() {
-            if (!confirm("Remove all pixel IDs? Tracking will stop on the next page load.")) return;
-            await supabaseClient.from('site_config').upsert({
-                section_key: 'marketing',
-                data: {},
-                updated_at: new Date()
-            }, { onConflict: 'section_key' });
-            loadMarketingFields();
-            toast("All tracking pixels cleared.");
-        }
-
-
-        // ── DESTINATIONS MANAGER ────────────────────────────────────
-        var BALI_DAYS = [
-            { title: 'Arrival, Connect & Seafood Welcome Dinner by the Beach', body: 'Warmly welcomed and transferred into nature. Settle into your 5-star luxury villa, explore your surroundings, then gather for an intimate seafood welcome dinner by the beach.', highlights: ['🛬 Airport Transfer', '🏨 Villa Check-in', '🦞 Welcome Seafood Dinner'] },
-            { title: 'Waterfalls & Wonders of Bali', body: 'Private guide from 9:30 AM. First stop: the breathtaking Tegenungan Waterfall, cascading waters surrounded by lush jungle. Continue to the historic Elephant Cave (Goa Gajah) — ancient carvings and tranquil surroundings.', highlights: ['🍳 Breakfast Included', '💧 Tegenungan Waterfall', '🐘 Elephant Cave (Goa Gajah)', '📸 Photo Moments'] },
-            { title: 'Sunset in a Landscape Shaped by Time', body: 'Relaxed breakfast then guide meets you at 2:00 PM. Journey to Mount Batur Geopark for a Black Lava Jeep tour at 4:00 PM — dramatic volcanic landscapes and sweeping panoramic views. Reach the sunset viewpoint around 6:00 PM where the sky transforms into a stunning display of color.', highlights: ['🍳 Breakfast Included', '🚙 Black Lava Jeep Tour', '🌋 Mount Batur Geopark', '🌅 Sunset Viewpoint'] },
-            { title: 'Rice Terraces & Village Life', body: 'Early pickup at 7:30 AM. At 9:00 AM begin a guided e-bike tour through Jatiluwih Rice Terraces — a UNESCO World Heritage site. Ride through an agro farm, bee farm, bamboo forest, and Jatiluwih Village. Afternoon: check-in at Pullman Bali Legian Beach.', highlights: ['🍳 Breakfast Included', '🍽️ Lunch & Dinner Included', '🚲 UNESCO E-Bike Tour', '🌾 Jatiluwih Village', '🏨 Hotel Move: Pullman Bali'] },
-            { title: 'Yacht Day in Bali', body: 'Pickup at 6:30 AM to Sanur Pier. Board at 7:30 AM and cruise to Nusa Lembongan. Step aboard the Utopia Catamaran (8:30 AM–1:30 PM) — welcome drink, snorkeling with equipment and safety gear, curated lunch, GoPro photos & video. Shaded lounges onboard.', highlights: ['🍳 Breakfast & Dinner Included', '⛵ Utopia Catamaran Cruise', '🤿 Snorkeling Included', '🎥 GoPro Photos & Video', '🍹 Welcome Drinks'] },
-            { title: "Asia's Hottest Beach Club", body: 'Relaxed breakfast then half day at leisure. Your guide transfers you to Finns Beach Club — one of Bali\'s most iconic beachfront destinations. Lounge by the pool, sip cocktails by the beach, or catch the sunset over the water.', highlights: ['🍳 Breakfast Included', '🏖️ Finns Beach Club', '🌅 Sunset by the Ocean', '🍹 Oceanfront Cocktails'] },
-            { title: "This Is Not Goodbye — See You Next Time!", body: 'Final breakfast at the hotel, then leisure hours — last dip in the pool or a beach stroll. Transfer to Ngurah Rai International Airport for departure. Leave with unforgettable memories, new friendships, and a camera roll that will make everyone wish they came.', highlights: ['🍳 Final Breakfast', '🏖️ Leisure Morning', '🚐 Airport Transfer', '✈️ Ngurah Rai International'] }
-        ];
-        var BALI_INCLUDES = [
-            { icon: '🏨', title: 'Accommodation / Lodging', desc: 'Luxury private villa stays and curated boutique accommodations — kept secret until reveal day.' },
-            { icon: '🎭', title: 'Events & Activities', desc: '7 carefully curated mystery experiences unveiled throughout the trip.' },
-            { icon: '🚐', title: 'Transportation', desc: 'Private transfers and curated transportation for all scheduled group activities.' },
-            { icon: '📸', title: 'Professional Photographer', desc: "Liv shoots everything — Sony digital camera, DJI Osmo Pocket, DJI Mini 3 drone. You'll come home with a full camera roll." },
-            { icon: '🍽️', title: 'Food & Beverages', desc: 'Welcome drinks, all breakfasts, 2 lunches, and 3 curated group dinners.' },
-            { icon: '🥂', title: 'Alcohol', desc: 'Welcome drink on Travel & LIV Collective.' },
-            { icon: '🤝', title: 'Community & Connections', desc: 'You may just find your next bestie or boo on this trip.' }
-        ];
-        var BALI_ROOMS = [
-            { title: 'Mystery Trip — Double Occupancy (Bringing a friend/couple)', price: '$2,350', deposit: '$500 deposit · Payment plan available', badge: '' },
-            { title: 'Mystery Trip — Double Occupancy (Solo/roommate matching)', price: '$2,400', deposit: '$530 deposit · 3 payments of $623 · No credit check', badge: 'Only 4 remaining!' },
-            { title: 'Mystery Trip — Single Occupancy', price: '$2,850', deposit: '$500 deposit · Your own private room', badge: '' }
-        ];
-        var DEST_DEFAULTS = [
-            { slug: 'bali', name: 'Bali, Indonesia', emoji: '🏝️', url: 'bali.html', status: 'booking_open', dates: 'July 30 – Aug 5, 2026', price: 'Starting at $2,350', badge: '🟢 Booking Open', tagline: 'Sacred rice terraces, rooftop infinity pools, volcanic sunrises, and nights you will never forget.', teaserDesc: '7 days of luxury, culture and connection in Bali.', description: 'Your journey begins the moment you arrive, where you will be seamlessly welcomed and transported into nature. Throughout the trip, you will stay in hand-selected 5-star luxury local resorts and private villas, each chosen for their setting, serenity, and wow factor.', squadtrip: 'https://travelnlivcollective.squadtrip.com/trip/travel-liv-collective-signature-mystery-trip-where-luxury-meets-relaxation-and-connection-13016?color=abcca8', days: BALI_DAYS, includes: BALI_INCLUDES, rooms: BALI_ROOMS },
-            { slug: 'puntacana', name: 'Punta Cana, D.R.', emoji: '🌴', url: 'puntacana.html', status: 'coming_soon', dates: 'TBA', price: 'TBA', badge: '✈️ Coming Soon — Details Dropping', tagline: 'All trip information will be revealed soon.', teaserDesc: 'The details are being finalized. Expect the same luxury and community.', description: '', squadtrip: '', days: [], includes: [], rooms: [] },
-            { slug: 'rio', name: 'Rio de Janeiro, Brazil', emoji: '🎉', url: 'rio.html', status: 'coming_soon', dates: 'TBA', price: 'TBA', badge: '✈️ Coming Soon — Details Dropping', tagline: 'All trip information will be revealed soon.', teaserDesc: 'The details are being finalized. Expect the same luxury and community.', description: '', squadtrip: '', days: [], includes: [], rooms: [] }
-        ];
-
-        function getDestinations() {
-            try {
-                var stored = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || 'null');
-                if (!stored) {
-                    // seed defaults on first load
-                    stored = DEST_DEFAULTS;
-                    localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(stored));
-                    stored.forEach(function (d) { localStorage.setItem('DEST_' + d.slug, JSON.stringify(d)); });
-                }
-                return stored;
-            } catch (e) { return DEST_DEFAULTS; }
-        }
-        // Always ensure individual DEST_ keys exist for trip pages to read
-        (function seedDestKeys() {
-            try {
-                var list = JSON.parse(localStorage.getItem('DESTINATIONS_LIST') || 'null');
-                if (!list) return;
-                list.forEach(function (d) { localStorage.setItem('DEST_' + d.slug, JSON.stringify(d)); });
-            } catch (e) { }
-        })();
-
-
-        async function saveDestinations(list) {
-            localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(list));
-            const client = supabaseClient;
-
-            for (const d of list) {
-                // 1. Destination
-                await client.from('destinations').upsert({
-                    slug: d.slug,
-                    name: d.name,
-                    emoji: d.emoji || '✈️',
-                    url: d.url,
-                    status: d.status,
-                    dates: d.dates,
-                    price: d.price,
-                    badge: d.badge,
-                    tagline: d.tagline,
-                    teaser_desc: d.teaserDesc,
-                    description: d.description,
-                    squadtrip_link: d.squadtrip,
-                    updated_at: new Date()
-                });
-
-                // 2. Itinerary (Delete first to ensure clean state or use upsert if IDs present)
-                if (d.days) {
-                    await client.from('itineraries').delete().eq('destination_slug', d.slug);
-                    const days = d.days.map((day, i) => ({
-                        destination_slug: d.slug,
-                        day_number: i + 1,
-                        title: day.title,
-                        body: day.body,
-                        highlights: day.highlights
-                    }));
-                    await client.from('itineraries').insert(days);
-                }
-
-                // 3. Includes
-                if (d.includes) {
-                    await client.from('includes').delete().eq('destination_slug', d.slug);
-                    const incs = d.includes.map((inc, i) => ({
-                        destination_slug: d.slug,
-                        icon: inc.icon,
-                        title: inc.title,
-                        description: inc.desc,
-                        order_index: i
-                    }));
-                    await client.from('includes').insert(incs);
-                }
-
-                // 4. Rooms
-                if (d.rooms) {
-                    await client.from('rooms').delete().eq('destination_slug', d.slug);
-                    const rooms = d.rooms.map((r, i) => ({
-                        destination_slug: d.slug,
-                        title: r.title,
-                        price: r.price,
-                        deposit_note: r.deposit,
-                        badge: r.badge,
-                        order_index: i
-                    }));
-                    await client.from('rooms').insert(rooms);
-                }
-            }
-
-            if (window.publishDestinations) window.publishDestinations(list); // Fallback
-        }
-
-        var STATUS_LABELS = {
-            booking_open: '🟢 Booking Open',
-            coming_soon: '✈️ Coming Soon',
-            sold_out: '🔴 Sold Out',
-            concluded: '🏁 Concluded'
-        };
-
-
-        var _isReordering = false;
-        function toggleDestReorder() {
-            _isReordering = !_isReordering;
-            var btn = document.getElementById('reorder-dest-btn');
-            btn.textContent = _isReordering ? '✓ Finish Rearranging' : '⇅ Rearrange Trip Order';
-            btn.className = _isReordering ? 'btn-admin-primary' : 'btn-secondary';
-            renderDestList();
-        }
-
-        function moveDest(index, direction) {
-            var list = getDestinations();
-            if (direction === 'up' && index > 0) {
-                var temp = list[index];
-                list[index] = list[index - 1];
-                list[index - 1] = temp;
-            } else if (direction === 'down' && index < list.length - 1) {
-                var temp = list[index];
-                list[index] = list[index + 1];
-                list[index + 1] = temp;
-            }
-            saveDestinations(list);
-            renderDestList();
-        }
-
-        function renderDestList() {
-            var list = getDestinations();
-            var el = document.getElementById('dest-list');
-            if (!el) return;
-            if (!list.length) {
-                el.innerHTML = '<p style="color:#888;font-style:italic;">No destinations yet. Add one below.</p>';
-                return;
-            }
-            var html = '';
-            list.forEach(function (d, i) {
-                var statusColor = d.status === 'booking_open' ? '#4caf72' : d.status === 'concluded' ? '#888' : '#e8a838';
-                html += '<div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">';
-
-                if (_isReordering) {
-                    html += '<div style="display:flex;flex-direction:column;gap:4px;margin-right:12px;">' +
-                        '<button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'up\')">▲</button>' +
-                        '<button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'down\')">▼</button>' +
-                        '</div>';
-                }
-
-                html += '<div style="font-size:2rem;">' + (d.emoji || '✈️') + '</div>' +
-                    '<div style="flex:1;min-width:200px;">' +
-                    '<div style="font-weight:700;font-size:1rem;">' + d.name + '</div>' +
-                    '<div style="font-size:0.8rem;color:#888;margin-top:2px;">' + d.dates + ' · ' + d.price + '</div>' +
-                    '<div style="display:inline-block;margin-top:6px;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:' + statusColor + '20;color:' + statusColor + ';border:1px solid ' + statusColor + '40;">' + (STATUS_LABELS[d.status] || d.status) + '</div>' +
-                    '</div>' +
-                    '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-                    '<a href="' + (d.url || ('/upcomingtrips/' + d.slug)) + '" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">🗺️ View Page</a>' +
-                    '<button onclick="openEditDest(' + i + ')" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">✏️ Edit</button>' +
-                    '<button onclick="deleteDest(' + i + ')" style="background:#c0392b;border:none;border-radius:8px;color:#fff;padding:8px 14px;font-size:0.8rem;cursor:pointer;">🗑️ Delete</button>' +
-                    '</div>' +
-                    '</div>';
-            });
-            el.innerHTML = html;
-        }
-
-        function openAddDestForm() {
-            document.getElementById('add-dest-form').style.display = 'block';
-            document.getElementById('add-dest-btn').style.display = 'none';
-            closeEditDest();
-        }
-        function closeAddDestForm() {
-            document.getElementById('add-dest-form').style.display = 'none';
-            document.getElementById('add-dest-btn').style.display = 'flex';
-            ['new-dest-name', 'new-dest-slug', 'new-dest-dates', 'new-dest-price', 'new-dest-tagline', 'new-dest-teaser', 'new-dest-emoji'].forEach(function (id) { var el = document.getElementById(id); if (el) el.value = ''; });
-        }
-
-        async function saveNewDest() {
-            var name = (document.getElementById('new-dest-name').value || '').trim();
-            var slug = (document.getElementById('new-dest-slug').value || '').trim().toLowerCase().replace(/\s+/g, '-');
-
-            if (!name || !slug) { toast('Name and Slug are required.', 'error'); return; }
-
-            var list = await getDestinations();
-            if (list.find(function (d) { return d.slug === slug; })) {
-                toast('A destination with that slug already exists.', 'error'); return;
-            }
-
-            var newDest = {
-                slug: slug,
-                name: name,
-                emoji: document.getElementById('new-dest-emoji').value || '✈️',
-                url: slug + '.html',
-                status: document.getElementById('new-dest-status').value,
-                dates: document.getElementById('new-dest-dates').value || 'TBA',
-                price: document.getElementById('new-dest-price').value || 'TBA',
-                badge: '',
-                tagline: document.getElementById('new-dest-tagline').value || '',
-                teaserDesc: document.getElementById('new-dest-teaser').value || '',
-                description: '',
-                squadtrip: '',
-                days: [],
-                includes: [],
-                rooms: []
-            };
-
-            list.push(newDest);
-            await saveDestinations(list);
-            renderDestList();
-            closeAddDestForm();
-            toast('✓ "' + name + '" created successfully!');
-        }
-
-        /* ── ITINERARY EDITOR HELPERS ── */
-        function renderItinEditor(days) {
-            var c = document.getElementById('itin-editor-list');
-            if (!c) return;
-            c.innerHTML = '';
-            (days || []).forEach(function (day, i) { _addItinRow(day, i); });
-        }
-        function _addItinRow(day, i) {
-            var c = document.getElementById('itin-editor-list');
-            var div = document.createElement('div');
-            div.style.cssText = 'background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:10px;padding:14px 16px;';
-            div.innerHTML =
-                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">' +
-                '<strong style="font-size:0.85rem;">Day ' + (i + 1) + '</strong>' +
-                '<button onclick="this.parentElement.parentElement.remove()" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:0.8rem;">✕ Remove</button>' +
-                '</div>' +
-                '<input type="text" placeholder="Day title (e.g. Arrival & Welcome Dinner)" value="' + (day.title || '').replace(/"/g, '&quot;') + '" class="form-control itin-day-title" style="margin-bottom:8px;" />' +
-                '<textarea placeholder="Day description..." class="form-control itin-day-body" rows="3" style="margin-bottom:8px;">' + (day.body || '') + '</textarea>' +
-                '<input type="text" placeholder="Highlights (comma separated: 🛬 Airport · 🏨 Villa Check-in)" value="' + (day.highlights || []).join(' · ').replace(/"/g, '&quot;') + '" class="form-control itin-day-hl" />';
-            div.setAttribute('data-irow', '1');
-            c.appendChild(div);
-        }
-        function addItinDayField() {
-            var rows = document.querySelectorAll('#itin-editor-list [data-irow]').length;
-            _addItinRow({ title: '', body: '', highlights: [] }, rows);
-        }
-        function getItinData() {
-            var rows = document.querySelectorAll('#itin-editor-list [data-irow]');
-            var days = [];
-            rows.forEach(function (row) {
-                var title = row.querySelector('.itin-day-title').value.trim();
-                var body = row.querySelector('.itin-day-body').value.trim();
-                var hl = row.querySelector('.itin-day-hl').value.trim();
-                days.push({ title: title, body: body, highlights: hl ? hl.split('·').map(function (x) { return x.trim(); }) : [] });
-            });
-            return days;
-        }
-
-        /* ── INCLUDES EDITOR HELPERS ── */
-        function renderIncludesEditor(includes) {
-            var c = document.getElementById('includes-editor-list');
-            if (!c) return;
-            c.innerHTML = '';
-            (includes || []).forEach(function (inc) { _addIncludeRow(inc); });
-        }
-        function _addIncludeRow(inc) {
-            var c = document.getElementById('includes-editor-list');
-            var div = document.createElement('div');
-            div.setAttribute('data-inc-row', '1');
-            div.style.cssText = 'display:grid;grid-template-columns:60px 1fr 2fr auto;gap:8px;align-items:center;';
-            div.innerHTML =
-                '<input type="text" value="' + (inc.icon || '').replace(/"/g, '&quot;') + '" placeholder="Icon" class="form-control inc-icon" style="text-align:center;font-size:1.2rem;" />' +
-                '<input type="text" value="' + (inc.title || '').replace(/"/g, '&quot;') + '" placeholder="Title" class="form-control inc-title" />' +
-                '<input type="text" value="' + (inc.desc || '').replace(/"/g, '&quot;') + '" placeholder="Description" class="form-control inc-desc" />' +
-                '<button onclick="this.parentElement.remove()" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:1rem;">✕</button>';
-            c.appendChild(div);
-        }
-        function addIncludeField() { _addIncludeRow({ icon: '✅', title: '', desc: '' }); }
-        function getIncludesData() {
-            var rows = document.querySelectorAll('#includes-editor-list [data-inc-row]');
-            var list = [];
-            rows.forEach(function (row) {
-                list.push({
-                    icon: row.querySelector('.inc-icon').value.trim(),
-                    title: row.querySelector('.inc-title').value.trim(),
-                    desc: row.querySelector('.inc-desc').value.trim()
-                });
-            });
-            return list;
-        }
-
-        /* ── ROOMS EDITOR HELPERS ── */
-        function renderRoomsEditor(rooms) {
-            var c = document.getElementById('rooms-editor-list');
-            if (!c) return;
-            c.innerHTML = '';
-            (rooms || []).forEach(function (r) { _addRoomRow(r); });
-        }
-        function _addRoomRow(r) {
-            var c = document.getElementById('rooms-editor-list');
-            var div = document.createElement('div');
-            div.setAttribute('data-room-row', '1');
-            div.style.cssText = 'display:grid;grid-template-columns:2fr 1fr 2fr 80px auto;gap:8px;align-items:center;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:8px;padding:10px 14px;';
-            div.innerHTML =
-                '<input type="text" value="' + (r.title || '').replace(/"/g, '&quot;') + '" placeholder="Room name" class="form-control room-title" />' +
-                '<input type="text" value="' + (r.price || '').replace(/"/g, '&quot;') + '" placeholder="Price ($2,350)" class="form-control room-price" />' +
-                '<input type="text" value="' + (r.deposit || '').replace(/"/g, '&quot;') + '" placeholder="Deposit note" class="form-control room-deposit" />' +
-                '<input type="text" value="' + (r.badge || '').replace(/"/g, '&quot;') + '" placeholder="Badge" class="form-control room-badge" />' +
-                '<button onclick="this.parentElement.remove()" style="background:none;border:none;color:#c0392b;cursor:pointer;font-size:1rem;">✕</button>';
-            c.appendChild(div);
-        }
-        function addRoomField() { _addRoomRow({ title: '', price: '', deposit: '', badge: '' }); }
-        function getRoomsData() {
-            var rows = document.querySelectorAll('#rooms-editor-list [data-room-row]');
-            var list = [];
-            rows.forEach(function (row) {
-                list.push({
-                    title: row.querySelector('.room-title').value.trim(),
-                    price: row.querySelector('.room-price').value.trim(),
-                    deposit: row.querySelector('.room-deposit').value.trim(),
-                    badge: row.querySelector('.room-badge').value.trim()
-                });
-            });
-            return list;
-        }
-
-        /* ── OPEN / SAVE / CLOSE ── */
-        function openEditDest(idx) {
-            var list = getDestinations();
-            var d = list[idx];
-            if (!d) return;
-            document.getElementById('edit-dest-slug-hidden').value = d.slug;
-            document.getElementById('edit-dest-name').value = d.name || '';
-            document.getElementById('edit-dest-dates').value = d.dates || '';
-            document.getElementById('edit-dest-price').value = d.price || '';
-            document.getElementById('edit-dest-badge').value = d.badge || '';
-            document.getElementById('edit-dest-tagline').value = d.tagline || '';
-            document.getElementById('edit-dest-teaser').value = d.teaserDesc || '';
-            document.getElementById('edit-dest-url').value = d.url || '';
-            document.getElementById('edit-dest-squadtrip').value = d.squadtrip || '';
-            document.getElementById('edit-dest-desc').value = d.description || '';
-            var sel = document.getElementById('edit-dest-status');
-            if (sel) sel.value = d.status || 'coming_soon';
-            renderItinEditor(d.days || []);
-            renderIncludesEditor(d.includes || []);
-            renderRoomsEditor(d.rooms || []);
-            document.getElementById('edit-dest-drawer-title').textContent = 'Edit: ' + d.name;
-            document.getElementById('dest-edit-drawer').style.display = 'block';
-            renderDestPhotoGrid(d.slug);
-            setTimeout(function () { document.getElementById('dest-edit-drawer').scrollIntoView({ behavior: 'smooth' }); }, 100);
-        }
-
-        function closeEditDest() {
-            document.getElementById('dest-edit-drawer').style.display = 'none';
-        }
-        function renderDestPhotoGrid(slug) {
-            var grid = document.getElementById('dest-gallery-grid');
-            var stripGrid = document.getElementById('dest-strip-grid');
-            if (!grid || !stripGrid) return;
-
-            restoreZoneKey(slug + '_card', 'zone-dest-card');
-            restoreZoneKey(slug + '_hero', 'zone-dest-hero');
-
-            // 1. Gallery Grid (10 photos)
-            grid.innerHTML = '';
-            var defaults = DEST_GALLERY_DEFAULTS[slug] || [];
-            for (var i = 0; i < 10; i++) {
-                var key = slug + '_g_' + i;
-                var stored = localStorage.getItem('tnliv_img_' + key);
-                var displaySrc = stored || defaults[i] || null;
-                var slot = document.createElement('div');
-                var imgHtml = displaySrc
-                    ? '<img src="' + displaySrc + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />' + (stored ? '' : '<div style="position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:0.6rem;color:#fff;background:rgba(0,0,0,0.6);padding:2px;border-radius:0 0 6px 6px;">current</div>')
-                    : '<div class="img-upload-placeholder" style="gap:2px;"><span style="font-size:1rem;">📷</span><span style="font-size:0.67rem;">Upload</span></div>';
-
-                slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
-                    '<div class="img-upload-zone" id="zone-dg-' + i + '" onclick="openPickerDg(' + i + ')" style="min-height:90px;border-radius:8px;position:relative;overflow:hidden;cursor:pointer;" ' +
-                    'draggable="true" ondragstart="handleDragStart(event, \'gallery\', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, \'gallery\', ' + i + ')">' +
-                    imgHtml +
-                    '</div>' +
-                    '<input type="file" id="file-dg-' + i + '" accept="image/*" style="display:none" onchange="handleDestGalleryPick(event,' + i + ')" />';
-                grid.appendChild(slot);
-            }
-
-            // 2. Strip Grid (5 photos)
-            stripGrid.innerHTML = '';
-            var stripDefaults = DEST_GALLERY_DEFAULTS[slug + "_strip"] || [];
-            for (var i = 0; i < 5; i++) {
-                var key = slug + '_strip_' + i;
-                var stored = localStorage.getItem('tnliv_img_' + key);
-                var displaySrc = stored || stripDefaults[i] || null;
-                var slot = document.createElement('div');
-                var imgHtml = displaySrc
-                    ? '<img src="' + displaySrc + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />' + (stored ? '' : '<div style="position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:0.6rem;color:#fff;background:rgba(0,0,0,0.6);padding:2px;border-radius:0 0 6px 6px;">current</div>')
-                    : '<div class="img-upload-placeholder" style="gap:2px;"><span style="font-size:1rem;">📷</span><span style="font-size:0.67rem;">Upload</span></div>';
-
-                slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
-                    '<div class="img-upload-zone" id="zone-ds-' + i + '" onclick="openPickerDs(' + i + ')" style="min-height:80px;border-radius:8px;position:relative;overflow:hidden;cursor:pointer;" ' +
-                    'draggable="true" ondragstart="handleDragStart(event, \'strip\', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, \'strip\', ' + i + ')">' +
-                    imgHtml +
-                    '</div>' +
-                    '<input type="file" id="file-ds-' + i + '" accept="image/*" style="display:none" onchange="handleDestStripPick(event,' + i + ')" />';
-                stripGrid.appendChild(slot);
-            }
-        }
-
-
-        // ── DESTINATION DEFAULTS (current live images) ────────────────
-        var DEST_CARD_DEFAULTS = { bali: 'bali_hero.png', puntacana: null, rio: null };
-        var DEST_HERO_DEFAULTS = { bali: 'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg', puntacana: null, rio: null };
-        var DEST_GALLERY_DEFAULTS = {
-            bali: [
-                'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg',
-                'bali/jatiluwih-warisan-budaya_f4caf68e-bd5a-4190-834f-4645784211f5.jpeg',
-                'bali/bali-mount-batur-jeep-sunrise-17370345941_831c16a5-8602-4c8a-b439-bc9251c2b50c.jpeg',
-                'bali/utopia-catamaran-floating-beach-club-aerial-view_7d80a1cd-173f-48cf-94ab-ef690209fa34.jpeg',
-                'bali/bali-tegenungan-waterfall_e16b7917-e41a-4766-829a-abaeeb24a256.jpeg',
-                'bali/MountBaturJeepSunriseComboExperienceinBali-KlookUnitedStates_c593a0b2-3eb4-4973-aa28-3e4128bb7787.jpeg',
-                'bali/Finns_5507ce8c-35bc-4059-9e33-63e9b0f552c0.png',
-                'bali/Bali-Nightlife-Featured-image_a2cd03ed-8904-4a76-a030-fe42501455d7.jpeg',
-                'bali/slide2_afcc89ef-2f18-423d-b9bd-cf88edce1482.jpeg',
-                'bali/DSC08538_a040ac40-a59f-49a5-a2d6-ea0f1853a3a9.jpeg'
-            ],
-            bali_strip: [
-                'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg',
-                'bali/jatiluwih-warisan-budaya_f4caf68e-bd5a-4190-834f-4645784211f5.jpeg',
-                'bali/utopia-catamaran-floating-beach-club-aerial-view_7d80a1cd-173f-48cf-94ab-ef690209fa34.jpeg',
-                'bali/bali-mount-batur-jeep-sunrise-17370345941_831c16a5-8602-4c8a-b439-bc9251c2b50c.jpeg',
-                'bali/bali-tegenungan-waterfall_e16b7917-e41a-4766-829a-abaeeb24a256.jpeg'
-            ]
-        };
-
-        function openPickerDg(idx) {
-            var inp = document.getElementById('file-dg-' + idx);
-            if (inp) inp.click();
-        }
-
-        function restoreZoneKey(key, zoneId) {
-            var stored = localStorage.getItem('tnliv_img_' + key);
-            // Determine default src from slug + type
-            var parts = key.split('_');
-            var slug = parts[0];
-            var type = parts[1];
-            var defaultSrc = type === 'card' ? (DEST_CARD_DEFAULTS[slug] || null)
-                : type === 'hero' ? (DEST_HERO_DEFAULTS[slug] || null) : null;
-            var src = stored || defaultSrc;
-            if (!src) return;
-            var zone = document.getElementById(zoneId);
-            if (!zone) return;
-            zone.innerHTML = '<div style="position:relative;width:100%;height:100%;">'
-                + '<img src="' + src + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />'
-                + (stored ? '' : '<div style="position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:0.62rem;color:#ccc;background:rgba(0,0,0,0.6);padding:2px;">current — click to replace</div>')
-                + '</div>';
-        }
-
-        function handleDestPhoto(event, type) {
-            var slug = document.getElementById('edit-dest-slug-hidden').value;
-            var file = event.target.files[0];
-            if (!file) return;
-            var key = slug + '_' + type;
-            var zoneId = type === 'card' ? 'zone-dest-card' : 'zone-dest-hero';
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var dataUrl = e.target.result;
-                localStorage.setItem('tnliv_img_' + key, dataUrl);
-                var zone = document.getElementById(zoneId);
-                if (zone) zone.innerHTML = '<img src="' + dataUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />';
-                toast('Uploading ' + type + ' photo...');
-                if (window.publishImage) {
-                    window.publishImage(key, dataUrl)
-                        .then(function () { toast('\u2705 ' + (type === 'card' ? 'Card' : 'Hero') + ' photo is now live!'); })
-                        .catch(function (err) { toast('Saved locally. ' + err.message, 'error'); });
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-
-
-        // ── DRAG & SWAP FOR PHOTOS ───────────────────────────────
-        var _dragSource = null;
-        function handleDragStart(e, type, idx) {
-            _dragSource = { type: type, idx: idx };
-            e.dataTransfer.setData('text/plain', idx);
-        }
-        function handleDragOver(e) {
-            e.preventDefault();
-        }
-        function handleDropSwap(e, type, targetIdx) {
-            e.preventDefault();
-            if (!_dragSource || _dragSource.type !== type || _dragSource.idx === targetIdx) return;
-
-            var slug = document.getElementById('edit-dest-slug-hidden').value;
-            var sourceIdx = _dragSource.idx;
-            var keyPart = (type === "gallery" ? "_g_" : "_strip_");
-
-            var sourceKey = slug + keyPart + sourceIdx;
-            var targetKey = slug + keyPart + targetIdx;
-
-            // Swap in local storage
-            var sourceVal = localStorage.getItem('tnliv_img_' + sourceKey);
-            var targetVal = localStorage.getItem('tnliv_img_' + targetKey);
-
-            // Fallback to defaults if null
-            if (!sourceVal) sourceVal = (type === "gallery" ? DEST_GALLERY_DEFAULTS[slug][sourceIdx] : DEST_GALLERY_DEFAULTS[slug + "_strip"][sourceIdx]);
-            if (!targetVal) targetVal = (type === "gallery" ? DEST_GALLERY_DEFAULTS[slug][targetIdx] : DEST_GALLERY_DEFAULTS[slug + "_strip"][targetIdx]);
-
-            localStorage.setItem('tnliv_img_' + sourceKey, targetVal);
-            localStorage.setItem('tnliv_img_' + targetKey, sourceVal);
-
-            toast('Swapped photos...');
-
-            // If we have data URLs, we should probably publish them too
-            if (window.publishImage) {
-                Promise.all([
-                    window.publishImage(sourceKey, targetVal),
-                    window.publishImage(targetKey, sourceVal)
-                ]).then(function () { toast('✅ Order saved to GitHub'); });
-            }
-
-            renderDestPhotoGrid(slug);
-            _dragSource = null;
-        }
-
-        function handleDestStripPick(event, idx) {
-            var slug = document.getElementById('edit-dest-slug-hidden').value;
-            var file = event.target.files[0];
-            if (!file) return;
-            var key = slug + '_strip_' + idx;
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var dataUrl = e.target.result;
-                localStorage.setItem('tnliv_img_' + key, dataUrl);
-                renderDestPhotoGrid(slug);
-                toast('Uploading strip photo ' + (idx + 1) + '...');
-                if (window.publishImage) {
-                    window.publishImage(key, dataUrl)
-                        .then(function () { toast('\u2705 Strip photo ' + (idx + 1) + ' live!'); });
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function openPickerDs(idx) {
-            var inp = document.getElementById('file-ds-' + idx);
-            if (inp) inp.click();
-        }
-
-        function handleDestGalleryPick(event, idx) {
-            var slug = document.getElementById('edit-dest-slug-hidden').value;
-            var file = event.target.files[0];
-            if (!file) return;
-            var key = slug + '_g_' + idx;
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var dataUrl = e.target.result;
-                localStorage.setItem('tnliv_img_' + key, dataUrl);
-                var zone = document.getElementById('zone-dg-' + idx);
-                if (zone) zone.innerHTML = '<img src="' + dataUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />';
-                toast('Uploading gallery photo ' + (idx + 1) + '...');
-                if (window.publishImage) {
-                    window.publishImage(key, dataUrl)
-                        .then(function () { toast('\u2705 Gallery photo ' + (idx + 1) + ' is now live!'); })
-                        .catch(function (err) { toast('Saved locally. ' + err.message, 'error'); });
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-
-
-        async function saveEditDest() {
-            var slug = document.getElementById('edit-dest-slug-hidden').value;
-            var list = await getDestinations(); // Fresh fetch
-            var idx = list.findIndex(function (d) { return d.slug === slug; });
-            if (idx < 0) { toast('Destination not found.', 'error'); return; }
-            list[idx].name = document.getElementById('edit-dest-name').value;
-            list[idx].dates = document.getElementById('edit-dest-dates').value;
-            list[idx].price = document.getElementById('edit-dest-price').value;
-            list[idx].badge = document.getElementById('edit-dest-badge').value;
-            list[idx].tagline = document.getElementById('edit-dest-tagline').value;
-            list[idx].teaserDesc = document.getElementById('edit-dest-teaser').value;
-            list[idx].url = document.getElementById('edit-dest-url').value;
-            list[idx].squadtrip = document.getElementById('edit-dest-squadtrip').value;
-            list[idx].description = document.getElementById('edit-dest-desc').value;
-            list[idx].status = document.getElementById('edit-dest-status').value;
-            list[idx].days = getItinData();
-            list[idx].includes = getIncludesData();
-            list[idx].rooms = getRoomsData();
-
-            toast('💾 Saving to Supabase...');
-            await saveDestinations(list);
-            renderDestList();
-            closeEditDest();
-            toast('✓ "' + list[idx].name + '" — all changes saved and live!');
-        }
-
-        function deleteDest(idx) {
-            var list = getDestinations();
-            var d = list[idx];
-            if (!d) return;
-            if (!confirm('Delete "' + d.name + '"? This removes it from admin and the nav dropdown. The .html page stays live but will not appear in the dropdown.')) return;
-            list.splice(idx, 1);
-            saveDestinations(list);
-            localStorage.removeItem('DEST_' + d.slug);
-            renderDestList();
-            toast('"' + d.name + '" removed from destinations.');
-        }
-
-        // Hook into showPanel to render destinations list when opened
-        var _origShowPanel = showPanel;
-        showPanel = function (id) {
-            _origShowPanel(id);
-            if (id === 'destinations') renderDestList();
-            if (id === 'about') { loadAboutFields(); renderPastTripsAdmin(); renderAutoArchiveCandidates(); }
-            if (id === 'gallery') renderGalleryAdmin();
-        };
-
-        // ============================================================
-        // ABOUT PAGE ADMIN
-        // ============================================================
-
-        // ── Inject the About panel HTML into <main> ──────────────────
-        (function injectAboutPanel() {
-            var main = document.querySelector('.admin-main');
-            if (!main) return;
-            var div = document.createElement('div');
-            div.className = 'admin-panel';
-            div.id = 'panel-about';
-            div.innerHTML = `
-
-<!-- ── SECTION: FOUNDER BIO ── -->
-<div class="panel-section">
-  <div class="panel-section-header">
-    <div class="panel-section-icon">✍️</div>
-    <div>
-      <div class="panel-section-title">Founder Bio (About Page)</div>
-      <div class="panel-section-desc">Edit Olivia's story — each paragraph is editable separately</div>
-    </div>
-  </div>
-  <div class="form-group" style="margin-bottom:20px;">
-    <label>Founder Photo</label>
-    <div class="img-upload-zone" id="zone-founder_photo" onclick="openPicker('founder_photo')" 
-         style="min-height:120px; max-width:200px;"
-         ondragover="event.preventDefault();this.classList.add('drag-over')" 
-         ondragleave="this.classList.remove('drag-over')" 
-         ondrop="handleDrop(event,'founder_photo')">
-      <div class="img-upload-placeholder">
-        <span class="img-upload-icon">👤</span>
-        <span class="img-upload-text"><strong>Replace Photo</strong></span>
-      </div>
-    </div>
-    <input type="file" id="file-founder_photo" accept="image/*" style="display:none" onchange="handleFilePick(event,'founder_photo')" />
-  </div>
-  <div class="form-group">
-    <label>Founder Quote <small style="color:#888">(shown in the floating card on her photo)</small></label>
-    <input type="text" id="ab-quote" class="form-control" placeholder="You arrive as a stranger. You leave as a community." />
-  </div>
-  <div class="form-group">
-    <label>Paragraph 1</label>
-    <textarea id="ab-p1" class="form-control" rows="3"></textarea>
-  </div>
-  <div class="form-group">
-    <label>Paragraph 2</label>
-    <textarea id="ab-p2" class="form-control" rows="3"></textarea>
-  </div>
-  <div class="form-group">
-    <label>Paragraph 3</label>
-    <textarea id="ab-p3" class="form-control" rows="3"></textarea>
-  </div>
-  <div class="form-group">
-    <label>Paragraph 4</label>
-    <textarea id="ab-p4" class="form-control" rows="3"></textarea>
-  </div>
-  <div class="form-group">
-    <label>Paragraph 5 (Closing / Goal Statement)</label>
-    <textarea id="ab-p5" class="form-control" rows="2"></textarea>
-  </div>
-  <div style="margin-top:8px;"><button class="btn-admin-primary" onclick="saveBio()">💾 Save Bio</button></div>
-</div>
-
-<!-- ── SECTION: PAST TRIPS ── -->
-<div class="panel-section" style="margin-top:24px;">
-  <div class="panel-section-header">
-    <div class="panel-section-icon">🏁</div>
-    <div>
-      <div class="panel-section-title">Past Trips (About Page)</div>
-      <div class="panel-section-desc">Add, edit, or remove past trip cards shown in the "Where We've Been" section</div>
-    </div>
-  </div>
-
-  <div id="past-trips-admin-list" style="display:flex;flex-direction:column;gap:16px;margin-top:16px;"></div>
-
-  <!-- Add New Past Trip Form -->
-  <div style="margin-top:20px;">
-    <button class="btn-admin-primary" onclick="openAddPastTripForm()" id="add-past-trip-btn" style="display:flex;align-items:center;gap:8px;">➕ Add Past Trip</button>
-  </div>
-  <div id="add-past-trip-form" style="display:none;margin-top:20px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:24px;">
-    <h3 style="margin-bottom:16px;font-size:1rem;">New Past Trip</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      <div class="form-group"><label>Tag Label <small style="color:#888">(e.g. China)</small></label><input type="text" id="npt-label" class="form-control" placeholder="China" /></div>
-      <div class="form-group"><label>Card Title</label><input type="text" id="npt-title" class="form-control" placeholder="China 2026" /></div>
-      <div class="form-group"><label>Month / Year</label><input type="text" id="npt-month" class="form-control" placeholder="March 2026" /></div>
-      <div class="form-group"><label>Duration</label><input type="text" id="npt-duration" class="form-control" placeholder="14 Days" /></div>
-      <div class="form-group"><label>Traveler Count</label><input type="text" id="npt-travelers" class="form-control" placeholder="20+ Travelers" /></div>
-      <div class="form-group"><label>Video File <small style="color:#888">(filename in project, if any)</small></label><input type="text" id="npt-video" class="form-control" placeholder="worldstallestelevator.mp4" /></div>
-      <div class="form-group" style="grid-column:span 2;"><label>Description</label><textarea id="npt-desc" class="form-control" rows="3" placeholder="A description of the trip..."></textarea></div>
-    </div>
-    <div style="display:flex;gap:12px;margin-top:16px;">
-      <button class="btn-admin-primary" onclick="saveNewPastTrip()">✓ Add Past Trip</button>
-      <button class="btn-secondary" onclick="closeAddPastTripForm()">Cancel</button>
-    </div>
-  </div>
-
-  <!-- Edit Past Trip Form -->
-  <div id="edit-past-trip-form" style="display:none;margin-top:20px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:24px;">
-    <h3 style="margin-bottom:16px;font-size:1rem;">✏️ Edit Past Trip</h3>
-    <input type="hidden" id="ept-id" />
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      <div class="form-group"><label>Tag Label</label><input type="text" id="ept-label" class="form-control" /></div>
-      <div class="form-group"><label>Card Title</label><input type="text" id="ept-title" class="form-control" /></div>
-      <div class="form-group"><label>Month / Year</label><input type="text" id="ept-month" class="form-control" /></div>
-      <div class="form-group"><label>Duration</label><input type="text" id="ept-duration" class="form-control" /></div>
-      <div class="form-group"><label>Traveler Count</label><input type="text" id="ept-travelers" class="form-control" /></div>
-      <div class="form-group"><label>Video File <small style="color:#888">(filename, optional)</small></label><input type="text" id="ept-video" class="form-control" /></div>
-      <div class="form-group" style="grid-column:span 2;"><label>Description</label><textarea id="ept-desc" class="form-control" rows="3"></textarea></div>
-    </div>
-    <div style="display:flex;gap:12px;margin-top:16px;">
-      <button class="btn-admin-primary" onclick="saveEditPastTrip()">✓ Save Changes</button>
-      <button class="btn-secondary" onclick="closeEditPastTripForm()">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── SECTION: AUTO-ARCHIVE ── -->
-<div class="panel-section" style="margin-top:24px;">
-  <div class="panel-section-header">
-    <div class="panel-section-icon">🔄</div>
-    <div>
-      <div class="panel-section-title">Auto-Archive: Promote Upcoming → Past Trips</div>
-      <div class="panel-section-desc">Upcoming trips whose end date has passed will appear here. Promote them to the Past Trips section with one click — they'll show up on the About page automatically.</div>
-    </div>
-  </div>
-  <div id="auto-archive-candidates" style="margin-top:16px;"></div>
-</div>
-
-`;
-            main.appendChild(div);
-        })();
-
-        // ── Bio load/save ────────────────────────────────────────────
-        function loadAboutFields() {
-            var cfg = getSiteConfig();
-            var bio = cfg.aboutBio || TNLIV_DEFAULTS.aboutBio;
-            var set = function (id, val) { var el = document.getElementById(id); if (el) el.value = val || ''; };
-            set('ab-quote', bio.founderQuote);
-            set('ab-p1', bio.para1); set('ab-p2', bio.para2); set('ab-p3', bio.para3);
-            set('ab-p4', bio.para4); set('ab-p5', bio.para5);
-            restoreZone('founder_photo');
-        }
-        async function saveBio() {
-            var cfg = await window.getSiteConfig();
-            var get = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
-            cfg.aboutBio = {
-                founderQuote: get('ab-quote'),
-                para1: get('ab-p1'), para2: get('ab-p2'), para3: get('ab-p3'),
-                para4: get('ab-p4'), para5: get('ab-p5'),
-            };
-            toast('💾 Saving Bio...');
-            await saveSiteConfig(cfg);
-            toast('✓ Bio saved! Reload the About page to see the update.');
-        }
-
-        // ── Past Trips helpers ───────────────────────────────────────
-        function getPastTrips() {
-            var cfg = getSiteConfig();
-            return Array.isArray(cfg.pastTrips) ? cfg.pastTrips : JSON.parse(JSON.stringify(TNLIV_DEFAULTS.pastTrips));
-        }
-        function savePastTrips(list) {
-            var cfg = getSiteConfig();
-            cfg.pastTrips = list;
-            saveSiteConfig(cfg);
-        }
-
-        function renderPastTripsAdmin() {
-            var el = document.getElementById('past-trips-admin-list');
-            if (!el) return;
-            var list = getPastTrips();
-            if (!list.length) {
-                el.innerHTML = '<p style="color:#888;font-style:italic;">No past trips yet. Add one below or promote an upcoming trip.</p>';
-                return;
-            }
-            el.innerHTML = list.map(function (t, i) {
-                '<div style="font-size:1.8rem;">🏁</div>' +
-                    '<div style="flex:1;min-width:200px;">' +
-                    '<div style="font-weight:700;font-size:1rem;">' + (t.title || 'Untitled') + '</div>' +
-                    '<div style="font-size:0.8rem;color:#888;margin-top:2px;">' + (t.monthYear || '') + ' · ' + (t.duration || '') + ' · ' + (t.travelerCount || '') + '</div>' +
-                    '<div style="font-size:0.78rem;color:#aaa;margin-top:6px;max-width:440px;">' + (t.description || '').slice(0, 120) + (t.description && t.description.length > 120 ? '…' : '') + '</div>' +
-                    (t.autoArchived ? '<div style="font-size:0.72rem;color:#8FBF9F;margin-top:4px;">⚡ Auto-archived from upcoming trips</div>' : '') +
-                    '</div>' +
-                    '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-                    '<button onclick="openEditPastTripForm(' + i + ')" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">✏️ Edit</button>' +
-                    '<button onclick="deletePastTrip(' + i + ')" style="background:#c0392b;border:none;border-radius:8px;color:#fff;padding:8px 14px;font-size:0.8rem;cursor:pointer;">🗑️ Delete</button>' +
-                    '</div></div>';
-            }).join('');
-        }
-
-        // ── Add past trip ────────────────────────────────────────────
-        function openAddPastTripForm() {
-            document.getElementById('add-past-trip-form').style.display = 'block';
-            document.getElementById('add-past-trip-btn').style.display = 'none';
-            closeEditPastTripForm();
-        }
-        function closeAddPastTripForm() {
-            document.getElementById('add-past-trip-form').style.display = 'none';
-            document.getElementById('add-past-trip-btn').style.display = 'flex';
-            ['npt-label', 'npt-title', 'npt-month', 'npt-duration', 'npt-travelers', 'npt-video', 'npt-desc'].forEach(function (id) { var el = document.getElementById(id); if (el) el.value = ''; });
-        }
-        function saveNewPastTrip() {
-            var title = (document.getElementById('npt-title').value || '').trim();
-            if (!title) { toast('Title is required.', 'error'); return; }
-            var list = getPastTrips();
-            list.push({
-                id: 'pt-' + Date.now(),
-                label: (document.getElementById('npt-label').value || '').trim() || title,
-                title: title,
-                description: (document.getElementById('npt-desc').value || '').trim(),
-                monthYear: (document.getElementById('npt-month').value || '').trim(),
-                duration: (document.getElementById('npt-duration').value || '').trim(),
-                travelerCount: (document.getElementById('npt-travelers').value || '').trim(),
-                videoSrc: (document.getElementById('npt-video').value || '').trim(),
-                heroImage: '',
-                autoArchived: false,
-                sourceSlug: '',
-            });
-            savePastTrips(list);
-            renderPastTripsAdmin();
-            renderAutoArchiveCandidates();
-            closeAddPastTripForm();
-            toast('✓ Past trip added! Reload the About page to see it.');
-        }
-
-        // ── Edit past trip ───────────────────────────────────────────
-        function openEditPastTripForm(idx) {
-            var list = getPastTrips();
-            var t = list[idx];
-            if (!t) return;
-            closeAddPastTripForm();
-            document.getElementById('ept-id').value = t.id;
-            var set = function (id, val) { var el = document.getElementById(id); if (el) el.value = val || ''; };
-            set('ept-label', t.label); set('ept-title', t.title);
-            set('ept-month', t.monthYear); set('ept-duration', t.duration);
-            set('ept-travelers', t.travelerCount); set('ept-video', t.videoSrc);
-            set('ept-desc', t.description);
-            document.getElementById('edit-past-trip-form').style.display = 'block';
-            setTimeout(function () { document.getElementById('edit-past-trip-form').scrollIntoView({ behavior: 'smooth' }); }, 80);
-        }
-        function closeEditPastTripForm() {
-            var f = document.getElementById('edit-past-trip-form');
-            if (f) f.style.display = 'none';
-        }
-        function saveEditPastTrip() {
-            var id = (document.getElementById('ept-id').value || '').trim();
-            var list = getPastTrips();
-            var idx = list.findIndex(function (t) { return t.id === id; });
-            if (idx < 0) { toast('Trip not found.', 'error'); return; }
-            var get = function (eid) { var el = document.getElementById(eid); return el ? el.value.trim() : ''; };
-            list[idx].label = get('ept-label');
-            list[idx].title = get('ept-title');
-            list[idx].monthYear = get('ept-month');
-            list[idx].duration = get('ept-duration');
-            list[idx].travelerCount = get('ept-travelers');
-            list[idx].videoSrc = get('ept-video');
-            list[idx].description = get('ept-desc');
-            savePastTrips(list);
-            renderPastTripsAdmin();
-            closeEditPastTripForm();
-            toast('✓ Past trip updated! Reload the About page to see it.');
-        }
-        function deletePastTrip(idx) {
-            var list = getPastTrips();
-            var t = list[idx];
-            if (!t) return;
-            if (!confirm('Delete "' + t.title + '" from past trips?')) return;
-            list.splice(idx, 1);
-            savePastTrips(list);
-            renderPastTripsAdmin();
-            toast('"' + t.title + '" removed from past trips.');
-        }
-
-        // ── Auto-Archive: eligible upcoming trips ────────────────────
-        function renderAutoArchiveCandidates() {
-            var el = document.getElementById('auto-archive-candidates');
-            if (!el) return;
-            var dests = getDestinations();
-            var pastTrips = getPastTrips();
-            var pastSlugs = pastTrips.map(function (t) { return t.sourceSlug; }).filter(Boolean);
-            var today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            // A destination may be manually archived (status 'concluded') or its dates may have passed
-            var candidates = dests.filter(function (d) {
-                if (pastSlugs.indexOf(d.slug) >= 0) return false; // already archived
-                // Check status first — concluded is always a candidate
-                if (d.status === 'concluded') return true;
-                // Try to parse end date from dates string
-                var endDate = parseEndDate(d.dates);
-                if (endDate && endDate < today) return true;
-                return false;
-            });
-
-            if (!candidates.length) {
-                el.innerHTML = '<p style="color:#888;font-style:italic;">No concluded or past-date upcoming trips found. When a trip\'s end date passes, it will appear here automatically.</p>';
-                return;
-            }
-            el.innerHTML = '<p style="font-size:0.82rem;color:#888;margin-bottom:16px;">The trips below have either been marked as <strong style="color:#e8a838;">Concluded</strong> or their dates have passed. Promote them to Past Trips with one click.</p>' +
-                candidates.map(function (d) {
-                    '<div style="font-size:1.6rem;">' + (d.emoji || '✈️') + '</div>' +
-                        '<div style="flex:1;min-width:180px;">' +
-                        '<div style="font-weight:700;">' + d.name + '</div>' +
-                        '<div style="font-size:0.8rem;color:#888;margin-top:2px;">' + d.dates + '</div>' +
-                        '<div style="font-size:0.72rem;color:#e8a838;margin-top:4px;">' + (d.status === 'concluded' ? '🏁 Marked as Concluded' : '⏰ Dates have passed') + '</div>' +
-                        '</div>' +
-                        '<button onclick="promoteToParst(\'' + d.slug + '\')" class="btn-admin-primary" style="font-size:0.82rem;padding:10px 18px;">▶ Promote to Past Trips</button>' +
-                        '</div>';
-                }).join('');
-        }
-
-        // Parse the end date from a dates string like "July 30 – Aug 5, 2026" or "March 2026"
-        function parseEndDate(datesStr) {
-            if (!datesStr || datesStr === 'TBA') return null;
-            try {
-                // Try to get the last date mentioned (right side of range, or only date)
-                var s = datesStr.replace(/\u2013|\u2014/g, '-').split('-').pop().trim();
-                // If it's just "Month Year" like "October 2026"
-                var d = new Date(s);
-                if (!isNaN(d)) return d;
-                // Try prepending the year from datesStr
-                var yearMatch = datesStr.match(/(\d{4})/);
-                if (yearMatch) { d = new Date(s + ' ' + yearMatch[1]); if (!isNaN(d)) return d; }
-            } catch (e) { }
-            return null;
-        }
-
-        function promoteToParst(slug) {
-            var dests = getDestinations();
-            var d = dests.find(function (x) { return x.slug === slug; });
-            if (!d) { toast('Destination not found.', 'error'); return; }
-            var list = getPastTrips();
-            // Prevent duplicate
-            if (list.find(function (t) { return t.sourceSlug === slug; })) {
-                toast('This trip is already in past trips!', 'error'); return;
-            }
-            var newPast = {
-                id: 'pt-' + slug + '-' + Date.now(),
-                label: d.emoji ? d.emoji + ' ' + (d.name.split(',')[0]) : d.name.split(',')[0],
-                title: d.name.split(',')[0] + ' ' + (d.dates.match(/(\d{4})/) ? d.dates.match(/(\d{4})/)[1] : ''),
-                description: d.teaserDesc || d.tagline || '',
-                monthYear: d.dates,
-                duration: d.duration || '',
-                travelerCount: '',
-                videoSrc: '',
-                heroImage: d.image || '',
-                autoArchived: true,
-                sourceSlug: slug,
-            };
-            list.push(newPast);
-            savePastTrips(list);
-            // Optionally mark source as concluded
-            var dIdx = dests.findIndex(function (x) { return x.slug === slug; });
-            if (dIdx >= 0 && dests[dIdx].status !== 'concluded') {
-                dests[dIdx].status = 'concluded';
-                saveDestinations(dests);
-            }
-            renderPastTripsAdmin();
-            renderAutoArchiveCandidates();
-            toast('✓ "' + d.name + '" promoted to Past Trips! Edit it to add duration, traveler count, and full description.');
+        function editTrip(idx) {
+            toast("Edit form coming in next patch! Currently managing global settings.");
         }
 
         // ── INIT ──────────────────────────────────────────────────────
         checkLogin();
+
+        function checkLogin() {
+            if (localStorage.getItem("tnliv_authed") === "1") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-app').style.display = 'block';
+                const last = localStorage.getItem('LAST_TAB') || 'panel-home';
+                switchTab(last);
+            }
+        }
+
+        function v(id, val) {
+            const el = document.getElementById(id);
+            if (el) el.value = val || "";
+        }
+
+        function toast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.transform = 'translateY(0)';
+            t.style.opacity = '1';
+            setTimeout(() => { t.style.transform = 'translateY(100px)'; t.style.opacity = '0'; }, 3000);
+        }
+
+        async function saveAll() {
+            const cfg = getSiteConfig();
+
+            cfg.hero.eyebrow = document.getElementById('hero-eyebrow-val').value;
+            cfg.hero.heading = document.getElementById('hero-heading-val').value;
+            cfg.hero.headingItalic = document.getElementById('hero-heading-italic-val').value;
+            cfg.hero.subtitle = document.getElementById('hero-subtitle-val').value;
+
+            cfg.ticker = document.getElementById('ticker-items-val').value.split('\n').filter(x => x.trim());
+
+            cfg.nextTrip.badge = document.getElementById('nt-badge').value;
+            cfg.nextTrip.destination = document.getElementById('nt-destination').value;
+            cfg.nextTrip.squadtripUrl = document.getElementById('nt-squadtrip-url').value;
+
+            cfg.marketing = {
+                metaId: document.getElementById('px-meta').value,
+                tiktokId: document.getElementById('px-tiktok').value,
+                gtmId: document.getElementById('px-gtm').value
+            };
+
+            saveSiteConfig(cfg);
+            toast("✅ Changes saved locally.");
+
+            // Push to Supabase if possible
+            if (window.supabaseClient) {
+                try {
+                    await supabaseClient.from('site_config').upsert({ section_key: 'global', data: cfg });
+                    toast("✅ Sync complete!");
+                } catch (e) { console.error(e); }
+            }
+        }
+
+        window.onload = () => {
+            // Auto-focus password
+            document.getElementById('login-password').focus();
+        };
+
+        // Allow Enter key to login
+        document.getElementById('login-password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleLogin();
+        });
     </script>
 </body>
 

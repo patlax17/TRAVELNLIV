@@ -1068,3 +1068,15 @@ select.form-control {
 .admin-panel.active {
     display: block !important;
 }
+
+/* ── NUCLEAR SHOW-SECTION BYPASS ────────────────────────── */
+.management-container {
+    display: none;
+}
+.show-section {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    height: auto !important;
+    width: 100% !important;
+}
