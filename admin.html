@@ -1074,92 +1074,91 @@
                 </div>
             </div><!-- end panel-events -->
 
-            <!-- ========== PANEL: FAQs ========== -->
-            <div class="admin-panel" id="panel-faqs">
-                <div class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">❓</div>
-                        <div>
-                            <div class="panel-section-title">FAQ Management</div>
-                            <div class="panel-section-desc">Add, edit, or remove questions in each category</div>
+            <!-- ── GALLERY PANEL ── -->
+            <div id="panel-gallery" class="admin-panel">
+                <div class="management-container">
+                    <div class="panel-header">
+                        <div class="panel-header-info">
+                            <div class="panel-icon"><img
+                                    src="https://api.iconify.design/material-symbols:images-outline.svg?color=%23cca471"
+                                    width="24"></div>
+                            <div>
+                                <h2>Gallery Management</h2>
+                                <p>Curate your high-res community photos and China trip memories.</p>
+                            </div>
                         </div>
                     </div>
-                    <div id="faq-editor"></div>
-                </div>
-            </div>
 
-            <!-- ========== PANEL: GALLERY ========== -->
-            <div class="admin-panel" id="panel-gallery">
-
-                <!-- Stats -->
-                <div class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">📊</div>
-                        <div>
-                            <div class="panel-section-title">Gallery Stats</div>
-                            <div class="panel-section-desc">Numbers shown in the gallery hero section</div>
+                    <!-- Stats -->
+                    <div class="panel-section">
+                        <div class="panel-section-header">
+                            <div class="panel-section-icon">📊</div>
+                            <div>
+                                <div class="panel-section-title">Gallery Stats</div>
+                                <div class="panel-section-desc">Numbers shown in the gallery hero section</div>
+                            </div>
+                        </div>
+                        <div class="form-row triple">
+                            <div class="form-group">
+                                <label>Total Photo Count</label>
+                                <input type="number" id="gallery-photos" class="form-control" placeholder="50" />
+                            </div>
+                            <div class="form-group">
+                                <label>Destinations Featured</label>
+                                <input type="number" id="gallery-dests" class="form-control" placeholder="2" />
+                            </div>
+                            <div class="form-group">
+                                <label>Trips Documented</label>
+                                <input type="number" id="gallery-trips" class="form-control" placeholder="1" />
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row triple">
-                        <div class="form-group">
-                            <label>Total Photo Count</label>
-                            <input type="number" id="gallery-photos" class="form-control" placeholder="50" />
-                        </div>
-                        <div class="form-group">
-                            <label>Destinations Featured</label>
-                            <input type="number" id="gallery-dests" class="form-control" placeholder="2" />
-                        </div>
-                        <div class="form-group">
-                            <label>Trips Documented</label>
-                            <input type="number" id="gallery-trips" class="form-control" placeholder="1" />
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Add New Photo -->
-                <div class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">➕</div>
-                        <div>
-                            <div class="panel-section-title">Add New Gallery Photo</div>
-                            <div class="panel-section-desc">Keep your high-res community photos fresh.</div>
+                    <!-- Add New Photo -->
+                    <div class="panel-section">
+                        <div class="panel-section-header">
+                            <div class="panel-section-icon">➕</div>
+                            <div>
+                                <div class="panel-section-title">Add New Gallery Photo</div>
+                                <div class="panel-section-desc">Keep your high-res community photos fresh.</div>
+                            </div>
+                        </div>
+
+                        <div
+                            style="display:flex; gap:12px; align-items:center; margin-bottom:20px; background:var(--dark-3); padding:16px; border-radius:10px; border:1px solid var(--border);">
+                            <div class="form-group" style="margin:0; flex:1;">
+                                <label>Gallery Category</label>
+                                <select id="new-gallery-cat" class="form-control">
+                                    <option value="community">Community</option>
+                                    <option value="events">Events</option>
+                                    <option value="travel">Travel</option>
+                                </select>
+                            </div>
+                            <div style="flex:1;">
+                                <label class="btn-admin-primary"
+                                    style="display:flex; justify-content:center; cursor:pointer;">
+                                    📸 Select & Upload
+                                    <input type="file" accept="image/*" style="display:none;"
+                                        onchange="addGalleryPhoto(event)" />
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="gallery-add-list" class="gallery-admin-grid">
+                            <!-- Pending/Existing uploads rendered here by renderGalleryAdmin() -->
                         </div>
                     </div>
 
                     <div
-                        style="display:flex; gap:12px; align-items:center; margin-bottom:20px; background:var(--dark-3); padding:16px; border-radius:10px; border:1px solid var(--border);">
-                        <div class="form-group" style="margin:0; flex:1;">
-                            <label>Gallery Category</label>
-                            <select id="new-gallery-cat" class="form-control">
-                                <option value="community">Community</option>
-                                <option value="events">Events</option>
-                                <option value="travel">Travel</option>
-                            </select>
-                        </div>
-                        <div style="flex:1;">
-                            <label class="btn-admin-primary"
-                                style="display:flex; justify-content:center; cursor:pointer;">
-                                📸 Select & Upload
-                                <input type="file" accept="image/*" style="display:none;"
-                                    onchange="addGalleryPhoto(event)" />
-                            </label>
-                        </div>
+                        style="background:var(--dark-3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:20px;">
+                        <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.7;">
+                            <strong style="color:var(--gold)">📌 Note:</strong> Photos added here are stored in your
+                            browser's localStorage and appear in the gallery on reload.
+                            For permanent storage across all devices, also commit the image files to the project and add
+                            a matching <code style="color:var(--gold)">&lt;div class="gallery-card"&gt;</code> block in
+                            <code style="color:var(--gold)">gallery.html</code>.
+                        </p>
                     </div>
-
-                    <div id="gallery-add-list" class="gallery-admin-grid">
-                        <!-- Pending/Existing uploads rendered here by renderGalleryAdmin() -->
-                    </div>
-                </div>
-
-                <div
-                    style="background:var(--dark-3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:20px;">
-                    <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.7;">
-                        <strong style="color:var(--gold)">📌 Note:</strong> Photos added here are stored in your
-                        browser's localStorage and appear in the gallery on reload.
-                        For permanent storage across all devices, also commit the image files to the project and add
-                        a matching <code style="color:var(--gold)">&lt;div class="gallery-card"&gt;</code> block in
-                        <code style="color:var(--gold)">gallery.html</code>.
-                    </p>
                 </div>
             </div>
 
@@ -1359,15 +1358,18 @@
     </div>
 
 
-    <!-- ========== PANEL: DESTINATIONS ========== -->
-    <div class="admin-panel" id="panel-destinations">
-        <div class="panel-section">
-            <div class="panel-section-header">
-                <div class="panel-section-icon">🗺️</div>
-                <div>
-                    <div class="panel-section-title">Destination Pages</div>
-                    <div class="panel-section-desc">Manage individual trip pages — edit info, mark as coming
-                        soon or booking open, delete concluded trips, and add brand new destinations.</div>
+    <!-- ── DESTINATIONS PANEL ── -->
+    <div id="panel-destinations" class="admin-panel active">
+        <div class="management-container">
+            <div class="panel-header">
+                <div class="panel-header-info">
+                    <div class="panel-icon"><img
+                            src="https://api.iconify.design/material-symbols:map-outline.svg?color=%23cca471"
+                            width="24"></div>
+                    <div>
+                        <h2>Destination Pages</h2>
+                        <p>Manage individual trip pages — edit info, mark as coming soon or booking open.</p>
+                    </div>
                 </div>
             </div>
 
