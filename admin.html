@@ -55,7 +55,7 @@
                 <button class="sidebar-link" onclick="showPanel('about')" id="nav-about">
                     <span class="sl-icon">📖</span><span>About Page</span>
                 </button>
-                <button class="sidebar-link" onclick="showPanel(\'gallery\')" id="nav-gallery">
+                <button class="sidebar-link" onclick="showPanel('gallery')" id="nav-gallery">
                     <span class="sl-icon">📸</span><span>Gallery</span>
                 </button>
                 <button class="sidebar-link" onclick="showPanel('social')" id="nav-social">
@@ -1360,8 +1360,11 @@
 
                     <!-- Add New Button -->
                     <div style="margin-top:24px;">
-                        <button class="btn-admin-primary" onclick="openAddDestForm()" id="add-dest-btn" style="display:flex;align-items:center;gap:8px;">➕ Add New Destination</button>
-                        <button class="btn-secondary" onclick="toggleDestReorder()" id="reorder-dest-btn" style="margin-top:12px;display:flex;align-items:center;gap:8px;">⇅ Rearrange Trip Order</button>
+                        <button class="btn-admin-primary" onclick="openAddDestForm()" id="add-dest-btn"
+                            style="display:flex;align-items:center;gap:8px;">➕ Add New Destination</button>
+                        <button class="btn-secondary" onclick="toggleDestReorder()" id="reorder-dest-btn"
+                            style="margin-top:12px;display:flex;align-items:center;gap:8px;">⇅ Rearrange Trip
+                            Order</button>
                     </div>
 
                     <!-- Add New Form (hidden by default) -->
@@ -1572,13 +1575,16 @@
                             📷 Gallery Photos <span style="font-weight:400;color:#666;">— the photo grid on the trip
                                 page (click any slot to replace)</span>
                         </label>
-                        
+
                         <!-- Photo Strip Management (upcoming.html expander) -->
                         <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-color,#2a2a2a);">
-                            <label style="display:block;font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;margin-bottom:10px;">
-                                🎞️ Photo Strip <span style="font-weight:400;color:#666;">— the 5 photos in the upcoming.html expanded view (drag to rearrange)</span>
+                            <label
+                                style="display:block;font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;margin-bottom:10px;">
+                                🎞️ Photo Strip <span style="font-weight:400;color:#666;">— the 5 photos in the
+                                    upcoming.html expanded view (drag to rearrange)</span>
                             </label>
-                            <div id="dest-strip-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+                            <div id="dest-strip-grid"
+                                style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
                                 <!-- Populated by renderDestPhotoGrid() -->
                             </div>
                         </div>
@@ -1611,6 +1617,7 @@
     <!-- Toast -->
     <div id="toast"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="site-config.js"></script>
     <script src="publisher.js"></script>
     <script>
@@ -1618,6 +1625,10 @@
         // ============================================================
         // ADMIN PANEL — CORE LOGIC
         // ============================================================
+
+        const SUPABASE_URL = "https://ziejdpdrhpxqxrhkwpew.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_raXNn8hTDaSHzkSeD1R3SQ_0EPZzUPX";
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         const DEFAULT_PASS_KEY = "tnliv_admin_pass";
         const DEFAULT_PASS = "travelnliv2026";
@@ -1673,15 +1684,51 @@
             if (e.key === "Enter") handleLogin();
         });
 
-        function showApp() {
+        async function showApp() {
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("admin-app").style.display = "flex";
+
+            // ─── SUPABASE SYNC BRIDGE ───
+            toast('🔄 Syncing with Supabase...');
+            const config = await window.getSiteConfig();
+            const dests = await window.getDestinations();
+            const images = await window.fetchSiteData();
+
+            // Populate localStorage so existing logic works
+            localStorage.setItem('tnliv_config', JSON.stringify(config));
+            localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(dests));
+            if (images) localStorage.setItem('tnliv_images', JSON.stringify(images.images));
+
             loadAllFields();
             loadMarketingFields();
             renderPastEventPhotoGrid();
-            addGallerySlot(); // start with one empty slot
+            addGallerySlot();
             populateFeaturedTripSelect();
-            loadGhStatusPanel(); // check GitHub publish connection
+            renderDestList();
+            loadAboutFields();
+            renderPastTripsAdmin();
+            renderAutoArchiveCandidates();
+
+            toast('✅ Live Database Connected');
+        }
+
+        /**
+         * saveSiteConfig: Overridden to push to Supabase
+         */
+        async function saveSiteConfig(cfg) {
+            localStorage.setItem('tnliv_config', JSON.stringify(cfg));
+            const client = supabaseClient;
+
+            // Push each section to Supabase
+            const sections = ['hero', 'ticker', 'identity', 'socialProof', 'howItWorks', 'whyUs', 'finalCta', 'social', 'navCta', 'nextTrip', 'pastEvent', 'event', 'gallery', 'aboutBio', 'marketing'];
+
+            for (const s of sections) {
+                if (cfg[s]) {
+                    await client.from('site_config').upsert({ section_key: s, data: cfg[s], updated_at: new Date() });
+                }
+            }
+
+            if (window.publishConfig) window.publishConfig(cfg); // Fallback to GitHub
         }
 
 
@@ -2461,14 +2508,70 @@
         })();
 
 
-        function saveDestinations(list) {
+        async function saveDestinations(list) {
             localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(list));
-            // Also write individual DEST_ keys so trip pages always have fresh data
-            list.forEach(function (d) { localStorage.setItem('DEST_' + d.slug, JSON.stringify(d)); });
-            // also save individual DEST_ keys so trip pages can read them
-            list.forEach(function (d) {
-                localStorage.setItem('DEST_' + d.slug, JSON.stringify(d));
-            });
+            const client = supabaseClient;
+
+            for (const d of list) {
+                // 1. Destination
+                await client.from('destinations').upsert({
+                    slug: d.slug,
+                    name: d.name,
+                    emoji: d.emoji || '✈️',
+                    url: d.url,
+                    status: d.status,
+                    dates: d.dates,
+                    price: d.price,
+                    badge: d.badge,
+                    tagline: d.tagline,
+                    teaser_desc: d.teaserDesc,
+                    description: d.description,
+                    squadtrip_link: d.squadtrip,
+                    updated_at: new Date()
+                });
+
+                // 2. Itinerary (Delete first to ensure clean state or use upsert if IDs present)
+                if (d.days) {
+                    await client.from('itineraries').delete().eq('destination_slug', d.slug);
+                    const days = d.days.map((day, i) => ({
+                        destination_slug: d.slug,
+                        day_number: i + 1,
+                        title: day.title,
+                        body: day.body,
+                        highlights: day.highlights
+                    }));
+                    await client.from('itineraries').insert(days);
+                }
+
+                // 3. Includes
+                if (d.includes) {
+                    await client.from('includes').delete().eq('destination_slug', d.slug);
+                    const incs = d.includes.map((inc, i) => ({
+                        destination_slug: d.slug,
+                        icon: inc.icon,
+                        title: inc.title,
+                        description: inc.desc,
+                        order_index: i
+                    }));
+                    await client.from('includes').insert(incs);
+                }
+
+                // 4. Rooms
+                if (d.rooms) {
+                    await client.from('rooms').delete().eq('destination_slug', d.slug);
+                    const rooms = d.rooms.map((r, i) => ({
+                        destination_slug: d.slug,
+                        title: r.title,
+                        price: r.price,
+                        deposit_note: r.deposit,
+                        badge: r.badge,
+                        order_index: i
+                    }));
+                    await client.from('rooms').insert(rooms);
+                }
+            }
+
+            if (window.publishDestinations) window.publishDestinations(list); // Fallback
         }
 
         var STATUS_LABELS = {
@@ -2478,68 +2581,68 @@
             concluded: '🏁 Concluded'
         };
 
-  
-         var _isReordering = false;
-         function toggleDestReorder() {
-             _isReordering = !_isReordering;
-             var btn = document.getElementById('reorder-dest-btn');
-             btn.textContent = _isReordering ? '✓ Finish Rearranging' : '⇅ Rearrange Trip Order';
-             btn.className = _isReordering ? 'btn-admin-primary' : 'btn-secondary';
-             renderDestList();
-         }
 
-         function moveDest(index, direction) {
-             var list = getDestinations();
-             if (direction === 'up' && index > 0) {
-                 var temp = list[index];
-                 list[index] = list[index - 1];
-                 list[index - 1] = temp;
-             } else if (direction === 'down' && index < list.length - 1) {
-                 var temp = list[index];
-                 list[index] = list[index + 1];
-                 list[index + 1] = temp;
-             }
-             saveDestinations(list);
-             renderDestList();
-         }
+        var _isReordering = false;
+        function toggleDestReorder() {
+            _isReordering = !_isReordering;
+            var btn = document.getElementById('reorder-dest-btn');
+            btn.textContent = _isReordering ? '✓ Finish Rearranging' : '⇅ Rearrange Trip Order';
+            btn.className = _isReordering ? 'btn-admin-primary' : 'btn-secondary';
+            renderDestList();
+        }
 
-         function renderDestList() {
-             var list = getDestinations();
-             var el = document.getElementById('dest-list');
-             if (!el) return;
-             if (!list.length) {
-                 el.innerHTML = '<p style="color:#888;font-style:italic;">No destinations yet. Add one below.</p>';
-                 return;
-             }
-             var html = '';
-             list.forEach(function(d, i) {
-                 var statusColor = d.status === 'booking_open' ? '#4caf72' : d.status === 'concluded' ? '#888' : '#e8a838';
-                 html += '<div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">';
-                 
-                 if (_isReordering) {
-                     html += '<div style="display:flex;flex-direction:column;gap:4px;margin-right:12px;">' +
-                             '<button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'up\')">▲</button>' +
-                             '<button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'down\')">▼</button>' +
-                             '</div>';
-                 }
-                 
-                 html += '<div style="font-size:2rem;">' + (d.emoji || '✈️') + '</div>' +
-                         '<div style="flex:1;min-width:200px;">' +
-                         '<div style="font-weight:700;font-size:1rem;">' + d.name + '</div>' +
-                         '<div style="font-size:0.8rem;color:#888;margin-top:2px;">' + d.dates + ' · ' + d.price + '</div>' +
-                         '<div style="display:inline-block;margin-top:6px;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:' + statusColor + '20;color:' + statusColor + ';border:1px solid ' + statusColor + '40;">' + (STATUS_LABELS[d.status] || d.status) + '</div>' +
-                         '</div>' +
-                         '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-                         '<a href="' + (d.url || ('/upcomingtrips/' + d.slug)) + '" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">🗺️ View Page</a>' +
-                         '<button onclick="openEditDest(' + i + ')" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">✏️ Edit</button>' +
-                         '<button onclick="deleteDest(' + i + ')" style="background:#c0392b;border:none;border-radius:8px;color:#fff;padding:8px 14px;font-size:0.8rem;cursor:pointer;">🗑️ Delete</button>' +
-                         '</div>' +
-                         '</div>';
-             });
-             el.innerHTML = html;
-         }
+        function moveDest(index, direction) {
+            var list = getDestinations();
+            if (direction === 'up' && index > 0) {
+                var temp = list[index];
+                list[index] = list[index - 1];
+                list[index - 1] = temp;
+            } else if (direction === 'down' && index < list.length - 1) {
+                var temp = list[index];
+                list[index] = list[index + 1];
+                list[index + 1] = temp;
+            }
+            saveDestinations(list);
+            renderDestList();
+        }
 
-         function openAddDestForm() {
+        function renderDestList() {
+            var list = getDestinations();
+            var el = document.getElementById('dest-list');
+            if (!el) return;
+            if (!list.length) {
+                el.innerHTML = '<p style="color:#888;font-style:italic;">No destinations yet. Add one below.</p>';
+                return;
+            }
+            var html = '';
+            list.forEach(function (d, i) {
+                var statusColor = d.status === 'booking_open' ? '#4caf72' : d.status === 'concluded' ? '#888' : '#e8a838';
+                html += '<div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">';
+
+                if (_isReordering) {
+                    html += '<div style="display:flex;flex-direction:column;gap:4px;margin-right:12px;">' +
+                        '<button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'up\')">▲</button>' +
+                        '<button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'down\')">▼</button>' +
+                        '</div>';
+                }
+
+                html += '<div style="font-size:2rem;">' + (d.emoji || '✈️') + '</div>' +
+                    '<div style="flex:1;min-width:200px;">' +
+                    '<div style="font-weight:700;font-size:1rem;">' + d.name + '</div>' +
+                    '<div style="font-size:0.8rem;color:#888;margin-top:2px;">' + d.dates + ' · ' + d.price + '</div>' +
+                    '<div style="display:inline-block;margin-top:6px;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:' + statusColor + '20;color:' + statusColor + ';border:1px solid ' + statusColor + '40;">' + (STATUS_LABELS[d.status] || d.status) + '</div>' +
+                    '</div>' +
+                    '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+                    '<a href="' + (d.url || ('/upcomingtrips/' + d.slug)) + '" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">🗺️ View Page</a>' +
+                    '<button onclick="openEditDest(' + i + ')" class="btn-secondary" style="font-size:0.8rem;padding:8px 14px;">✏️ Edit</button>' +
+                    '<button onclick="deleteDest(' + i + ')" style="background:#c0392b;border:none;border-radius:8px;color:#fff;padding:8px 14px;font-size:0.8rem;cursor:pointer;">🗑️ Delete</button>' +
+                    '</div>' +
+                    '</div>';
+            });
+            el.innerHTML = html;
+        }
+
+        function openAddDestForm() {
             document.getElementById('add-dest-form').style.display = 'block';
             document.getElementById('add-dest-btn').style.display = 'none';
             closeEditDest();
@@ -2550,31 +2653,40 @@
             ['new-dest-name', 'new-dest-slug', 'new-dest-dates', 'new-dest-price', 'new-dest-tagline', 'new-dest-teaser', 'new-dest-emoji'].forEach(function (id) { var el = document.getElementById(id); if (el) el.value = ''; });
         }
 
-        function saveNewDest() {
+        async function saveNewDest() {
             var name = (document.getElementById('new-dest-name').value || '').trim();
-            var slug = (document.getElementById('new-dest-slug').value || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-            if (!name || !slug) { toast('Name and slug are required.', 'error'); return; }
-            var list = getDestinations();
-            if (list.find(function (d) { return d.slug === slug; })) { toast('A destination with that slug already exists.', 'error'); return; }
-            var status = document.getElementById('new-dest-status').value;
+            var slug = (document.getElementById('new-dest-slug').value || '').trim().toLowerCase().replace(/\s+/g, '-');
+
+            if (!name || !slug) { toast('Name and Slug are required.', 'error'); return; }
+
+            var list = await getDestinations();
+            if (list.find(function (d) { return d.slug === slug; })) {
+                toast('A destination with that slug already exists.', 'error'); return;
+            }
+
             var newDest = {
                 slug: slug,
                 name: name,
                 emoji: document.getElementById('new-dest-emoji').value || '✈️',
                 url: slug + '.html',
-                status: status,
+                status: document.getElementById('new-dest-status').value,
                 dates: document.getElementById('new-dest-dates').value || 'TBA',
                 price: document.getElementById('new-dest-price').value || 'TBA',
-                badge: status === 'booking_open' ? '🟢 Booking Open' : '✈️ Coming Soon — Details Dropping',
-                tagline: document.getElementById('new-dest-tagline').value || 'All trip information will be revealed soon.',
-                teaserDesc: document.getElementById('new-dest-teaser').value || 'The details are being finalized.',
-                squadtrip: ''
+                badge: '',
+                tagline: document.getElementById('new-dest-tagline').value || '',
+                teaserDesc: document.getElementById('new-dest-teaser').value || '',
+                description: '',
+                squadtrip: '',
+                days: [],
+                includes: [],
+                rooms: []
             };
+
             list.push(newDest);
-            saveDestinations(list);
+            await saveDestinations(list);
             renderDestList();
             closeAddDestForm();
-            toast('✓ Destination "' + name + '" created! Update the page URL and Squadtrip link in Edit.');
+            toast('✓ "' + name + '" created successfully!');
         }
 
         /* ── ITINERARY EDITOR HELPERS ── */
@@ -2705,230 +2817,230 @@
             renderRoomsEditor(d.rooms || []);
             document.getElementById('edit-dest-drawer-title').textContent = 'Edit: ' + d.name;
             document.getElementById('dest-edit-drawer').style.display = 'block';
-             renderDestPhotoGrid(d.slug);
+            renderDestPhotoGrid(d.slug);
             setTimeout(function () { document.getElementById('dest-edit-drawer').scrollIntoView({ behavior: 'smooth' }); }, 100);
         }
 
         function closeEditDest() {
             document.getElementById('dest-edit-drawer').style.display = 'none';
-         }
-         function renderDestPhotoGrid(slug) {
-             var grid = document.getElementById('dest-gallery-grid');
-             var stripGrid = document.getElementById('dest-strip-grid');
-             if (!grid || !stripGrid) return;
-             
-             restoreZoneKey(slug + '_card', 'zone-dest-card');
-             restoreZoneKey(slug + '_hero', 'zone-dest-hero');
-             
-             // 1. Gallery Grid (10 photos)
-             grid.innerHTML = '';
-             var defaults = DEST_GALLERY_DEFAULTS[slug] || [];
-             for (var i = 0; i < 10; i++) {
-                 var key = slug + '_g_' + i;
-                 var stored = localStorage.getItem('tnliv_img_' + key);
-                 var displaySrc = stored || defaults[i] || null;
-                 var slot = document.createElement('div');
-                 var imgHtml = displaySrc
-                     ? '<img src="' + displaySrc + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />' + (stored ? '' : '<div style="position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:0.6rem;color:#fff;background:rgba(0,0,0,0.6);padding:2px;border-radius:0 0 6px 6px;">current</div>')
-                     : '<div class="img-upload-placeholder" style="gap:2px;"><span style="font-size:1rem;">📷</span><span style="font-size:0.67rem;">Upload</span></div>';
-                 
-                 slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
-                     '<div class="img-upload-zone" id="zone-dg-' + i + '" onclick="openPickerDg(' + i + ')" style="min-height:90px;border-radius:8px;position:relative;overflow:hidden;cursor:pointer;" ' +
-                     'draggable="true" ondragstart="handleDragStart(event, \'gallery\', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, \'gallery\', ' + i + ')">' +
-                     imgHtml +
-                     '</div>' +
-                     '<input type="file" id="file-dg-' + i + '" accept="image/*" style="display:none" onchange="handleDestGalleryPick(event,' + i + ')" />';
-                 grid.appendChild(slot);
-             }
+        }
+        function renderDestPhotoGrid(slug) {
+            var grid = document.getElementById('dest-gallery-grid');
+            var stripGrid = document.getElementById('dest-strip-grid');
+            if (!grid || !stripGrid) return;
 
-             // 2. Strip Grid (5 photos)
-             stripGrid.innerHTML = '';
-             var stripDefaults = DEST_GALLERY_DEFAULTS[slug + "_strip"] || [];
-             for (var i = 0; i < 5; i++) {
-                 var key = slug + '_strip_' + i;
-                 var stored = localStorage.getItem('tnliv_img_' + key);
-                 var displaySrc = stored || stripDefaults[i] || null;
-                 var slot = document.createElement('div');
-                 var imgHtml = displaySrc
-                     ? '<img src="' + displaySrc + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />' + (stored ? '' : '<div style="position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:0.6rem;color:#fff;background:rgba(0,0,0,0.6);padding:2px;border-radius:0 0 6px 6px;">current</div>')
-                     : '<div class="img-upload-placeholder" style="gap:2px;"><span style="font-size:1rem;">📷</span><span style="font-size:0.67rem;">Upload</span></div>';
-                 
-                 slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
-                     '<div class="img-upload-zone" id="zone-ds-' + i + '" onclick="openPickerDs(' + i + ')" style="min-height:80px;border-radius:8px;position:relative;overflow:hidden;cursor:pointer;" ' +
-                     'draggable="true" ondragstart="handleDragStart(event, \'strip\', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, \'strip\', ' + i + ')">' +
-                     imgHtml +
-                     '</div>' +
-                     '<input type="file" id="file-ds-' + i + '" accept="image/*" style="display:none" onchange="handleDestStripPick(event,' + i + ')" />';
-                 stripGrid.appendChild(slot);
-             }
-         }
+            restoreZoneKey(slug + '_card', 'zone-dest-card');
+            restoreZoneKey(slug + '_hero', 'zone-dest-hero');
 
+            // 1. Gallery Grid (10 photos)
+            grid.innerHTML = '';
+            var defaults = DEST_GALLERY_DEFAULTS[slug] || [];
+            for (var i = 0; i < 10; i++) {
+                var key = slug + '_g_' + i;
+                var stored = localStorage.getItem('tnliv_img_' + key);
+                var displaySrc = stored || defaults[i] || null;
+                var slot = document.createElement('div');
+                var imgHtml = displaySrc
+                    ? '<img src="' + displaySrc + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />' + (stored ? '' : '<div style="position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:0.6rem;color:#fff;background:rgba(0,0,0,0.6);padding:2px;border-radius:0 0 6px 6px;">current</div>')
+                    : '<div class="img-upload-placeholder" style="gap:2px;"><span style="font-size:1rem;">📷</span><span style="font-size:0.67rem;">Upload</span></div>';
 
-         // ── DESTINATION DEFAULTS (current live images) ────────────────
-         var DEST_CARD_DEFAULTS = { bali: 'bali_hero.png', puntacana: null, rio: null };
-         var DEST_HERO_DEFAULTS = { bali: 'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg', puntacana: null, rio: null };
-         var DEST_GALLERY_DEFAULTS = {
-             bali: [
-                 'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg',
-                 'bali/jatiluwih-warisan-budaya_f4caf68e-bd5a-4190-834f-4645784211f5.jpeg',
-                 'bali/bali-mount-batur-jeep-sunrise-17370345941_831c16a5-8602-4c8a-b439-bc9251c2b50c.jpeg',
-                 'bali/utopia-catamaran-floating-beach-club-aerial-view_7d80a1cd-173f-48cf-94ab-ef690209fa34.jpeg',
-                 'bali/bali-tegenungan-waterfall_e16b7917-e41a-4766-829a-abaeeb24a256.jpeg',
-                 'bali/MountBaturJeepSunriseComboExperienceinBali-KlookUnitedStates_c593a0b2-3eb4-4973-aa28-3e4128bb7787.jpeg',
-                 'bali/Finns_5507ce8c-35bc-4059-9e33-63e9b0f552c0.png',
-                 'bali/Bali-Nightlife-Featured-image_a2cd03ed-8904-4a76-a030-fe42501455d7.jpeg',
-                 'bali/slide2_afcc89ef-2f18-423d-b9bd-cf88edce1482.jpeg',
-                 'bali/DSC08538_a040ac40-a59f-49a5-a2d6-ea0f1853a3a9.jpeg'
-             ],
-             bali_strip: [
-                 'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg',
-                 'bali/jatiluwih-warisan-budaya_f4caf68e-bd5a-4190-834f-4645784211f5.jpeg',
-                 'bali/utopia-catamaran-floating-beach-club-aerial-view_7d80a1cd-173f-48cf-94ab-ef690209fa34.jpeg',
-                 'bali/bali-mount-batur-jeep-sunrise-17370345941_831c16a5-8602-4c8a-b439-bc9251c2b50c.jpeg',
-                 'bali/bali-tegenungan-waterfall_e16b7917-e41a-4766-829a-abaeeb24a256.jpeg'
-             ]
-         };
+                slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
+                    '<div class="img-upload-zone" id="zone-dg-' + i + '" onclick="openPickerDg(' + i + ')" style="min-height:90px;border-radius:8px;position:relative;overflow:hidden;cursor:pointer;" ' +
+                    'draggable="true" ondragstart="handleDragStart(event, \'gallery\', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, \'gallery\', ' + i + ')">' +
+                    imgHtml +
+                    '</div>' +
+                    '<input type="file" id="file-dg-' + i + '" accept="image/*" style="display:none" onchange="handleDestGalleryPick(event,' + i + ')" />';
+                grid.appendChild(slot);
+            }
 
-         function openPickerDg(idx) {
-             var inp = document.getElementById('file-dg-' + idx);
-             if (inp) inp.click();
-         }
+            // 2. Strip Grid (5 photos)
+            stripGrid.innerHTML = '';
+            var stripDefaults = DEST_GALLERY_DEFAULTS[slug + "_strip"] || [];
+            for (var i = 0; i < 5; i++) {
+                var key = slug + '_strip_' + i;
+                var stored = localStorage.getItem('tnliv_img_' + key);
+                var displaySrc = stored || stripDefaults[i] || null;
+                var slot = document.createElement('div');
+                var imgHtml = displaySrc
+                    ? '<img src="' + displaySrc + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />' + (stored ? '' : '<div style="position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:0.6rem;color:#fff;background:rgba(0,0,0,0.6);padding:2px;border-radius:0 0 6px 6px;">current</div>')
+                    : '<div class="img-upload-placeholder" style="gap:2px;"><span style="font-size:1rem;">📷</span><span style="font-size:0.67rem;">Upload</span></div>';
 
-         function restoreZoneKey(key, zoneId) {
-             var stored = localStorage.getItem('tnliv_img_' + key);
-             // Determine default src from slug + type
-             var parts = key.split('_');
-             var slug = parts[0];
-             var type = parts[1];
-             var defaultSrc = type === 'card' ? (DEST_CARD_DEFAULTS[slug] || null)
-                            : type === 'hero' ? (DEST_HERO_DEFAULTS[slug] || null) : null;
-             var src = stored || defaultSrc;
-             if (!src) return;
-             var zone = document.getElementById(zoneId);
-             if (!zone) return;
-             zone.innerHTML = '<div style="position:relative;width:100%;height:100%;">'
-                 + '<img src="' + src + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />'
-                 + (stored ? '' : '<div style="position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:0.62rem;color:#ccc;background:rgba(0,0,0,0.6);padding:2px;">current — click to replace</div>')
-                 + '</div>';
-         }
-
-         function handleDestPhoto(event, type) {
-             var slug = document.getElementById('edit-dest-slug-hidden').value;
-             var file = event.target.files[0];
-             if (!file) return;
-             var key = slug + '_' + type;
-             var zoneId = type === 'card' ? 'zone-dest-card' : 'zone-dest-hero';
-             var reader = new FileReader();
-             reader.onload = function (e) {
-                 var dataUrl = e.target.result;
-                 localStorage.setItem('tnliv_img_' + key, dataUrl);
-                 var zone = document.getElementById(zoneId);
-                 if (zone) zone.innerHTML = '<img src="' + dataUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />';
-                 toast('Uploading ' + type + ' photo...');
-                 if (window.publishImage) {
-                     window.publishImage(key, dataUrl)
-                         .then(function () { toast('\u2705 ' + (type === 'card' ? 'Card' : 'Hero') + ' photo is now live!'); })
-                         .catch(function (err) { toast('Saved locally. ' + err.message, 'error'); });
-                 }
-             };
-             reader.readAsDataURL(file);
-         }
-
-   
-         // ── DRAG & SWAP FOR PHOTOS ───────────────────────────────
-         var _dragSource = null;
-         function handleDragStart(e, type, idx) {
-             _dragSource = { type: type, idx: idx };
-             e.dataTransfer.setData('text/plain', idx);
-         }
-         function handleDragOver(e) {
-             e.preventDefault();
-         }
-         function handleDropSwap(e, type, targetIdx) {
-             e.preventDefault();
-             if (!_dragSource || _dragSource.type !== type || _dragSource.idx === targetIdx) return;
-             
-             var slug = document.getElementById('edit-dest-slug-hidden').value;
-             var sourceIdx = _dragSource.idx;
-             var keyPart = (type === "gallery" ? "_g_" : "_strip_");
-             
-             var sourceKey = slug + keyPart + sourceIdx;
-             var targetKey = slug + keyPart + targetIdx;
-             
-             // Swap in local storage
-             var sourceVal = localStorage.getItem('tnliv_img_' + sourceKey);
-             var targetVal = localStorage.getItem('tnliv_img_' + targetKey);
-             
-             // Fallback to defaults if null
-             if (!sourceVal) sourceVal = (type === "gallery" ? DEST_GALLERY_DEFAULTS[slug][sourceIdx] : DEST_GALLERY_DEFAULTS[slug + "_strip"][sourceIdx]);
-             if (!targetVal) targetVal = (type === "gallery" ? DEST_GALLERY_DEFAULTS[slug][targetIdx] : DEST_GALLERY_DEFAULTS[slug + "_strip"][targetIdx]);
-             
-             localStorage.setItem('tnliv_img_' + sourceKey, targetVal);
-             localStorage.setItem('tnliv_img_' + targetKey, sourceVal);
-             
-             toast('Swapped photos...');
-             
-             // If we have data URLs, we should probably publish them too
-             if (window.publishImage) {
-                 Promise.all([
-                     window.publishImage(sourceKey, targetVal),
-                     window.publishImage(targetKey, sourceVal)
-                 ]).then(function() { toast('✅ Order saved to GitHub'); });
-             }
-             
-             renderDestPhotoGrid(slug);
-             _dragSource = null;
-         }
-
-         function handleDestStripPick(event, idx) {
-             var slug = document.getElementById('edit-dest-slug-hidden').value;
-             var file = event.target.files[0];
-             if (!file) return;
-             var key = slug + '_strip_' + idx;
-             var reader = new FileReader();
-             reader.onload = function (e) {
-                 var dataUrl = e.target.result;
-                 localStorage.setItem('tnliv_img_' + key, dataUrl);
-                 renderDestPhotoGrid(slug);
-                 toast('Uploading strip photo ' + (idx + 1) + '...');
-                 if (window.publishImage) {
-                     window.publishImage(key, dataUrl)
-                         .then(function () { toast('\u2705 Strip photo ' + (idx + 1) + ' live!'); });
-                 }
-             };
-             reader.readAsDataURL(file);
-         }
-
-         function openPickerDs(idx) {
-             var inp = document.getElementById('file-ds-' + idx);
-             if (inp) inp.click();
-         }
-
-         function handleDestGalleryPick(event, idx) {
-             var slug = document.getElementById('edit-dest-slug-hidden').value;
-             var file = event.target.files[0];
-             if (!file) return;
-             var key = slug + '_g_' + idx;
-             var reader = new FileReader();
-             reader.onload = function (e) {
-                 var dataUrl = e.target.result;
-                 localStorage.setItem('tnliv_img_' + key, dataUrl);
-                 var zone = document.getElementById('zone-dg-' + idx);
-                 if (zone) zone.innerHTML = '<img src="' + dataUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />';
-                 toast('Uploading gallery photo ' + (idx + 1) + '...');
-                 if (window.publishImage) {
-                     window.publishImage(key, dataUrl)
-                         .then(function () { toast('\u2705 Gallery photo ' + (idx + 1) + ' is now live!'); })
-                         .catch(function (err) { toast('Saved locally. ' + err.message, 'error'); });
-                 }
-             };
-             reader.readAsDataURL(file);
-         }
+                slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
+                    '<div class="img-upload-zone" id="zone-ds-' + i + '" onclick="openPickerDs(' + i + ')" style="min-height:80px;border-radius:8px;position:relative;overflow:hidden;cursor:pointer;" ' +
+                    'draggable="true" ondragstart="handleDragStart(event, \'strip\', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, \'strip\', ' + i + ')">' +
+                    imgHtml +
+                    '</div>' +
+                    '<input type="file" id="file-ds-' + i + '" accept="image/*" style="display:none" onchange="handleDestStripPick(event,' + i + ')" />';
+                stripGrid.appendChild(slot);
+            }
+        }
 
 
-        function saveEditDest() {
+        // ── DESTINATION DEFAULTS (current live images) ────────────────
+        var DEST_CARD_DEFAULTS = { bali: 'bali_hero.png', puntacana: null, rio: null };
+        var DEST_HERO_DEFAULTS = { bali: 'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg', puntacana: null, rio: null };
+        var DEST_GALLERY_DEFAULTS = {
+            bali: [
+                'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg',
+                'bali/jatiluwih-warisan-budaya_f4caf68e-bd5a-4190-834f-4645784211f5.jpeg',
+                'bali/bali-mount-batur-jeep-sunrise-17370345941_831c16a5-8602-4c8a-b439-bc9251c2b50c.jpeg',
+                'bali/utopia-catamaran-floating-beach-club-aerial-view_7d80a1cd-173f-48cf-94ab-ef690209fa34.jpeg',
+                'bali/bali-tegenungan-waterfall_e16b7917-e41a-4766-829a-abaeeb24a256.jpeg',
+                'bali/MountBaturJeepSunriseComboExperienceinBali-KlookUnitedStates_c593a0b2-3eb4-4973-aa28-3e4128bb7787.jpeg',
+                'bali/Finns_5507ce8c-35bc-4059-9e33-63e9b0f552c0.png',
+                'bali/Bali-Nightlife-Featured-image_a2cd03ed-8904-4a76-a030-fe42501455d7.jpeg',
+                'bali/slide2_afcc89ef-2f18-423d-b9bd-cf88edce1482.jpeg',
+                'bali/DSC08538_a040ac40-a59f-49a5-a2d6-ea0f1853a3a9.jpeg'
+            ],
+            bali_strip: [
+                'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg',
+                'bali/jatiluwih-warisan-budaya_f4caf68e-bd5a-4190-834f-4645784211f5.jpeg',
+                'bali/utopia-catamaran-floating-beach-club-aerial-view_7d80a1cd-173f-48cf-94ab-ef690209fa34.jpeg',
+                'bali/bali-mount-batur-jeep-sunrise-17370345941_831c16a5-8602-4c8a-b439-bc9251c2b50c.jpeg',
+                'bali/bali-tegenungan-waterfall_e16b7917-e41a-4766-829a-abaeeb24a256.jpeg'
+            ]
+        };
+
+        function openPickerDg(idx) {
+            var inp = document.getElementById('file-dg-' + idx);
+            if (inp) inp.click();
+        }
+
+        function restoreZoneKey(key, zoneId) {
+            var stored = localStorage.getItem('tnliv_img_' + key);
+            // Determine default src from slug + type
+            var parts = key.split('_');
+            var slug = parts[0];
+            var type = parts[1];
+            var defaultSrc = type === 'card' ? (DEST_CARD_DEFAULTS[slug] || null)
+                : type === 'hero' ? (DEST_HERO_DEFAULTS[slug] || null) : null;
+            var src = stored || defaultSrc;
+            if (!src) return;
+            var zone = document.getElementById(zoneId);
+            if (!zone) return;
+            zone.innerHTML = '<div style="position:relative;width:100%;height:100%;">'
+                + '<img src="' + src + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />'
+                + (stored ? '' : '<div style="position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:0.62rem;color:#ccc;background:rgba(0,0,0,0.6);padding:2px;">current — click to replace</div>')
+                + '</div>';
+        }
+
+        function handleDestPhoto(event, type) {
             var slug = document.getElementById('edit-dest-slug-hidden').value;
-            var list = getDestinations();
+            var file = event.target.files[0];
+            if (!file) return;
+            var key = slug + '_' + type;
+            var zoneId = type === 'card' ? 'zone-dest-card' : 'zone-dest-hero';
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var dataUrl = e.target.result;
+                localStorage.setItem('tnliv_img_' + key, dataUrl);
+                var zone = document.getElementById(zoneId);
+                if (zone) zone.innerHTML = '<img src="' + dataUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />';
+                toast('Uploading ' + type + ' photo...');
+                if (window.publishImage) {
+                    window.publishImage(key, dataUrl)
+                        .then(function () { toast('\u2705 ' + (type === 'card' ? 'Card' : 'Hero') + ' photo is now live!'); })
+                        .catch(function (err) { toast('Saved locally. ' + err.message, 'error'); });
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+
+        // ── DRAG & SWAP FOR PHOTOS ───────────────────────────────
+        var _dragSource = null;
+        function handleDragStart(e, type, idx) {
+            _dragSource = { type: type, idx: idx };
+            e.dataTransfer.setData('text/plain', idx);
+        }
+        function handleDragOver(e) {
+            e.preventDefault();
+        }
+        function handleDropSwap(e, type, targetIdx) {
+            e.preventDefault();
+            if (!_dragSource || _dragSource.type !== type || _dragSource.idx === targetIdx) return;
+
+            var slug = document.getElementById('edit-dest-slug-hidden').value;
+            var sourceIdx = _dragSource.idx;
+            var keyPart = (type === "gallery" ? "_g_" : "_strip_");
+
+            var sourceKey = slug + keyPart + sourceIdx;
+            var targetKey = slug + keyPart + targetIdx;
+
+            // Swap in local storage
+            var sourceVal = localStorage.getItem('tnliv_img_' + sourceKey);
+            var targetVal = localStorage.getItem('tnliv_img_' + targetKey);
+
+            // Fallback to defaults if null
+            if (!sourceVal) sourceVal = (type === "gallery" ? DEST_GALLERY_DEFAULTS[slug][sourceIdx] : DEST_GALLERY_DEFAULTS[slug + "_strip"][sourceIdx]);
+            if (!targetVal) targetVal = (type === "gallery" ? DEST_GALLERY_DEFAULTS[slug][targetIdx] : DEST_GALLERY_DEFAULTS[slug + "_strip"][targetIdx]);
+
+            localStorage.setItem('tnliv_img_' + sourceKey, targetVal);
+            localStorage.setItem('tnliv_img_' + targetKey, sourceVal);
+
+            toast('Swapped photos...');
+
+            // If we have data URLs, we should probably publish them too
+            if (window.publishImage) {
+                Promise.all([
+                    window.publishImage(sourceKey, targetVal),
+                    window.publishImage(targetKey, sourceVal)
+                ]).then(function () { toast('✅ Order saved to GitHub'); });
+            }
+
+            renderDestPhotoGrid(slug);
+            _dragSource = null;
+        }
+
+        function handleDestStripPick(event, idx) {
+            var slug = document.getElementById('edit-dest-slug-hidden').value;
+            var file = event.target.files[0];
+            if (!file) return;
+            var key = slug + '_strip_' + idx;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var dataUrl = e.target.result;
+                localStorage.setItem('tnliv_img_' + key, dataUrl);
+                renderDestPhotoGrid(slug);
+                toast('Uploading strip photo ' + (idx + 1) + '...');
+                if (window.publishImage) {
+                    window.publishImage(key, dataUrl)
+                        .then(function () { toast('\u2705 Strip photo ' + (idx + 1) + ' live!'); });
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function openPickerDs(idx) {
+            var inp = document.getElementById('file-ds-' + idx);
+            if (inp) inp.click();
+        }
+
+        function handleDestGalleryPick(event, idx) {
+            var slug = document.getElementById('edit-dest-slug-hidden').value;
+            var file = event.target.files[0];
+            if (!file) return;
+            var key = slug + '_g_' + idx;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var dataUrl = e.target.result;
+                localStorage.setItem('tnliv_img_' + key, dataUrl);
+                var zone = document.getElementById('zone-dg-' + idx);
+                if (zone) zone.innerHTML = '<img src="' + dataUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />';
+                toast('Uploading gallery photo ' + (idx + 1) + '...');
+                if (window.publishImage) {
+                    window.publishImage(key, dataUrl)
+                        .then(function () { toast('\u2705 Gallery photo ' + (idx + 1) + ' is now live!'); })
+                        .catch(function (err) { toast('Saved locally. ' + err.message, 'error'); });
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+
+        async function saveEditDest() {
+            var slug = document.getElementById('edit-dest-slug-hidden').value;
+            var list = await getDestinations(); // Fresh fetch
             var idx = list.findIndex(function (d) { return d.slug === slug; });
             if (idx < 0) { toast('Destination not found.', 'error'); return; }
             list[idx].name = document.getElementById('edit-dest-name').value;
@@ -2944,7 +3056,9 @@
             list[idx].days = getItinData();
             list[idx].includes = getIncludesData();
             list[idx].rooms = getRoomsData();
-            saveDestinations(list);
+
+            toast('💾 Saving to Supabase...');
+            await saveDestinations(list);
             renderDestList();
             closeEditDest();
             toast('✓ "' + list[idx].name + '" — all changes saved and live!');
@@ -2991,6 +3105,20 @@
       <div class="panel-section-title">Founder Bio (About Page)</div>
       <div class="panel-section-desc">Edit Olivia's story — each paragraph is editable separately</div>
     </div>
+  </div>
+  <div class="form-group" style="margin-bottom:20px;">
+    <label>Founder Photo</label>
+    <div class="img-upload-zone" id="zone-founder_photo" onclick="openPicker('founder_photo')" 
+         style="min-height:120px; max-width:200px;"
+         ondragover="event.preventDefault();this.classList.add('drag-over')" 
+         ondragleave="this.classList.remove('drag-over')" 
+         ondrop="handleDrop(event,'founder_photo')">
+      <div class="img-upload-placeholder">
+        <span class="img-upload-icon">👤</span>
+        <span class="img-upload-text"><strong>Replace Photo</strong></span>
+      </div>
+    </div>
+    <input type="file" id="file-founder_photo" accept="image/*" style="display:none" onchange="handleFilePick(event,'founder_photo')" />
   </div>
   <div class="form-group">
     <label>Founder Quote <small style="color:#888">(shown in the floating card on her photo)</small></label>
@@ -3096,16 +3224,18 @@
             set('ab-quote', bio.founderQuote);
             set('ab-p1', bio.para1); set('ab-p2', bio.para2); set('ab-p3', bio.para3);
             set('ab-p4', bio.para4); set('ab-p5', bio.para5);
+            restoreZone('founder_photo');
         }
-        function saveBio() {
-            var cfg = getSiteConfig();
+        async function saveBio() {
+            var cfg = await window.getSiteConfig();
             var get = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
             cfg.aboutBio = {
                 founderQuote: get('ab-quote'),
                 para1: get('ab-p1'), para2: get('ab-p2'), para3: get('ab-p3'),
                 para4: get('ab-p4'), para5: get('ab-p5'),
             };
-            saveSiteConfig(cfg);
+            toast('💾 Saving Bio...');
+            await saveSiteConfig(cfg);
             toast('✓ Bio saved! Reload the About page to see the update.');
         }
 
@@ -3129,7 +3259,7 @@
                 return;
             }
             el.innerHTML = list.map(function (t, i) {
-                    '<div style="font-size:1.8rem;">🏁</div>' +
+                '<div style="font-size:1.8rem;">🏁</div>' +
                     '<div style="flex:1;min-width:200px;">' +
                     '<div style="font-weight:700;font-size:1rem;">' + (t.title || 'Untitled') + '</div>' +
                     '<div style="font-size:0.8rem;color:#888;margin-top:2px;">' + (t.monthYear || '') + ' · ' + (t.duration || '') + ' · ' + (t.travelerCount || '') + '</div>' +
@@ -3253,7 +3383,7 @@
             }
             el.innerHTML = '<p style="font-size:0.82rem;color:#888;margin-bottom:16px;">The trips below have either been marked as <strong style="color:#e8a838;">Concluded</strong> or their dates have passed. Promote them to Past Trips with one click.</p>' +
                 candidates.map(function (d) {
-                        '<div style="font-size:1.6rem;">' + (d.emoji || '✈️') + '</div>' +
+                    '<div style="font-size:1.6rem;">' + (d.emoji || '✈️') + '</div>' +
                         '<div style="flex:1;min-width:180px;">' +
                         '<div style="font-weight:700;">' + d.name + '</div>' +
                         '<div style="font-size:0.8rem;color:#888;margin-top:2px;">' + d.dates + '</div>' +

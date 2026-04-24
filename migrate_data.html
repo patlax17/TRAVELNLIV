@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelNLiv - Supabase Migration Tool</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            background: #111;
+            color: #eee;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #8fbf9f;
+            margin-top: 0;
+        }
+
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 6px;
+            background: #222;
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        button {
+            background: #8fbf9f;
+            color: #111;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Migration Tool</h1>
+        <p>This tool will push your current destinations, itineraries, and site configuration into Supabase.</p>
+
+        <div id="status" class="status">Ready to migrate...</div>
+
+        <button id="migrateBtn">Start Migration</button>
+    </div>
+
+    <script>
+        const SUPABASE_URL = "https://ziejdpdrhpxqxrhkwpew.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_raXNn8hTDaSHzkSeD1R3SQ_0EPZzUPX";
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const log = (msg) => {
+            const el = document.getElementById('status');
+            el.innerText += "\n" + msg;
+            el.scrollTop = el.scrollHeight;
+        };
+
+        const DEFAULTS = [
+            {
+                slug: "bali",
+                name: "Bali, Indonesia",
+                emoji: "🏝️",
+                url: "/bali.html",
+                status: "booking_open",
+                dates: "July 30 – Aug 5, 2026",
+                price: "Starting at $2,350",
+                badge: "🟢 Booking Open",
+                tagline: "Sacred rice terraces, rooftop infinity pools, volcanic sunrises, and nights you will never forget.",
+                teaserDesc: "7 days of luxury, culture and connection in Bali.",
+                description: "Your journey begins the moment you arrive, where you will be seamlessly welcomed and transported into nature. Throughout the trip, you will stay in hand-selected 5-star luxury local resorts and private villas, each chosen for their setting, serenity, and wow factor.",
+                squadtrip_link: "https://travelnlivcollective.squadtrip.com/trip/travel-liv-collective-signature-mystery-trip-where-luxury-meets-relaxation-and-connection-13016?color=abcca8",
+                display_order: 1,
+                includes: [
+                    { icon: '🏨', title: 'Accommodation / Lodging', desc: 'Luxury private villa stays and curated boutique accommodations.' },
+                    { icon: '🎭', title: 'Events & Activities', desc: '7 carefully curated mystery experiences unveiled throughout the trip.' },
+                    { icon: '🚐', title: 'Transportation', desc: 'Private transfers and curated transportation for all scheduled group activities.' },
+                    { icon: '📸', title: 'Professional Photographer', desc: "Liv shoots everything — Sony camera, DJI Osmo Pocket, DJI Mini 3 drone." },
+                    { icon: '🍽️', title: 'Food & Beverages', desc: 'Welcome drinks, all breakfasts, 2 lunches, and 3 curated group dinners.' },
+                    { icon: '🥂', title: 'Alcohol', desc: 'Welcome drink on Travel & LIV Collective.' },
+                    { icon: '🤝', title: 'Community & Connections', desc: 'You may just find your next bestie or boo on this trip.' }
+                ],
+                rooms: [
+                    { title: 'Double Occupancy (Bringing a friend/couple)', price: '$2,350', deposit: '$500 deposit · Payment plan available', badge: '' },
+                    { title: 'Double Occupancy (Solo / roommate matching)', price: '$2,400', deposit: '$530 deposit · 3 payments of $623 · No credit check', badge: 'Only 4 remaining!' },
+                    { title: 'Single Occupancy (Private room)', price: '$2,850', deposit: '$500 deposit · Your own private room', badge: '' }
+                ],
+                days: [
+                    { title: 'Arrival, Connect & Seafood Welcome Dinner by the Beach', body: 'Warmly welcomed and transferred into nature. Settle into your 5-star luxury villa, explore your surroundings, then gather for an intimate seafood welcome dinner by the beach.', highlights: ['🛬 Airport Transfer', '🏨 Villa Check-in', '🦞 Welcome Seafood Dinner'] },
+                    { title: 'Waterfalls & Wonders of Bali', body: 'Private guide from 9:30 AM to Tegenungan Waterfall — cascading waters surrounded by lush jungle. Continue to the historic Elephant Cave (Goa Gajah).', highlights: ['🍳 Breakfast Included', '💧 Tegenungan Waterfall', '🐘 Elephant Cave (Goa Gajah)', '📸 Photo Moments'] },
+                    { title: 'Sunset in a Landscape Shaped by Time', body: 'Guide meets you at 2:00 PM. Journey to Mount Batur Geopark for a Black Lava Jeep tour at 4:00 PM with panoramic views. Sunset viewpoint at 6:00 PM.', highlights: ['🍳 Breakfast Included', '🚙 Black Lava Jeep Tour', '🌋 Mount Batur Geopark', '🌅 Sunset Viewpoint'] },
+                    { title: 'Rice Terraces & Village Life', body: 'Early pickup at 7:30 AM. Guided e-bike tour through Jatiluwih Rice Terraces (UNESCO World Heritage site). Ride through agro farm, bee farm, bamboo forest, and Jatiluwih Village. Afternoon check-in at Pullman Bali Legian Beach.', highlights: ['🍳 Breakfast, Lunch & Dinner Included', '🚲 UNESCO E-Bike Tour', '🌾 Jatiluwih Village', '🏨 Hotel Move: Pullman Bali'] },
+                    { title: 'Yacht Day in Bali', body: 'Pickup at 6:30 AM to Sanur Pier. Board at 7:30 AM to Nusa Lembongan. Utopia Catamaran cruise 8:30 AM–1:30 PM with snorkeling, GoPro photos, curated lunch, and welcome drinks.', highlights: ['🍳 Breakfast & Dinner Included', '⛵ Utopia Catamaran Cruise', '🤿 Snorkeling Included', '🎥 GoPro Photos & Video', '🍹 Welcome Drinks'] },
+                    { title: "Asia's Hottest Beach Club", body: "Relaxed morning, then transfer to Finns Beach Club — one of Bali's most iconic beachfront destinations. Pool, cocktails, oceanfront sunset.", highlights: ['🍳 Breakfast Included', '🏖️ Finns Beach Club', '🌅 Sunset by the Ocean', '🍹 Oceanfront Cocktails'] },
+                    { title: 'This Is Not Goodbye — See You Next Time!', body: 'Final breakfast at the hotel, leisure morning — last pool dip or beach stroll. Transfer to Ngurah Rai International Airport for departure.', highlights: ['🍳 Final Breakfast', '🏖️ Leisure Morning', '🚐 Airport Transfer', '✈️ Ngurah Rai International'] }
+                ]
+            },
+            {
+                slug: "puntacana",
+                name: "Punta Cana, Dominican Republic",
+                emoji: "🌴",
+                url: "/puntacana.html",
+                status: "coming_soon",
+                dates: "October 2026",
+                price: "TBA",
+                badge: "✈️ Coming Soon",
+                tagline: "White-sand beaches, crystal-clear waters, and the warmth of the Caribbean.",
+                teaserDesc: "White-sand beaches, crystal-clear waters, and the warmth of the Caribbean — Punta Cana is the perfect backdrop for an unforgettable collective experience. Full details dropping soon.",
+                display_order: 2,
+                includes: [
+                    { icon: '🏖️', title: 'Beachfront Accommodations', desc: 'Hand-selected beachfront resorts.' },
+                    { icon: '🍹', title: 'Group Experiences', desc: 'Curated activities and cultural experiences.' },
+                    { icon: '💳', title: 'Flexible Payments', desc: 'Secure your spot with a deposit.' },
+                    { icon: '🧳', title: 'Solo-Friendly', desc: 'Roommate matching available.' }
+                ]
+            },
+            {
+                slug: "rio",
+                name: "Rio de Janeiro, Brazil",
+                emoji: "🎉",
+                url: "/rio.html",
+                status: "coming_soon",
+                dates: "December 2026",
+                price: "TBA",
+                badge: "✈️ Coming Soon",
+                tagline: "Carnival energy, iconic beaches, and Christ the Redeemer.",
+                teaserDesc: "End 2026 right. Carnival energy, iconic beaches, Christ the Redeemer, and samba nights — Rio is electric, and we're bringing the collective there for a December experience you won't forget.",
+                display_order: 3,
+                includes: [
+                    { icon: '🌊', title: 'Iconic Locations', desc: 'Ipanema, Copacabana, and beyond.' },
+                    { icon: '🎶', title: 'Cultural Experiences', desc: 'Samba, cuisine, and local culture.' },
+                    { icon: '💳', title: 'Flexible Payments', desc: 'Secure your spot with a deposit.' },
+                    { icon: '🧳', title: 'Solo-Friendly', desc: 'Roommate matching available.' }
+                ]
+            }
+        ];
+
+        document.getElementById('migrateBtn').addEventListener('click', async () => {
+            document.getElementById('migrateBtn').disabled = true;
+            log("🚀 Starting migration...");
+
+            try {
+                for (const d of DEFAULTS) {
+                    log(`📦 Migrating destination: ${d.name} (${d.slug})...`);
+
+                    const { error: destErr } = await supabaseClient.from('destinations').upsert({
+                        slug: d.slug,
+                        name: d.name,
+                        emoji: d.emoji,
+                        url: d.url,
+                        status: d.status,
+                        dates: d.dates,
+                        price: d.price,
+                        badge: d.badge,
+                        tagline: d.tagline,
+                        teaser_desc: d.teaserDesc,
+                        description: d.description || "",
+                        squadtrip_link: d.squadtrip_link,
+                        display_order: d.display_order
+                    });
+
+                    if (destErr) throw destErr;
+
+                    // Itineraries
+                    if (d.days && d.days.length) {
+                        log(`  🗓️ Adding ${d.days.length} itinerary days...`);
+                        const days = d.days.map((day, i) => ({
+                            destination_slug: d.slug,
+                            day_number: i + 1,
+                            title: day.title,
+                            body: day.body,
+                            highlights: day.highlights
+                        }));
+                        const { error: itinErr } = await supabaseClient.from('itineraries').upsert(days);
+                        if (itinErr) throw itinErr;
+                    }
+
+                    // Includes
+                    if (d.includes && d.includes.length) {
+                        log(`  ✅ Adding ${d.includes.length} inclusions...`);
+                        const incs = d.includes.map((inc, i) => ({
+                            destination_slug: d.slug,
+                            icon: inc.icon,
+                            title: inc.title,
+                            description: inc.desc,
+                            order_index: i
+                        }));
+                        const { error: incErr } = await supabaseClient.from('includes').upsert(incs);
+                        if (incErr) throw incErr;
+                    }
+
+                    // Rooms
+                    if (d.rooms && d.rooms.length) {
+                        log(`  🏨 Adding ${d.rooms.length} room types...`);
+                        const rooms = d.rooms.map((r, i) => ({
+                            destination_slug: d.slug,
+                            title: r.title,
+                            price: r.price,
+                            deposit_note: r.deposit,
+                            badge: r.badge,
+                            order_index: i
+                        }));
+                        const { error: roomErr } = await supabaseClient.from('rooms').upsert(rooms);
+                        if (roomErr) throw roomErr;
+                    }
+                }
+
+                log("🏠 Migrating Homepage Config...");
+                const siteCfg = [
+                    { section_key: 'hero', data: { eyebrow: "Travel & LIV Collective", heading: "Where destinations", headingItalic: "become connections", subtitle: "Group trips for people who actually make it out of the group chat. Curated experiences. Real connections. Unforgettable destinations.", stat1Number: "4–5★", stat1Label: "Stays Only", stat2Number: "Global", stat2Label: "Destinations", stat3Number: "💳", stat3Label: "Flexible Payment Plans Available", ctaPrimaryText: "Join the Next Experience", ctaSecondaryText: "Explore Upcoming Trips", image: "zanzibar_hero.png" } },
+                    { section_key: 'ticker', data: ["Pre-Trip Meet & Greets", "Welcome Dinners", "4–5 Star Stays Only", "Curated Experiences", "Flexible Payment Plans", "Real Connections", "Farewell Dinners Included", "Come Solo. Leave With More."] },
+                    { section_key: 'identity', data: { eyebrow: "Who We Are", heading: "This isn't a travel group.", headingItalic: "It's your kind of people.", para1: "You know that feeling when everyone talks about traveling... but no one actually books it?", para2: "We built Travel & LIV Collective for the ones who do.", para3: "The ones who crave more than just a trip — but a shared experience with people who get it." } },
+                    { section_key: 'socialProof', data: { eyebrow: "Social Proof", heading: "We already took", headingBold: "20+ strangers", headingEnd: "across the world...", headingGold: "and they didn't want to leave.", body: "From rooftop nights in Shanghai to once-in-a-lifetime experiences, our travelers came as strangers — and left as a community.", stat1Number: "20+", stat1Label: "Strangers Connected", stat2Number: "100%", stat2Label: "Would Go Again", stat3Number: "∞", stat3Label: "Memories Made" } }
+                ];
+                const { error: cfgErr } = await supabaseClient.from('site_config').upsert(siteCfg);
+                if (cfgErr) throw cfgErr;
+
+                log("🎉 Migration Successful!");
+            } catch (err) {
+                log(`❌ Error: ${err.message}`);
+                console.error(err);
+            }
+        });
+    </script>
+</body>
+
+</html>
