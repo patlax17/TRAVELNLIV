@@ -579,19 +579,248 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Hero Image</label>
+                            <label
+                                style="font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--green,#8FBF9F);">
+                                🃏 Trip Card Photo — <em style="font-weight:400;color:#888;text-transform:none;">shows
+                                    on the Upcoming Trips page card</em>
+                            </label>
                             <div class="img-upload-zone" id="zone-trip1" onclick="openPicker('trip1')"
                                 ondragover="event.preventDefault();this.classList.add('drag-over')"
                                 ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'trip1')">
                                 <div class="img-upload-placeholder">
-                                    <span class="img-upload-icon">🖼️</span>
+                                    <span class="img-upload-icon">🃏</span>
                                     <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
-                                    <span class="img-upload-hint">PNG · JPG · WebP — recommended 1200×800px</span>
+                                    <span class="img-upload-hint">This photo appears on the Upcoming Trips page card ·
+                                        800×600px recommended</span>
                                 </div>
                             </div>
                             <input type="file" id="file-trip1" accept="image/*" style="display:none"
                                 onchange="handleFilePick(event,'trip1')" />
                         </div>
+
+                        <!-- ── BALI.HTML PAGE PHOTOS ── -->
+                        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-color,#2a2a2a);">
+                            <div
+                                style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted,#888);margin-bottom:16px;">
+                                📄 Bali.html Page Photos
+                            </div>
+
+                            <!-- Hero -->
+                            <div class="form-group">
+                                <label>🖼️ Page Hero — <em style="font-weight:400;color:#888;">full-bleed background on
+                                        bali.html</em></label>
+                                <div class="img-upload-zone" id="zone-bali_hero" onclick="openPicker('bali_hero')"
+                                    style="min-height:120px;"
+                                    ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                    ondragleave="this.classList.remove('drag-over')"
+                                    ondrop="handleDrop(event,'bali_hero')">
+                                    <div class="img-upload-placeholder"><span class="img-upload-icon"
+                                            style="font-size:1.4rem;">🏔️</span><span
+                                            class="img-upload-text"><strong>Click to upload</strong> hero
+                                            background</span></div>
+                                </div>
+                                <input type="file" id="file-bali_hero" accept="image/*" style="display:none"
+                                    onchange="handleFilePick(event,'bali_hero')" />
+                            </div>
+
+                            <!-- Gallery strip: 10 slots -->
+                            <label style="font-size:0.78rem;font-weight:600;margin-bottom:10px;display:block;">🖼️
+                                Gallery (10 photos) — <em style="font-weight:400;color:#888;">the photo grid on
+                                    bali.html</em></label>
+                            <div
+                                style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px;">
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo 1
+                                    </p>
+                                    <div class="img-upload-zone" id="zone-bali_g_0" onclick="openPicker('bali_g_0')"
+                                        style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_g_0')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">📷</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_g_0" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_g_0')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo 2
+                                    </p>
+                                    <div class="img-upload-zone" id="zone-bali_g_1" onclick="openPicker('bali_g_1')"
+                                        style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_g_1')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">📷</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_g_1" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_g_1')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo 3
+                                    </p>
+                                    <div class="img-upload-zone" id="zone-bali_g_2" onclick="openPicker('bali_g_2')"
+                                        style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_g_2')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">📷</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_g_2" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_g_2')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo 4
+                                    </p>
+                                    <div class="img-upload-zone" id="zone-bali_g_3" onclick="openPicker('bali_g_3')"
+                                        style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_g_3')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">📷</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_g_3" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_g_3')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo 5
+                                    </p>
+                                    <div class="img-upload-zone" id="zone-bali_g_4" onclick="openPicker('bali_g_4')"
+                                        style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_g_4')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">📷</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_g_4" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_g_4')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo 6
+                                    </p>
+                                    <div class="img-upload-zone" id="zone-bali_g_5" onclick="openPicker('bali_g_5')"
+                                        style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_g_5')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">📷</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_g_5" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_g_5')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo 7
+                                    </p>
+                                    <div class="img-upload-zone" id="zone-bali_g_6" onclick="openPicker('bali_g_6')"
+                                        style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_g_6')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">📷</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_g_6" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_g_6')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo 8
+                                    </p>
+                                    <div class="img-upload-zone" id="zone-bali_g_7" onclick="openPicker('bali_g_7')"
+                                        style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_g_7')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">📷</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_g_7" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_g_7')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo 9
+                                    </p>
+                                    <div class="img-upload-zone" id="zone-bali_g_8" onclick="openPicker('bali_g_8')"
+                                        style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_g_8')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">📷</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_g_8" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_g_8')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo 10
+                                    </p>
+                                    <div class="img-upload-zone" id="zone-bali_g_9" onclick="openPicker('bali_g_9')"
+                                        style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_g_9')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">📷</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_g_9" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_g_9')" />
+                                </div>
+                            </div>
+
+                            <!-- Room photos: 3 slots -->
+                            <label style="font-size:0.78rem;font-weight:600;margin-bottom:10px;display:block;">🏨 Room
+                                Photos (3) — <em style="font-weight:400;color:#888;">room option cards on
+                                    bali.html</em></label>
+                            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Double (w/
+                                        friend)</p>
+                                    <div class="img-upload-zone" id="zone-bali_room_0"
+                                        onclick="openPicker('bali_room_0')" style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_room_0')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">🛏️</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_room_0" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_room_0')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Double
+                                        (solo match)</p>
+                                    <div class="img-upload-zone" id="zone-bali_room_1"
+                                        onclick="openPicker('bali_room_1')" style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_room_1')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">🛏️</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_room_1" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_room_1')" />
+                                </div>
+                                <div>
+                                    <p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Single
+                                        (private)</p>
+                                    <div class="img-upload-zone" id="zone-bali_room_2"
+                                        onclick="openPicker('bali_room_2')" style="min-height:88px;border-radius:8px;"
+                                        ondragover="event.preventDefault();this.classList.add('drag-over')"
+                                        ondragleave="this.classList.remove('drag-over')"
+                                        ondrop="handleDrop(event,'bali_room_2')">
+                                        <div class="img-upload-placeholder" style="gap:2px;"><span
+                                                style="font-size:1rem;">🛏️</span><span
+                                                style="font-size:0.67rem;">Upload</span></div>
+                                    </div><input type="file" id="file-bali_room_2" accept="image/*" style="display:none"
+                                        onchange="handleFilePick(event,'bali_room_2')" />
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Destination</label>
@@ -1540,6 +1769,10 @@
             v('s-nav-cta-text', nCta.text); v('s-nav-cta-url', nCta.url);
 
             restoreZone('next_trip'); restoreZone('event_bg');
+            // Bali page image zones
+            restoreZone('bali_hero');
+            for (var _bi = 0; _bi < 10; _bi++) restoreZone('bali_g_' + _bi);
+            for (var _ri = 0; _ri < 3; _ri++) restoreZone('bali_room_' + _ri);
 
             // FAQs
             renderFaqEditor(cfg.faqs || TNLIV_DEFAULTS.faqs);

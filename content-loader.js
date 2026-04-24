@@ -233,8 +233,26 @@
             });
         }
 
+        // ── BALI DESTINATION PAGE ────────────────────────────────────
+        if (page === "bali") {
+            // Hero background
+            var baliHero = document.getElementById("bali-hero-img");
+            if (baliHero) baliHero.src = getImg("bali_hero", baliHero.src, globalImages);
+            // Gallery: 10 photos
+            for (var bg = 0; bg < 10; bg++) {
+                var gEl = document.getElementById("bali-g-" + bg);
+                if (gEl) gEl.src = getImg("bali_g_" + bg, gEl.src, globalImages);
+            }
+            // Room photos: 3 slots
+            for (var br = 0; br < 3; br++) {
+                var rEl = document.getElementById("bali-room-" + br);
+                if (rEl) rEl.src = getImg("bali_room_" + br, rEl.src, globalImages);
+            }
+        }
+
         // ── GALLERY PAGE ─────────────────────────────────────────────
         if (page === "gallery") {
+
             set("photoCount", cfg.gallery.photoCount);
             set("dest-count", cfg.gallery.destinationCount);
             set("trip-count", cfg.gallery.tripCount);
