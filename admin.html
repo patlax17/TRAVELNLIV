@@ -1360,10 +1360,8 @@
 
                     <!-- Add New Button -->
                     <div style="margin-top:24px;">
-                        <button class="btn-admin-primary" onclick="openAddDestForm()" id="add-dest-btn"
-                            style="display:flex;align-items:center;gap:8px;">
-                            ➕ Add New Destination
-                        </button>
+                        <button class="btn-admin-primary" onclick="openAddDestForm()" id="add-dest-btn" style="display:flex;align-items:center;gap:8px;">➕ Add New Destination</button>
+                        <button class="btn-secondary" onclick="toggleDestReorder()" id="reorder-dest-btn" style="margin-top:12px;display:flex;align-items:center;gap:8px;">⇅ Rearrange Trip Order</button>
                     </div>
 
                     <!-- Add New Form (hidden by default) -->
@@ -2470,7 +2468,32 @@
             concluded: '🏁 Concluded'
         };
 
-        function renderDestList() {
+  
+         var _isReordering = false;
+         function toggleDestReorder() {
+             _isReordering = !_isReordering;
+             var btn = document.getElementById('reorder-dest-btn');
+             btn.textContent = _isReordering ? '✓ Finish Rearranging' : '⇅ Rearrange Trip Order';
+             btn.className = _isReordering ? 'btn-admin-primary' : 'btn-secondary';
+             renderDestList();
+         }
+
+         function moveDest(index, direction) {
+             var list = getDestinations();
+             if (direction === 'up' && index > 0) {
+                 var temp = list[index];
+                 list[index] = list[index - 1];
+                 list[index - 1] = temp;
+             } else if (direction === 'down' && index < list.length - 1) {
+                 var temp = list[index];
+                 list[index] = list[index + 1];
+                 list[index + 1] = temp;
+             }
+             saveDestinations(list);
+             renderDestList();
+         }
+
+         function renderDestList() {
             var list = getDestinations();
             var el = document.getElementById('dest-list');
             if (!el) return;
@@ -2480,7 +2503,7 @@
             }
             el.innerHTML = list.map(function (d, i) {
                 var statusColor = d.status === 'booking_open' ? '#4caf72' : d.status === 'concluded' ? '#888' : '#e8a838';
-                return '<div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
+                return ' + (_isReordering ? '<div style="display:flex;flex-direction:column;gap:4px;margin-right:12px;"><button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'up\')">▲</button><button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'down\')">▼</button></div>' : '') + ''<div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
                     '<div style="font-size:2rem;">' + (d.emoji || '✈️') + '</div>' +
                     '<div style="flex:1;min-width:200px;">' +
                     '<div style="font-weight:700;font-size:1rem;">' + d.name + '</div>' +
@@ -2670,26 +2693,28 @@
             document.getElementById('dest-edit-drawer').style.display = 'none';
         }
 
-         // ── DESTINATION PHOTO MANAGEMENT ─────────────────────────────
-         function renderDestPhotoGrid(slug) {
-             var grid = document.getElementById('dest-gallery-grid');
-             if (!grid) return;
-             restoreZoneKey(slug + '_card', 'zone-dest-card');
-             restoreZoneKey(slug + '_hero', 'zone-dest-hero');
-             grid.innerHTML = '';
-             for (var i = 0; i < 10; i++) {
-                 var key = slug + '_g_' + i;
-                 var stored = localStorage.getItem('tnliv_img_' + key);
-                 var slot = document.createElement('div');
-                 slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
-                     '<div class="img-upload-zone" id="zone-dg-' + i + '" onclick="openPickerDg(' + i + ')" style="min-height:90px;border-radius:8px;" ' +
-                     'ondragover="event.preventDefault();this.classList.add(\'drag-over\')" ondragleave="this.classList.remove(\'drag-over\')">' +
-                     (stored ? '<img src="' + stored + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />' :
-                         '<div class="img-upload-placeholder" style="gap:2px;"><span style="font-size:1rem;">📷</span><span style="font-size:0.67rem;">Upload</span></div>') +
-                     '</div>' +
-                     '<input type="file" id="file-dg-' + i + '" accept="image/*" style="display:none" onchange="handleDestGalleryPick(event,' + i + ')" />';
-                 grid.appendChild(slot);
-             }
+         // ── DESTINATION DEFAULTS (current live images) ────────────────
+         var DEST_GALLERY_DEFAULTS = {
+             bali: [
+                 'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg',
+                 'bali/jatiluwih-warisan-budaya_f4caf68e-bd5a-4190-834f-4645784211f5.jpeg',
+                 'bali/bali-mount-batur-jeep-sunrise-17370345941_831c16a5-8602-4c8a-b439-bc9251c2b50c.jpeg',
+                 'bali/utopia-catamaran-floating-beach-club-aerial-view_7d80a1cd-173f-48cf-94ab-ef690209fa34.jpeg',
+                 'bali/bali-tegenungan-waterfall_e16b7917-e41a-4766-829a-abaeeb24a256.jpeg',
+                 'bali/MountBaturJeepSunriseComboExperienceinBali-KlookUnitedStates_c593a0b2-3eb4-4973-aa28-3e4128bb7787.jpeg',
+                 'bali/Finns_5507ce8c-35bc-4059-9e33-63e9b0f552c0.png',
+                 'bali/Bali-Nightlife-Featured-image_a2cd03ed-8904-4a76-a030-fe42501455d7.jpeg',
+                 'bali/slide2_afcc89ef-2f18-423d-b9bd-cf88edce1482.jpeg',
+                 'bali/DSC08538_a040ac40-a59f-49a5-a2d6-ea0f1853a3a9.jpeg'
+             ],
+             bali_strip: [
+                 'bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg',
+                 'bali/jatiluwih-warisan-budaya_f4caf68e-bd5a-4190-834f-4645784211f5.jpeg',
+                 'bali/utopia-catamaran-floating-beach-club-aerial-view_7d80a1cd-173f-48cf-94ab-ef690209fa34.jpeg',
+                 'bali/bali-mount-batur-jeep-sunrise-17370345941_831c16a5-8602-4c8a-b439-bc9251c2b50c.jpeg',
+                 'bali/bali-tegenungan-waterfall_e16b7917-e41a-4766-829a-abaeeb24a256.jpeg'
+             ]
+         };
          }
 
          function openPickerDg(idx) {
@@ -2699,10 +2724,20 @@
 
          function restoreZoneKey(key, zoneId) {
              var stored = localStorage.getItem('tnliv_img_' + key);
-             if (!stored) return;
+             // Determine default src from slug + type
+             var parts = key.split('_');
+             var slug = parts[0];
+             var type = parts[1];
+             var defaultSrc = type === 'card' ? (DEST_CARD_DEFAULTS[slug] || null)
+                            : type === 'hero' ? (DEST_HERO_DEFAULTS[slug] || null) : null;
+             var src = stored || defaultSrc;
+             if (!src) return;
              var zone = document.getElementById(zoneId);
              if (!zone) return;
-             zone.innerHTML = '<img src="' + stored + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />';
+             zone.innerHTML = '<div style="position:relative;width:100%;height:100%;">'
+                 + '<img src="' + src + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />'
+                 + (stored ? '' : '<div style="position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:0.62rem;color:#ccc;background:rgba(0,0,0,0.6);padding:2px;">current — click to replace</div>')
+                 + '</div>';
          }
 
          function handleDestPhoto(event, type) {
@@ -2725,6 +2760,76 @@
                  }
              };
              reader.readAsDataURL(file);
+         }
+
+   
+         // ── DRAG & SWAP FOR PHOTOS ───────────────────────────────
+         var _dragSource = null;
+         function handleDragStart(e, type, idx) {
+             _dragSource = { type: type, idx: idx };
+             e.dataTransfer.setData('text/plain', idx);
+         }
+         function handleDragOver(e) {
+             e.preventDefault();
+         }
+         function handleDropSwap(e, type, targetIdx) {
+             e.preventDefault();
+             if (!_dragSource || _dragSource.type !== type || _dragSource.idx === targetIdx) return;
+             
+             var slug = document.getElementById('edit-dest-slug-hidden').value;
+             var sourceIdx = _dragSource.idx;
+             var keyPart = (type === "gallery" ? "_g_" : "_strip_");
+             
+             var sourceKey = slug + keyPart + sourceIdx;
+             var targetKey = slug + keyPart + targetIdx;
+             
+             // Swap in local storage
+             var sourceVal = localStorage.getItem('tnliv_img_' + sourceKey);
+             var targetVal = localStorage.getItem('tnliv_img_' + targetKey);
+             
+             // Fallback to defaults if null
+             if (!sourceVal) sourceVal = (type === "gallery" ? DEST_GALLERY_DEFAULTS[slug][sourceIdx] : DEST_GALLERY_DEFAULTS[slug + "_strip"][sourceIdx]);
+             if (!targetVal) targetVal = (type === "gallery" ? DEST_GALLERY_DEFAULTS[slug][targetIdx] : DEST_GALLERY_DEFAULTS[slug + "_strip"][targetIdx]);
+             
+             localStorage.setItem('tnliv_img_' + sourceKey, targetVal);
+             localStorage.setItem('tnliv_img_' + targetKey, sourceVal);
+             
+             toast('Swapped photos...');
+             
+             // If we have data URLs, we should probably publish them too
+             if (window.publishImage) {
+                 Promise.all([
+                     window.publishImage(sourceKey, targetVal),
+                     window.publishImage(targetKey, sourceVal)
+                 ]).then(function() { toast('✅ Order saved to GitHub'); });
+             }
+             
+             renderDestPhotoGrid(slug);
+             _dragSource = null;
+         }
+
+         function handleDestStripPick(event, idx) {
+             var slug = document.getElementById('edit-dest-slug-hidden').value;
+             var file = event.target.files[0];
+             if (!file) return;
+             var key = slug + '_strip_' + idx;
+             var reader = new FileReader();
+             reader.onload = function (e) {
+                 var dataUrl = e.target.result;
+                 localStorage.setItem('tnliv_img_' + key, dataUrl);
+                 renderDestPhotoGrid(slug);
+                 toast('Uploading strip photo ' + (idx + 1) + '...');
+                 if (window.publishImage) {
+                     window.publishImage(key, dataUrl)
+                         .then(function () { toast('\u2705 Strip photo ' + (idx + 1) + ' live!'); });
+                 }
+             };
+             reader.readAsDataURL(file);
+         }
+
+         function openPickerDs(idx) {
+             var inp = document.getElementById('file-ds-' + idx);
+             if (inp) inp.click();
          }
 
          function handleDestGalleryPick(event, idx) {
@@ -2952,7 +3057,7 @@
                 return;
             }
             el.innerHTML = list.map(function (t, i) {
-                return '<div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
+                return ' + (_isReordering ? '<div style="display:flex;flex-direction:column;gap:4px;margin-right:12px;"><button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'up\')">▲</button><button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'down\')">▼</button></div>' : '') + ''<div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
                     '<div style="font-size:1.8rem;">🏁</div>' +
                     '<div style="flex:1;min-width:200px;">' +
                     '<div style="font-weight:700;font-size:1rem;">' + (t.title || 'Untitled') + '</div>' +
@@ -3077,7 +3182,7 @@
             }
             el.innerHTML = '<p style="font-size:0.82rem;color:#888;margin-bottom:16px;">The trips below have either been marked as <strong style="color:#e8a838;">Concluded</strong> or their dates have passed. Promote them to Past Trips with one click.</p>' +
                 candidates.map(function (d) {
-                    return '<div style="background:var(--bg-2,#1a1a1a);border:1px dashed #e8a83860;border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:12px;">' +
+                    return ' + (_isReordering ? '<div style="display:flex;flex-direction:column;gap:4px;margin-right:12px;"><button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'up\')">▲</button><button class="btn-secondary" style="padding:4px 8px;font-size:0.7rem;" onclick="moveDest(' + i + ',\'down\')">▼</button></div>' : '') + ''<div style="background:var(--bg-2,#1a1a1a);border:1px dashed #e8a83860;border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:12px;">' +
                         '<div style="font-size:1.6rem;">' + (d.emoji || '✈️') + '</div>' +
                         '<div style="flex:1;min-width:180px;">' +
                         '<div style="font-weight:700;">' + d.name + '</div>' +

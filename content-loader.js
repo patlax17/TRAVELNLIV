@@ -205,7 +205,15 @@
 
                 const imgEl = document.getElementById(prefix + "-img");
                 if (imgEl) {
-                    imgEl.src = getImg("trip" + (i + 1), trip.image, globalImages);
+                    imgEl.src = getImg(trip.slug + "_card", getImg("trip" + (i + 1), trip.image, globalImages), globalImages);
+                    // Also handle the photo strip (up to 5 photos)
+                    for (var s = 0; s < 5; s++) {
+                        var sEl = document.getElementById(prefix + "-strip-" + s);
+                        if (sEl) {
+                            var defaultSrc = sEl.getAttribute('data-default') || sEl.src;
+                            sEl.src = getImg(trip.slug + "_strip_" + s, defaultSrc, globalImages);
+                        }
+                    }
                     imgEl.alt = trip.destination;
                 }
 
