@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin — Travel & LIV Collective</title>
     <meta name="robots" content="noindex, nofollow" />
-    <link rel="stylesheet" href="admin.css?v=1.2" />
+    <link rel="stylesheet" href="admin.css?v=2.0" />
 </head>
 
 <body>
@@ -2286,13 +2286,13 @@
                 'next_trip': 'bali-hero.jpg'
             };
 
-            const stored = localStorage.getItem("tnliv_img_" + key);
-            if (stored) {
-                refreshZone(key, stored);
-            } else if (window.globalImages && window.globalImages[key]) {
-                refreshZone(key, window.globalImages[key]);
+            const liveUrl = (window.globalImages && window.globalImages[key]) ? window.globalImages[key] : null;
+
+            if (liveUrl) {
+                refreshZone(key, liveUrl);
+            } else if (localStorage.getItem("tnliv_img_" + key)) {
+                refreshZone(key, localStorage.getItem("tnliv_img_" + key));
             } else if (defaults[key]) {
-                // Show the existing hardcoded site asset inside the gold border
                 refreshZone(key, defaults[key]);
             }
         }

@@ -51,14 +51,31 @@ CREATE TABLE IF NOT EXISTS rooms (
     order_index INT DEFAULT 0
 );
 
--- 5. SITE CONFIG TABLE
-CREATE TABLE IF NOT EXISTS site_config (
-    section_key TEXT PRIMARY KEY,
-    data JSONB NOT NULL,
+-- 5. SITE SETTINGS (Dynamic Layout Keys)
+CREATE TABLE IF NOT EXISTS homepage_settings (
+    key TEXT PRIMARY KEY,
+    value JSONB NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 6. IMAGES TABLE (Key-Value map for external URLs or storage paths)
+CREATE TABLE IF NOT EXISTS about_settings (
+    key TEXT PRIMARY KEY,
+    value JSONB NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 6. GALLERY IMAGES (High-Res Asset Bank)
+CREATE TABLE IF NOT EXISTS gallery_images (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    url TEXT NOT NULL,
+    category TEXT DEFAULT 'COMMUNITY',
+    title TEXT,
+    description TEXT,
+    display_order INT DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 7. IMAGES (Global Core Assets Mapping)
 CREATE TABLE IF NOT EXISTS images (
     image_key TEXT PRIMARY KEY,
     url TEXT NOT NULL,
@@ -66,29 +83,18 @@ CREATE TABLE IF NOT EXISTS images (
 );
 
 -- ── ROW LEVEL SECURITY (RLS) ──────────────────────────────────────────
-
--- Enable RLS on all tables
-ALTER TABLE destinations ENABLE ROW LEVEL SECURITY;
-ALTER TABLE itineraries ENABLE ROW LEVEL SECURITY;
-ALTER TABLE includes ENABLE ROW LEVEL SECURITY;
-ALTER TABLE rooms ENABLE ROW LEVEL SECURITY;
-ALTER TABLE site_config ENABLE ROW LEVEL SECURITY;
+ALTER TABLE homepage_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE about_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE gallery_images ENABLE ROW LEVEL SECURITY;
 ALTER TABLE images ENABLE ROW LEVEL SECURITY;
-ALTER TABLE gallery_assets ENABLE ROW LEVEL SECURITY;
 
--- Allow public READ access to everything
-CREATE POLICY "Public Read Access" ON destinations FOR SELECT USING (true);
-CREATE POLICY "Public Read Access" ON itineraries FOR SELECT USING (true);
-CREATE POLICY "Public Read Access" ON includes FOR SELECT USING (true);
-CREATE POLICY "Public Read Access" ON rooms FOR SELECT USING (true);
-CREATE POLICY "Public Read Access" ON site_config FOR SELECT USING (true);
-CREATE POLICY "Public Read Access" ON images FOR SELECT USING (true);
-CREATE POLICY "Public Read Access" ON gallery_assets FOR SELECT USING (true);
+CREATE POLICY "Public Read" ON homepage_settings FOR SELECT USING (true);
+CREATE POLICY "Public Read" ON about_settings FOR SELECT USING (true);
+CREATE POLICY "Public Read" ON gallery_images FOR SELECT USING (true);
+CREATE POLICY "Public Read" ON images FOR SELECT USING (true);
 
--- Allow authenticated (Admin) WRITE access to everything
-CREATE POLICY "Admin Write Access" ON destinations FOR ALL TO authenticated USING (true);
-CREATE POLICY "Admin Write Access" ON itineraries FOR ALL TO authenticated USING (true);
-CREATE POLICY "Admin Write Access" ON includes FOR ALL TO authenticated USING (true);
-CREATE POLICY "Admin Write Access" ON rooms FOR ALL TO authenticated USING (true);
-CREATE POLICY "Admin Write Access" ON site_config FOR ALL TO authenticated USING (true);
-CREATE POLICY "Admin Write Access" ON images FOR ALL TO authenticated USING (true);
+-- Admin Write Access (Manual Auth Trigger)
+CREATE POLICY "Admin Write" ON homepage_settings FOR ALL TO authenticated USING (true);
+CREATE POLICY "Admin Write" ON about_settings FOR ALL TO authenticated USING (true);
+CREATE POLICY "Admin Write" ON gallery_images FOR ALL TO authenticated USING (true);
+CREATE POLICY "Admin Write" ON images FOR ALL TO authenticated USING (true);

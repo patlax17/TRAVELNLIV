@@ -151,40 +151,56 @@ textarea.form-control {
     display: none;
 }
 
-.status-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--success);
-}
-
-/* ── PRECISION CENTER-ALIGNMENT ──────────────────────────── */
-.admin-main {
+/* ── MASTER LAYOUT SHELL (FIXED SIDEBAR + LIQUID CONTENT) ── */
+#admin-app {
     display: flex !important;
-    justify-content: center !important;
-    /* Center horizontally */
-    width: 100% !important;
-    height: 100vh !important;
-    padding-left: 280px !important;
-    /* Fixed Sidebar space */
-    box-sizing: border-box !important;
-    overflow-y: auto !important;
-    background: var(--dark) !important;
-    position: relative !important;
+    min-height: 100vh !important;
+    width: 100vw !important;
+    overflow: hidden !important;
+    background: var(--dark);
 }
 
-/* Constrained Workspace */
+.admin-sidebar {
+    width: 280px !important;
+    position: fixed !important;
+    height: 100vh !important;
+    top: 0;
+    left: 0;
+    z-index: 1000 !important;
+    background: var(--dark-2);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-main {
+    margin-left: 280px !important;
+    /* Fixed lane for content */
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+    width: calc(100% - 280px) !important;
+    overflow-y: auto !important;
+    position: relative;
+    background: var(--dark);
+    padding: 0 !important;
+}
+
 .admin-content {
     width: 100% !important;
-    max-width: 900px !important;
-    /* Precision Constraint */
-    margin: 0 auto !important;
-    padding: 60px 40px !important;
+    padding: 40px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    /* Perfect horizontal centering */
 }
 
 .management-container {
     width: 100% !important;
-    max-width: 860px !important;
+    max-width: 1100px !important;
+    /* Wide, premium constraint */
     margin: 0 auto !important;
 }
 
@@ -198,24 +214,14 @@ textarea.form-control {
     position: sticky;
     top: 0;
     z-index: 100;
+    width: 100%;
 }
 
-/* ── APP SHELL ───────────────────────────────────────────── */
-#admin-app {
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-}
-
-/* ── SIDEBAR ─────────────────────────────────────────────── */
-.admin-sidebar {
-    width: var(--sidebar-w);
-    background: var(--dark-2);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    flex-shrink: 0;
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--success);
 }
 
 .sidebar-brand {
