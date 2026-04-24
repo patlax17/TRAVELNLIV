@@ -5,7 +5,97 @@
 // =============================================================
 
 const TNLIV_DEFAULTS = {
-    version: "1.1",
+    version: "1.2",
+
+    // ── HERO SECTION ──────────────────────────────────────────────
+    hero: {
+        eyebrow: "Travel & LIV Collective",
+        heading: "Where destinations",
+        headingItalic: "become connections",
+        subtitle: "Group trips for people who actually make it out of the group chat. Curated experiences. Real connections. Unforgettable destinations.",
+        stat1Number: "4–5★",
+        stat1Label: "Stays Only",
+        stat2Number: "Global",
+        stat2Label: "Destinations",
+        stat3Number: "💳",
+        stat3Label: "Flexible Payment Plans Available",
+        ctaPrimaryText: "Join the Next Experience",
+        ctaSecondaryText: "Explore Upcoming Trips",
+        image: "zanzibar_hero.png",
+    },
+
+    // ── MARQUEE TICKER ────────────────────────────────────────────
+    ticker: [
+        "Pre-Trip Meet & Greets",
+        "Welcome Dinners",
+        "4–5 Star Stays Only",
+        "Curated Experiences",
+        "Flexible Payment Plans",
+        "Real Connections",
+        "Farewell Dinners Included",
+        "Come Solo. Leave With More.",
+    ],
+
+    // ── WHO WE ARE / IDENTITY ─────────────────────────────────────
+    identity: {
+        eyebrow: "Who We Are",
+        heading: "This isn't a travel group.",
+        headingItalic: "It's your kind of people.",
+        para1: "You know that feeling when everyone talks about traveling... but no one actually books it?",
+        para2: "We built Travel & LIV Collective for the ones who do.",
+        para3: "The ones who crave more than just a trip — but a shared experience with people who get it.",
+    },
+
+    // ── SOCIAL PROOF ─────────────────────────────────────────────
+    socialProof: {
+        eyebrow: "Social Proof",
+        heading: "We already took",
+        headingBold: "20+ strangers",
+        headingEnd: "across the world...",
+        headingGold: "and they didn't want to leave.",
+        body: "From rooftop nights in Shanghai to once-in-a-lifetime experiences, our travelers came as strangers — and left as a community.",
+        stat1Number: "20+",
+        stat1Label: "Strangers Connected",
+        stat2Number: "100%",
+        stat2Label: "Would Go Again",
+        stat3Number: "∞",
+        stat3Label: "Memories Made",
+    },
+
+    // ── HOW IT WORKS (4 steps) ────────────────────────────────────
+    howItWorks: {
+        eyebrow: "The Process",
+        heading: "It's easier than you think.",
+        steps: [
+            { icon: "🌍", title: "Pick Your Trip", body: "Browse our curated lineup of upcoming international escapes. Something always vibes." },
+            { icon: "🔐", title: "Secure Your Spot", body: "Lock in your space with a deposit. Flexible payment plans available via Affirm, Klarna & Afterpay." },
+            { icon: "💬", title: "Join the Group Chat", body: "Meet your future travel crew before you even board the plane. Pre-trip meet & greets included." },
+            { icon: "🛫", title: "Show Up — We Handle the Rest", body: "Logistics, activities, welcome dinner, farewell dinner — everything is curated so you just arrive and live." },
+        ],
+    },
+
+    // ── WHY TRAVEL & LIV (4 cards) ───────────────────────────────
+    whyUs: {
+        eyebrow: "The Travel & LIV Way",
+        heading: "Why Travel & LIV?",
+        body: "This is a curated collective of like-minded people who value experience, connection, and the finer things in life.",
+        cards: [
+            { title: "Curated, Not Generic", body: "Every trip is meticulously crafted. No cookie-cutter packages — every detail, from venues to activities, is handpicked for quality and authenticity. You won't find these on Google." },
+            { title: "Community First", body: "You're not just booking a trip — you're joining a collective. Pre-trip meet & greets, welcome dinners, farewell dinners. Connection is built in from day one." },
+            { title: "Mid-Luxury Standards", body: "4–5 star stays only. We don't compromise on where you rest your head. Premium without the pretension — just quality that matches the moment." },
+            { title: "Flexible Payments", body: "Secure your spot with a deposit, then spread the rest with Affirm, Klarna, or Afterpay. No stress, just wanderlust. The experience you deserve, at a pace that works." },
+        ],
+    },
+
+    // ── FINAL CTA ─────────────────────────────────────────────────
+    finalCta: {
+        eyebrow: "Make Your Move",
+        heading: "You'll either be on the next trip...",
+        headingItalic: "or watching it on Instagram.",
+        body: "The collective is growing. The next trip is being planned. Your seat is waiting.",
+        ctaText: "Join Travel & LIV Collective",
+        image: "snorkeling_mnemba.png",
+    },
 
     // ── SOCIAL LINKS (used site-wide in nav, footer, CTAs) ───────
     social: {

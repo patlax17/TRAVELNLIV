@@ -94,43 +94,276 @@
             <!-- ========== PANEL: HOMEPAGE ========== -->
             <div class="admin-panel active" id="panel-home">
 
-                <!-- Next Trip Card -->
-                <div class="panel-section">
+                <!-- ── SECTION JUMP NAV ── -->
+                <div
+                    style="display:flex;flex-wrap:wrap;gap:8px;padding:0 0 24px;border-bottom:1px solid var(--border,#2a2a2a);margin-bottom:8px;">
+                    <a href="#hs-hero" class="hp-jump">🖼 Hero</a>
+                    <a href="#hs-ticker" class="hp-jump">📣 Ticker</a>
+                    <a href="#hs-identity" class="hp-jump">🙌 Who We Are</a>
+                    <a href="#hs-proof" class="hp-jump">📊 Social Proof</a>
+                    <a href="#hs-hiw" class="hp-jump">🗺 How It Works</a>
+                    <a href="#hs-trip" class="hp-jump">✈️ Next Trip</a>
+                    <a href="#hs-past" class="hp-jump">🎊 Past Event</a>
+                    <a href="#hs-why" class="hp-jump">⭐ Why Us</a>
+                    <a href="#hs-cta" class="hp-jump">🚀 Final CTA</a>
+                </div>
+
+                <!-- ─────────────────────────────────────────── -->
+                <!-- 1. HERO SECTION                            -->
+                <!-- ─────────────────────────────────────────── -->
+                <div class="panel-section" id="hs-hero" style="scroll-margin-top:80px;">
                     <div class="panel-section-header">
-                        <div class="panel-section-icon">🌍</div>
+                        <div class="panel-section-icon">🖼</div>
                         <div>
-                            <div class="panel-section-title">Next Trip Card (Homepage)</div>
-                            <div class="panel-section-desc">The featured destination shown on the homepage hero area
-                            </div>
+                            <div class="panel-section-title">Hero — Section 1</div>
+                            <div class="panel-section-desc">The full-screen opening image, headline, subtitle, and stat
+                                bar</div>
                         </div>
                     </div>
 
+                    <!-- Hero image -->
+                    <div class="form-group">
+                        <label>Background Hero Image</label>
+                        <div class="img-upload-zone" id="zone-hero_img" onclick="openPicker('hero_img')"
+                            ondragover="event.preventDefault();this.classList.add('drag-over')"
+                            ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'hero_img')">
+                            <div class="img-upload-placeholder">
+                                <span class="img-upload-icon">🌅</span>
+                                <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
+                                <span class="img-upload-hint">Recommended: 2400×1600px landscape</span>
+                            </div>
+                        </div>
+                        <input type="file" id="file-hero_img" accept="image/*" style="display:none"
+                            onchange="handleFilePick(event,'hero_img')" />
+                    </div>
 
-                    <div class="form-group" style="max-width:420px;margin-top:4px;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Eyebrow Text</label>
+                            <input type="text" id="hero-eyebrow-val" class="form-control"
+                                placeholder="Travel & LIV Collective" />
+                        </div>
+                        <div class="form-group">
+                            <label>Primary CTA Button Text</label>
+                            <input type="text" id="hero-cta-primary-val" class="form-control"
+                                placeholder="Join the Next Experience" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Headline — Main</label>
+                            <input type="text" id="hero-heading-val" class="form-control"
+                                placeholder="Where destinations" />
+                        </div>
+                        <div class="form-group">
+                            <label>Headline — Italic Ending</label>
+                            <input type="text" id="hero-heading-italic-val" class="form-control"
+                                placeholder="become connections" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subtitle Paragraph</label>
+                        <textarea id="hero-subtitle-val" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div
+                        style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:16px 0 10px;">
+                        Stat Bar (3 figures)</div>
+                    <div class="form-row triple">
+                        <div class="form-group">
+                            <label>Stat 1 Number</label>
+                            <input type="text" id="hero-stat1-num-val" class="form-control" placeholder="4–5★" />
+                        </div>
+                        <div class="form-group">
+                            <label>Stat 1 Label</label>
+                            <input type="text" id="hero-stat1-label-val" class="form-control"
+                                placeholder="Stays Only" />
+                        </div>
+                        <div class="form-group" style="grid-column:span 1"><!-- spacer --></div>
+                    </div>
+                    <div class="form-row triple">
+                        <div class="form-group">
+                            <label>Stat 2 Number</label>
+                            <input type="text" id="hero-stat2-num-val" class="form-control" placeholder="Global" />
+                        </div>
+                        <div class="form-group">
+                            <label>Stat 2 Label</label>
+                            <input type="text" id="hero-stat2-label-val" class="form-control"
+                                placeholder="Destinations" />
+                        </div>
+                        <div class="form-group" style="grid-column:span 1"><!-- spacer --></div>
+                    </div>
+                    <div class="form-row triple">
+                        <div class="form-group">
+                            <label>Stat 3 Number / Icon</label>
+                            <input type="text" id="hero-stat3-num-val" class="form-control" placeholder="💳" />
+                        </div>
+                        <div class="form-group">
+                            <label>Stat 3 Label</label>
+                            <input type="text" id="hero-stat3-label-val" class="form-control"
+                                placeholder="Flexible Payment Plans Available" />
+                        </div>
+                        <div class="form-group" style="grid-column:span 1"><!-- spacer --></div>
+                    </div>
+                </div>
+
+                <!-- ─────────────────────────────────────────── -->
+                <!-- 2. TICKER                                  -->
+                <!-- ─────────────────────────────────────────── -->
+                <div class="panel-section" id="hs-ticker" style="scroll-margin-top:80px;">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">📣</div>
+                        <div>
+                            <div class="panel-section-title">Marquee Ticker — Section 2</div>
+                            <div class="panel-section-desc">The scrolling banner below the hero. One item per line.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Ticker Items (one per line)</label>
+                        <textarea id="ticker-items-val" class="form-control" rows="8"
+                            placeholder="Pre-Trip Meet &amp; Greets&#10;Welcome Dinners&#10;4–5 Star Stays Only"></textarea>
+                        <p style="font-size:0.78rem;color:#888;margin-top:8px;">Each line becomes one ticker item
+                            separated by ✦. The strip automatically duplicates for a seamless loop.</p>
+                    </div>
+                </div>
+
+                <!-- ─────────────────────────────────────────── -->
+                <!-- 3. WHO WE ARE                              -->
+                <!-- ─────────────────────────────────────────── -->
+                <div class="panel-section" id="hs-identity" style="scroll-margin-top:80px;">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">🙌</div>
+                        <div>
+                            <div class="panel-section-title">Who We Are — Section 3</div>
+                            <div class="panel-section-desc">The brand identity copy beneath the hero video</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Eyebrow</label>
+                            <input type="text" id="identity-eyebrow-val" class="form-control"
+                                placeholder="Who We Are" />
+                        </div>
+                        <div class="form-group">
+                            <label>Heading — Main</label>
+                            <input type="text" id="identity-heading-val" class="form-control"
+                                placeholder="This isn't a travel group." />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Heading — Italic Ending</label>
+                        <input type="text" id="identity-heading-italic-val" class="form-control"
+                            placeholder="It's your kind of people." />
+                    </div>
+                    <div class="form-group">
+                        <label>Paragraph 1</label>
+                        <textarea id="identity-para1-val" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Paragraph 2</label>
+                        <textarea id="identity-para2-val" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Paragraph 3</label>
+                        <textarea id="identity-para3-val" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <!-- ─────────────────────────────────────────── -->
+                <!-- 4. SOCIAL PROOF                            -->
+                <!-- ─────────────────────────────────────────── -->
+                <div class="panel-section" id="hs-proof" style="scroll-margin-top:80px;">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">📊</div>
+                        <div>
+                            <div class="panel-section-title">Social Proof — Section 4</div>
+                            <div class="panel-section-desc">The dark stats strip with the community photo mosaic</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Eyebrow</label>
+                            <input type="text" id="sp-eyebrow-val" class="form-control" placeholder="Social Proof" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Body Text</label>
+                        <textarea id="sp-body-val" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div
+                        style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:10px 0 10px;">
+                        Three Stats</div>
+                    <div class="form-row triple">
+                        <div class="form-group"><label>Stat 1 Number</label><input type="text" id="sp-stat1-num-val"
+                                class="form-control" placeholder="20+" /></div>
+                        <div class="form-group"><label>Stat 1 Label</label><input type="text" id="sp-stat1-label-val"
+                                class="form-control" placeholder="Strangers Connected" /></div>
+                        <div class="form-group" style="grid-column:span 1"></div>
+                    </div>
+                    <div class="form-row triple">
+                        <div class="form-group"><label>Stat 2 Number</label><input type="text" id="sp-stat2-num-val"
+                                class="form-control" placeholder="100%" /></div>
+                        <div class="form-group"><label>Stat 2 Label</label><input type="text" id="sp-stat2-label-val"
+                                class="form-control" placeholder="Would Go Again" /></div>
+                        <div class="form-group" style="grid-column:span 1"></div>
+                    </div>
+                    <div class="form-row triple">
+                        <div class="form-group"><label>Stat 3 Number</label><input type="text" id="sp-stat3-num-val"
+                                class="form-control" placeholder="∞" /></div>
+                        <div class="form-group"><label>Stat 3 Label</label><input type="text" id="sp-stat3-label-val"
+                                class="form-control" placeholder="Memories Made" /></div>
+                        <div class="form-group" style="grid-column:span 1"></div>
+                    </div>
+                </div>
+
+                <!-- ─────────────────────────────────────────── -->
+                <!-- 5. HOW IT WORKS                            -->
+                <!-- ─────────────────────────────────────────── -->
+                <div class="panel-section" id="hs-hiw" style="scroll-margin-top:80px;">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">🗺</div>
+                        <div>
+                            <div class="panel-section-title">How It Works — Section 5</div>
+                            <div class="panel-section-desc">The 4-step process cards</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Eyebrow</label><input type="text" id="hiw-eyebrow-val"
+                                class="form-control" placeholder="The Process" /></div>
+                        <div class="form-group"><label>Section Heading</label><input type="text" id="hiw-heading-val"
+                                class="form-control" placeholder="It's easier than you think." /></div>
+                    </div>
+                    <div id="hiw-steps-editor" style="display:flex;flex-direction:column;gap:16px;margin-top:8px;">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- ─────────────────────────────────────────── -->
+                <!-- 6. FEATURED NEXT TRIP                      -->
+                <!-- ─────────────────────────────────────────── -->
+                <div class="panel-section" id="hs-trip" style="scroll-margin-top:80px;">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">✈️</div>
+                        <div>
+                            <div class="panel-section-title">Featured Trip Card — Section 6</div>
+                            <div class="panel-section-desc">The "Where We're Going Next" booking card + the Squadtrip
+                                widget</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="max-width:420px;">
                         <label>⭐ Featured Trip on Homepage</label>
                         <select id="featured-trip-slug" class="form-control" style="font-size:1rem;padding:12px 16px;">
                             <option value="">— Auto (first Booking Open trip) —</option>
                         </select>
-                        <p style="font-size:0.78rem;color:#888;margin-top:8px;">Choose which destination is featured in
-                            the "Where We're Going Next" card on the homepage. Changing this updates the card
-                            automatically — no code needed.</p>
+                        <p style="font-size:0.78rem;color:#888;margin-top:8px;">Choose which destination is featured.
+                            Changing this updates the card automatically.</p>
                     </div>
-                    <div style="margin-top:16px;">
-                        <button class="btn-admin-primary" onclick="saveFeaturedTrip()">✓ Set as Featured</button>
-                    </div>
-
-                    <!-- Squadtrip Booking Widget URL -->
-                    <div class="form-group"
-                        style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border-color,#2a2a2a);">
-                        <label style="display:flex;align-items:center;gap:8px;">🔗 Squadtrip Booking URL <span
-                                style="font-size:0.75rem;color:#888;font-weight:400;">(powers the "Reserve Your Spot"
-                                booking widget on the homepage)</span></label>
-                        <input type="url" id="nt-squadtrip-url" class="form-control"
-                            placeholder="https://travelnlivcollective.squadtrip.com/trip/your-trip-slug" />
-                        <p style="font-size:0.78rem;color:#888;margin-top:8px;">When a new trip goes live, paste the new
-                            Squadtrip link here and hit <strong>Save Changes</strong>. The booking widget will
-                            automatically update — no code needed.</p>
-                    </div>
+                    <div style="margin-top:12px;"><button class="btn-admin-primary" onclick="saveFeaturedTrip()">✓ Set
+                            as Featured</button></div>
 
                     <div id="featured-trip-preview"
                         style="margin-top:20px;padding:16px 20px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;display:none;">
@@ -145,21 +378,53 @@
                             style="font-size:0.82rem;color:var(--green,#8FBF9F);margin-top:8px;display:inline-block;">View
                             live page →</a>
                     </div>
+
+                    <div class="form-group"
+                        style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border-color,#2a2a2a);">
+                        <label style="display:flex;align-items:center;gap:8px;">🔗 Squadtrip Booking URL <span
+                                style="font-size:0.75rem;color:#888;font-weight:400;">(powers the "Reserve Your Spot"
+                                widget)</span></label>
+                        <input type="url" id="nt-squadtrip-url" class="form-control"
+                            placeholder="https://travelnlivcollective.squadtrip.com/trip/..." />
+                        <p style="font-size:0.78rem;color:#888;margin-top:8px;">Paste the new Squadtrip link when a trip
+                            goes live — the booking iframe updates automatically.</p>
+                    </div>
+
+                    <!-- card text overrides -->
+                    <div
+                        style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:20px 0 10px;">
+                        Manual Card Text Overrides</div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Badge Text</label><input type="text" id="nt-badge"
+                                class="form-control" placeholder="Booking Open" /></div>
+                        <div class="form-group"><label>Destination Name</label><input type="text" id="nt-destination"
+                                class="form-control" placeholder="Bali, Indonesia" /></div>
+                    </div>
+                    <div class="form-row triple">
+                        <div class="form-group"><label>Dates</label><input type="text" id="nt-dates"
+                                class="form-control" placeholder="July 30 – August 5, 2026" /></div>
+                        <div class="form-group"><label>Duration</label><input type="text" id="nt-duration"
+                                class="form-control" placeholder="7 Days" /></div>
+                        <div class="form-group"><label>Price Display</label><input type="text" id="nt-price"
+                                class="form-control" placeholder="From $2,350" /></div>
+                    </div>
+                    <div class="form-group"><label>Description</label><textarea id="nt-desc" class="form-control"
+                            rows="3"></textarea></div>
+                    <div class="form-group"><label>CTA Button Text</label><input type="text" id="nt-cta-text"
+                            class="form-control" placeholder="Reserve Your Spot" /></div>
                 </div>
 
-
-
-                <!-- Past Event Recap -->
-                <div class="panel-section">
+                <!-- ─────────────────────────────────────────── -->
+                <!-- 7. PAST EVENT RECAP                        -->
+                <!-- ─────────────────────────────────────────── -->
+                <div class="panel-section" id="hs-past" style="scroll-margin-top:80px;">
                     <div class="panel-section-header">
                         <div class="panel-section-icon">🎊</div>
                         <div>
-                            <div class="panel-section-title">Past Event Recap (Homepage)</div>
-                            <div class="panel-section-desc">The cinematic photo grid section showing your last event — 7
-                                photos total</div>
+                            <div class="panel-section-title">Past Event Recap — Section 7</div>
+                            <div class="panel-section-desc">The cinematic 7-photo grid showing your last event</div>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label>Show This Section?</label>
                         <select id="pe-visible" class="form-control" style="max-width:260px;">
@@ -168,37 +433,92 @@
                         </select>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>City</label>
-                            <input type="text" id="pe-city" class="form-control" placeholder="e.g. NYC" />
-                        </div>
-                        <div class="form-group">
-                            <label>Date</label>
-                            <input type="text" id="pe-date" class="form-control" placeholder="e.g. April 2025" />
+                        <div class="form-group"><label>City</label><input type="text" id="pe-city" class="form-control"
+                                placeholder="e.g. NYC" /></div>
+                        <div class="form-group"><label>Date</label><input type="text" id="pe-date" class="form-control"
+                                placeholder="e.g. April 2025" /></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Event Title</label><input type="text" id="pe-title"
+                                class="form-control" placeholder="e.g. The Launch Party" /></div>
+                        <div class="form-group"><label>Title Italic Suffix</label><input type="text" id="pe-italic"
+                                class="form-control" placeholder="e.g. it was a vibe." /></div>
+                    </div>
+                    <div class="form-group"><label>Recap Description</label><textarea id="pe-desc" class="form-control"
+                            rows="3"></textarea></div>
+                    <div class="form-group" style="margin-top:8px;">
+                        <label>Event Photos — 7 Grid Slots (click or drag to upload)</label>
+                        <div class="pe-photo-grid" id="pe-photo-grid"><!-- Rendered by JS --></div>
+                    </div>
+                </div>
+
+                <!-- ─────────────────────────────────────────── -->
+                <!-- 8. WHY TRAVEL & LIV                        -->
+                <!-- ─────────────────────────────────────────── -->
+                <div class="panel-section" id="hs-why" style="scroll-margin-top:80px;">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">⭐</div>
+                        <div>
+                            <div class="panel-section-title">Why Travel & LIV — Section 8</div>
+                            <div class="panel-section-desc">The 4 trust-building value cards</div>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Event Title</label>
-                            <input type="text" id="pe-title" class="form-control" placeholder="e.g. The Launch Party" />
-                        </div>
-                        <div class="form-group">
-                            <label>Title Italic Suffix</label>
-                            <input type="text" id="pe-italic" class="form-control" placeholder="e.g. it was a vibe." />
-                        </div>
+                        <div class="form-group"><label>Eyebrow</label><input type="text" id="why-eyebrow-val"
+                                class="form-control" placeholder="The Travel &amp; LIV Way" /></div>
+                        <div class="form-group"><label>Section Heading</label><input type="text" id="why-heading-val"
+                                class="form-control" placeholder="Why Travel &amp; LIV?" /></div>
                     </div>
-                    <div class="form-group">
-                        <label>Recap Description</label>
-                        <textarea id="pe-desc" class="form-control"></textarea>
+                    <div class="form-group"><label>Section Subheading</label><textarea id="why-body-val"
+                            class="form-control" rows="2"></textarea></div>
+                    <div id="why-cards-editor" style="display:flex;flex-direction:column;gap:16px;margin-top:8px;">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- ─────────────────────────────────────────── -->
+                <!-- 9. FINAL CTA                               -->
+                <!-- ─────────────────────────────────────────── -->
+                <div class="panel-section" id="hs-cta" style="scroll-margin-top:80px;">
+                    <div class="panel-section-header">
+                        <div class="panel-section-icon">🚀</div>
+                        <div>
+                            <div class="panel-section-title">Final CTA — Section 9</div>
+                            <div class="panel-section-desc">The full-width closing call-to-action with background photo
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- 7-PHOTO GRID -->
-                    <div class="form-group" style="margin-top:8px;">
-                        <label>Event Photos (drag &amp; drop or click each slot to upload)</label>
-                        <div class="pe-photo-grid" id="pe-photo-grid">
-                            <!-- Rendered by JS -->
+                    <div class="form-group">
+                        <label>Background Image</label>
+                        <div class="img-upload-zone" id="zone-cta_bg" onclick="openPicker('cta_bg')"
+                            ondragover="event.preventDefault();this.classList.add('drag-over')"
+                            ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'cta_bg')">
+                            <div class="img-upload-placeholder">
+                                <span class="img-upload-icon">🌊</span>
+                                <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
+                                <span class="img-upload-hint">Recommended: 2400×1200px landscape</span>
+                            </div>
                         </div>
+                        <input type="file" id="file-cta_bg" accept="image/*" style="display:none"
+                            onchange="handleFilePick(event,'cta_bg')" />
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group"><label>Eyebrow</label><input type="text" id="cta-eyebrow-val"
+                                class="form-control" placeholder="Make Your Move" /></div>
+                        <div class="form-group"><label>CTA Button Text</label><input type="text" id="cta-btn-text-val"
+                                class="form-control" placeholder="Join Travel &amp; LIV Collective" /></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Headline — Main</label><input type="text" id="cta-heading-val"
+                                class="form-control" placeholder="You'll either be on the next trip..." /></div>
+                        <div class="form-group"><label>Headline — Italic Ending</label><input type="text"
+                                id="cta-heading-italic-val" class="form-control"
+                                placeholder="or watching it on Instagram." /></div>
+                    </div>
+                    <div class="form-group"><label>Body Text</label><textarea id="cta-body-val" class="form-control"
+                            rows="2"></textarea></div>
                 </div>
 
             </div><!-- end panel-home -->
@@ -1052,59 +1372,99 @@
             const nt = cfg.nextTrip, pe = cfg.pastEvent, ev = cfg.event,
                 gl = cfg.gallery, tr = cfg.trips, sc = cfg.social, nCta = cfg.navCta;
 
-            // Next Trip text fields
-            v("nt-destination", nt.destination); v("nt-badge", nt.badge);
-            v("nt-dates", nt.dates); v("nt-duration", nt.duration);
-            v("nt-desc", nt.description); v("nt-price", nt.priceFrom);
-            v("nt-cta-text", nt.ctaText);
-            v("nt-squadtrip-url", nt.squadtripUrl);
+            // ── HERO ──
+            const hr = cfg.hero || {};
+            v('hero-eyebrow-val', hr.eyebrow); v('hero-heading-val', hr.heading);
+            v('hero-heading-italic-val', hr.headingItalic); v('hero-subtitle-val', hr.subtitle);
+            v('hero-stat1-num-val', hr.stat1Number); v('hero-stat1-label-val', hr.stat1Label);
+            v('hero-stat2-num-val', hr.stat2Number); v('hero-stat2-label-val', hr.stat2Label);
+            v('hero-stat3-num-val', hr.stat3Number); v('hero-stat3-label-val', hr.stat3Label);
+            v('hero-cta-primary-val', hr.ctaPrimaryText);
+            restoreZone('hero_img');
 
-            // Past Event fields
-            v("pe-visible", String(pe.visible)); v("pe-city", pe.city);
-            v("pe-date", pe.date); v("pe-title", pe.title);
-            v("pe-italic", pe.titleItalic); v("pe-desc", pe.description);
+            // ── TICKER ──
+            const tk = cfg.ticker || [];
+            v('ticker-items-val', tk.join('\n'));
+
+            // ── IDENTITY ──
+            const id = cfg.identity || {};
+            v('identity-eyebrow-val', id.eyebrow); v('identity-heading-val', id.heading);
+            v('identity-heading-italic-val', id.headingItalic);
+            v('identity-para1-val', id.para1); v('identity-para2-val', id.para2); v('identity-para3-val', id.para3);
+
+            // ── SOCIAL PROOF ──
+            const sp = cfg.socialProof || {};
+            v('sp-eyebrow-val', sp.eyebrow); v('sp-body-val', sp.body);
+            v('sp-stat1-num-val', sp.stat1Number); v('sp-stat1-label-val', sp.stat1Label);
+            v('sp-stat2-num-val', sp.stat2Number); v('sp-stat2-label-val', sp.stat2Label);
+            v('sp-stat3-num-val', sp.stat3Number); v('sp-stat3-label-val', sp.stat3Label);
+
+            // ── HOW IT WORKS ──
+            const hiw = cfg.howItWorks || {};
+            v('hiw-eyebrow-val', hiw.eyebrow); v('hiw-heading-val', hiw.heading);
+            renderHiwStepsEditor(hiw.steps || []);
+
+            // ── NEXT TRIP ──
+            v('nt-destination', nt.destination); v('nt-badge', nt.badge);
+            v('nt-dates', nt.dates); v('nt-duration', nt.duration);
+            v('nt-desc', nt.description); v('nt-price', nt.priceFrom);
+            v('nt-cta-text', nt.ctaText); v('nt-squadtrip-url', nt.squadtripUrl);
+
+            // ── PAST EVENT ──
+            v('pe-visible', String(pe.visible)); v('pe-city', pe.city);
+            v('pe-date', pe.date); v('pe-title', pe.title);
+            v('pe-italic', pe.titleItalic); v('pe-desc', pe.description);
+
+            // ── WHY US ──
+            const wu = cfg.whyUs || {};
+            v('why-eyebrow-val', wu.eyebrow); v('why-heading-val', wu.heading); v('why-body-val', wu.body);
+            renderWhyCardsEditor(wu.cards || []);
+
+            // ── FINAL CTA ──
+            const fc = cfg.finalCta || {};
+            v('cta-eyebrow-val', fc.eyebrow); v('cta-heading-val', fc.heading);
+            v('cta-heading-italic-val', fc.headingItalic); v('cta-body-val', fc.body);
+            v('cta-btn-text-val', fc.ctaText);
+            restoreZone('cta_bg');
 
             // Event fields
             const modeEl = document.querySelector('input[name="event-mode"][value="' + ev.mode + '"]');
             if (modeEl) { modeEl.checked = true; toggleEventMode(ev.mode); }
-            v("ev-eyebrow", ev.eyebrow); v("ev-badge", ev.badgeText);
-            v("ev-heading", ev.heading); v("ev-heading-italic", ev.headingItalic);
-            v("ev-desc", ev.description); v("ev-sub-desc", ev.subDescription);
-            v("ev-live-name", ev.liveEventName); v("ev-live-date", ev.liveEventDate);
-            v("ev-live-venue", ev.liveEventVenue); v("ev-live-price", ev.livePriceDisplay);
-            v("ev-live-btn", ev.liveTicketBtn); v("ev-live-url", ev.liveTicketUrl);
+            v('ev-eyebrow', ev.eyebrow); v('ev-badge', ev.badgeText);
+            v('ev-heading', ev.heading); v('ev-heading-italic', ev.headingItalic);
+            v('ev-desc', ev.description); v('ev-sub-desc', ev.subDescription);
+            v('ev-live-name', ev.liveEventName); v('ev-live-date', ev.liveEventDate);
+            v('ev-live-venue', ev.liveEventVenue); v('ev-live-price', ev.livePriceDisplay);
+            v('ev-live-btn', ev.liveTicketBtn); v('ev-live-url', ev.liveTicketUrl);
 
             // Gallery
-            v("gallery-photos", gl.photoCount); v("gallery-dests", gl.destinationCount); v("gallery-trips", gl.tripCount);
+            v('gallery-photos', gl.photoCount); v('gallery-dests', gl.destinationCount); v('gallery-trips', gl.tripCount);
 
             // Trips
             tr.forEach(function (trip, i) {
-                const p = "trip" + (i + 1);
-                v(p + "-status", trip.status, true); v(p + "-destination", trip.destination);
-                v(p + "-month", trip.monthYear); v(p + "-dates", trip.dates);
-                v(p + "-duration", trip.duration); v(p + "-region", trip.region);
-                v(p + "-price", trip.priceDisplay); v(p + "-desc", trip.description);
-                v(p + "-cta-text", trip.ctaText); v(p + "-cta-url", trip.ctaUrl);
-                // Restore image preview
+                const p = 'trip' + (i + 1);
+                v(p + '-status', trip.status, true); v(p + '-destination', trip.destination);
+                v(p + '-month', trip.monthYear); v(p + '-dates', trip.dates);
+                v(p + '-duration', trip.duration); v(p + '-region', trip.region);
+                v(p + '-price', trip.priceDisplay); v(p + '-desc', trip.description);
+                v(p + '-cta-text', trip.ctaText); v(p + '-cta-url', trip.ctaUrl);
                 restoreZone(p);
             });
 
             // Social
-            v("s-email", sc.email); v("s-instagram", sc.instagram);
-            v("s-tiktok", sc.tiktok); v("s-facebook", sc.facebook);
-            v("s-wa-group", sc.whatsappGroup); v("s-wa-channel", sc.whatsappChannel);
-            v("s-nav-cta-text", nCta.text); v("s-nav-cta-url", nCta.url);
+            v('s-email', sc.email); v('s-instagram', sc.instagram);
+            v('s-tiktok', sc.tiktok); v('s-facebook', sc.facebook);
+            v('s-wa-group', sc.whatsappGroup); v('s-wa-channel', sc.whatsappChannel);
+            v('s-nav-cta-text', nCta.text); v('s-nav-cta-url', nCta.url);
 
-            // Restore image previews for main uploaders
-            restoreZone("next_trip");
-            restoreZone("event_bg");
+            restoreZone('next_trip'); restoreZone('event_bg');
 
             // FAQs
             renderFaqEditor(cfg.faqs || TNLIV_DEFAULTS.faqs);
 
             // Mode toggle listeners
             document.querySelectorAll('input[name="event-mode"]').forEach(r => {
-                r.addEventListener("change", () => toggleEventMode(r.value));
+                r.addEventListener('change', () => toggleEventMode(r.value));
             });
         }
 
@@ -1124,23 +1484,75 @@
         function saveAll() {
             const cfg = getSiteConfig();
 
+            // ── HERO ──
+            cfg.hero = {
+                eyebrow: g('hero-eyebrow-val'), heading: g('hero-heading-val'),
+                headingItalic: g('hero-heading-italic-val'), subtitle: g('hero-subtitle-val'),
+                stat1Number: g('hero-stat1-num-val'), stat1Label: g('hero-stat1-label-val'),
+                stat2Number: g('hero-stat2-num-val'), stat2Label: g('hero-stat2-label-val'),
+                stat3Number: g('hero-stat3-num-val'), stat3Label: g('hero-stat3-label-val'),
+                ctaPrimaryText: g('hero-cta-primary-val'),
+                image: (cfg.hero || {}).image || 'zanzibar_hero.png',
+            };
+
+            // ── TICKER ──
+            const tickerRaw = (document.getElementById('ticker-items-val') || {}).value || '';
+            cfg.ticker = tickerRaw.split('\n').map(s => s.trim()).filter(Boolean);
+
+            // ── IDENTITY / WHO WE ARE ──
+            cfg.identity = {
+                eyebrow: g('identity-eyebrow-val'), heading: g('identity-heading-val'),
+                headingItalic: g('identity-heading-italic-val'),
+                para1: g('identity-para1-val'), para2: g('identity-para2-val'), para3: g('identity-para3-val'),
+            };
+
+            // ── SOCIAL PROOF ──
+            cfg.socialProof = {
+                eyebrow: g('sp-eyebrow-val'), body: g('sp-body-val'),
+                stat1Number: g('sp-stat1-num-val'), stat1Label: g('sp-stat1-label-val'),
+                stat2Number: g('sp-stat2-num-val'), stat2Label: g('sp-stat2-label-val'),
+                stat3Number: g('sp-stat3-num-val'), stat3Label: g('sp-stat3-label-val'),
+            };
+
+            // ── HOW IT WORKS ──
+            cfg.howItWorks = {
+                eyebrow: g('hiw-eyebrow-val'), heading: g('hiw-heading-val'),
+                steps: collectHiwSteps(),
+            };
+
+            // ── NEXT TRIP ──
             cfg.nextTrip = {
                 badge: g("nt-badge"), destination: g("nt-destination"), dates: g("nt-dates"),
                 duration: g("nt-duration"), description: g("nt-desc"),
-                image: cfg.nextTrip.image, // preserve default filename
+                image: cfg.nextTrip.image,
                 priceFrom: g("nt-price"), ctaText: g("nt-cta-text"),
                 squadtripUrl: g("nt-squadtrip-url"),
             };
 
+            // ── PAST EVENT ──
             cfg.pastEvent = {
                 visible: g("pe-visible") === "true", city: g("pe-city"), date: g("pe-date"),
                 title: g("pe-title"), titleItalic: g("pe-italic"), description: g("pe-desc"),
             };
 
+            // ── WHY US ──
+            cfg.whyUs = {
+                eyebrow: g('why-eyebrow-val'), heading: g('why-heading-val'), body: g('why-body-val'),
+                cards: collectWhyCards(),
+            };
+
+            // ── FINAL CTA ──
+            cfg.finalCta = {
+                eyebrow: g('cta-eyebrow-val'), heading: g('cta-heading-val'),
+                headingItalic: g('cta-heading-italic-val'), body: g('cta-body-val'),
+                ctaText: g('cta-btn-text-val'),
+                image: (cfg.finalCta || {}).image || 'snorkeling_mnemba.png',
+            };
+
             const mode = document.querySelector('input[name="event-mode"]:checked');
             cfg.event = {
                 mode: mode ? mode.value : "coming-soon",
-                bgImage: cfg.event.bgImage, // preserve default filename
+                bgImage: cfg.event.bgImage,
                 eyebrow: g("ev-eyebrow"), heading: g("ev-heading"), headingItalic: g("ev-heading-italic"),
                 description: g("ev-desc"), subDescription: g("ev-sub-desc"), badgeText: g("ev-badge"),
                 liveEventName: g("ev-live-name"), liveEventDate: g("ev-live-date"), liveEventVenue: g("ev-live-venue"),
@@ -1156,7 +1568,7 @@
             cfg.trips = cfg.trips.map(function (trip, i) {
                 const p = "trip" + (i + 1);
                 return {
-                    id: trip.id, image: trip.image, // preserve default filename
+                    id: trip.id, image: trip.image,
                     status: g(p + "-status"), destination: g(p + "-destination"), monthYear: g(p + "-month"),
                     dates: g(p + "-dates"), duration: g(p + "-duration"), region: g(p + "-region"),
                     priceDisplay: g(p + "-price"), description: g(p + "-desc"),
@@ -1174,7 +1586,74 @@
             cfg.faqs = collectFaqs();
 
             saveSiteConfig(cfg);
-            toast("✓ Changes saved! Reload any site page to see updates.");
+            toast("✓ Saved! Reload the homepage to see updates.");
+        }
+
+        // ── HOW IT WORKS STEPS EDITOR ─────────────────────────────────
+        function renderHiwStepsEditor(steps) {
+            const editor = document.getElementById('hiw-steps-editor');
+            if (!editor) return;
+            editor.innerHTML = steps.map((step, i) => `
+              <div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:18px 20px;">
+                <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Step ${i + 1}</div>
+                <div style="display:grid;grid-template-columns:64px 1fr 1fr;gap:12px;">
+                  <div class="form-group" style="margin-bottom:0">
+                    <label>Icon</label>
+                    <input type="text" class="form-control" id="hiw-step-icon-${i}" value="${escapeAttr(step.icon || '')}" />
+                  </div>
+                  <div class="form-group" style="margin-bottom:0">
+                    <label>Title</label>
+                    <input type="text" class="form-control" id="hiw-step-title-${i}" value="${escapeAttr(step.title || '')}" />
+                  </div>
+                  <div class="form-group" style="margin-bottom:0">
+                    <label>Body</label>
+                    <input type="text" class="form-control" id="hiw-step-body-${i}" value="${escapeAttr(step.body || '')}" />
+                  </div>
+                </div>
+              </div>`).join('');
+        }
+
+        function collectHiwSteps() {
+            const steps = []; let i = 0;
+            while (document.getElementById('hiw-step-title-' + i)) {
+                steps.push({
+                    icon: (document.getElementById('hiw-step-icon-' + i) || {}).value || '',
+                    title: (document.getElementById('hiw-step-title-' + i) || {}).value || '',
+                    body: (document.getElementById('hiw-step-body-' + i) || {}).value || '',
+                });
+                i++;
+            }
+            return steps;
+        }
+
+        // ── WHY US CARDS EDITOR ───────────────────────────────────────
+        function renderWhyCardsEditor(cards) {
+            const editor = document.getElementById('why-cards-editor');
+            if (!editor) return;
+            editor.innerHTML = cards.map((card, i) => `
+              <div style="background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:18px 20px;">
+                <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Card ${i + 1}</div>
+                <div class="form-group" style="margin-bottom:10px;">
+                  <label>Card Title</label>
+                  <input type="text" class="form-control" id="why-card-title-${i}" value="${escapeAttr(card.title || '')}" />
+                </div>
+                <div class="form-group" style="margin-bottom:0">
+                  <label>Card Body</label>
+                  <textarea class="form-control" id="why-card-body-${i}" rows="2">${escHtml(card.body || '')}</textarea>
+                </div>
+              </div>`).join('');
+        }
+
+        function collectWhyCards() {
+            const cards = []; let i = 0;
+            while (document.getElementById('why-card-title-' + i)) {
+                cards.push({
+                    title: (document.getElementById('why-card-title-' + i) || {}).value || '',
+                    body: (document.getElementById('why-card-body-' + i) || {}).value || '',
+                });
+                i++;
+            }
+            return cards;
         }
 
         // ── EVENT MODE ────────────────────────────────────────────────
@@ -1182,6 +1661,7 @@
             document.getElementById("cs-fields").style.display = mode === "coming-soon" ? "" : "none";
             document.getElementById("live-fields").style.display = mode === "live" ? "" : "none";
         }
+
 
         // ============================================================
         // IMAGE UPLOAD SYSTEM

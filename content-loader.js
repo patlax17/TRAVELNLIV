@@ -51,20 +51,109 @@
     // ── HOME PAGE ────────────────────────────────────────────────
     if (page === "home") {
 
-        // --- Upcoming Event Section ---
-        const eventSection = document.getElementById("event");
+        // ── HERO ──
+        var hr = cfg.hero || {};
+        set("hero-eyebrow", hr.eyebrow);
+        set("hero-heading", hr.heading);
+        set("hero-heading-italic", hr.headingItalic);
+        set("hero-subtitle", hr.subtitle);
+        set("hero-stat1-num", hr.stat1Number);
+        set("hero-stat1-label", hr.stat1Label);
+        set("hero-stat2-num", hr.stat2Number);
+        set("hero-stat2-label", hr.stat2Label);
+        set("hero-stat3-num", hr.stat3Number);
+        set("hero-stat3-label", hr.stat3Label);
+        set("hero-cta-primary", hr.ctaPrimaryText);
+        var heroImg = getImg("hero_img", hr.image);
+        if (heroImg) { var hi = document.getElementById("hero-img"); if (hi) hi.src = heroImg; }
+
+        // ── TICKER ──
+        if (cfg.ticker && cfg.ticker.length) {
+            var tickerItems = cfg.ticker.map(function (t) {
+                return '<span>' + t + '</span><span class="ticker-sep">✦</span>';
+            }).join('');
+            document.querySelectorAll('.ticker-track').forEach(function (t) {
+                t.innerHTML = tickerItems + tickerItems; // duplicate for seamless loop
+            });
+        }
+
+        // ── IDENTITY / WHO WE ARE ──
+        var ident = cfg.identity || {};
+        set("identity-eyebrow", ident.eyebrow);
+        set("identity-heading", ident.heading);
+        set("identity-heading-italic", ident.headingItalic);
+        set("identity-para1", ident.para1);
+        set("identity-para2", ident.para2);
+        set("identity-para3", ident.para3);
+
+        // ── SOCIAL PROOF STATS ──
+        var sp = cfg.socialProof || {};
+        set("sp-eyebrow", sp.eyebrow);
+        set("sp-stat1-num", sp.stat1Number);
+        set("sp-stat1-label", sp.stat1Label);
+        set("sp-stat2-num", sp.stat2Number);
+        set("sp-stat2-label", sp.stat2Label);
+        set("sp-stat3-num", sp.stat3Number);
+        set("sp-stat3-label", sp.stat3Label);
+
+        // ── HOW IT WORKS ──
+        var hiw = cfg.howItWorks || {};
+        set("hiw-eyebrow", hiw.eyebrow);
+        set("hiw-heading", hiw.heading);
+
+        // ── NEXT TRIP CARD ──
+        set("next-trip-badge", cfg.nextTrip.badge);
+        set("next-trip-destination", cfg.nextTrip.destination);
+        set("next-trip-dates", cfg.nextTrip.dates + (cfg.nextTrip.duration ? " · " + cfg.nextTrip.duration : ""));
+        set("next-trip-desc", cfg.nextTrip.description);
+        setImgSrc("next-trip-img", "next_trip", cfg.nextTrip.image);
+        if (cfg.nextTrip.squadtripUrl) {
+            setAttr("home-booking-iframe", "data-src", cfg.nextTrip.squadtripUrl);
+        }
+
+        // ── PAST EVENT RECAP ──
+        var pastSection = document.getElementById("past-event");
+        if (pastSection) {
+            pastSection.style.display = cfg.pastEvent.visible ? "" : "none";
+            set("past-event-location", cfg.pastEvent.city + " &mdash; " + cfg.pastEvent.date);
+            set("past-event-title", cfg.pastEvent.title + ' <em>&mdash; ' + cfg.pastEvent.titleItalic + '</em>');
+            set("past-event-desc", cfg.pastEvent.description);
+            for (var pi = 0; pi < 7; pi++) {
+                var pEl = document.getElementById("lp-photo-" + pi);
+                var stored = localStorage.getItem("tnliv_img_lp_photo_" + pi);
+                if (pEl && stored) pEl.src = stored;
+            }
+        }
+
+        // ── WHY US ──
+        var wu = cfg.whyUs || {};
+        set("why-eyebrow", wu.eyebrow);
+        set("why-heading", wu.heading);
+        set("why-body", wu.body);
+
+        // ── FINAL CTA ──
+        var fc = cfg.finalCta || {};
+        set("cta-eyebrow", fc.eyebrow);
+        set("cta-heading", fc.heading);
+        set("cta-heading-italic", fc.headingItalic);
+        set("cta-body", fc.body);
+        set("cta-btn-text", fc.ctaText);
+        var ctaBgImg = getImg("cta_bg", fc.image);
+        if (ctaBgImg) { var ci = document.getElementById("cta-bg-img"); if (ci) ci.src = ctaBgImg; }
+
+        // ── UPCOMING EVENT SECTION (legacy) ──
+        var eventSection = document.getElementById("event");
         if (eventSection) {
             if (cfg.event.mode === "hidden") {
                 eventSection.style.display = "none";
             } else {
                 eventSection.style.display = "";
-                // Background image (checks for admin-uploaded override)
-                const bgImg = eventSection.querySelector(".event-bg img");
+                var bgImg = eventSection.querySelector(".event-bg img");
                 if (bgImg) bgImg.src = getImg("event_bg", cfg.event.bgImage);
 
                 if (cfg.event.mode === "coming-soon") {
-                    const csEl = document.getElementById("event-coming-soon-view");
-                    const liveEl = document.getElementById("event-live-view");
+                    var csEl = document.getElementById("event-coming-soon-view");
+                    var liveEl = document.getElementById("event-live-view");
                     if (csEl) csEl.style.display = "";
                     if (liveEl) liveEl.style.display = "none";
                     set("event-eyebrow", cfg.event.eyebrow);
@@ -73,43 +162,17 @@
                     set("event-sub-desc", cfg.event.subDescription);
                     set("event-badge-text", cfg.event.badgeText);
                 } else if (cfg.event.mode === "live") {
-                    const csEl = document.getElementById("event-coming-soon-view");
-                    const liveEl = document.getElementById("event-live-view");
-                    if (csEl) csEl.style.display = "none";
-                    if (liveEl) liveEl.style.display = "";
+                    var csEl2 = document.getElementById("event-coming-soon-view");
+                    var liveEl2 = document.getElementById("event-live-view");
+                    if (csEl2) csEl2.style.display = "none";
+                    if (liveEl2) liveEl2.style.display = "";
                     set("event-live-name", cfg.event.liveEventName);
                     set("event-live-date", cfg.event.liveEventDate);
                     set("event-live-venue", cfg.event.liveEventVenue);
                     set("event-live-price", cfg.event.livePriceDisplay);
-                    const ticketBtn = document.getElementById("event-live-ticket-btn");
+                    var ticketBtn = document.getElementById("event-live-ticket-btn");
                     if (ticketBtn) { ticketBtn.textContent = cfg.event.liveTicketBtn; ticketBtn.href = cfg.event.liveTicketUrl; }
                 }
-            }
-        }
-
-        // --- Next Trip Card ---
-        set("next-trip-badge", cfg.nextTrip.badge);
-        set("next-trip-destination", cfg.nextTrip.destination);
-        set("next-trip-dates", cfg.nextTrip.dates + (cfg.nextTrip.duration ? " · " + cfg.nextTrip.duration : ""));
-        set("next-trip-desc", cfg.nextTrip.description);
-        setImgSrc("next-trip-img", "next_trip", cfg.nextTrip.image);
-        // Wire the Squadtrip booking iframe src from admin config
-        if (cfg.nextTrip.squadtripUrl) {
-            setAttr("home-booking-iframe", "data-src", cfg.nextTrip.squadtripUrl);
-        }
-
-        // --- Past Event Recap ---
-        const pastSection = document.getElementById("past-event");
-        if (pastSection) {
-            pastSection.style.display = cfg.pastEvent.visible ? "" : "none";
-            set("past-event-location", cfg.pastEvent.city + " &mdash; " + cfg.pastEvent.date);
-            set("past-event-title", cfg.pastEvent.title + ' <em>&mdash; ' + cfg.pastEvent.titleItalic + '</em>');
-            set("past-event-desc", cfg.pastEvent.description);
-            // Apply admin-uploaded past event photos (0-6)
-            for (var pi = 0; pi < 7; pi++) {
-                var pEl = document.getElementById("lp-photo-" + pi);
-                var stored = localStorage.getItem("tnliv_img_lp_photo_" + pi);
-                if (pEl && stored) pEl.src = stored;
             }
         }
     }

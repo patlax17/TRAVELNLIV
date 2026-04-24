@@ -75,46 +75,41 @@
   <!-- ======== SECTION 1: HERO ======== -->
   <section id="hero">
     <div class="hero-bg">
-      <img src="zanzibar_hero.png" alt="Stunning travel destination aerial view" class="hero-img" />
+      <img src="zanzibar_hero.png" alt="Stunning travel destination aerial view" class="hero-img" id="hero-img" />
       <div class="hero-overlay"></div>
     </div>
     <div class="hero-content container">
       <div class="hero-text animate-fade-up">
         <span class="eyebrow animate-fade-up animate-delay-1">Travel & LIV Collective</span>
-        <h1 class="display-xl animate-fade-up animate-delay-2">
-          Where destinations<br /><em>become connections</em>
-        </h1>
-        <p class="hero-subtitle animate-fade-up animate-delay-3">
-          Group trips for people who actually make it out of the group chat. Curated experiences. Real connections.
-          Unforgettable destinations.
-        </p>
+        <h1 class="display-xl animate-fade-up animate-delay-2" id="hero-heading">Where destinations<br /><em id="hero-heading-italic">become connections</em></h1>
+        <p class="hero-subtitle animate-fade-up animate-delay-3" id="hero-subtitle">Group trips for people who actually make it out of the group chat. Curated experiences. Real connections. Unforgettable destinations.</p>
         <div class="hero-actions animate-fade-up animate-delay-4">
           <a href="#featured"
             onclick="event.preventDefault();document.getElementById('featured').scrollIntoView({behavior:'smooth'})"
             class="btn btn-gold" id="hero-join-btn">
-            <span>Join the Next Experience</span>
+            <span id="hero-cta-primary">Join the Next Experience</span>
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </a>
-          <a href="upcoming.html" class="btn btn-outline" id="hero-explore-btn">Explore Upcoming Trips</a>
+          <a href="upcoming.html" class="btn btn-outline" id="hero-explore-btn"><span id="hero-cta-secondary">Explore Upcoming Trips</span></a>
         </div>
       </div>
       <div class="hero-stat-bar glass animate-fade-in animate-delay-4">
 
         <div class="hero-stat">
-          <span class="stat-number">4–5★</span>
-          <span class="stat-label">Stays Only</span>
+          <span class="stat-number" id="hero-stat1-num">4–5★</span>
+          <span class="stat-label" id="hero-stat1-label">Stays Only</span>
         </div>
         <div class="stat-divider"></div>
         <div class="hero-stat">
-          <span class="stat-number">Global</span>
-          <span class="stat-label">Destinations</span>
+          <span class="stat-number" id="hero-stat2-num">Global</span>
+          <span class="stat-label" id="hero-stat2-label">Destinations</span>
         </div>
         <div class="stat-divider"></div>
         <div class="hero-stat">
-          <span class="stat-number">💳</span>
-          <span class="stat-label">Flexible Payment Plans Available</span>
+          <span class="stat-number" id="hero-stat3-num">💳</span>
+          <span class="stat-label" id="hero-stat3-label">Flexible Payment Plans Available</span>
         </div>
       </div>
     </div>
@@ -153,9 +148,9 @@
 
       <!-- TOP: Heading centered -->
       <div class="identity-header text-center reveal">
-        <span class="eyebrow"><span class="gold-line"></span>Who We Are</span>
+        <span class="eyebrow" id="identity-eyebrow"><span class="gold-line"></span>Who We Are</span>
         <h2 class="display-lg" style="margin:20px 0 0;">
-          This isn't a travel group.<br /><em>It's your kind of people.</em>
+          <span id="identity-heading">This isn't a travel group.</span><br /><em id="identity-heading-italic">It's your kind of people.</em>
         </h2>
       </div>
 
@@ -179,13 +174,13 @@
       <!-- BOTTOM: Body copy + highlights centered -->
       <div class="identity-body text-center reveal">
         <p class="text-muted" style="font-size:1.05rem;line-height:1.8;margin-bottom:16px;">
-          You know that feeling when everyone talks about traveling... but no one actually books it?
+          <span id="identity-para1">You know that feeling when everyone talks about traveling... but no one actually books it?</span>
         </p>
         <p class="text-muted" style="font-size:1.05rem;line-height:1.8;margin-bottom:16px;">
-          We built Travel &amp; LIV Collective for the ones who do.
+          <span id="identity-para2">We built Travel &amp; LIV Collective for the ones who do.</span>
         </p>
         <p class="text-muted" style="font-size:1.05rem;line-height:1.8;margin-bottom:48px;">
-          The ones who crave more than just a trip — but a shared experience with people who get it.
+          <span id="identity-para3">The ones who crave more than just a trip — but a shared experience with people who get it.</span>
         </p>
         <div class="highlights-grid">
           <div class="highlight-item">
@@ -226,7 +221,7 @@
   <section class="proof-section" id="proof">
     <!-- heading + stats on dark bg -->
     <div class="container proof-content reveal">
-      <span class="eyebrow">Social Proof</span>
+      <span class="eyebrow" id="sp-eyebrow">Social Proof</span>
       <h2 class="display-lg" style="margin:20px 0 24px;">
         We already took <em>20+ strangers</em><br />across the world...
         <span class="text-gold"> and they didn't want to leave.</span>
@@ -395,35 +390,35 @@
   <section class="section" id="how">
     <div class="container">
       <div class="section-header text-center reveal">
-        <span class="eyebrow">The Process</span>
-        <h2 class="display-md" style="margin-top:16px;">It's easier than you think.</h2>
+        <span class="eyebrow" id="hiw-eyebrow">The Process</span>
+        <h2 class="display-md" style="margin-top:16px;" id="hiw-heading">It's easier than you think.</h2>
         <div class="divider"></div>
       </div>
       <div class="steps-grid">
         <div class="step-card reveal animate-delay-1">
           <div class="step-number">01</div>
           <div class="step-icon">🌍</div>
-          <h3>Pick Your Trip</h3>
+          <h3 id="hiw-step1-title">Pick Your Trip</h3>
           <p class="text-muted">Browse our curated lineup of upcoming international escapes. Something always vibes.</p>
         </div>
         <div class="step-card reveal animate-delay-2">
           <div class="step-number">02</div>
           <div class="step-icon">🔐</div>
-          <h3>Secure Your Spot</h3>
+          <h3 id="hiw-step2-title">Secure Your Spot</h3>
           <p class="text-muted">Lock in your space with a deposit. Flexible payment plans available via Affirm, Klarna &
             Afterpay.</p>
         </div>
         <div class="step-card reveal animate-delay-3">
           <div class="step-number">03</div>
           <div class="step-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0 0 20.885 3.488"/></svg></div>
-          <h3>Join the Group Chat</h3>
+          <h3 id="hiw-step3-title">Join the Group Chat</h3>
           <p class="text-muted">Meet your future travel crew before you even board the plane. Pre-trip meet & greets
             included.</p>
         </div>
         <div class="step-card reveal animate-delay-4">
           <div class="step-number">04</div>
           <div class="step-icon">🛫</div>
-          <h3>Show Up — We Handle the Rest</h3>
+          <h3 id="hiw-step4-title">Show Up — We Handle the Rest</h3>
           <p class="text-muted">Logistics, activities, welcome dinner, farewell dinner — everything is curated so you
             just arrive and live.</p>
         </div>
@@ -523,32 +518,31 @@
         <h2 class="display-md" style="margin-top:16px;">Why Travel & LIV?</h2>
         <div class="divider"></div>
         <p class="text-muted" style="max-width:640px;margin:24px auto 0;font-size:1.05rem;line-height:1.8;">
-          This is a curated collective of like-minded people who value experience, connection, and the finer things in
-          life.
+          <span id="why-body">This is a curated collective of like-minded people who value experience, connection, and the finer things in life.</span>
         </p>
       </div>
       <div class="why-grid">
         <div class="why-card reveal animate-delay-1">
           <div class="why-number">01</div>
-          <h3>Curated, Not Generic</h3>
+          <h3 id="why-card1-title">Curated, Not Generic</h3>
           <p class="text-muted">Every trip is meticulously crafted. No cookie-cutter packages — every detail, from
             venues to activities, is handpicked for quality and authenticity. You won't find these on Google.</p>
         </div>
         <div class="why-card reveal animate-delay-2">
           <div class="why-number">02</div>
-          <h3>Community First</h3>
+          <h3 id="why-card2-title">Community First</h3>
           <p class="text-muted">You're not just booking a trip — you're joining a collective. Pre-trip meet & greets,
             welcome dinners, farewell dinners. Connection is built in from day one.</p>
         </div>
         <div class="why-card reveal animate-delay-3">
           <div class="why-number">03</div>
-          <h3>Mid-Luxury Standards</h3>
+          <h3 id="why-card3-title">Mid-Luxury Standards</h3>
           <p class="text-muted">4–5 star stays only. We don't compromise on where you rest your head. Premium without
             the pretension — just quality that matches the moment.</p>
         </div>
         <div class="why-card reveal animate-delay-4">
           <div class="why-number">04</div>
-          <h3>Flexible Payments</h3>
+          <h3 id="why-card4-title">Flexible Payments</h3>
           <p class="text-muted">Secure your spot with a deposit, then spread the rest with Affirm, Klarna, or Afterpay.
             No stress, just wanderlust. The experience you deserve, at a pace that works.</p>
         </div>
@@ -559,17 +553,17 @@
   <!-- ======== SECTION 8: FINAL CTA ======== -->
   <section class="final-cta-section" id="join">
     <div class="final-cta-bg">
-      <img src="snorkeling_mnemba.png" alt="Unforgettable travel experience" />
+      <img src="snorkeling_mnemba.png" alt="Unforgettable travel experience" id="cta-bg-img" />
       <div class="final-cta-overlay"></div>
     </div>
     <div class="container final-cta-content reveal">
-      <span class="eyebrow">Make Your Move</span>
+      <span class="eyebrow" id="cta-eyebrow">Make Your Move</span>
       <h2 class="display-lg" style="margin:20px 0 24px;">
-        You'll either be on the next trip...<br />
-        <em>or watching it on Instagram.</em>
+        <span id="cta-heading">You'll either be on the next trip...</span><br />
+        <em id="cta-heading-italic">or watching it on Instagram.</em>
       </h2>
       <p class="text-muted" style="max-width:560px;margin:0 auto 48px;font-size:1.05rem;line-height:1.8;">
-        The collective is growing. The next trip is being planned. Your seat is waiting.
+        <span id="cta-body">The collective is growing. The next trip is being planned. Your seat is waiting.</span>
       </p>
       <a href="#featured"
         onclick="event.preventDefault();document.getElementById('featured').scrollIntoView({behavior:'smooth'})"
