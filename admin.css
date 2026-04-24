@@ -791,12 +791,45 @@ select.form-control {
     border-color: var(--danger);
 }
 
-/* ── PAST EVENT PHOTO GRID ────────────────────────────────── */
-.pe-photo-grid {
+/* ── DYNAMIC GALLERY ADMIN GRID ───────────────────────────── */
+.gallery-admin-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-top: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.gallery-admin-card {
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.gallery-admin-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+}
+
+.gallery-admin-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border);
+}
+
+.gac-info {
+    padding: 12px;
+}
+
+.gac-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
 }
 
 .pe-photo-grid .img-upload-zone {

@@ -1122,490 +1122,501 @@
                         <div class="panel-section-icon">➕</div>
                         <div>
                             <div class="panel-section-title">Add New Gallery Photo</div>
-                            <div class="panel-section-desc">Upload a photo, fill in its details, and it will appear in
-                                the gallery. Remember to increase the photo count above.</div>
+                            <div class="panel-section-desc">Keep your high-res community photos fresh.</div>
                         </div>
-                    </div>
-
-                    <div id="gallery-add-list">
-                        <!-- Pending uploads rendered here -->
-                    </div>
-
-                    <button class="btn-add-faq" onclick="addGallerySlot()" style="margin-top:8px;">
-                        ➕ Add another photo slot
-                    </button>
-
-                    <div
-                        style="background:var(--dark-3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:20px;">
-                        <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.7;">
-                            <strong style="color:var(--gold)">📌 Note:</strong> Photos added here are stored in your
-                            browser's localStorage and appear in the gallery on reload.
-                            For permanent storage across all devices, also commit the image files to the project and add
-                            a matching <code style="color:var(--gold)">&lt;div class="gallery-card"&gt;</code> block in
-                            <code style="color:var(--gold)">gallery.html</code>.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- ========== PANEL: SOCIAL / CONTACT ========== -->
-            <div class="admin-panel" id="panel-social">
-                <div class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">🔗</div>
-                        <div>
-                            <div class="panel-section-title">Links & Contact Info</div>
-                            <div class="panel-section-desc">These update site-wide — nav, footer, CTAs, and all social
-                                buttons</div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Contact Email</label><input type="email" id="s-email"
-                                class="form-control" placeholder="Info@travelnliv.com" /></div>
-                        <div class="form-group"><label>Global CTA Button Text</label><input type="text"
-                                id="s-nav-cta-text" class="form-control" placeholder="Reserve Your Spot" /></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Global CTA Button URL</label><input type="url" id="s-nav-cta-url"
-                                class="form-control" /></div>
-                        <div class="form-group"><label>Instagram URL</label><input type="url" id="s-instagram"
-                                class="form-control" /></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>TikTok URL</label><input type="url" id="s-tiktok"
-                                class="form-control" /></div>
-                        <div class="form-group"><label>Facebook URL</label><input type="url" id="s-facebook"
-                                class="form-control" /></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>WhatsApp Group Link</label><input type="url" id="s-wa-group"
-                                class="form-control" /></div>
-                        <div class="form-group"><label>WhatsApp Channel Link</label><input type="url" id="s-wa-channel"
-                                class="form-control" /></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========== PANEL: MARKETING & ANALYTICS ========== -->
-            <div class="admin-panel" id="panel-marketing">
-                <div class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">📊</div>
-                        <div>
-                            <div class="panel-section-title">Ad Tracking Pixels</div>
-                            <div class="panel-section-desc">Enter only your numeric or alphanumeric ID — not the full
-                                script. Scripts are injected asynchronously so they never slow the site down.</div>
-                        </div>
-                    </div>
-
-                    <!-- Live status badges -->
-                    <div class="tracking-status-row" id="tracking-status-row">
-                        <!-- rendered by loadMarketingFields() -->
-                    </div>
-
-                    <!-- META PIXEL -->
-                    <div class="form-group">
-                        <label class="label-with-tip">
-                            Meta (Facebook / Instagram) Pixel ID
-                            <span class="field-tip" tabindex="0">ℹ
-                                <span class="tip-text">Paste your numeric Pixel ID (e.g.
-                                    <strong>1234567890123456</strong>). Find it in Meta Business → Events Manager → your
-                                    Pixel → Settings. Do <strong>not</strong> paste the full &lt;script&gt; tag — only
-                                    the ID.</span>
-                            </span>
-                        </label>
-                        <input type="text" id="px-meta" class="form-control" placeholder="e.g. 1234567890123456"
-                            style="max-width:420px;" inputmode="numeric" />
-                    </div>
-
-                    <!-- TIKTOK PIXEL -->
-                    <div class="form-group">
-                        <label class="label-with-tip">
-                            TikTok Pixel ID
-                            <span class="field-tip" tabindex="0">ℹ
-                                <span class="tip-text">Paste your TikTok Pixel ID (e.g. <strong>C9ABCDE12345</strong>).
-                                    Find it in TikTok Ads Manager → Assets → Events → Web Events → your Pixel →
-                                    Settings. Only the ID, not the script.</span>
-                            </span>
-                        </label>
-                        <input type="text" id="px-tiktok" class="form-control" placeholder="e.g. C9ABCDE12345"
-                            style="max-width:420px;" />
-                    </div>
-
-                    <!-- GOOGLE TAG MANAGER -->
-                    <div class="form-group">
-                        <label class="label-with-tip">
-                            Google Tag Manager ID
-                            <span class="field-tip" tabindex="0">ℹ
-                                <span class="tip-text">Paste your GTM Container ID (e.g. <strong>GTM-XXXXXXX</strong>).
-                                    Find it in tagmanager.google.com → Admin → Container Settings. Only the GTM-XXXXXXX
-                                    portion.</span>
-                            </span>
-                        </label>
-                        <input type="text" id="px-gtm" class="form-control" placeholder="e.g. GTM-XXXXXXX"
-                            style="max-width:420px;" />
-                    </div>
-
-                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
-                        <button class="btn-save" onclick="saveMarketing()">💾 Save Configuration</button>
-                        <button class="btn-secondary" onclick="clearTracking()">🗑 Clear All Pixels</button>
                     </div>
 
                     <div
-                        style="background:var(--dark-3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:24px;">
-                        <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.8;margin:0;">
-                            <strong style="color:var(--gold)">⚡ How it works:</strong>
-                            Once saved, <code style="color:var(--gold)">tracking.js</code> reads your IDs on every page
-                            load and injects the official vendor script asynchronously — meaning zero render-blocking,
-                            no performance hit. Removing or clearing an ID stops all tracking immediately.
-                        </p>
-                    </div>
-                </div>
-            </div><!-- end panel-marketing -->
-
-            <!-- ========== PANEL: SETTINGS ========== -->
-            <div class="admin-panel" id="panel-settings">
-
-                <!-- ── PUBLISH STATUS ── -->
-                <div class="panel-section" style="border-top:3px solid var(--gold,#c4a060);">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">🌐</div>
-                        <div>
-                            <div class="panel-section-title">Live Site Publish Status</div>
-                            <div class="panel-section-desc">Every Save Changes and image upload automatically goes live
-                                for <strong>all visitors</strong> on any device — no setup needed.</div>
-                        </div>
-                    </div>
-                    <div id="gh-status-bar"
-                        style="padding:14px 18px;border-radius:10px;background:rgba(196,160,96,0.08);border:1px solid rgba(196,160,96,0.2);font-size:0.85rem;">
-                        🔍 Checking publish connection...
-                    </div>
-                </div>
-
-                <div class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">🔑</div>
-                        <div>
-                            <div class="panel-section-title">Change Admin Password</div>
-                            <div class="panel-section-desc">Default password is <strong
-                                    style="color:var(--gold)">travelnliv2026</strong></div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>New Password</label><input type="password" id="new-pass"
-                                class="form-control" placeholder="Enter new password" /></div>
-                        <div class="form-group"><label>Confirm Password</label><input type="password" id="confirm-pass"
-                                class="form-control" placeholder="Confirm new password" /></div>
-                    </div>
-                    <button class="btn-save" onclick="changePassword()" style="margin-top:8px;">Update Password</button>
-                </div>
-
-                <div class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">🖼️</div>
-                        <div>
-                            <div class="panel-section-title">Clear All Uploaded Images</div>
-                            <div class="panel-section-desc">Remove all locally-stored image overrides (pages will fall
-                                back to default file-path images)</div>
-                        </div>
-                    </div>
-                    <button class="btn-danger" onclick="clearAllImages()">Clear All Image Uploads</button>
-                </div>
-                <div class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">⚠️</div>
-                        <div>
-                            <div class="panel-section-title">Reset All Content to Defaults</div>
-                            <div class="panel-section-desc">Undoes all text & link changes and restores original
-                                hardcoded content</div>
-                        </div>
-                    </div>
-                    <button class="btn-danger" onclick="resetDefaults()">Reset to Defaults</button>
-                </div>
-                <div class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">📤</div>
-                        <div>
-                            <div class="panel-section-title">Export / Import Config</div>
-                            <div class="panel-section-desc">Download a backup of your settings or restore from a backup
-                                file</div>
-                        </div>
-                    </div>
-                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                        <button class="btn-secondary" onclick="exportConfig()">⬇️ Export Config JSON</button>
-                        <label class="btn-secondary" style="cursor:pointer;">
-                            ⬆️ Import Config JSON
-                            <input type="file" accept=".json" onchange="importConfig(event)" style="display:none;" />
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- ========== PANEL: DESTINATIONS ========== -->
-            <div class="admin-panel" id="panel-destinations">
-                <div class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">🗺️</div>
-                        <div>
-                            <div class="panel-section-title">Destination Pages</div>
-                            <div class="panel-section-desc">Manage individual trip pages — edit info, mark as coming
-                                soon or booking open, delete concluded trips, and add brand new destinations.</div>
-                        </div>
-                    </div>
-
-                    <!-- Destination List -->
-                    <div id="dest-list" style="margin-top:24px;display:flex;flex-direction:column;gap:16px;"></div>
-
-                    <!-- Add New Button -->
-                    <div style="margin-top:24px;">
-                        <button class="btn-admin-primary" onclick="openAddDestForm()" id="add-dest-btn"
-                            style="display:flex;align-items:center;gap:8px;">➕ Add New Destination</button>
-                        <button class="btn-secondary" onclick="toggleDestReorder()" id="reorder-dest-btn"
-                            style="margin-top:12px;display:flex;align-items:center;gap:8px;">⇅ Rearrange Trip
-                            Order</button>
-                    </div>
-
-                    <!-- Add New Form (hidden by default) -->
-                    <div id="add-dest-form"
-                        style="display:none;margin-top:24px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:24px;">
-                        <h3 style="margin-bottom:16px;font-size:1rem;">New Destination</h3>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-                            <div class="form-group">
-                                <label>Destination Name *</label>
-                                <input type="text" id="new-dest-name" class="form-control"
-                                    placeholder="e.g. Santorini, Greece" />
-                            </div>
-                            <div class="form-group">
-                                <label>URL Slug * <small style="color:#888;">(no spaces, lowercase)</small></label>
-                                <input type="text" id="new-dest-slug" class="form-control"
-                                    placeholder="e.g. santorini" />
-                            </div>
-                            <div class="form-group">
-                                <label>Dates</label>
-                                <input type="text" id="new-dest-dates" class="form-control"
-                                    placeholder="e.g. Oct 5–12, 2027" />
-                            </div>
-                            <div class="form-group">
-                                <label>Starting Price</label>
-                                <input type="text" id="new-dest-price" class="form-control" placeholder="e.g. $2,800" />
-                            </div>
-                            <div class="form-group" style="grid-column:span 2;">
-                                <label>Status Badge</label>
-                                <select id="new-dest-status" class="form-control">
-                                    <option value="coming_soon">✈️ Coming Soon</option>
-                                    <option value="booking_open">🟢 Booking Open</option>
-                                    <option value="sold_out">🔴 Sold Out</option>
-                                </select>
-                            </div>
-                            <div class="form-group" style="grid-column:span 2;">
-                                <label>Short Tagline</label>
-                                <input type="text" id="new-dest-tagline" class="form-control"
-                                    placeholder="e.g. Cliffside villas, volcanic sunsets..." />
-                            </div>
-                            <div class="form-group" style="grid-column:span 2;">
-                                <label>Teaser Description</label>
-                                <textarea id="new-dest-teaser" class="form-control" rows="3"
-                                    placeholder="A short paragraph about the trip (for the coming soon page)..."></textarea>
-                            </div>
-                            <div class="form-group" style="grid-column:span 2;">
-                                <label>Emoji / Flag</label>
-                                <input type="text" id="new-dest-emoji" class="form-control" placeholder="e.g. 🇬🇷" />
-                            </div>
-                        </div>
-                        <div style="display:flex;gap:12px;margin-top:16px;">
-                            <button class="btn-admin-primary" onclick="saveNewDest()">✓ Create Destination</button>
-                            <button class="btn-secondary" onclick="closeAddDestForm()">Cancel</button>
-                        </div>
-                        <p style="font-size:0.8rem;color:#888;margin-top:12px;">
-                            ℹ️ Creating a destination saves it to the site config. A new page stub will be generated —
-                            you can then fill in the full itinerary, photos, and room info.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Edit Form (shown inline per destination) -->
-                <div id="dest-edit-drawer" style="display:none;margin-top:0;" class="panel-section">
-                    <div class="panel-section-header">
-                        <div class="panel-section-icon">✏️</div>
-                        <div>
-                            <div class="panel-section-title" id="edit-dest-drawer-title">Edit Destination</div>
-                            <div class="panel-section-desc">Update the key details for this trip page.</div>
-                        </div>
-                    </div>
-                    <input type="hidden" id="edit-dest-slug-hidden" />
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;">
-                        <div class="form-group">
-                            <label>Destination Name</label>
-                            <input type="text" id="edit-dest-name" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Dates</label>
-                            <input type="text" id="edit-dest-dates" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Starting Price</label>
-                            <input type="text" id="edit-dest-price" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select id="edit-dest-status" class="form-control">
-                                <option value="coming_soon">✈️ Coming Soon</option>
-                                <option value="booking_open">🟢 Booking Open</option>
-                                <option value="sold_out">🔴 Sold Out</option>
-                                <option value="concluded">🏁 Trip Concluded</option>
+                        style="display:flex; gap:12px; align-items:center; margin-bottom:20px; background:var(--dark-3); padding:16px; border-radius:10px; border:1px solid var(--border);">
+                        <div class="form-group" style="margin:0; flex:1;">
+                            <label>Gallery Category</label>
+                            <select id="new-gallery-cat" class="form-control">
+                                <option value="community">Community</option>
+                                <option value="events">Events</option>
+                                <option value="travel">Travel</option>
                             </select>
                         </div>
-                        <div class="form-group" style="grid-column:span 2;">
-                            <label>Status Badge Text</label>
-                            <input type="text" id="edit-dest-badge" class="form-control"
-                                placeholder="e.g. ✈️ Coming Soon — Details Dropping" />
-                        </div>
-                        <div class="form-group" style="grid-column:span 2;">
-                            <label>Short Tagline</label>
-                            <input type="text" id="edit-dest-tagline" class="form-control" />
-                        </div>
-                        <div class="form-group" style="grid-column:span 2;">
-                            <label>Teaser Description</label>
-                            <textarea id="edit-dest-teaser" class="form-control" rows="4"></textarea>
-                        </div>
-                        <div class="form-group" style="grid-column:span 2;">
-                            <label>Trip Page URL <small style="color:#888;">(the .html file for this
-                                    trip)</small></label>
-                            <input type="text" id="edit-dest-url" class="form-control" placeholder="e.g. bali.html" />
-                        </div>
-                        <div class="form-group" style="grid-column:span 2;">
-                            <label>Squadtrip Embed URL <small style="color:#888;">(paste the full URL from
-                                    Squadtrip)</small></label>
-                            <input type="text" id="edit-dest-squadtrip" class="form-control"
-                                placeholder="https://travelnlivcollective.squadtrip.com/trip/..." />
-                        </div>
-                    </div>
-                    <!-- Full Description -->
-                    <div class="form-group" style="grid-column:span 2;margin-top:4px;">
-                        <label>Full Trip Description <small style="color:#888;">(shown on the trip page)</small></label>
-                        <textarea id="edit-dest-desc" class="form-control" rows="5"
-                            placeholder="Describe the full trip experience..."></textarea>
-                    </div>
-
-                    <!-- ── ITINERARY EDITOR ── -->
-                    <div style="grid-column:span 2;margin-top:16px;">
-                        <label
-                            style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green,#8FBF9F);margin-bottom:10px;">Day-by-Day
-                            Itinerary</label>
-                        <div id="itin-editor-list" style="display:flex;flex-direction:column;gap:12px;"></div>
-                        <button onclick="addItinDayField()" class="btn-secondary"
-                            style="margin-top:10px;font-size:0.82rem;">+ Add Day</button>
-                    </div>
-
-                    <!-- ── INCLUDES EDITOR ── -->
-                    <div style="grid-column:span 2;margin-top:16px;">
-                        <label
-                            style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green,#8FBF9F);margin-bottom:10px;">What's
-                            Included</label>
-                        <div id="includes-editor-list" style="display:flex;flex-direction:column;gap:10px;"></div>
-                        <button onclick="addIncludeField()" class="btn-secondary"
-                            style="margin-top:10px;font-size:0.82rem;">+ Add Inclusion</button>
-                    </div>
-
-                    <!-- ── ROOM OPTIONS EDITOR ── -->
-                    <div style="grid-column:span 2;margin-top:16px;">
-                        <label
-                            style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green,#8FBF9F);margin-bottom:10px;">Room
-                            Options</label>
-                        <div id="rooms-editor-list" style="display:flex;flex-direction:column;gap:10px;"></div>
-                        <button onclick="addRoomField()" class="btn-secondary"
-                            style="margin-top:10px;font-size:0.82rem;">+ Add Room</button>
-                    </div>
-
-                    <!-- ── PHOTO MANAGEMENT ── -->
-                    <div
-                        style="grid-column:span 2;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-color,#2a2a2a);">
-                        <label
-                            style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold,#c4a060);margin-bottom:16px;">
-                            📷 Page Photo Management
-                        </label>
-                        <p style="font-size:0.8rem;color:#888;margin-bottom:20px;line-height:1.6;">
-                            Upload photos for this destination's page. Changes push to GitHub and go live for all
-                            visitors in ~30s.
-                        </p>
-
-                        <!-- Trip Card + Hero row -->
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-                            <div>
-                                <label
-                                    style="font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;display:block;margin-bottom:8px;">🃏
-                                    Trip Card Photo <span style="font-weight:400;color:#666;">— upcoming.html
-                                        card</span></label>
-                                <div class="img-upload-zone" id="zone-dest-card" onclick="openPicker('dest_card')"
-                                    style="min-height:110px;"
-                                    ondragover="event.preventDefault();this.classList.add('drag-over')"
-                                    ondragleave="this.classList.remove('drag-over')"
-                                    ondrop="handleDrop(event,'dest_card')">
-                                    <div class="img-upload-placeholder"><span class="img-upload-icon"
-                                            style="font-size:1.4rem;">🃏</span><span
-                                            class="img-upload-text"><strong>Click to upload</strong></span></div>
-                                </div>
-                                <input type="file" id="file-dest_card" accept="image/*" style="display:none"
-                                    onchange="handleDestPhoto(event,'card')" />
-                            </div>
-                            <div>
-                                <label
-                                    style="font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;display:block;margin-bottom:8px;">🖼️
-                                    Page Hero <span style="font-weight:400;color:#666;">— full-bleed
-                                        background</span></label>
-                                <div class="img-upload-zone" id="zone-dest-hero" onclick="openPicker('dest_hero')"
-                                    style="min-height:110px;"
-                                    ondragover="event.preventDefault();this.classList.add('drag-over')"
-                                    ondragleave="this.classList.remove('drag-over')"
-                                    ondrop="handleDrop(event,'dest_hero')">
-                                    <div class="img-upload-placeholder"><span class="img-upload-icon"
-                                            style="font-size:1.4rem;">🏔️</span><span
-                                            class="img-upload-text"><strong>Click to upload</strong></span></div>
-                                </div>
-                                <input type="file" id="file-dest_hero" accept="image/*" style="display:none"
-                                    onchange="handleDestPhoto(event,'hero')" />
-                            </div>
-                        </div>
-
-                        <!-- Gallery grid — dynamically populated -->
-                        <label
-                            style="font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;display:block;margin-bottom:10px;">
-                            📷 Gallery Photos <span style="font-weight:400;color:#666;">— the photo grid on the trip
-                                page (click any slot to replace)</span>
-                        </label>
-
-                        <!-- Photo Strip Management (upcoming.html expander) -->
-                        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-color,#2a2a2a);">
-                            <label
-                                style="display:block;font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;margin-bottom:10px;">
-                                🎞️ Photo Strip <span style="font-weight:400;color:#666;">— the 5 photos in the
-                                    upcoming.html expanded view (drag to rearrange)</span>
+                        <div style="flex:1;">
+                            <label class="btn-admin-primary"
+                                style="display:flex; justify-content:center; cursor:pointer;">
+                                📸 Select & Upload
+                                <input type="file" accept="image/*" style="display:none;"
+                                    onchange="addGalleryPhoto(event)" />
                             </label>
-                            <div id="dest-strip-grid"
-                                style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
-                                <!-- Populated by renderDestPhotoGrid() -->
-                            </div>
-                        </div>
-                        <div id="dest-gallery-grid"
-                            style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;">
-                            <!-- Populated by renderDestPhotoGrid() when edit drawer opens -->
                         </div>
                     </div>
 
-                </div><!-- end edit grid -->
-                <p
-                    style="font-size:0.78rem;color:#888;margin-top:12px;padding:10px 14px;background:rgba(143,191,159,0.07);border-radius:8px;border-left:2px solid #8FBF9F;">
-                    💡 <strong>How updates work:</strong> Changes saved here update the live site automatically via
-                    localStorage. For new destinations, visit <code>trip.html?slug=YOUR_SLUG</code> to see the full
-                    rendered page.
-                </p>
-                <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
-                    <button class="btn-admin-primary" onclick="saveEditDest()">✓ Save All Changes</button>
-                    <button class="btn-secondary" onclick="closeEditDest()">Cancel</button>
+                    <div id="gallery-add-list" class="gallery-admin-grid">
+                        <!-- Pending/Existing uploads rendered here by renderGalleryAdmin() -->
+                    </div>
+                </div>
+
+                <div
+                    style="background:var(--dark-3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:20px;">
+                    <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.7;">
+                        <strong style="color:var(--gold)">📌 Note:</strong> Photos added here are stored in your
+                        browser's localStorage and appear in the gallery on reload.
+                        For permanent storage across all devices, also commit the image files to the project and add
+                        a matching <code style="color:var(--gold)">&lt;div class="gallery-card"&gt;</code> block in
+                        <code style="color:var(--gold)">gallery.html</code>.
+                    </p>
                 </div>
             </div>
+
+    </div>
+
+    <!-- ========== PANEL: SOCIAL / CONTACT ========== -->
+    <div class="admin-panel" id="panel-social">
+        <div class="panel-section">
+            <div class="panel-section-header">
+                <div class="panel-section-icon">🔗</div>
+                <div>
+                    <div class="panel-section-title">Links & Contact Info</div>
+                    <div class="panel-section-desc">These update site-wide — nav, footer, CTAs, and all social
+                        buttons</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Contact Email</label><input type="email" id="s-email"
+                        class="form-control" placeholder="Info@travelnliv.com" /></div>
+                <div class="form-group"><label>Global CTA Button Text</label><input type="text" id="s-nav-cta-text"
+                        class="form-control" placeholder="Reserve Your Spot" /></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Global CTA Button URL</label><input type="url" id="s-nav-cta-url"
+                        class="form-control" /></div>
+                <div class="form-group"><label>Instagram URL</label><input type="url" id="s-instagram"
+                        class="form-control" /></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>TikTok URL</label><input type="url" id="s-tiktok" class="form-control" />
+                </div>
+                <div class="form-group"><label>Facebook URL</label><input type="url" id="s-facebook"
+                        class="form-control" /></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>WhatsApp Group Link</label><input type="url" id="s-wa-group"
+                        class="form-control" /></div>
+                <div class="form-group"><label>WhatsApp Channel Link</label><input type="url" id="s-wa-channel"
+                        class="form-control" /></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== PANEL: MARKETING & ANALYTICS ========== -->
+    <div class="admin-panel" id="panel-marketing">
+        <div class="panel-section">
+            <div class="panel-section-header">
+                <div class="panel-section-icon">📊</div>
+                <div>
+                    <div class="panel-section-title">Ad Tracking Pixels</div>
+                    <div class="panel-section-desc">Enter only your numeric or alphanumeric ID — not the full
+                        script. Scripts are injected asynchronously so they never slow the site down.</div>
+                </div>
+            </div>
+
+            <!-- Live status badges -->
+            <div class="tracking-status-row" id="tracking-status-row">
+                <!-- rendered by loadMarketingFields() -->
+            </div>
+
+            <!-- META PIXEL -->
+            <div class="form-group">
+                <label class="label-with-tip">
+                    Meta (Facebook / Instagram) Pixel ID
+                    <span class="field-tip" tabindex="0">ℹ
+                        <span class="tip-text">Paste your numeric Pixel ID (e.g.
+                            <strong>1234567890123456</strong>). Find it in Meta Business → Events Manager → your
+                            Pixel → Settings. Do <strong>not</strong> paste the full &lt;script&gt; tag — only
+                            the ID.</span>
+                    </span>
+                </label>
+                <input type="text" id="px-meta" class="form-control" placeholder="e.g. 1234567890123456"
+                    style="max-width:420px;" inputmode="numeric" />
+            </div>
+
+            <!-- TIKTOK PIXEL -->
+            <div class="form-group">
+                <label class="label-with-tip">
+                    TikTok Pixel ID
+                    <span class="field-tip" tabindex="0">ℹ
+                        <span class="tip-text">Paste your TikTok Pixel ID (e.g. <strong>C9ABCDE12345</strong>).
+                            Find it in TikTok Ads Manager → Assets → Events → Web Events → your Pixel →
+                            Settings. Only the ID, not the script.</span>
+                    </span>
+                </label>
+                <input type="text" id="px-tiktok" class="form-control" placeholder="e.g. C9ABCDE12345"
+                    style="max-width:420px;" />
+            </div>
+
+            <!-- GOOGLE TAG MANAGER -->
+            <div class="form-group">
+                <label class="label-with-tip">
+                    Google Tag Manager ID
+                    <span class="field-tip" tabindex="0">ℹ
+                        <span class="tip-text">Paste your GTM Container ID (e.g. <strong>GTM-XXXXXXX</strong>).
+                            Find it in tagmanager.google.com → Admin → Container Settings. Only the GTM-XXXXXXX
+                            portion.</span>
+                    </span>
+                </label>
+                <input type="text" id="px-gtm" class="form-control" placeholder="e.g. GTM-XXXXXXX"
+                    style="max-width:420px;" />
+            </div>
+
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+                <button class="btn-save" onclick="saveMarketing()">💾 Save Configuration</button>
+                <button class="btn-secondary" onclick="clearTracking()">🗑 Clear All Pixels</button>
+            </div>
+
+            <div
+                style="background:var(--dark-3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:24px;">
+                <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.8;margin:0;">
+                    <strong style="color:var(--gold)">⚡ How it works:</strong>
+                    Once saved, <code style="color:var(--gold)">tracking.js</code> reads your IDs on every page
+                    load and injects the official vendor script asynchronously — meaning zero render-blocking,
+                    no performance hit. Removing or clearing an ID stops all tracking immediately.
+                </p>
+            </div>
+        </div>
+    </div><!-- end panel-marketing -->
+
+    <!-- ========== PANEL: SETTINGS ========== -->
+    <div class="admin-panel" id="panel-settings">
+
+        <!-- ── PUBLISH STATUS ── -->
+        <div class="panel-section" style="border-top:3px solid var(--gold,#c4a060);">
+            <div class="panel-section-header">
+                <div class="panel-section-icon">🌐</div>
+                <div>
+                    <div class="panel-section-title">Live Site Publish Status</div>
+                    <div class="panel-section-desc">Every Save Changes and image upload automatically goes live
+                        for <strong>all visitors</strong> on any device — no setup needed.</div>
+                </div>
+            </div>
+            <div id="gh-status-bar"
+                style="padding:14px 18px;border-radius:10px;background:rgba(196,160,96,0.08);border:1px solid rgba(196,160,96,0.2);font-size:0.85rem;">
+                🔍 Checking publish connection...
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <div class="panel-section-header">
+                <div class="panel-section-icon">🔑</div>
+                <div>
+                    <div class="panel-section-title">Change Admin Password</div>
+                    <div class="panel-section-desc">Default password is <strong
+                            style="color:var(--gold)">travelnliv2026</strong></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>New Password</label><input type="password" id="new-pass"
+                        class="form-control" placeholder="Enter new password" /></div>
+                <div class="form-group"><label>Confirm Password</label><input type="password" id="confirm-pass"
+                        class="form-control" placeholder="Confirm new password" /></div>
+            </div>
+            <button class="btn-save" onclick="changePassword()" style="margin-top:8px;">Update Password</button>
+        </div>
+
+        <div class="panel-section">
+            <div class="panel-section-header">
+                <div class="panel-section-icon">🖼️</div>
+                <div>
+                    <div class="panel-section-title">Clear All Uploaded Images</div>
+                    <div class="panel-section-desc">Remove all locally-stored image overrides (pages will fall
+                        back to default file-path images)</div>
+                </div>
+            </div>
+            <button class="btn-danger" onclick="clearAllImages()">Clear All Image Uploads</button>
+        </div>
+        <div class="panel-section">
+            <div class="panel-section-header">
+                <div class="panel-section-icon">⚠️</div>
+                <div>
+                    <div class="panel-section-title">Reset All Content to Defaults</div>
+                    <div class="panel-section-desc">Undoes all text & link changes and restores original
+                        hardcoded content</div>
+                </div>
+            </div>
+            <button class="btn-danger" onclick="resetDefaults()">Reset to Defaults</button>
+        </div>
+        <div class="panel-section">
+            <div class="panel-section-header">
+                <div class="panel-section-icon">📤</div>
+                <div>
+                    <div class="panel-section-title">Export / Import Config</div>
+                    <div class="panel-section-desc">Download a backup of your settings or restore from a backup
+                        file</div>
+                </div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <button class="btn-secondary" onclick="exportConfig()">⬇️ Export Config JSON</button>
+                <label class="btn-secondary" style="cursor:pointer;">
+                    ⬆️ Import Config JSON
+                    <input type="file" accept=".json" onchange="importConfig(event)" style="display:none;" />
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========== PANEL: DESTINATIONS ========== -->
+    <div class="admin-panel" id="panel-destinations">
+        <div class="panel-section">
+            <div class="panel-section-header">
+                <div class="panel-section-icon">🗺️</div>
+                <div>
+                    <div class="panel-section-title">Destination Pages</div>
+                    <div class="panel-section-desc">Manage individual trip pages — edit info, mark as coming
+                        soon or booking open, delete concluded trips, and add brand new destinations.</div>
+                </div>
+            </div>
+
+            <!-- Destination List -->
+            <div id="dest-list" style="margin-top:24px;display:flex;flex-direction:column;gap:16px;"></div>
+
+            <!-- Add New Button -->
+            <div style="margin-top:24px;">
+                <button class="btn-admin-primary" onclick="openAddDestForm()" id="add-dest-btn"
+                    style="display:flex;align-items:center;gap:8px;">➕ Add New Destination</button>
+                <button class="btn-secondary" onclick="toggleDestReorder()" id="reorder-dest-btn"
+                    style="margin-top:12px;display:flex;align-items:center;gap:8px;">⇅ Rearrange Trip
+                    Order</button>
+            </div>
+
+            <!-- Add New Form (hidden by default) -->
+            <div id="add-dest-form"
+                style="display:none;margin-top:24px;background:var(--bg-2,#1a1a1a);border:1px solid var(--border-color,#2a2a2a);border-radius:12px;padding:24px;">
+                <h3 style="margin-bottom:16px;font-size:1rem;">New Destination</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div class="form-group">
+                        <label>Destination Name *</label>
+                        <input type="text" id="new-dest-name" class="form-control"
+                            placeholder="e.g. Santorini, Greece" />
+                    </div>
+                    <div class="form-group">
+                        <label>URL Slug * <small style="color:#888;">(no spaces, lowercase)</small></label>
+                        <input type="text" id="new-dest-slug" class="form-control" placeholder="e.g. santorini" />
+                    </div>
+                    <div class="form-group">
+                        <label>Dates</label>
+                        <input type="text" id="new-dest-dates" class="form-control" placeholder="e.g. Oct 5–12, 2027" />
+                    </div>
+                    <div class="form-group">
+                        <label>Starting Price</label>
+                        <input type="text" id="new-dest-price" class="form-control" placeholder="e.g. $2,800" />
+                    </div>
+                    <div class="form-group" style="grid-column:span 2;">
+                        <label>Status Badge</label>
+                        <select id="new-dest-status" class="form-control">
+                            <option value="coming_soon">✈️ Coming Soon</option>
+                            <option value="booking_open">🟢 Booking Open</option>
+                            <option value="sold_out">🔴 Sold Out</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="grid-column:span 2;">
+                        <label>Short Tagline</label>
+                        <input type="text" id="new-dest-tagline" class="form-control"
+                            placeholder="e.g. Cliffside villas, volcanic sunsets..." />
+                    </div>
+                    <div class="form-group" style="grid-column:span 2;">
+                        <label>Teaser Description</label>
+                        <textarea id="new-dest-teaser" class="form-control" rows="3"
+                            placeholder="A short paragraph about the trip (for the coming soon page)..."></textarea>
+                    </div>
+                    <div class="form-group" style="grid-column:span 2;">
+                        <label>Emoji / Flag</label>
+                        <input type="text" id="new-dest-emoji" class="form-control" placeholder="e.g. 🇬🇷" />
+                    </div>
+                </div>
+                <div style="display:flex;gap:12px;margin-top:16px;">
+                    <button class="btn-admin-primary" onclick="saveNewDest()">✓ Create Destination</button>
+                    <button class="btn-secondary" onclick="closeAddDestForm()">Cancel</button>
+                </div>
+                <p style="font-size:0.8rem;color:#888;margin-top:12px;">
+                    ℹ️ Creating a destination saves it to the site config. A new page stub will be generated —
+                    you can then fill in the full itinerary, photos, and room info.
+                </p>
+            </div>
+        </div>
+
+        <!-- Edit Form (shown inline per destination) -->
+        <div id="dest-edit-drawer" style="display:none;margin-top:0;" class="panel-section">
+            <div class="panel-section-header">
+                <div class="panel-section-icon">✏️</div>
+                <div>
+                    <div class="panel-section-title" id="edit-dest-drawer-title">Edit Destination</div>
+                    <div class="panel-section-desc">Update the key details for this trip page.</div>
+                </div>
+            </div>
+            <input type="hidden" id="edit-dest-slug-hidden" />
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;">
+                <div class="form-group">
+                    <label>Destination Name</label>
+                    <input type="text" id="edit-dest-name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Dates</label>
+                    <input type="text" id="edit-dest-dates" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Starting Price</label>
+                    <input type="text" id="edit-dest-price" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="edit-dest-status" class="form-control">
+                        <option value="coming_soon">✈️ Coming Soon</option>
+                        <option value="booking_open">🟢 Booking Open</option>
+                        <option value="sold_out">🔴 Sold Out</option>
+                        <option value="concluded">🏁 Trip Concluded</option>
+                    </select>
+                </div>
+                <div class="form-group" style="grid-column:span 2;">
+                    <label>Status Badge Text</label>
+                    <input type="text" id="edit-dest-badge" class="form-control"
+                        placeholder="e.g. ✈️ Coming Soon — Details Dropping" />
+                </div>
+                <div class="form-group" style="grid-column:span 2;">
+                    <label>Short Tagline</label>
+                    <input type="text" id="edit-dest-tagline" class="form-control" />
+                </div>
+                <div class="form-group" style="grid-column:span 2;">
+                    <label>Teaser Description</label>
+                    <textarea id="edit-dest-teaser" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="form-group" style="grid-column:span 2;">
+                    <label>Trip Page URL <small style="color:#888;">(the .html file for this
+                            trip)</small></label>
+                    <input type="text" id="edit-dest-url" class="form-control" placeholder="e.g. bali.html" />
+                </div>
+                <div class="form-group" style="grid-column:span 2;">
+                    <label>Squadtrip Embed URL <small style="color:#888;">(paste the full URL from
+                            Squadtrip)</small></label>
+                    <input type="text" id="edit-dest-squadtrip" class="form-control"
+                        placeholder="https://travelnlivcollective.squadtrip.com/trip/..." />
+                </div>
+            </div>
+            <!-- Full Description -->
+            <div class="form-group" style="grid-column:span 2;margin-top:4px;">
+                <label>Full Trip Description <small style="color:#888;">(shown on the trip page)</small></label>
+                <textarea id="edit-dest-desc" class="form-control" rows="5"
+                    placeholder="Describe the full trip experience..."></textarea>
+            </div>
+
+            <!-- ── ITINERARY EDITOR ── -->
+            <div style="grid-column:span 2;margin-top:16px;">
+                <label
+                    style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green,#8FBF9F);margin-bottom:10px;">Day-by-Day
+                    Itinerary</label>
+                <div id="itin-editor-list" style="display:flex;flex-direction:column;gap:12px;"></div>
+                <button onclick="addItinDayField()" class="btn-secondary" style="margin-top:10px;font-size:0.82rem;">+
+                    Add Day</button>
+            </div>
+
+            <!-- ── INCLUDES EDITOR ── -->
+            <div style="grid-column:span 2;margin-top:16px;">
+                <label
+                    style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green,#8FBF9F);margin-bottom:10px;">What's
+                    Included</label>
+                <div id="includes-editor-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+                <button onclick="addIncludeField()" class="btn-secondary" style="margin-top:10px;font-size:0.82rem;">+
+                    Add Inclusion</button>
+            </div>
+
+            <!-- ── ROOM OPTIONS EDITOR ── -->
+            <div style="grid-column:span 2;margin-top:16px;">
+                <label
+                    style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green,#8FBF9F);margin-bottom:10px;">Room
+                    Options</label>
+                <div id="rooms-editor-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+                <button onclick="addRoomField()" class="btn-secondary" style="margin-top:10px;font-size:0.82rem;">+ Add
+                    Room</button>
+            </div>
+
+            <!-- ── PHOTO MANAGEMENT ── -->
+            <div
+                style="grid-column:span 2;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-color,#2a2a2a);">
+                <label
+                    style="display:block;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold,#c4a060);margin-bottom:16px;">
+                    📷 Page Photo Management
+                </label>
+                <p style="font-size:0.8rem;color:#888;margin-bottom:20px;line-height:1.6;">
+                    Upload photos for this destination's page. Changes push to GitHub and go live for all
+                    visitors in ~30s.
+                </p>
+
+                <!-- Trip Card + Hero row -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+                    <div>
+                        <label
+                            style="font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;display:block;margin-bottom:8px;">🃏
+                            Trip Card Photo <span style="font-weight:400;color:#666;">— upcoming.html
+                                card</span></label>
+                        <div class="img-upload-zone" id="zone-dest-card" onclick="openPicker('dest_card')"
+                            style="min-height:110px;"
+                            ondragover="event.preventDefault();this.classList.add('drag-over')"
+                            ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'dest_card')">
+                            <div class="img-upload-placeholder"><span class="img-upload-icon"
+                                    style="font-size:1.4rem;">🃏</span><span class="img-upload-text"><strong>Click to
+                                        upload</strong></span></div>
+                        </div>
+                        <input type="file" id="file-dest_card" accept="image/*" style="display:none"
+                            onchange="handleDestPhoto(event,'card')" />
+                    </div>
+                    <div>
+                        <label
+                            style="font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;display:block;margin-bottom:8px;">🖼️
+                            Page Hero <span style="font-weight:400;color:#666;">— full-bleed
+                                background</span></label>
+                        <div class="img-upload-zone" id="zone-dest-hero" onclick="openPicker('dest_hero')"
+                            style="min-height:110px;"
+                            ondragover="event.preventDefault();this.classList.add('drag-over')"
+                            ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event,'dest_hero')">
+                            <div class="img-upload-placeholder"><span class="img-upload-icon"
+                                    style="font-size:1.4rem;">🏔️</span><span class="img-upload-text"><strong>Click to
+                                        upload</strong></span></div>
+                        </div>
+                        <input type="file" id="file-dest_hero" accept="image/*" style="display:none"
+                            onchange="handleDestPhoto(event,'hero')" />
+                    </div>
+                </div>
+
+                <!-- Gallery grid — dynamically populated -->
+                <label
+                    style="font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;display:block;margin-bottom:10px;">
+                    📷 Gallery Photos <span style="font-weight:400;color:#666;">— the photo grid on the trip
+                        page (click any slot to replace)</span>
+                </label>
+
+                <!-- Photo Strip Management (upcoming.html expander) -->
+                <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-color,#2a2a2a);">
+                    <label
+                        style="display:block;font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;margin-bottom:10px;">
+                        🎞️ Photo Strip <span style="font-weight:400;color:#666;">— the 5 photos in the
+                            upcoming.html expanded view (drag to rearrange)</span>
+                    </label>
+                    <div id="dest-strip-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+                        <!-- Populated by renderDestPhotoGrid() -->
+                    </div>
+                </div>
+                <div id="dest-gallery-grid"
+                    style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;">
+                    <!-- Populated by renderDestPhotoGrid() when edit drawer opens -->
+                </div>
+            </div>
+
+        </div><!-- end edit grid -->
+        <p
+            style="font-size:0.78rem;color:#888;margin-top:12px;padding:10px 14px;background:rgba(143,191,159,0.07);border-radius:8px;border-left:2px solid #8FBF9F;">
+            💡 <strong>How updates work:</strong> Changes saved here update the live site automatically via
+            localStorage. For new destinations, visit <code>trip.html?slug=YOUR_SLUG</code> to see the full
+            rendered page.
+        </p>
+        <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+            <button class="btn-admin-primary" onclick="saveEditDest()">✓ Save All Changes</button>
+            <button class="btn-secondary" onclick="closeEditDest()">Cancel</button>
+        </div>
+    </div>
     </div>
 
     </main>
@@ -2133,70 +2144,85 @@
             if (file && file.type.startsWith("image/")) processImage(file, key);
         }
 
-        // Convert file to base64, store, refresh zone
-        // Convert file to base64, store locally + publish to GitHub
-        function processImage(file, key) {
+        // Convert file to base64 for instant preview, then push to Supabase Storage
+        async function processImage(file, key) {
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = async function (e) {
                 const base64 = e.target.result;
-                // 1️⃣ Store locally for instant admin preview
-                localStorage.setItem("tnliv_img_" + key, base64);
-                refreshZone(key, base64);
-                toast("✓ Photo saved. Publishing to live site...");
 
-                // 2️⃣ Commit to GitHub → visible to ALL visitors after ~30s deploy
+                // 1. Instant Admin Preview
+                refreshZone(key, base64);
+                toast("⏳ Uploading to Supabase Storage...");
+
+                // 2. Push to Supabase
                 if (window.publishImage) {
-                    window.publishImage(key, base64)
-                        .then(function (url) {
-                            if (url) toast("✅ Photo published! Live site updates in ~30 seconds.");
-                            else toast("✓ Photo saved locally. Add GitHub token in Settings to publish globally.", "warn");
-                        })
-                        .catch(function (e) {
-                            toast("⚠ Photo saved locally, publish failed: " + e.message, "error");
-                        });
+                    const publicUrl = await window.publishImage(key, file);
+                    if (publicUrl) {
+                        toast("✅ Photo live in Supabase!");
+                        // Update preview with real URL
+                        refreshZone(key, publicUrl);
+                        // Save mapping to localStorage as cache
+                        localStorage.setItem("tnliv_img_" + key, publicUrl);
+                    } else {
+                        toast("❌ Upload failed.", "error");
+                    }
                 }
             };
             reader.readAsDataURL(file);
         }
 
-        // Remove image for a key (local + global)
-        function removeImage(event, key) {
-            event.stopPropagation();
-            localStorage.removeItem("tnliv_img_" + key);
-            refreshZone(key, null);
-            toast("Image removed.");
-            // Also remove from GitHub site-data.json
-            if (window.unpublishImage) window.unpublishImage(key);
+        // Remove image for a key (local + Supabase Storage)
+        async function removeImage(event, key) {
+            if (event) event.stopPropagation();
+            if (!confirm("Permanently delete this image from Supabase Storage?")) return;
+
+            toast("🗑 Deleting...");
+            const ok = await window.removeImage(key);
+            if (ok) {
+                localStorage.removeItem("tnliv_img_" + key);
+                refreshZone(key, null);
+                toast("✓ Image removed.");
+            } else {
+                toast("❌ Delete failed.", "error");
+            }
         }
 
-
         // Re-render a zone with new image or empty state
-        function refreshZone(key, base64) {
+        function refreshZone(key, url) {
             const zone = document.getElementById("zone-" + key);
             if (!zone) return;
-            if (base64) {
+            if (url) {
                 zone.classList.add("has-image");
                 zone.innerHTML = `
-      <img class="img-upload-preview" src="${base64}" alt="Preview" />
-      <button class="img-remove-btn" onclick="removeImage(event,'${key}')" title="Remove image">✕</button>`;
+                    <div class="img-upload-overlay">
+                        <span class="overlay-text">Click to Replace</span>
+                    </div>
+                    <img class="img-upload-preview" src="${url}" alt="Preview" />
+                    <button class="img-remove-btn" onclick="removeImage(event,'${key}')" title="Delete Permanent">🗑</button>`;
             } else {
                 zone.classList.remove("has-image");
                 zone.innerHTML = `
-      <div class="img-upload-placeholder">
-        <span class="img-upload-icon">🖼️</span>
-        <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
-        <span class="img-upload-hint">PNG · JPG · WebP accepted</span>
-      </div>`;
+                    <div class="img-upload-placeholder">
+                        <span class="img-upload-icon">🖼️</span>
+                        <span class="img-upload-text">Drop image or <strong>click to browse</strong></span>
+                        <span class="img-upload-hint">Dashed borders = Lead Engineer Pattern</span>
+                    </div>`;
             }
-            // Reset file input so same file can be reselected
+            // Reset file input
             const fi = document.getElementById("file-" + key);
             if (fi) fi.value = "";
         }
 
-        // Restore a zone's preview from stored base64
+        // Restore a zone's preview from stored URL
         function restoreZone(key) {
             const stored = localStorage.getItem("tnliv_img_" + key);
             if (stored) refreshZone(key, stored);
+            else {
+                // Check if in globalImages (from showApp sync)
+                if (window.globalImages && window.globalImages[key]) {
+                    refreshZone(key, window.globalImages[key]);
+                }
+            }
         }
 
         // ── PAST EVENT PHOTO GRID ─────────────────────────────────────
@@ -2230,60 +2256,56 @@
             }).join("");
         }
 
-        // ── GALLERY UPLOAD SLOTS ──────────────────────────────────────
-        let gallerySlotCount = 0;
+        // ── GALLERY MANAGEMENT (Supabase Powered) ────────────────────
+        async function renderGalleryAdmin() {
+            const grid = document.getElementById("gallery-add-list");
+            if (!grid) return;
+            grid.innerHTML = "⏳ Loading Gallery...";
 
-        function addGallerySlot() {
-            const idx = gallerySlotCount++;
-            const key = "gallery_pending_" + idx;
-            const list = document.getElementById("gallery-add-list");
-            const div = document.createElement("div");
-            div.id = "gallery-slot-" + idx;
-            div.className = "gallery-add-row";
-            div.innerHTML = `
-    <div>
-      <div class="img-upload-zone" id="zone-${key}"
-        onclick="openPicker('${key}')"
-        ondragover="event.preventDefault();this.classList.add('drag-over')"
-        ondragleave="this.classList.remove('drag-over')"
-        ondrop="handleDrop(event,'${key}')">
-        <div class="img-upload-placeholder">
-          <span class="img-upload-icon">📷</span>
-          <span class="img-upload-text" style="font-size:0.72rem;">Drop or <strong>browse</strong></span>
-        </div>
-      </div>
-      <input type="file" id="file-${key}" accept="image/*" style="display:none" onchange="handleFilePick(event,'${key}')" />
-    </div>
-    <div>
-      <div class="form-group" style="margin-bottom:10px;">
-        <label>Photo Title</label>
-        <input type="text" id="gtitle-${idx}" class="form-control" placeholder="e.g. Rooftop Views" />
-      </div>
-      <div class="form-group" style="margin-bottom:0">
-        <label>Description</label>
-        <input type="text" id="gdesc-${idx}" class="form-control" placeholder="Short caption..." />
-      </div>
-    </div>
-    <div>
-      <div class="form-group" style="margin-bottom:10px;">
-        <label>Category (filter tag)</label>
-        <select id="gcat-${idx}" class="form-control">
-          <option value="community">Community</option>
-          <option value="china">China</option>
-          <option value="events">Events</option>
-        </select>
-      </div>
-    </div>
-    <div style="display:flex;align-items:flex-end;padding-bottom:4px;">
-      <button class="btn-danger" onclick="removeGallerySlot(${idx})" style="font-size:0.75rem;padding:8px 14px;">Remove</button>
-    </div>`;
-            list.appendChild(div);
+            const { data, error } = await supabaseClient.from('gallery_assets').select('*').order('created_at', { ascending: false });
+            if (error) return grid.innerHTML = "Error loading gallery.";
+
+            grid.innerHTML = data.map(item => `
+                <div class="gallery-admin-card">
+                    <img src="${item.url}" alt="Gallery Photo" />
+                    <div class="gac-info">
+                        <div class="gac-tag">${item.category || 'Uncategorized'}</div>
+                        <button class="btn-danger" onclick="deleteGalleryItem('${item.id}', '${item.url}')">🗑 Remove</button>
+                    </div>
+                </div>
+            `).join("");
         }
 
-        function removeGallerySlot(idx) {
-            const el = document.getElementById("gallery-slot-" + idx);
-            if (el) el.remove();
-            localStorage.removeItem("tnliv_img_gallery_pending_" + idx);
+        async function addGalleryPhoto(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            toast("📤 Uploading gallery photo...");
+            const publicUrl = await window.publishImage(`gallery_${Date.now()}`, file);
+            if (publicUrl) {
+                await supabaseClient.from('gallery_assets').insert({
+                    url: publicUrl,
+                    category: document.getElementById('new-gallery-cat').value,
+                    display_order: 0
+                });
+                renderGalleryAdmin();
+                toast("✅ Gallery photo added!");
+            }
+        }
+
+        async function deleteGalleryItem(id, url) {
+            if (!confirm("Permanently delete this gallery photo?")) return;
+            toast("🗑 Deleting...");
+
+            // Remove from Storage
+            const parts = url.split('/');
+            const fileName = parts[parts.length - 1];
+            await supabaseClient.storage.from('site-assets').remove([fileName]);
+
+            // Remove from DB
+            await supabaseClient.from('gallery_assets').delete().eq('id', id);
+            renderGalleryAdmin();
+            toast("✓ Photo deleted.");
         }
 
         // ── RESET & CLEAR ─────────────────────────────────────────────
@@ -2404,19 +2426,26 @@
             { id: "px-gtm", lsKey: "tnliv_pixel_gtm", label: "GTM" },
         ];
 
-        function loadMarketingFields() {
+        async function loadMarketingFields() {
+            var row = document.getElementById("tracking-status-row");
+            if (row) row.innerHTML = "⏳ Loading...";
+
+            const client = supabaseClient;
+            const { data } = await client.from('site_config').select('*').eq('section_key', 'marketing').single();
+            const config = data ? data.data : {};
+
             PIXEL_KEYS.forEach(function (p) {
                 var el = document.getElementById(p.id);
-                if (el) el.value = localStorage.getItem(p.lsKey) || "";
+                if (el) el.value = config[p.id] || "";
             });
-            renderTrackingStatus();
+            renderTrackingStatus(config);
         }
 
-        function renderTrackingStatus() {
+        function renderTrackingStatus(config) {
             var row = document.getElementById("tracking-status-row");
             if (!row) return;
             row.innerHTML = PIXEL_KEYS.map(function (p) {
-                var val = (localStorage.getItem(p.lsKey) || "").trim();
+                var val = (config[p.id] || "").trim();
                 var active = !!val;
                 return '<div class="pixel-status-chip' + (active ? " active" : "") + '">' +
                     '<div class="psc-dot"></div>' +
@@ -2425,33 +2454,32 @@
             }).join("");
         }
 
-        function saveMarketing() {
-            var anySet = false;
+        async function saveMarketing() {
+            var config = {};
             PIXEL_KEYS.forEach(function (p) {
                 var el = document.getElementById(p.id);
-                if (!el) return;
-                var val = el.value.trim();
-                if (val) {
-                    localStorage.setItem(p.lsKey, val);
-                    anySet = true;
-                } else {
-                    localStorage.removeItem(p.lsKey);
-                }
+                if (el) config[p.id] = el.value.trim();
             });
-            renderTrackingStatus();
-            toast(anySet
-                ? "✓ Tracking IDs saved — scripts are now live on every page!"
-                : "Tracking IDs cleared — no scripts will fire.");
+
+            toast('💾 Syncing Marketing IDs...');
+            await supabaseClient.from('site_config').upsert({
+                section_key: 'marketing',
+                data: config,
+                updated_at: new Date()
+            }, { onConflict: 'section_key' });
+
+            loadMarketingFields();
+            toast("✓ Marketing IDs synced to Supabase!");
         }
 
-        function clearTracking() {
+        async function clearTracking() {
             if (!confirm("Remove all pixel IDs? Tracking will stop on the next page load.")) return;
-            PIXEL_KEYS.forEach(function (p) {
-                localStorage.removeItem(p.lsKey);
-                var el = document.getElementById(p.id);
-                if (el) el.value = "";
-            });
-            renderTrackingStatus();
+            await supabaseClient.from('site_config').upsert({
+                section_key: 'marketing',
+                data: {},
+                updated_at: new Date()
+            }, { onConflict: 'section_key' });
+            loadMarketingFields();
             toast("All tracking pixels cleared.");
         }
 
@@ -3082,6 +3110,7 @@
             _origShowPanel(id);
             if (id === 'destinations') renderDestList();
             if (id === 'about') { loadAboutFields(); renderPastTripsAdmin(); renderAutoArchiveCandidates(); }
+            if (id === 'gallery') renderGalleryAdmin();
         };
 
         // ============================================================
