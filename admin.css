@@ -269,14 +269,18 @@ textarea.form-control {
     background: var(--success);
 }
 
-/* ── MAIN CONTENT ────────────────────────────────────────── */
+/* ── MAIN CONTENT FORCE-ALIGNMENT ────────────────────────── */
 .admin-main {
-    flex: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    background: var(--dark);
-    position: relative;
+    margin-left: 280px !important;
+    /* Fixed offset from sidebar */
+    width: calc(100% - 280px) !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    padding: 0 !important;
+    background: var(--dark) !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
 .admin-topbar {
