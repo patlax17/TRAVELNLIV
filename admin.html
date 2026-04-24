@@ -1572,6 +1572,16 @@
                             📷 Gallery Photos <span style="font-weight:400;color:#666;">— the photo grid on the trip
                                 page (click any slot to replace)</span>
                         </label>
+                        
+                        <!-- Photo Strip Management (upcoming.html expander) -->
+                        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-color,#2a2a2a);">
+                            <label style="display:block;font-size:0.77rem;color:var(--green,#8FBF9F);font-weight:600;margin-bottom:10px;">
+                                🎞️ Photo Strip <span style="font-weight:400;color:#666;">— the 5 photos in the upcoming.html expanded view (drag to rearrange)</span>
+                            </label>
+                            <div id="dest-strip-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+                                <!-- Populated by renderDestPhotoGrid() -->
+                            </div>
+                        </div>
                         <div id="dest-gallery-grid"
                             style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;">
                             <!-- Populated by renderDestPhotoGrid() when edit drawer opens -->
@@ -2700,6 +2710,57 @@
         }
 
         function closeEditDest() {
+         function renderDestPhotoGrid(slug) {
+             var grid = document.getElementById('dest-gallery-grid');
+             var stripGrid = document.getElementById('dest-strip-grid');
+             if (!grid || !stripGrid) return;
+             
+             restoreZoneKey(slug + '_card', 'zone-dest-card');
+             restoreZoneKey(slug + '_hero', 'zone-dest-hero');
+             
+             // 1. Gallery Grid (10 photos)
+             grid.innerHTML = '';
+             var defaults = DEST_GALLERY_DEFAULTS[slug] || [];
+             for (var i = 0; i < 10; i++) {
+                 var key = slug + '_g_' + i;
+                 var stored = localStorage.getItem('tnliv_img_' + key);
+                 var displaySrc = stored || defaults[i] || null;
+                 var slot = document.createElement('div');
+                 var imgHtml = displaySrc
+                     ? '<img src="' + displaySrc + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />' + (stored ? '' : '<div style="position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:0.6rem;color:#fff;background:rgba(0,0,0,0.6);padding:2px;border-radius:0 0 6px 6px;">current</div>')
+                     : '<div class="img-upload-placeholder" style="gap:2px;"><span style="font-size:1rem;">📷</span><span style="font-size:0.67rem;">Upload</span></div>';
+                 
+                 slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
+                     '<div class="img-upload-zone" id="zone-dg-' + i + '" onclick="openPickerDg(' + i + ')" style="min-height:90px;border-radius:8px;position:relative;overflow:hidden;cursor:pointer;" ' +
+                     'draggable="true" ondragstart="handleDragStart(event, 'gallery', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, 'gallery', ' + i + ')">' +
+                     imgHtml +
+                     '</div>' +
+                     '<input type="file" id="file-dg-' + i + '" accept="image/*" style="display:none" onchange="handleDestGalleryPick(event,' + i + ')" />';
+                 grid.appendChild(slot);
+             }
+
+             // 2. Strip Grid (5 photos)
+             stripGrid.innerHTML = '';
+             var stripDefaults = DEST_GALLERY_DEFAULTS[slug + "_strip"] || [];
+             for (var i = 0; i < 5; i++) {
+                 var key = slug + '_strip_' + i;
+                 var stored = localStorage.getItem('tnliv_img_' + key);
+                 var displaySrc = stored || stripDefaults[i] || null;
+                 var slot = document.createElement('div');
+                 var imgHtml = displaySrc
+                     ? '<img src="' + displaySrc + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" />' + (stored ? '' : '<div style="position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:0.6rem;color:#fff;background:rgba(0,0,0,0.6);padding:2px;border-radius:0 0 6px 6px;">current</div>')
+                     : '<div class="img-upload-placeholder" style="gap:2px;"><span style="font-size:1rem;">📷</span><span style="font-size:0.67rem;">Upload</span></div>';
+                 
+                 slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
+                     '<div class="img-upload-zone" id="zone-ds-' + i + '" onclick="openPickerDs(' + i + ')" style="min-height:80px;border-radius:8px;position:relative;overflow:hidden;cursor:pointer;" ' +
+                     'draggable="true" ondragstart="handleDragStart(event, 'strip', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, 'strip', ' + i + ')">' +
+                     imgHtml +
+                     '</div>' +
+                     '<input type="file" id="file-ds-' + i + '" accept="image/*" style="display:none" onchange="handleDestStripPick(event,' + i + ')" />';
+                 stripGrid.appendChild(slot);
+             }
+         }
+
             document.getElementById('dest-edit-drawer').style.display = 'none';
         }
 
