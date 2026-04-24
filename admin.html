@@ -55,7 +55,7 @@
                 <button class="sidebar-link" onclick="showPanel('about')" id="nav-about">
                     <span class="sl-icon">📖</span><span>About Page</span>
                 </button>
-                <button class="sidebar-link" onclick="showPanel('gallery')" id="nav-gallery">
+                <button class="sidebar-link" onclick="showPanel(\'gallery\')" id="nav-gallery">
                     <span class="sl-icon">📸</span><span>Gallery</span>
                 </button>
                 <button class="sidebar-link" onclick="showPanel('social')" id="nav-social">
@@ -2710,6 +2710,8 @@
         }
 
         function closeEditDest() {
+            document.getElementById('dest-edit-drawer').style.display = 'none';
+         }
          function renderDestPhotoGrid(slug) {
              var grid = document.getElementById('dest-gallery-grid');
              var stripGrid = document.getElementById('dest-strip-grid');
@@ -2732,7 +2734,7 @@
                  
                  slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
                      '<div class="img-upload-zone" id="zone-dg-' + i + '" onclick="openPickerDg(' + i + ')" style="min-height:90px;border-radius:8px;position:relative;overflow:hidden;cursor:pointer;" ' +
-                     'draggable="true" ondragstart="handleDragStart(event, 'gallery', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, 'gallery', ' + i + ')">' +
+                     'draggable="true" ondragstart="handleDragStart(event, \'gallery\', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, \'gallery\', ' + i + ')">' +
                      imgHtml +
                      '</div>' +
                      '<input type="file" id="file-dg-' + i + '" accept="image/*" style="display:none" onchange="handleDestGalleryPick(event,' + i + ')" />';
@@ -2753,7 +2755,7 @@
                  
                  slot.innerHTML = '<p style="font-size:0.68rem;color:#888;margin:0 0 4px;text-align:center;">Photo ' + (i + 1) + '</p>' +
                      '<div class="img-upload-zone" id="zone-ds-' + i + '" onclick="openPickerDs(' + i + ')" style="min-height:80px;border-radius:8px;position:relative;overflow:hidden;cursor:pointer;" ' +
-                     'draggable="true" ondragstart="handleDragStart(event, 'strip', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, 'strip', ' + i + ')">' +
+                     'draggable="true" ondragstart="handleDragStart(event, \'strip\', ' + i + ')" ondragover="handleDragOver(event)" ondrop="handleDropSwap(event, \'strip\', ' + i + ')">' +
                      imgHtml +
                      '</div>' +
                      '<input type="file" id="file-ds-' + i + '" accept="image/*" style="display:none" onchange="handleDestStripPick(event,' + i + ')" />';
