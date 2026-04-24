@@ -480,6 +480,72 @@ h6 {
     color: var(--white);
 }
 
+/* Mobile nav — Upcoming Trips accordion */
+.mobile-nav-accordion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+}
+
+.mobile-nav-accordion-trigger {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition);
+    padding: 0;
+}
+
+.mobile-nav-accordion-trigger:hover {
+    color: var(--teal);
+}
+
+.mobile-nav-accordion-trigger .mob-arrow {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.mobile-nav-accordion-trigger.open .mob-arrow {
+    transform: rotate(180deg);
+}
+
+.mobile-nav-accordion-items {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 0;
+}
+
+.mobile-nav-accordion-items.open {
+    max-height: 300px;
+    padding-top: 18px;
+}
+
+.mobile-nav-accordion-items a {
+    font-size: 1.3rem !important;
+    color: var(--text-muted) !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mobile-nav-accordion-items a:hover {
+    color: var(--teal) !important;
+}
+
 /* ——— DIVIDER ——— */
 .divider {
     width: 60px;
@@ -576,11 +642,11 @@ h6 {
 
     0%,
     100% {
-        box-shadow: 0 0 20px rgba(196, 160, 96, 0.2);
+        box-shadow: 0 0 20px rgba(143, 191, 159, 0.2);
     }
 
     50% {
-        box-shadow: 0 0 40px rgba(196, 160, 96, 0.45);
+        box-shadow: 0 0 40px rgba(143, 191, 159, 0.45);
     }
 }
 
@@ -669,8 +735,13 @@ footer {
     border: 1px solid var(--border);
     display: grid;
     place-items: center;
-    font-size: 1rem;
     color: var(--text-muted);
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.social-icon svg {
+    display: block;
     transition: var(--transition);
 }
 

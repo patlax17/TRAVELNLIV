@@ -176,7 +176,7 @@
 
 .play-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 30px rgba(196, 160, 96, 0.5);
+    box-shadow: 0 0 30px rgba(143, 191, 159, 0.5);
 }
 
 .past-trip-video-placeholder span {
@@ -730,8 +730,8 @@
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(196, 160, 96, 0.12);
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(143, 191, 159, 0.12);
 }
 
 .form-group input::placeholder,
