@@ -271,8 +271,32 @@ window.TNLIV_DEFAULTS = TNLIV_DEFAULTS;
 
 window.getSiteConfig = function () {
     try {
-        const stored = localStorage.getItem("tnliv_config");
-        if (stored) return JSON.parse(stored);
+        var stored = localStorage.getItem("tnliv_config");
+        if (stored) {
+            var parsed = JSON.parse(stored);
+            // Deep-merge: start with a fresh copy of ALL defaults, then
+            // overwrite top-level keys that exist in the stored config.
+            // This ensures new fields added after a user's first save
+            // always have default values (prevents "undefined" in the DOM).
+            var merged = JSON.parse(JSON.stringify(TNLIV_DEFAULTS));
+            Object.keys(parsed).forEach(function (key) {
+                // For object keys (not arrays), merge one level deep so
+                // new sub-keys inside existing objects also get defaults.
+                if (
+                    parsed[key] !== null &&
+                    typeof parsed[key] === 'object' &&
+                    !Array.isArray(parsed[key]) &&
+                    merged[key] !== null &&
+                    typeof merged[key] === 'object' &&
+                    !Array.isArray(merged[key])
+                ) {
+                    merged[key] = Object.assign({}, merged[key], parsed[key]);
+                } else {
+                    merged[key] = parsed[key];
+                }
+            });
+            return merged;
+        }
     } catch (e) { }
     return JSON.parse(JSON.stringify(TNLIV_DEFAULTS));
 };

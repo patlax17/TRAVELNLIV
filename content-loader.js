@@ -21,9 +21,11 @@
 
     // ── Utility ─────────────────────────────────────────────────
     function set(id, html) {
+        if (html === undefined || html === null) return;
         const el = document.getElementById(id);
         if (el) el.innerHTML = html;
     }
+
     function setAttr(id, attr, val) {
         const el = document.getElementById(id);
         if (el) el.setAttribute(attr, val);
