@@ -1699,28 +1699,28 @@
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("admin-app").style.display = "flex";
 
-            // ─── SUPABASE SYNC BRIDGE ───
-            toast('🔄 Syncing with Supabase...');
+            toast('🔄 Syncing Supabase Assets...');
             const config = await window.getSiteConfig();
             const dests = await window.getDestinations();
-            const images = await window.fetchSiteData();
+            const imagesRes = await window.fetchSiteData();
 
-            // Populate localStorage so existing logic works
-            localStorage.setItem('tnliv_config', JSON.stringify(config));
-            localStorage.setItem('DESTINATIONS_LIST', JSON.stringify(dests));
-            if (images) localStorage.setItem('tnliv_images', JSON.stringify(images.images));
+            if (imagesRes && imagesRes.images) {
+                window.globalImages = imagesRes.images;
+                // Force UI restoration for all core slots
+                const coreSlots = ['hero_img', 'founder_photo', 'cta_bg', 'next_trip'];
+                coreSlots.forEach(slot => restoreZone(slot));
+            }
 
             loadAllFields();
             loadMarketingFields();
             renderPastEventPhotoGrid();
-            addGallerySlot();
             populateFeaturedTripSelect();
             renderDestList();
             loadAboutFields();
             renderPastTripsAdmin();
             renderAutoArchiveCandidates();
 
-            toast('✅ Live Database Connected');
+            toast('✅ Supabase Connection: Active');
         }
 
         /**
@@ -1795,7 +1795,6 @@
         };
 
         function showPanel(id) {
-            console.log("Showing panel:", id);
             document.querySelectorAll(".admin-panel").forEach(p => p.classList.remove("active"));
             document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
 
@@ -1804,9 +1803,10 @@
 
             if (panel) {
                 panel.classList.add("active");
-                // FORCE rendering for dynamic sections
+                // Mandatory Lead Engineer Refetch Pattern
                 if (id === 'gallery') renderGalleryAdmin();
-                if (id === 'about') renderPastTripsAdmin();
+                if (id === 'home') { restoreZone('hero_img'); restoreZone('cta_bg'); }
+                if (id === 'about') { loadAboutFields(); renderPastTripsAdmin(); restoreZone('founder_photo'); }
                 if (id === 'destinations') renderDestList();
             }
             if (navBtn) navBtn.classList.add("active");
