@@ -9,6 +9,20 @@
     content="Travel & LIV Collective curates luxury group travel experiences for people who crave real connection. Join the next experience." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="home.css" />
+  <!-- Supabase SDK — loaded first so supabaseClient is available to all scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Initialize the global supabaseClient immediately after SDK loads.
+    // site-sync.js checks: if (typeof supabaseClient === 'undefined') return;
+    // This init block ensures that check passes on every page.
+    (function () {
+      var SUPABASE_URL = 'https://ziejdpdrhpxqxrhkwpew.supabase.co';
+      var SUPABASE_KEY = 'sb_publishable_raXNn8hTDaSHzkSeD1R3SQ_0EPZzUPX';
+      if (typeof supabase !== 'undefined' && !window.supabaseClient) {
+        window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+    })();
+  </script>
   <script src="tracking.js"></script>
 </head>
 
@@ -254,8 +268,9 @@
       </div>
     </div>
 
-    <!-- masonry photo gallery -->
-    <div class="masonry-gallery reveal">
+    <!-- masonry photo gallery — populated by site-sync.js from site_copy.proof_photos array order -->
+    <div class="masonry-gallery reveal" id="social-proof-grid">
+
       <div class="masonry-item">
         <img src="social_proof/KQ6A1033.JPG" alt="Travel and LIV Collective group experience" loading="lazy" />
         <div class="masonry-overlay"><span>The Collective ✦</span></div>
@@ -701,6 +716,9 @@
   <script src="content-loader.js"></script>
   <script src="site-defaults.js"></script>
   <script src="dest-sync.js"></script>
+  <!-- site-sync.js always loads last — requires supabaseClient from <head> -->
+  <script src="site-sync.js"></script>
+
 </body>
 
 </html>

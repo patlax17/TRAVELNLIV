@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="zanzibar.css" />
     <script src="tracking.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="trip-loader.js"></script>
     <style>
         /* ── BALI-SPECIFIC OVERRIDES ── */
         .bali-photo-grid {
@@ -317,7 +319,7 @@
     </style>
 </head>
 
-<body data-page="bali">
+<body data-page="bali" data-slug="bali">
 
     <!-- ======== NAVIGATION ======== -->
     <nav id="nav">
@@ -376,7 +378,8 @@
     <!-- ======== TRIP HERO ======== -->
     <section id="trip-hero">
         <div class="trip-hero-bg">
-            <img id="bali-hero-img" src="bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg"
+            <img id="bali-hero-img" data-field="hero-img"
+                src="bali/kelingking-beach-nusa-penida_c3b4aac4-411f-4131-ab9c-705fc53b648f.jpeg"
                 alt="Bali, Indonesia aerial view" />
             <div class="trip-hero-overlay"></div>
         </div>
@@ -540,7 +543,7 @@
                 <span class="eyebrow"><span class="gold-line"></span>Trip Details</span>
                 <h2 class="display-md" style="margin-top:16px;">What Awaits You in Bali</h2>
             </div>
-            <div class="reveal" style="max-width:760px;margin-top:32px;">
+            <div class="reveal" data-field="description" style="max-width:760px;margin-top:32px;">
                 <p style="color:var(--text-muted);line-height:1.9;font-size:1.05rem;margin-bottom:20px;">
                     Your journey begins the moment you arrive, where you'll be seamlessly welcomed and transported into
                     nature. Throughout the trip, you'll stay in hand-selected 5-star luxury local resorts and private
@@ -554,8 +557,7 @@
                 <p style="color:var(--text-muted);line-height:1.9;font-size:1.05rem;margin-bottom:20px;">
                     Over the course of the experience, your days will blend adventure, culture, and leisure. Think
                     hidden natural wonders, early-morning excursions that reward you with unforgettable views, immersive
-                    cultural moments, and time to simply relax and take it all in. Some days are designed for
-                    exploration, others for slowing down — because balance is part of the luxury.
+                    cultural moments, and time to simply relax and take it all in.
                 </p>
                 <p style="color:var(--text-muted);line-height:1.9;font-size:1.05rem;margin-bottom:20px;">
                     Meals are thoughtfully included throughout the trip, featuring a mix of local cuisine, unique dining
