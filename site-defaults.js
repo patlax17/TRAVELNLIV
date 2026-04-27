@@ -29,7 +29,7 @@ window.SITE_DEST_DEFAULTS = [
         ],
         rooms: [
             { title: 'Double Occupancy (Bringing a friend/couple)', price: '$2,350', deposit: '$500 deposit · Payment plan available', badge: '' },
-            { title: 'Double Occupancy (Solo / roommate matching)', price: '$2,400', deposit: '$530 deposit · 3 payments of $623 · No credit check', badge: 'Only 4 remaining!' },
+            { title: 'Double Occupancy (Solo / roommate matching)', price: '$2,500', deposit: '$530 deposit · No credit check payment plan available', badge: 'Only 4 remaining!' },
             { title: 'Single Occupancy (Private room)', price: '$2,850', deposit: '$500 deposit · Your own private room', badge: '' }
         ],
         days: [

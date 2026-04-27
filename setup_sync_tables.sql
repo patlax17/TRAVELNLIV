@@ -276,7 +276,7 @@ VALUES
     'bali',
     'Bali, Indonesia', '🏝️',
     'September 2026', '7 Days', 'September 3 – September 10, 2026',
-    'Starting at $2,350', '$500 deposit to reserve', 'Then 3 payments of $623',
+    'Starting at $2,350', '$500 deposit to reserve', 'Flexible payment plan available',
     'Seven days in the Island of the Gods. From sacred rice terraces and volcanic sunrises to rooftop infinity pools, traditional ceremonies, and nights you''ll never forget — Bali is where the soul gets recharged and strangers become lifelong friends.',
     '["🏨 Curated Villa Stay","🍽️ Welcome & Farewell Dinners","🌿 Group Excursions","🎋 Cultural Experiences","💳 Flexible Payments","🧳 Solo-Friendly"]',
     'open'
