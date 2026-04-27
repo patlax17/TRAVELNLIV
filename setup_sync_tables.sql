@@ -234,7 +234,7 @@ VALUES (
   '∞',   'Memories Made',
 
   -- Next Trip
-  'Booking Open', 'Bali, Indonesia', 'September 3 – September 10, 2026 · 8 Days', '/bali.html',
+  'Booking Open', 'Bali, Indonesia', 'September 3 – September 10, 2026 · 7 Days', '/bali.html',
   'Sacred rice terraces, rooftop infinity pools, temple sunrises, and nights the group chat will never let you forget. This is Bali with the collective.',
 
   -- Past Event
@@ -275,7 +275,7 @@ VALUES
   (
     'bali',
     'Bali, Indonesia', '🏝️',
-    'September 2026', '8 Days', 'September 3 – September 10, 2026',
+    'September 2026', '7 Days', 'September 3 – September 10, 2026',
     'Starting at $2,350', '$500 deposit to reserve', 'Then 3 payments of $623',
     'Seven days in the Island of the Gods. From sacred rice terraces and volcanic sunrises to rooftop infinity pools, traditional ceremonies, and nights you''ll never forget — Bali is where the soul gets recharged and strangers become lifelong friends.',
     '["🏨 Curated Villa Stay","🍽️ Welcome & Farewell Dinners","🌿 Group Excursions","🎋 Cultural Experiences","💳 Flexible Payments","🧳 Solo-Friendly"]',
@@ -433,14 +433,14 @@ WHERE page = 'home';
 
 UPDATE site_copy
 SET
-  nt_dates   = 'September 3 – September 10, 2026 · 8 Days',
+  nt_dates   = 'September 3 – September 10, 2026 · 7 Days',
   updated_at = NOW()
 WHERE page = 'home';
 
 UPDATE trip_pages
 SET
   month_tag    = 'September 2026',
-  duration_tag = '8 Days',
+  duration_tag = '7 Days',
   dates        = 'September 3 – September 10, 2026',
   updated_at   = NOW()
 WHERE slug = 'bali';
