@@ -11,11 +11,11 @@ window.SITE_DEST_DEFAULTS = [
         emoji: '🏝️',
         url: '/bali.html',
         status: 'booking_open',
-        dates: 'July 30 – Aug 5, 2026',
+        dates: 'September 3 – September 10, 2026',
         price: 'Starting at $2,350',
         badge: '🟢 Booking Open',
         tagline: 'Sacred rice terraces, rooftop infinity pools, volcanic sunrises, and nights you will never forget.',
-        teaserDesc: '7 days of luxury, culture and connection in Bali.',
+        teaserDesc: '8 days of luxury, culture and connection in Bali.',
         description: 'Your journey begins the moment you arrive, where you will be seamlessly welcomed and transported into nature. Throughout the trip, you will stay in hand-selected 5-star luxury local resorts and private villas, each chosen for their setting, serenity, and wow factor.',
         squadtrip: 'https://travelnlivcollective.squadtrip.com/trip/travel-liv-collective-signature-mystery-trip-where-luxury-meets-relaxation-and-connection-13016?color=abcca8',
         includes: [
@@ -94,7 +94,7 @@ window.SITE_DEST_DEFAULTS = [
 // ── DATA VERSION SYSTEM ────────────────────────────────────────────────
 // Bump DEST_DATA_VERSION whenever URL structure or critical data changes.
 // This forces ALL visitors' stale localStorage to be replaced automatically.
-var DEST_DATA_VERSION = '4'; // v4: direct .html URLs, no rewrites // v3: clean /upcomingtrips/ URLs
+var DEST_DATA_VERSION = '5'; // v5: Bali dates updated to Sep 3–10, 2026 (8 days)
 
 (function seedOrRefresh() {
     try {
