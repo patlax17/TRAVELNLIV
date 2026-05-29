@@ -632,14 +632,8 @@
                 }).join('');
             } else { roomGrid.style.display = 'none'; roomEmpty.style.display = 'block'; }
 
-            // ── SQUADTRIP BOOKING ──
-            var squadtripUrl = d.squadtrip || '';
-            if (squadtripUrl) {
-                document.getElementById('trip-squadtrip-iframe').setAttribute('data-src', squadtripUrl);
-            } else {
-                document.getElementById('trip-squadtrip-wrap').style.display = 'none';
-                document.getElementById('trip-notif-wrap').style.display = 'block';
-            }
+            // ── WETRAVEL BOOKING WIDGET ── always visible, widget handles its own state
+            // (embed_packages.js loaded in the booking panel handles checkout directly)
 
             // ── DROPDOWN NAV — use defaults if localStorage empty
             var dd = document.getElementById('dynamic-dropdown');
