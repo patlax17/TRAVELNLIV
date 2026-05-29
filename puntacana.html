@@ -422,16 +422,25 @@
                 <div id="trip-booking-panel"
                     style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;opacity:0;">
                     <div
-                        style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-1);box-shadow:var(--shadow-gold);">
-                        <iframe id="trip-squadtrip-iframe"
-                            style="width:100%;min-height:700px;height:auto;border:none;display:block;" src=""
-                            data-src="" title="Booking" allow="payment"></iframe>
+                        style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-1);box-shadow:var(--shadow-gold);padding:32px 24px;">
+                        <!-- WeTravel Official Package Listing Widget -->
+                        <div id="wetravel-widget-wrap">
+                            <script src="https://cdn.wetravel.com/widgets/embed_packages.js"
+                                id="wetravel_package_listing"
+                                data-env="https://travelnliv.wetravel.com"
+                                data-version="v0.3"
+                                data-uid="1623563"
+                                data-uuid="5990310291"
+                                data-color="33ae3f"
+                                data-text="Book Now"
+                                data-showreviews="true"></script>
+                        </div>
                     </div>
                     <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:16px;">Secure
-                        checkout powered by <strong style="color:var(--teal);">Squadtrip</strong></p>
+                        checkout powered by <strong style="color:var(--teal);">WeTravel</strong> · Flexible payment plans available</p>
                     <div style="text-align:center;margin-top:20px;padding-bottom:8px;">
                         <button onclick="toggleTripBooking()"
-                            style="background:#c0392b;border:none;border-radius:999px;color:#fff;padding:12px 32px;font-size:0.9rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(192,57,43,0.45);"
+                            style="background:#c0392b;border:none;border-radius:999px;color:#fff;padding:12px 32px;font-size:0.9rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(192,57,43,0.45);transition:all 0.2s;"
                             onmouseover="this.style.background='#a93226'" onmouseout="this.style.background='#c0392b'">
                             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
                                 viewBox="0 0 24 24">
@@ -662,9 +671,7 @@
             if (!panel) return;
             tripBookOpen = !tripBookOpen;
             if (tripBookOpen) {
-                var iframe = document.getElementById('trip-squadtrip-iframe');
-                if (iframe) { var ds = iframe.getAttribute('data-src'); if (ds && iframe.src !== ds) iframe.src = ds; }
-                panel.style.maxHeight = '1500px'; panel.style.opacity = '1';
+                panel.style.maxHeight = '2000px'; panel.style.opacity = '1';
                 if (arrow) arrow.style.transform = 'rotate(180deg)';
                 if (btn) btn.textContent = 'Close Booking Widget';
                 setTimeout(function () { panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
