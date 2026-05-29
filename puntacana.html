@@ -338,7 +338,7 @@
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="faqs.html">FAQs</a></li>
             </ul>
-            <a href="#pc-book" class="btn btn-gold nav-cta" id="pc-nav-book">Secure Your Spot</a>
+            <a href="https://travelnliv.wetravel.com/i/6a05b6355a2c298566ceeb1a" class="btn btn-gold nav-cta" id="pc-nav-book" target="_blank" rel="noopener">Secure Your Spot</a>
             <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
                 <span></span><span></span><span></span>
             </button>
@@ -366,7 +366,7 @@
         <a href="partnerships.html">Partners</a>
         <a href="gallery.html">Gallery</a>
         <a href="faqs.html">FAQs</a>
-        <a href="#pc-book" class="btn btn-gold" style="margin-top:16px;">Secure Your Spot</a>
+        <a href="https://travelnliv.wetravel.com/i/6a05b6355a2c298566ceeb1a" class="btn btn-gold" style="margin-top:16px;" target="_blank" rel="noopener">Secure Your Spot</a>
     </div>
 
     <!-- ======== TRIP HERO ======== -->
@@ -393,22 +393,14 @@
                 5 Days · October 28 – November 1, 2026 · Starting at $1,799
             </p>
             <div class="trip-hero-badges animate-fade-up animate-delay-4">
-                <span class="tag tag-gold">🟡 Coming Soon</span>
+                <span class="tag tag-teal">🟢 Booking Now</span>
                 <span class="tag tag-teal">🌴 Singles Trip</span>
-                <span class="tag tag-teal">$300 Deposit to Reserve</span>
+                <span class="tag tag-teal">$250 Deposit Till June 7th</span>
             </div>
             <div class="animate-fade-up animate-delay-4" style="margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;">
-                <a href="#pc-book" class="btn btn-gold" id="hero-book-btn"
-                    onclick="event.preventDefault();document.getElementById('pc-book').scrollIntoView({behavior:'smooth'});setTimeout(()=>openPCBooking(),400);">
+                <a href="https://travelnliv.wetravel.com/i/6a05b6355a2c298566ceeb1a"
+                    class="btn btn-gold" id="hero-book-btn" target="_blank" rel="noopener">
                     Secure Your Spot
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
-                        viewBox="0 0 24 24">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </a>
-                <a href="https://travelnliv.wetravel.com/i/6a05b6355a2c298566ceeb1a#travel-liv-collective-single-s-trip"
-                    class="btn btn-outline" id="hero-itinerary-btn" target="_blank" rel="noopener">
-                    Full Itinerary Details
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
                         viewBox="0 0 24 24">
                         <path d="M5 12h14M12 5l7 7-7 7" />
@@ -424,8 +416,7 @@
                         <span class="sticky-title">Punta Cana, Dominican Republic 2026</span>
                         <span class="sticky-sub text-muted" id="sticky-sub-text">Starting at $1,799 · 5 Days</span>
                     </div>
-                    <a href="#pc-book" class="btn btn-gold btn-sm" id="sticky-book-btn"
-                        onclick="event.preventDefault();document.getElementById('pc-book').scrollIntoView({behavior:'smooth'});setTimeout(()=>openPCBooking(),400);">Book
+                    <a href="https://travelnliv.wetravel.com/i/6a05b6355a2c298566ceeb1a" class="btn btn-gold btn-sm" id="sticky-book-btn" target="_blank" rel="noopener">Book
                         Now</a>
                 </div>
             </div>
@@ -851,94 +842,19 @@
                 <h2 class="display-md" style="margin-top:16px;">Lock In Your Spot</h2>
                 <div class="divider"></div>
                 <p class="text-muted" style="max-width:560px;margin:24px auto 0;line-height:1.8;">
-                    Over 400 people on the waitlist — only 60 spots available. Pay a $300 deposit to reserve your place
-                    — flexible payment plans available, no credit check required.
+                    Only 60 spots available. Reserve your place with a <strong style="color:var(--gold);">$250 deposit by June 7th</strong> — flexible payment plans available, no credit check required.
                 </p>
             </div>
-
-            <div class="reveal" style="margin-top:40px;">
-                <!-- Toggle button -->
-                <div style="text-align:center;margin-bottom:32px;">
-                    <button onclick="togglePCBooking()" class="btn btn-gold" id="pc-book-toggle"
-                        style="font-size:1rem;padding:16px 40px;">
-                        Open Booking Widget
-                        <svg id="pc-book-arrow" width="16" height="16" fill="none" stroke="currentColor"
-                            stroke-width="2.5" viewBox="0 0 24 24" style="transition:transform 0.3s ease;">
-                            <path d="M6 9l6 6 6-6" />
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Collapsible panel (exact Bali pattern) -->
-                <div id="pc-booking-panel"
-                    style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;opacity:0;">
-                    <div style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-1);box-shadow:var(--shadow-gold);">
-                        <!-- Room cards — Bali style, WeTravel SDK handles checkout overlay -->
-                        <div style="display:flex;flex-direction:column;gap:0;">
-
-                            <!-- Card 1: Double Occupancy -->
-                            <div style="display:flex;gap:0;border-bottom:1px solid var(--border);flex-wrap:wrap;">
-                                <div style="width:200px;min-width:160px;flex-shrink:0;position:relative;">
-                                    <img src="punta/IMG_4753.JPG" alt="Double Occupancy Room"
-                                        style="width:100%;height:100%;min-height:160px;object-fit:cover;display:block;" />
-                                    <span style="position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,0.6);color:#fff;font-size:0.7rem;padding:3px 8px;border-radius:999px;">1/2</span>
-                                </div>
-                                <div style="flex:1;padding:24px;display:flex;flex-direction:column;gap:8px;min-width:220px;">
-                                    <div style="font-weight:700;font-size:1rem;color:var(--text);">Double Occupancy (Solo / Roommate Matching)</div>
-                                    <div style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">You'll be matched with a same-gender roommate. Stay in a shared room at our 5-star all-inclusive beachfront resort.</div>
-                                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;flex-wrap:wrap;gap:12px;">
-                                        <div>
-                                            <div style="font-size:0.75rem;color:var(--text-muted);">Total</div>
-                                            <div style="font-size:1.6rem;font-weight:800;color:var(--text);">$1,799<span style="font-size:0.8rem;font-weight:400;color:var(--text-muted);"> Fee not included</span></div>
-                                        </div>
-                                        <a href="https://travelnliv.wetravel.com/i/6a05b6355a2c298566ceeb1a"
-                                            class="WeTravel"
-                                            style="background:var(--gold);color:#111;font-weight:700;padding:12px 28px;border-radius:999px;text-decoration:none;font-size:0.9rem;white-space:nowrap;display:inline-block;">
-                                            Book Now
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Card 2: Single Occupancy -->
-                            <div style="display:flex;gap:0;flex-wrap:wrap;">
-                                <div style="width:200px;min-width:160px;flex-shrink:0;position:relative;">
-                                    <img src="punta/IMG_9919.JPG" alt="Single Occupancy Room"
-                                        style="width:100%;height:100%;min-height:160px;object-fit:cover;display:block;" />
-                                    <span style="position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,0.6);color:#fff;font-size:0.7rem;padding:3px 8px;border-radius:999px;">1/2</span>
-                                </div>
-                                <div style="flex:1;padding:24px;display:flex;flex-direction:column;gap:8px;min-width:220px;">
-                                    <div style="font-weight:700;font-size:1rem;color:var(--text);">Single Occupancy (Private Room)</div>
-                                    <div style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">Your own private room at the 5-star all-inclusive beachfront resort. Maximum privacy and comfort.</div>
-                                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;flex-wrap:wrap;gap:12px;">
-                                        <div>
-                                            <div style="font-size:0.75rem;color:var(--text-muted);">Total</div>
-                                            <div style="font-size:1.6rem;font-weight:800;color:var(--text);">$2,199<span style="font-size:0.8rem;font-weight:400;color:var(--text-muted);"> Fee not included</span></div>
-                                        </div>
-                                        <a href="https://travelnliv.wetravel.com/i/6a05b6355a2c298566ceeb1a"
-                                            class="WeTravel"
-                                            style="background:var(--gold);color:#111;font-weight:700;padding:12px 28px;border-radius:999px;text-decoration:none;font-size:0.9rem;white-space:nowrap;display:inline-block;">
-                                            Book Now
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:16px;">
-                        Secure checkout powered by <strong style="color:var(--teal);">WeTravel</strong> · Flexible payment plans available
-                    </p>
-                    <div style="text-align:center;margin-top:24px;padding-bottom:8px;">
-                        <button onclick="togglePCBooking()"
-                            style="background:#c0392b;border:none;border-radius:999px;color:#fff;padding:12px 32px;font-size:0.9rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(192,57,43,0.45);transition:all 0.2s ease;"
-                            onmouseover="this.style.background='#a93226'" onmouseout="this.style.background='#c0392b'">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6" /></svg>
-                            Close Booking Widget
-                        </button>
-                    </div>
-                </div>
+            <div class="reveal" style="margin-top:40px;text-align:center;">
+                <a href="https://travelnliv.wetravel.com/i/6a05b6355a2c298566ceeb1a"
+                    class="btn btn-gold" target="_blank" rel="noopener"
+                    style="font-size:1.1rem;padding:18px 48px;display:inline-flex;align-items:center;gap:10px;">
+                    Secure Your Spot
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <p style="margin-top:16px;font-size:0.8rem;color:var(--text-muted);">Secure checkout powered by <strong style="color:var(--teal);">WeTravel</strong> · Flexible payment plans available</p>
             </div>
+
         </div>
     </section>
 
@@ -1038,10 +954,7 @@
             }, 120);
         }
 
-        function bookSelectedRoom() {
-            document.getElementById('pc-book').scrollIntoView({ behavior: 'smooth' });
-            setTimeout(function () { openPCBooking(); }, 500);
-        }
+
 
         /* ── DAY TAB SWITCHER ── */
         function showDay(num) {
@@ -1054,28 +967,6 @@
         }
 
         /* ── BOOKING WIDGET TOGGLE (mirrors toggleBaliBooking exactly) ── */
-        var pcBookOpen = false;
-        function togglePCBooking() {
-            var panel = document.getElementById('pc-booking-panel');
-            var btn = document.getElementById('pc-book-toggle');
-            if (!panel) return;
-            pcBookOpen = !pcBookOpen;
-            if (pcBookOpen) {
-                panel.style.maxHeight = '2000px';
-                panel.style.opacity = '1';
-                if (btn) btn.innerHTML = 'Close Booking Widget <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="transition:transform 0.3s ease;transform:rotate(180deg)"><path d="M6 9l6 6 6-6"/></svg>';
-                setTimeout(function () {
-                    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 300);
-            } else {
-                panel.style.maxHeight = '0';
-                panel.style.opacity = '0';
-                if (btn) btn.innerHTML = 'Open Booking Widget <svg id="pc-book-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="transition:transform 0.3s ease;"><path d="M6 9l6 6 6-6"/></svg>';
-            }
-        }
-        function openPCBooking() {
-            if (!pcBookOpen) togglePCBooking();
-        }
     </script>
     <script src="site-defaults.js"></script>
     <script src="dest-sync.js"></script>
