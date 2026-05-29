@@ -331,6 +331,7 @@
     <div class="page-nav-sticky" id="pageNav">
         <div class="container">
             <div class="page-nav-inner">
+                <a href="#trip-gallery" class="page-nav-link">Photos</a>
                 <a href="#trip-desc" class="page-nav-link">Details</a>
                 <a href="#trip-itin" class="page-nav-link">Itinerary</a>
                 <a href="#trip-includes" class="page-nav-link">Included</a>
@@ -339,6 +340,66 @@
             </div>
         </div>
     </div>
+
+    <!-- PHOTO GALLERY -->
+    <section class="section" id="trip-gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="eyebrow"><span class="gold-line"></span>See It First</span>
+                <h2 class="display-md" style="margin-top:16px;">A Glimpse of Punta Cana</h2>
+            </div>
+            <div class="bali-photo-grid reveal" style="margin-top:32px;">
+                <!-- Wide + tall hero -->
+                <div class="bali-photo wide tall">
+                    <img src="punta/IMG_6312.JPG" alt="Punta Cana beachfront resort aerial with pool and beach" loading="lazy" />
+                </div>
+                <!-- Resort aerial 2 -->
+                <div class="bali-photo">
+                    <img src="punta/IMG_6313.JPG" alt="Aerial view of Punta Cana beach resort" loading="lazy" />
+                </div>
+                <!-- Champagne toast -->
+                <div class="bali-photo">
+                    <img src="punta/8CECEBEC-DDD1-4B9B-BEE3-DBD0FA5ECC10.JPG" alt="Champagne toast overlooking the pool and Caribbean Sea" loading="lazy" />
+                </div>
+                <!-- Welcome dinner group -->
+                <div class="bali-photo">
+                    <img src="punta/6c367740-a204-44e6-a1c2-cfad270f8811.JPG" alt="Welcome dinner group at Travel and LIV" loading="lazy" />
+                </div>
+                <!-- ATV adventure -->
+                <div class="bali-photo">
+                    <img src="punta/IMG_6315.JPG" alt="ATV riding through the Dominican jungle" loading="lazy" />
+                </div>
+                <!-- Catamaran wide -->
+                <div class="bali-photo wide">
+                    <img src="punta/IMG_6311.JPG" alt="Private catamaran boat party on the Caribbean" loading="lazy" />
+                </div>
+                <!-- Horseback riding -->
+                <div class="bali-photo">
+                    <img src="punta/IMG_6317.JPG" alt="Horseback riding through lush Dominican trails" loading="lazy" />
+                </div>
+                <!-- Coco Bongo nightlife -->
+                <div class="bali-photo">
+                    <img src="punta/IMG_6316.JPG" alt="Coco Bongo nightclub live performance in Punta Cana" loading="lazy" />
+                </div>
+                <!-- Pool crew selfie -->
+                <div class="bali-photo">
+                    <img src="punta/IMG_9161_Original.JPG" alt="Group enjoying the resort pool" loading="lazy" />
+                </div>
+                <!-- Sunset -->
+                <div class="bali-photo">
+                    <img src="punta/IMG_9307.JPG" alt="Golden sunset over the Caribbean from the resort" loading="lazy" />
+                </div>
+                <!-- Resort walkway wide -->
+                <div class="bali-photo wide">
+                    <img src="punta/IMG_6314.JPG" alt="Resort grounds with beach backdrop" loading="lazy" />
+                </div>
+                <!-- Pool foam party -->
+                <div class="bali-photo">
+                    <img src="punta/IMG_9163.JPG" alt="Pool party at the resort" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- DESCRIPTION -->
     <section class="section" id="trip-desc" style="background:var(--dark-2);">
@@ -357,16 +418,114 @@
         <div class="container">
             <div class="section-header reveal">
                 <span class="eyebrow"><span class="gold-line"></span>Day-by-Day</span>
-                <h2 class="display-md" style="margin-top:16px;">Your Journey</h2>
+                <h2 class="display-md" style="margin-top:16px;">Your 5-Day Journey</h2>
             </div>
-            <div class="itin-tabs reveal" id="trip-itin-tabs"></div>
-            <div id="trip-itin-panels"></div>
-            <div id="trip-itin-empty" style="display:none;padding:40px;text-align:center;color:var(--text-muted);">
-                <p style="font-size:1.1rem;">The itinerary for this trip is being finalized. Check back soon or <button
-                        onclick="showMailerLiteForm()"
-                        style="background:none;border:none;color:var(--teal);cursor:pointer;text-decoration:underline;">get
-                        notified</button> when it drops.</p>
+
+            <!-- Day tabs -->
+            <div class="itin-tabs reveal">
+                <button class="itin-tab active" onclick="showPCDay(1)">Day 1</button>
+                <button class="itin-tab" onclick="showPCDay(2)">Day 2</button>
+                <button class="itin-tab" onclick="showPCDay(3)">Day 3</button>
+                <button class="itin-tab" onclick="showPCDay(4)">Day 4</button>
+                <button class="itin-tab" onclick="showPCDay(5)">Day 5</button>
             </div>
+
+            <!-- Day 1: Arrival & Welcome Mixer -->
+            <div class="itin-day-panel active" id="pc-day-1">
+                <div class="itin-panel-img">
+                    <img src="punta/6c367740-a204-44e6-a1c2-cfad270f8811.JPG"
+                        alt="Welcome dinner with the Travel & LIV group" loading="lazy" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Arrival, Check-In & Welcome Mixer 🥂</h3>
+                    <p>Arrive in Punta Cana and check in to your 5-star all-inclusive beachfront resort. Take in the views, unpack, and get settled — this is your home for the next 5 days.</p>
+                    <p>Tonight we kick things off right with an exclusive <strong>All-White Welcome Mixer</strong> at 6pm. Meet your travel crew, sip on cocktails, and vibe out — the connections start here.</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">✈️ Airport Transfer Included</span>
+                        <span class="itin-hl">🏨 Resort Check-In</span>
+                        <span class="itin-hl">🤍 All-White Welcome Mixer @ 6pm</span>
+                        <span class="itin-hl">🍹 Welcome Drinks</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 2: Adventure Day -->
+            <div class="itin-day-panel" id="pc-day-2">
+                <div class="itin-panel-img">
+                    <img src="punta/IMG_6315.JPG"
+                        alt="ATV adventure through the Dominican jungle" loading="lazy" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Adventure Day With Travel & LIV ⚡️</h3>
+                    <p>Get ready for a full day of adrenaline! We're taking it to the jungle and beyond with a packed adventure itinerary — ATV riding through the mud, horseback riding through lush trails, zip-lining over the canopy, and a chairlift with panoramic views.</p>
+                    <p>Then cap the night off with an optional visit to <strong>Coco Bongo</strong> — Punta Cana's hottest nightclub with live performances, open bar, and 1,000+ capacity of pure energy.</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">🏍️ ATV Riding</span>
+                        <span class="itin-hl">🐴 Horseback Riding</span>
+                        <span class="itin-hl">🌿 Zip-lining</span>
+                        <span class="itin-hl">🎪 Chairlift</span>
+                        <span class="itin-hl">🎉 Coco Bongo (Optional)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 3: Sip, Sail & Mingle -->
+            <div class="itin-day-panel" id="pc-day-3">
+                <div class="itin-panel-img">
+                    <img src="punta/IMG_6311.JPG"
+                        alt="Private catamaran boat party on the Caribbean" loading="lazy" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Sip, Sail & Mingle 🌊🍾</h3>
+                    <p>We are turning it up on the waters! Today is our exclusive <strong>private catamaran boat party</strong> — think open bar, music, snorkeling stops in crystal-clear Caribbean water, and non-stop vibes with the whole crew.</p>
+                    <p>Dress code: <strong>Orange</strong>. Wear your best orange outfit and bring the energy — this is the most iconic day of the trip.</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">⛵ Private Catamaran</span>
+                        <span class="itin-hl">🍊 Orange Outfit Day</span>
+                        <span class="itin-hl">🤿 Snorkeling Stop</span>
+                        <span class="itin-hl">🍹 Open Bar On Board</span>
+                        <span class="itin-hl">🎶 Music & Vibes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 4: Free Day & Farewell Dinner -->
+            <div class="itin-day-panel" id="pc-day-4">
+                <div class="itin-panel-img">
+                    <img src="punta/IMG_9161_Original.JPG"
+                        alt="Group enjoying the resort pool on free day" loading="lazy" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Free Day & Farewell Dinner 🌅</h3>
+                    <p>Today is yours. Sleep in, hit the beach, relax by the pool with unlimited all-inclusive drinks and food, book a spa treatment — do whatever calls to you. You've earned it.</p>
+                    <p>In the evening, we come together one last time for our <strong>Farewell Dinner</strong> — a curated group dinner to celebrate the connections made, the memories built, and the friendships that'll last long after this trip.</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">🏖️ Free Beach & Pool Day</span>
+                        <span class="itin-hl">♾️ All-Inclusive Dining</span>
+                        <span class="itin-hl">💆 Spa Available</span>
+                        <span class="itin-hl">🍽️ Group Farewell Dinner</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 5: Departure -->
+            <div class="itin-day-panel" id="pc-day-5">
+                <div class="itin-panel-img">
+                    <img src="punta/IMG_5561.JPG"
+                        alt="Aerial view of Punta Cana coastline at departure" loading="lazy" />
+                </div>
+                <div class="itin-panel-body">
+                    <h3>Time to Head Home 🛫</h3>
+                    <p>This is not goodbye — it's <em>see you later</em>. Enjoy your final morning at the resort, grab breakfast, and soak in those last Caribbean views before your airport transfer.</p>
+                    <p>You're leaving with a full heart, a camera roll full of memories, and a group of people who started as strangers and ended as family. See you on the next one. ✨</p>
+                    <div class="itin-hl-list">
+                        <span class="itin-hl">🌅 Final Morning at Resort</span>
+                        <span class="itin-hl">🚗 Airport Transfer Included</span>
+                        <span class="itin-hl">✈️ Safe Travels</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -694,6 +853,16 @@
                     '<li><a href="/upcoming.html">All Upcoming Trips</a></li>';
             } catch (e) { }
         })();
+
+        /* ── ITINERARY TABS ── */
+        function showPCDay(num) {
+            document.querySelectorAll('.itin-day-panel').forEach(function(p){ p.classList.remove('active'); });
+            document.querySelectorAll('.itin-tab').forEach(function(t){ t.classList.remove('active'); });
+            var panel = document.getElementById('pc-day-' + num);
+            if (panel) panel.classList.add('active');
+            var tabs = document.querySelectorAll('.itin-tab');
+            if (tabs[num - 1]) tabs[num - 1].classList.add('active');
+        }
 
         /* ── BOOKING TOGGLE ── */
         var tripBookOpen = false;
