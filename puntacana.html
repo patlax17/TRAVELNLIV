@@ -421,19 +421,58 @@
                 </div>
                 <div id="trip-booking-panel"
                     style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;opacity:0;">
-                    <div
-                        style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-1);box-shadow:var(--shadow-gold);padding:32px 24px;">
-                        <!-- WeTravel Official Package Listing Widget -->
-                        <div id="wetravel-widget-wrap">
-                            <script src="https://cdn.wetravel.com/widgets/embed_packages.js"
-                                id="wetravel_package_listing"
-                                data-env="https://travelnliv.wetravel.com"
-                                data-version="v0.3"
-                                data-uid="1623563"
-                                data-uuid="5990310291"
-                                data-color="33ae3f"
-                                data-text="Book Now"
-                                data-showreviews="true"></script>
+                    <div style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-1);box-shadow:var(--shadow-gold);">
+                        <!-- Room cards — mirrors Bali exactly, WeTravel SDK handles checkout overlay -->
+                        <div style="display:flex;flex-direction:column;gap:0;">
+
+                            <!-- Card 1: Double Occupancy (Solo / Roommate Matching) -->
+                            <div style="display:flex;gap:0;border-bottom:1px solid var(--border);flex-wrap:wrap;">
+                                <div style="width:200px;min-width:160px;flex-shrink:0;position:relative;">
+                                    <img src="punta/IMG_4753.JPG" alt="Double Occupancy Room"
+                                        style="width:100%;height:100%;min-height:160px;object-fit:cover;display:block;" />
+                                    <span style="position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,0.6);color:#fff;font-size:0.7rem;padding:3px 8px;border-radius:999px;">1/2</span>
+                                </div>
+                                <div style="flex:1;padding:24px;display:flex;flex-direction:column;gap:8px;min-width:220px;">
+                                    <div style="font-weight:700;font-size:1rem;color:var(--text);">Double Occupancy (Solo / Roommate Matching)</div>
+                                    <div style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">You'll be matched with a same-gender roommate. Stay in a shared room at our 5-star all-inclusive beachfront resort.</div>
+                                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;flex-wrap:wrap;gap:12px;">
+                                        <div>
+                                            <div style="font-size:0.75rem;color:var(--text-muted);">Total</div>
+                                            <div style="font-size:1.6rem;font-weight:800;color:var(--text);">$1,799<span style="font-size:0.8rem;font-weight:400;color:var(--text-muted);"> Fee not included</span></div>
+                                        </div>
+                                        <a href="https://travelnliv.wetravel.com/i/6a05b6355a2c298566ceeb1a"
+                                            class="WeTravel"
+                                            style="background:var(--gold);color:#111;font-weight:700;padding:12px 28px;border-radius:999px;text-decoration:none;font-size:0.9rem;white-space:nowrap;display:inline-block;">
+                                            Book Now
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Single Occupancy -->
+                            <div style="display:flex;gap:0;flex-wrap:wrap;">
+                                <div style="width:200px;min-width:160px;flex-shrink:0;position:relative;">
+                                    <img src="punta/IMG_9919.JPG" alt="Single Occupancy Room"
+                                        style="width:100%;height:100%;min-height:160px;object-fit:cover;display:block;" />
+                                    <span style="position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,0.6);color:#fff;font-size:0.7rem;padding:3px 8px;border-radius:999px;">1/2</span>
+                                </div>
+                                <div style="flex:1;padding:24px;display:flex;flex-direction:column;gap:8px;min-width:220px;">
+                                    <div style="font-weight:700;font-size:1rem;color:var(--text);">Single Occupancy (Private Room)</div>
+                                    <div style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">Your own private room at the 5-star all-inclusive beachfront resort. Maximum privacy and comfort.</div>
+                                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;flex-wrap:wrap;gap:12px;">
+                                        <div>
+                                            <div style="font-size:0.75rem;color:var(--text-muted);">Total</div>
+                                            <div style="font-size:1.6rem;font-weight:800;color:var(--text);">$2,199<span style="font-size:0.8rem;font-weight:400;color:var(--text-muted);"> Fee not included</span></div>
+                                        </div>
+                                        <a href="https://travelnliv.wetravel.com/i/6a05b6355a2c298566ceeb1a"
+                                            class="WeTravel"
+                                            style="background:var(--gold);color:#111;font-weight:700;padding:12px 28px;border-radius:999px;text-decoration:none;font-size:0.9rem;white-space:nowrap;display:inline-block;">
+                                            Book Now
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:16px;">Secure
@@ -681,6 +720,8 @@
             setTimeout(function () { toggleTripBooking(); }, 800);
         }
     </script>
+    <!-- WeTravel Book Now SDK — intercepts .WeTravel links and opens checkout overlay -->
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://www.wetravel.com/assets/book_button.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","wetravel-jssdk");</script>
 </body>
 
 </html>
