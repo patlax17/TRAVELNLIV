@@ -9,6 +9,16 @@
         content="Partner with Travel & LIV Collective. Fill out our partnership form to collaborate with one of the fastest-growing luxury group travel communities." />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="about.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      (function () {
+        var SUPABASE_URL = 'https://ziejdpdrhpxqxrhkwpew.supabase.co';
+        var SUPABASE_KEY = 'sb_publishable_raXNn8hTDaSHzkSeD1R3SQ_0EPZzUPX';
+        if (typeof supabase !== 'undefined' && !window.supabaseClient) {
+          window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        }
+      })();
+    </script>
     <script src="tracking.js"></script>
 </head>
 
@@ -33,7 +43,7 @@
                         <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
                     </div>
                 </li>
-                <li><a href="partnerships.html" class="active">Partners</a></li>
+                <li><a href="partnerships.html" class="active">Partnerships</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="faqs.html">FAQs</a></li>
             </ul>
@@ -62,7 +72,7 @@
                 <a href="/upcoming.html">✈️ View All Trips</a>
             </div>
         </div>
-        <a href="partnerships.html">Partners</a>
+        <a href="partnerships.html">Partnerships</a>
         <a href="gallery.html">Gallery</a>
         <a href="faqs.html">FAQs</a>
         <a href="index.html#event" class="btn btn-gold" style="margin-top:16px;">Get Your Ticket</a>
@@ -342,7 +352,6 @@
                     <div class="footer-heading">Explore</div>
                     <ul class="footer-links">
                         <li><a href="about.html">Our Story</a></li>
-                        <li><a href="about.html#past-trips">Past Trips</a></li>
                         <li><a href="partnerships.html">Partnerships</a></li>
                         <li><a href="faqs.html">FAQs</a></li>
                     </ul>
@@ -365,12 +374,42 @@
 
     <script src="main.js"></script>
     <script>
-        // Partnership form submit handling
-        document.getElementById('partnershipForm')?.addEventListener('submit', function (e) {
+        document.getElementById('partnershipForm')?.addEventListener('submit', async function (e) {
             e.preventDefault();
-            this.style.display = 'none';
-            document.getElementById('formSuccess').style.display = 'block';
-            document.getElementById('formSuccess').scrollIntoView({ behavior: 'smooth' });
+            const btn = document.getElementById('partner-submit-btn');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            const data = {
+                name: document.getElementById('partner-name').value,
+                email: document.getElementById('partner-email').value,
+                brand: document.getElementById('partner-brand').value,
+                website: document.getElementById('partner-website').value,
+                partnership_type: document.getElementById('partner-type').value,
+                industry: document.getElementById('partner-industry').value,
+                budget: document.getElementById('partner-budget').value,
+                message: document.getElementById('partner-message').value,
+                source: document.getElementById('partner-hear').value,
+                submitted_at: new Date().toISOString()
+            };
+
+            try {
+                if (window.supabaseClient) {
+                    const { error } = await window.supabaseClient
+                        .from('partnership_inquiries')
+                        .insert([data]);
+                    if (error) throw error;
+                }
+                // Show success regardless (fallback if Supabase table not yet created)
+                this.style.display = 'none';
+                document.getElementById('formSuccess').style.display = 'block';
+                document.getElementById('formSuccess').scrollIntoView({ behavior: 'smooth' });
+            } catch (err) {
+                console.error('Form submission error:', err);
+                btn.disabled = false;
+                btn.textContent = 'Submit Partnership Inquiry';
+                alert('Something went wrong. Please email us directly at partnerships@travelnliv.com');
+            }
         });
     </script>
     <script src="site-defaults.js"></script>

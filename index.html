@@ -46,7 +46,7 @@
             <a href="upcoming.html"><span class="dd-icon">✈️</span>View All Trips</a>
           </div>
         </li>
-        <li><a href="partnerships.html">Partners</a></li>
+        <li><a href="partnerships.html">Partnerships</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="faqs.html">FAQs</a></li>
       </ul>
@@ -78,7 +78,7 @@
       </div>
     </div>
 
-    <a href="partnerships.html">Partners</a>
+    <a href="partnerships.html">Partnerships</a>
     <a href="gallery.html">Gallery</a>
     <a href="faqs.html">FAQs</a>
     <a href="#featured"
@@ -100,16 +100,12 @@
         <p class="hero-subtitle animate-fade-up animate-delay-3" id="hero-subtitle">Group trips for people who actually
           make it out of the group chat. Curated experiences. Real connections. Unforgettable destinations.</p>
         <div class="hero-actions animate-fade-up animate-delay-4">
-          <a href="#featured"
-            onclick="event.preventDefault();document.getElementById('featured').scrollIntoView({behavior:'smooth'})"
-            class="btn btn-gold" id="hero-join-btn">
-            <span id="hero-cta-primary">Join the Next Experience</span>
+          <a href="upcoming.html" class="btn btn-gold" id="hero-explore-btn">
+            <span id="hero-cta-secondary">Explore Upcoming Trips</span>
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </a>
-          <a href="bali.html" class="btn btn-outline" id="hero-explore-btn"><span id="hero-cta-secondary">Explore
-              Upcoming Trips</span></a>
         </div>
       </div>
       <div class="hero-stat-bar glass animate-fade-in animate-delay-4">
@@ -450,87 +446,8 @@
     </div>
   </section>
 
-  <!-- ======== SECTION 5: NEXT TRIP ======== -->
-  <section class="section trip-feature-section" id="featured">
-    <div class="container">
-      <div class="section-header text-center reveal">
-        <span class="eyebrow">Next Experience</span>
-        <h2 class="display-md" style="margin-top:16px;">Where We're Going Next</h2>
-        <div class="divider"></div>
-        <p class="text-muted" style="max-width:560px;margin:16px auto 0;line-height:1.8;">
-          The next chapter is written. Spots are limited — secure yours before they're gone.
-        </p>
-      </div>
 
-      <!-- BALI 2026 FEATURED CARD -->
-      <div class="next-trip-placeholder reveal"
-        style="display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;padding:0;max-width:860px;">
-        <div style="height:100%;min-height:320px;overflow:hidden;position:relative;">
-          <img src="bali_hero.png" alt="Bali, Indonesia" id="next-trip-img"
-            style="width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;" />
-          <div
-            style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(20,20,20,0.6));">
-          </div>
-          <span class="tag tag-gold" id="next-trip-badge" style="position:absolute;top:20px;left:20px;">Booking
-            Open</span>
-        </div>
-        <div class="ntp-body" style="padding:40px 36px;display:flex;flex-direction:column;justify-content:center;">
-          <p class="ntp-label">Next Destination</p>
-          <h3 class="ntp-destination" id="next-trip-destination">Bali, Indonesia</h3>
-          <p class="ntp-meta" id="next-trip-dates">September 3 – September 10, 2026 · 7 Days</p>
-          <p class="ntp-desc text-muted" id="next-trip-desc" style="margin-top:12px;">
-            Sacred rice terraces, rooftop infinity pools, temple sunrises, and nights the group chat will never let you
-            forget. This is Bali with the collective.
-          </p>
-          <div style="margin-top:24px;">
-            <a href="/bali.html" class="btn btn-gold" id="next-trip-details-btn">
-              View Trip Details
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
-          </div>
 
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ── SQUADTRIP INLINE BOOKING DROPDOWN ── -->
-    <div id="home-booking-panel"
-      style="max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;opacity:0;">
-      <div style="padding-top:40px;">
-        <div style="text-align:center;margin-bottom:24px;">
-          <span class="eyebrow">Book Your Spot</span>
-          <h3 class="display-sm" style="margin-top:10px;">Ready to go? Lock in your seat.</h3>
-          <div class="divider" style="margin:14px auto 0;"></div>
-        </div>
-        <div
-          style="border:1px solid var(--border-gold);border-radius:var(--radius-lg);overflow:hidden;background:var(--dark-2);box-shadow:var(--shadow-gold);">
-          <iframe id="home-booking-iframe" style="width:100%;min-height:700px;height:auto;border:none;display:block;"
-            src="" data-src="" title="Reserve Your Spot — Book Your Trip" allow="payment">
-          </iframe>
-        </div>
-        <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:14px;">
-          Secure checkout powered by <strong style="color:var(--teal);">Squadtrip</strong> · Flexible payment plans
-          available
-        </p>
-        <div style="text-align:center;margin-top:24px;padding-bottom:8px;">
-          <button onclick="toggleBookingPanel()"
-            style="background:#c0392b;border:none;border-radius:999px;color:#fff;padding:12px 32px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 18px rgba(192,57,43,0.45);"
-            onmouseover="this.style.background='#a93226';this.style.boxShadow='0 6px 24px rgba(192,57,43,0.6)'"
-            onmouseout="this.style.background='#c0392b';this.style.boxShadow='0 4px 18px rgba(192,57,43,0.45)'"
-            id="booking-close-btn">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <path d="M18 15l-6-6-6 6" />
-            </svg>
-            Close Booking Widget
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </section>
 
 
 
